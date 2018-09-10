@@ -79,6 +79,34 @@ type
     dxNavBar1Item4: TdxNavBarItem;
     dxNavBar1Item5: TdxNavBarItem;
     cxGridDBTableView1Column4: TcxGridDBColumn;
+    cxTabSheet4: TcxTabSheet;
+    Panel1: TPanel;
+    cxLabel3: TcxLabel;
+    cxDateEdit1: TcxDateEdit;
+    cxLabel4: TcxLabel;
+    cxDateEdit2: TcxDateEdit;
+    cxButton4: TcxButton;
+    cxButton5: TcxButton;
+    cxButton6: TcxButton;
+    cxPageControl1: TcxPageControl;
+    cxTabSheet5: TcxTabSheet;
+    cxGrid3: TcxGrid;
+    cxGridDBTableView2: TcxGridDBTableView;
+    cxgrdbclmn2: TcxGridDBColumn;
+    cxgrdbclmn3: TcxGridDBColumn;
+    cxgrdbclmn4: TcxGridDBColumn;
+    cxgrdbclmn5: TcxGridDBColumn;
+    cxgrdbclmn6: TcxGridDBColumn;
+    cxgrdbclmn7: TcxGridDBColumn;
+    cxGridLevel2: TcxGridLevel;
+    cxTabSheet6: TcxTabSheet;
+    cxGrid4: TcxGrid;
+    cxGridDBTableView3: TcxGridDBTableView;
+    cxGridLevel3: TcxGridLevel;
+    qry_caigou_hz: TADOQuery;
+    DataSource_caigou_hz: TDataSource;
+    qry_cg_mingxi: TADOQuery;
+    DataSource_cg_mingxi: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -91,6 +119,8 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
+    procedure dxNavBar1Item3Click(Sender: TObject);
+    procedure dxNavBar1Group2Click(Sender: TObject);
   private
     xzbool:boolean;
   public
@@ -232,10 +262,21 @@ begin
   cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=true;
 end;
 
+procedure TForm_main.dxNavBar1Group2Click(Sender: TObject);
+begin
+  cxTabSheet4.Show;
+end;
+
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
 begin
   cxTabSheet1.Show;
   cxTabSheet2.Show;
+end;
+
+procedure TForm_main.dxNavBar1Item3Click(Sender: TObject);
+begin
+  cxTabSheet4.Show;
+
 end;
 
 procedure TForm_main.FormCreate(Sender: TObject);

@@ -2,8 +2,8 @@ object Form_main: TForm_main
   Left = 0
   Top = 0
   Caption = #20013#22830#24211#23384#31649#29702#31995#32479
-  ClientHeight = 711
-  ClientWidth = 1008
+  ClientHeight = 739
+  ClientWidth = 1251
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,8 +18,8 @@ object Form_main: TForm_main
   TextHeight = 19
   object dxRibbonStatusBar1: TdxRibbonStatusBar
     Left = 0
-    Top = 688
-    Width = 1008
+    Top = 716
+    Width = 1251
     Height = 23
     Panels = <
       item
@@ -39,12 +39,14 @@ object Form_main: TForm_main
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
+    ExplicitTop = 688
+    ExplicitWidth = 1008
   end
   object dxNavBar1: TdxNavBar
     Left = 0
     Top = 0
     Width = 185
-    Height = 688
+    Height = 716
     Align = alLeft
     ActiveGroupIndex = 0
     TabOrder = 1
@@ -53,7 +55,7 @@ object Form_main: TForm_main
     ViewStyle.ColorSchemeName = 'Blue'
     OptionsImage.LargeImages = DataModule1.cxImageList_main
     OptionsImage.SmallImages = DataModule1.cxImageList_main
-    ExplicitLeft = -2
+    ExplicitHeight = 688
     object dxNavBar1Group1: TdxNavBarGroup
       Caption = #38376#24215#25552#36135#31649#29702
       SelectedLinkIndex = -1
@@ -66,40 +68,76 @@ object Form_main: TForm_main
           Item = dxNavBar1Item2
         end>
     end
+    object dxNavBar1Group2: TdxNavBarGroup
+      Caption = #20013#22830#20179#24211#31649#29702
+      SelectedLinkIndex = -1
+      TopVisibleLinkIndex = 0
+      Links = <
+        item
+          Item = dxNavBar1Item3
+        end
+        item
+          Item = dxNavBar1Item5
+        end>
+    end
+    object dxNavBar1Group3: TdxNavBarGroup
+      Caption = #31995#32479#35774#32622
+      SelectedLinkIndex = -1
+      TopVisibleLinkIndex = 0
+      Links = <>
+    end
     object dxNavBar1Item1: TdxNavBarItem
       Caption = #25552#36135#30003#35831
-      SmallImageIndex = 30
+      SmallImageIndex = 45
       OnClick = dxNavBar1Item1Click
     end
     object dxNavBar1Item2: TdxNavBarItem
       Caption = #20184#36135
       SmallImageIndex = 38
     end
+    object dxNavBar1Item3: TdxNavBarItem
+      Caption = #37319#36141#30003#35831
+      SmallImageIndex = 30
+    end
+    object dxNavBar1Item4: TdxNavBarItem
+      Caption = #20379#24212#21830#35774#32622
+      SmallImageIndex = 54
+    end
+    object dxNavBar1Item5: TdxNavBarItem
+      Caption = #20837#24211
+      SmallImageIndex = 68
+    end
   end
   object cxPageControl_main: TcxPageControl
     Left = 185
     Top = 0
-    Width = 823
-    Height = 688
+    Width = 1066
+    Height = 716
     Align = alClient
     TabOrder = 2
     Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 683
+    ExplicitWidth = 823
+    ExplicitHeight = 688
+    ClientRectBottom = 711
     ClientRectLeft = 2
-    ClientRectRight = 818
+    ClientRectRight = 1061
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = 'cxTabSheet1'
       ImageIndex = 0
+      ExplicitWidth = 816
+      ExplicitHeight = 652
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 816
+        Width = 1059
         Height = 70
         Align = alTop
+        BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 816
         object cxLabel1: TcxLabel
           Left = 29
           Top = 24
@@ -162,28 +200,34 @@ object Form_main: TForm_main
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 816
-        Height = 582
+        Width = 1059
+        Height = 610
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet3
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 577
+        ExplicitWidth = 816
+        ExplicitHeight = 582
+        ClientRectBottom = 605
         ClientRectLeft = 2
-        ClientRectRight = 811
+        ClientRectRight = 1054
         ClientRectTop = 31
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
+          ExplicitWidth = 809
+          ExplicitHeight = 546
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
-            Width = 809
-            Height = 546
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
+            ExplicitWidth = 809
+            ExplicitHeight = 546
             object cxGrid1DBTableView1: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellDblClick = cxGrid1DBTableView1CellDblClick
@@ -239,65 +283,93 @@ object Form_main: TForm_main
         object cxTabSheet3: TcxTabSheet
           Caption = #26126#32454
           ImageIndex = 1
+          ExplicitWidth = 809
+          ExplicitHeight = 546
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
-            Width = 809
-            Height = 546
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
+            ExplicitWidth = 809
+            ExplicitHeight = 546
             object cxGridDBTableView1: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellDblClick = cxGridDBTableView1CellDblClick
+              DataController.DataModeController.SmartRefresh = True
               DataController.DataSource = ds_thshenqing_mx
+              DataController.KeyFieldNames = #32534#21495
               DataController.Summary.DefaultGroupSummaryItems = <>
               DataController.Summary.FooterSummaryItems = <>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
               OptionsData.DeletingConfirmation = False
-              OptionsData.Editing = False
               OptionsData.Inserting = False
+              OptionsSelection.InvertSelect = False
+              OptionsSelection.MultiSelect = True
+              OptionsSelection.CellMultiSelect = True
               OptionsView.ColumnAutoWidth = True
               OptionsView.GroupByBox = False
+              object cxGridDBTableView1Column4: TcxGridDBColumn
+                Caption = #36873#25321
+                DataBinding.ValueType = 'Boolean'
+                PropertiesClassName = 'TcxCheckBoxProperties'
+                Properties.NullStyle = nssUnchecked
+                Options.Filtering = False
+                Options.Moving = False
+                Options.Sorting = False
+                Width = 50
+                OnHeaderClick = cxGridDBTableView1Column4HeaderClick
+              end
               object cxGridDBColumn1: TcxGridDBColumn
                 DataBinding.FieldName = #20998#38498
+                Options.Editing = False
                 Width = 80
               end
               object cxGridDBColumn3: TcxGridDBColumn
                 DataBinding.FieldName = #30003#35831#26085#26399
                 PropertiesClassName = 'TcxDateEditProperties'
                 Properties.DisplayFormat = 'yyyy-mm-dd'
+                Options.Editing = False
                 Width = 100
               end
               object cxGridDBColumn2: TcxGridDBColumn
                 DataBinding.FieldName = #30003#35831#32534#21495
+                Options.Editing = False
                 Width = 80
               end
               object cxGridDBColumn4: TcxGridDBColumn
                 Caption = #21517#31216
                 DataBinding.FieldName = 'mc'
+                Options.Editing = False
                 Width = 150
               end
               object cxGridDBTableView1Column2: TcxGridDBColumn
                 DataBinding.FieldName = #31867#21035
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBColumn6: TcxGridDBColumn
                 DataBinding.FieldName = #35268#26684
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBColumn7: TcxGridDBColumn
                 DataBinding.FieldName = #21333#20301
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBTableView1Column1: TcxGridDBColumn
                 DataBinding.FieldName = #25968#37327
+                Options.Editing = False
               end
               object cxGridDBTableView1Column3: TcxGridDBColumn
                 Caption = #29366#24577
                 DataBinding.FieldName = 'zt'
+                Options.Editing = False
                 Width = 60
               end
             end

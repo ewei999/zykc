@@ -25,7 +25,7 @@ uses
   Vcl.StdCtrls, cxButtons,System.DateUtils, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxNavigator, Data.DB, cxDBData, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridCustomView,
-  cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new;
+  cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox;
 
 type
   TForm_main = class(TForm)
@@ -73,6 +73,12 @@ type
     cxGridDBTableView1Column3: TcxGridDBColumn;
     cxButton3: TcxButton;
     dxNavBar1Item2: TdxNavBarItem;
+    dxNavBar1Group2: TdxNavBarGroup;
+    dxNavBar1Item3: TdxNavBarItem;
+    dxNavBar1Group3: TdxNavBarGroup;
+    dxNavBar1Item4: TdxNavBarItem;
+    dxNavBar1Item5: TdxNavBarItem;
+    cxGridDBTableView1Column4: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -84,8 +90,9 @@ type
     procedure cxGridDBTableView1CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
   private
-    { Private declarations }
+    xzbool:boolean;
   public
     { Public declarations }
   end;
@@ -111,7 +118,7 @@ begin
   qry_thshenqing.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
     ' 申请数=(select count(编号) from 提货申请明细表 where 申请编号=a.申请编号 ) ,'+
     ' zt=(case when 状态=1 then ''已提交'' end) '+
-    ' from ( select * from 提货申请主表 where 是否作废=0 and 状态<>0 '+tjstr+' )a order by 申请日期';
+    ' from ( select * from 提货申请主表 where 是否作废=0 and 状态=2 '+tjstr+' )a order by 申请日期';
   qry_thshenqing.Open;
 
   cxTabSheet2.Show;
@@ -131,11 +138,12 @@ begin
   qry_thshenqing_mx.SQL.Text:='select * from ( select *,'+
     ' 分院=(select top 1 name from 分院表 where abbr=(select top 1 分店代码 from 提货申请主表 '+
     ' 	where  申请编号=a.申请编号) ) , '+
-    ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),mc=isnull(原名称,名称) ,'+
+    ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
+    ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end),'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
     ' zt=(case when 状态=1 then ''已提交'' when 状态=2 then ''已付货'' end) '+
     ' from ( select * from 提货申请明细表 '+
-    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态<>0 '+tjstr+') '+
+    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 '+tjstr+') '+
     ' )a)b order by 申请日期';
   qry_thshenqing_mx.Open;
 
@@ -148,11 +156,12 @@ begin
   qry_thshenqing_mx.SQL.Text:='select * from ( select *,'+
     ' 分院=(select top 1 name from 分院表 where abbr=(select top 1 分店代码 from 提货申请主表 '+
     ' 	where  申请编号=a.申请编号) ) , '+
-    ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),mc=isnull(原名称,名称) ,'+
+    ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
+    ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end),'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
     ' zt=(case when 状态=1 then ''已提交'' when 状态=2 then ''已付货'' end) '+
     ' from ( select * from 提货申请明细表 '+
-    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态<>0 ) and 状态=1 '+
+    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 ) and 状态=1 '+
     ' )a)b order by 申请日期';
   qry_thshenqing_mx.Open;
 
@@ -187,6 +196,42 @@ begin
   end;
 end;
 
+procedure TForm_main.cxGridDBTableView1Column4HeaderClick(Sender: TObject);
+var
+  i :Integer;
+begin
+  cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=false;
+  cxGridDBTableView1.BeginUpdate;
+  try
+    if xzbool = False then
+    begin
+      for i := 0 to cxGridDBTableView1.DataController.RecordCount - 1 do
+      begin
+        //先所有的都不选
+        cxGridDBTableView1.DataController.SetValue(i,cxGridDBTableView1Column4.Index,false);
+      end;
+      for i := 0 to cxGridDBTableView1.viewdata.RecordCount - 1 do
+      begin
+        //再让过滤后的设置为选中
+        cxGridDBTableView1.ViewData.Records[i].Values[0] := True;
+      end;
+      xzbool := True;
+    end
+    else
+    begin
+      for i := 0 to cxGridDBTableView1.viewdata.RecordCount - 1 do
+      begin
+        //所有的都不选
+        cxGridDBTableView1.ViewData.Records[i].Values[0] := false;
+      end;
+      xzbool := False;
+    end;
+  finally
+    cxGridDBTableView1.EndUpdate;
+  end;
+  cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=true;
+end;
+
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
 begin
   cxTabSheet1.Show;
@@ -200,6 +245,7 @@ begin
   cxTabSheet2.Show;
 
   cxDate_th_qishi.Date:=IncMonth(date,-1);
+  xzbool:=false;
 end;
 
 end.

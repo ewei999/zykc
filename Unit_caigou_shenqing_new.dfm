@@ -47,13 +47,16 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 317
+    Top = 244
     Width = 1131
-    Height = 404
-    Align = alBottom
+    Height = 316
+    Align = alClient
     TabOrder = 0
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Black'
+    ExplicitLeft = 8
+    ExplicitTop = 260
+    ExplicitHeight = 404
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource1
@@ -176,64 +179,6 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     Font.Style = []
     ParentFont = False
   end
-  object cxLabel1: TcxLabel
-    Left = 404
-    Top = 104
-    Caption = #30003#35831#32534#21495
-    Transparent = True
-  end
-  object cxLabel2: TcxLabel
-    Left = 86
-    Top = 104
-    Caption = #30003#35831#26085#26399
-    Transparent = True
-  end
-  object cxDateEdit1: TcxDateEdit
-    Left = 172
-    Top = 103
-    Properties.DisplayFormat = 'yyyy-mm-dd'
-    Properties.EditFormat = 'yyyy-mm-dd'
-    Properties.ReadOnly = True
-    Properties.SaveTime = False
-    Properties.ShowTime = False
-    TabOrder = 5
-    Width = 169
-  end
-  object cxLabel3: TcxLabel
-    Left = 92
-    Top = 146
-    Caption = #30003#35831#35828#26126
-    Transparent = True
-  end
-  object cxMemo1: TcxMemo
-    Left = 172
-    Top = 145
-    Properties.ScrollBars = ssVertical
-    TabOrder = 7
-    Height = 128
-    Width = 439
-  end
-  object cxLabel4: TcxLabel
-    Left = 484
-    Top = 288
-    Caption = #30003#35831#20154
-    Transparent = True
-  end
-  object cxLabel5: TcxLabel
-    Left = 548
-    Top = 288
-    AutoSize = False
-    Caption = #30003#35831#20154
-    Transparent = True
-    Height = 23
-    Width = 95
-  end
-  object cxLabel_bianhao: TcxLabel
-    Left = 484
-    Top = 104
-    Caption = #30003#35831#32534#21495
-    Transparent = True
-  end
   object cxButton6: TcxButton
     Left = 1017
     Top = 11
@@ -244,7 +189,7 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Black'
     OptionsImage.Layout = blGlyphTop
-    TabOrder = 11
+    TabOrder = 3
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -252,17 +197,140 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     Font.Style = []
     ParentFont = False
   end
-  object cxLabel6: TcxLabel
-    Left = 628
-    Top = 104
-    Caption = #30003#35831#20998#38498
-    Transparent = True
+  object pnl1: TPanel
+    Left = 0
+    Top = 80
+    Width = 1131
+    Height = 164
+    Align = alTop
+    TabOrder = 4
+    object cxLabel2: TcxLabel
+      Left = 86
+      Top = 20
+      Caption = #30003#35831#26085#26399
+      Transparent = True
+    end
+    object cxDateEdit1: TcxDateEdit
+      Left = 172
+      Top = 19
+      Properties.DisplayFormat = 'yyyy-mm-dd'
+      Properties.EditFormat = 'yyyy-mm-dd'
+      Properties.ReadOnly = True
+      Properties.SaveTime = False
+      Properties.ShowTime = False
+      TabOrder = 1
+      Width = 169
+    end
+    object cxLabel1: TcxLabel
+      Left = 404
+      Top = 20
+      Caption = #30003#35831#32534#21495
+      Transparent = True
+    end
+    object cxLabel_bianhao: TcxLabel
+      Left = 484
+      Top = 20
+      Caption = #30003#35831#32534#21495
+      Transparent = True
+    end
+    object cxLabel6: TcxLabel
+      Left = 628
+      Top = 20
+      Caption = #30003#35831#20998#38498
+      Transparent = True
+    end
+    object cxLabel7: TcxLabel
+      Left = 708
+      Top = 20
+      Caption = #30003#35831#32534#21495
+      Transparent = True
+    end
+    object cxLabel3: TcxLabel
+      Left = 86
+      Top = 49
+      Caption = #30003#35831#35828#26126
+      Transparent = True
+    end
+    object cxMemo1: TcxMemo
+      Left = 172
+      Top = 52
+      Properties.ScrollBars = ssVertical
+      TabOrder = 7
+      Height = 100
+      Width = 604
+    end
+    object cxLabel4: TcxLabel
+      Left = 916
+      Top = 20
+      Caption = #30003#35831#20154
+      Transparent = True
+    end
+    object cxLabel5: TcxLabel
+      Left = 980
+      Top = 20
+      AutoSize = False
+      Caption = #30003#35831#20154
+      Transparent = True
+      Height = 23
+      Width = 95
+    end
   end
-  object cxLabel7: TcxLabel
-    Left = 708
-    Top = 104
-    Caption = #30003#35831#32534#21495
-    Transparent = True
+  object cxGroup_shenpi: TcxGroupBox
+    Left = 0
+    Top = 560
+    Align = alBottom
+    Caption = #23457#25209#24847#35265
+    TabOrder = 5
+    ExplicitLeft = 8
+    Height = 161
+    Width = 1131
+    object cxGrid3: TcxGrid
+      Left = 2
+      Top = 24
+      Width = 1127
+      Height = 135
+      Align = alClient
+      BorderStyle = cxcbsNone
+      TabOrder = 0
+      LookAndFeel.SkinName = 'Black'
+      ExplicitTop = 5
+      ExplicitHeight = 154
+      object cxGridDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.DataSource = ds_shenpi
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsData.CancelOnExit = False
+        OptionsData.Deleting = False
+        OptionsData.DeletingConfirmation = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.ColumnAutoWidth = True
+        OptionsView.GroupByBox = False
+        object cxGrid2DBTableView1DBColumn4: TcxGridDBColumn
+          DataBinding.FieldName = #23457#25209#20154
+          Width = 100
+        end
+        object cxGridDBColumn1: TcxGridDBColumn
+          DataBinding.FieldName = #29366#24577
+          Width = 80
+        end
+        object cxGrid2DBTableView1DBColumn1: TcxGridDBColumn
+          DataBinding.FieldName = #24847#35265
+          Width = 100
+        end
+        object cxGridDBColumn2: TcxGridDBColumn
+          DataBinding.FieldName = #23457#25209#26102#38388
+          PropertiesClassName = 'TcxDateEditProperties'
+          Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+          Width = 150
+        end
+      end
+      object cxGridLevel1: TcxGridLevel
+        GridView = cxGridDBTableView1
+      end
+    end
   end
   object ADOQuery1: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -282,7 +350,7 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
   object ActionManager1: TActionManager
     Images = DataModule1.cxImageList32
     Left = 744
-    Top = 176
+    Top = 161
     StyleName = 'Platform Default'
     object Action_close: TAction
       Caption = #36820#22238
@@ -294,5 +362,19 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       ImageIndex = 87
       OnExecute = act_excelExecute
     end
+  end
+  object ds_shenpi: TDataSource
+    DataSet = qry_shenpi
+    Left = 416
+    Top = 424
+  end
+  object qry_shenpi: TADOQuery
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select top 1 * from '#37319#36141#30003#35831#26126#32454#34920)
+    Left = 344
+    Top = 440
   end
 end

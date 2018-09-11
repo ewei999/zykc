@@ -8,7 +8,8 @@ uses
   Encode in 'Encode.pas',
   Unit_public in 'Unit_public.pas',
   Unit_main in 'Unit_main.pas' {Form_main},
-  Unit_caigou_shenqing_new in 'Unit_caigou_shenqing_new.pas' {Form_caigou_shenqing_new};
+  Unit_caigou_shenqing_new in 'Unit_caigou_shenqing_new.pas' {Form_caigou_shenqing_new},
+  Unit_fuhuo in 'Unit_fuhuo.pas' {Form_fuhuo};
 
 {$R *.res}
 

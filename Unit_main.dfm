@@ -92,6 +92,7 @@ object Form_main: TForm_main
     object dxNavBar1Item2: TdxNavBarItem
       Caption = #20184#36135
       SmallImageIndex = 38
+      OnClick = dxNavBar1Item2Click
     end
     object dxNavBar1Item3: TdxNavBarItem
       Caption = #37319#36141#30003#35831
@@ -117,16 +118,17 @@ object Form_main: TForm_main
     Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 716
-    ClientRectRight = 1066
-    ClientRectTop = 30
+    ClientRectBottom = 711
+    ClientRectLeft = 2
+    ClientRectRight = 1061
+    ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = 'cxTabSheet1'
       ImageIndex = 0
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1066
+        Width = 1059
         Height = 70
         Align = alTop
         BevelOuter = bvNone
@@ -179,38 +181,29 @@ object Form_main: TForm_main
           TabOrder = 5
           OnClick = cxButton2Click
         end
-        object cxButton3: TcxButton
-          Left = 587
-          Top = 20
-          Width = 99
-          Height = 31
-          Caption = #20840#37096#26410#20184#36135
-          LookAndFeel.SkinName = 'Black'
-          TabOrder = 6
-          OnClick = cxButton3Click
-        end
       end
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1066
-        Height = 616
+        Width = 1059
+        Height = 610
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet3
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 616
-        ClientRectRight = 1066
-        ClientRectTop = 30
+        ClientRectBottom = 605
+        ClientRectLeft = 2
+        ClientRectRight = 1054
+        ClientRectTop = 31
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
-            Width = 1066
-            Height = 586
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -219,7 +212,12 @@ object Form_main: TForm_main
               OnCellDblClick = cxGrid1DBTableView1CellDblClick
               DataController.DataSource = ds_thshenqing
               DataController.Summary.DefaultGroupSummaryItems = <>
-              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <
+                item
+                  Format = #21512#35745#65306'0'
+                  Kind = skCount
+                  Column = cxGrid1DBTableView1DBColumn16
+                end>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
@@ -227,6 +225,7 @@ object Form_main: TForm_main
               OptionsData.Editing = False
               OptionsData.Inserting = False
               OptionsView.ColumnAutoWidth = True
+              OptionsView.Footer = True
               OptionsView.GroupByBox = False
               object cxGrid1DBTableView1DBColumn16: TcxGridDBColumn
                 DataBinding.FieldName = #20998#38498
@@ -272,8 +271,8 @@ object Form_main: TForm_main
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
-            Width = 1066
-            Height = 586
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -284,7 +283,12 @@ object Form_main: TForm_main
               DataController.DataSource = ds_thshenqing_mx
               DataController.KeyFieldNames = #32534#21495
               DataController.Summary.DefaultGroupSummaryItems = <>
-              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <
+                item
+                  Format = #21512#35745#65306'0'
+                  Kind = skCount
+                  Column = cxGridDBColumn1
+                end>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
@@ -294,18 +298,8 @@ object Form_main: TForm_main
               OptionsSelection.MultiSelect = True
               OptionsSelection.CellMultiSelect = True
               OptionsView.ColumnAutoWidth = True
+              OptionsView.Footer = True
               OptionsView.GroupByBox = False
-              object cxGridDBTableView1Column4: TcxGridDBColumn
-                Caption = #36873#25321
-                DataBinding.ValueType = 'Boolean'
-                PropertiesClassName = 'TcxCheckBoxProperties'
-                Properties.NullStyle = nssUnchecked
-                Options.Filtering = False
-                Options.Moving = False
-                Options.Sorting = False
-                Width = 50
-                OnHeaderClick = cxGridDBTableView1Column4HeaderClick
-              end
               object cxGridDBColumn1: TcxGridDBColumn
                 DataBinding.FieldName = #20998#38498
                 Options.Editing = False
@@ -368,12 +362,11 @@ object Form_main: TForm_main
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1066
+        Width = 1059
         Height = 70
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object cxLabel3: TcxLabel
           Left = 29
           Top = 24
@@ -430,30 +423,30 @@ object Form_main: TForm_main
           Caption = #20840#37096#26410#20184#36135
           LookAndFeel.SkinName = 'Black'
           TabOrder = 6
-          OnClick = cxButton3Click
         end
       end
       object cxPageControl1: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1066
-        Height = 616
+        Width = 1059
+        Height = 610
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet5
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 616
-        ClientRectRight = 1066
-        ClientRectTop = 30
+        ClientRectBottom = 605
+        ClientRectLeft = 2
+        ClientRectRight = 1054
+        ClientRectTop = 31
         object cxTabSheet5: TcxTabSheet
           Caption = #37319#36141#27719#24635
           ImageIndex = 0
           object cxGrid3: TcxGrid
             Left = 0
             Top = 0
-            Width = 1066
-            Height = 586
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -514,8 +507,8 @@ object Form_main: TForm_main
           object cxGrid4: TcxGrid
             Left = 0
             Top = 0
-            Width = 1066
-            Height = 586
+            Width = 1052
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'

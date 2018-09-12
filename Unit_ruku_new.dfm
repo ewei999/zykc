@@ -1,9 +1,9 @@
-object Form_cg_new: TForm_cg_new
+object Form_ruku_new: TForm_ruku_new
   Left = 0
   Top = 0
-  Caption = #37319#36141#30003#35831#21333
-  ClientHeight = 661
-  ClientWidth = 984
+  Caption = #20837#24211#21333
+  ClientHeight = 611
+  ClientWidth = 743
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,15 +12,13 @@ object Form_cg_new: TForm_cg_new
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  OnClose = FormClose
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 984
-    Height = 281
+    Width = 743
+    Height = 297
     Align = alTop
     Anchors = []
     BevelOuter = bvNone
@@ -28,12 +26,12 @@ object Form_cg_new: TForm_cg_new
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      984
-      281)
+      743
+      297)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
-      Width = 984
+      Width = 743
       Height = 42
       ActionManager = ActionManager1
       BiDiMode = bdLeftToRight
@@ -51,16 +49,17 @@ object Form_cg_new: TForm_cg_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
+      ExplicitWidth = 984
     end
     object cxLabel1: TcxLabel
       Left = 144
       Top = 61
-      Caption = #30003#35831#32534#21495
+      Caption = #20837#24211#32534#21495
     end
     object cxLabel2: TcxLabel
       Left = 384
       Top = 61
-      Caption = #30003#35831#26085#26399
+      Caption = #20837#24211#26085#26399
     end
     object cxLabel3: TcxLabel
       Left = 160
@@ -68,14 +67,14 @@ object Form_cg_new: TForm_cg_new
       Caption = #20379#24212#21830
     end
     object cxLabel4: TcxLabel
-      Left = 144
-      Top = 124
-      Caption = #30003#35831#35828#26126
+      Left = 176
+      Top = 159
+      Caption = #22791#27880
     end
     object cxLabel5: TcxLabel
       Left = 400
-      Top = 222
-      Caption = #30003#35831#20154
+      Top = 255
+      Caption = #32463#25163#20154
     end
     object cxDBTextEdit1: TcxDBTextEdit
       Left = 218
@@ -88,7 +87,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxDBTextEdit2: TcxDBTextEdit
       Left = 456
-      Top = 220
+      Top = 253
       DataBinding.DataField = #30003#35831#20154
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
@@ -123,7 +122,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxDBMemo1: TcxDBMemo
       Left = 218
-      Top = 123
+      Top = 158
       DataBinding.DataField = #30003#35831#35828#26126
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ScrollBars = ssVertical
@@ -132,7 +131,7 @@ object Form_cg_new: TForm_cg_new
       Width = 359
     end
     object cxButton1: TcxButton
-      Left = 4
+      Left = -237
       Top = 246
       Width = 33
       Height = 35
@@ -143,9 +142,10 @@ object Form_cg_new: TForm_cg_new
       LookAndFeel.SkinName = ''
       SpeedButtonOptions.Transparent = True
       TabOrder = 11
+      ExplicitLeft = 4
     end
     object cxButton2: TcxButton
-      Left = 43
+      Left = -198
       Top = 246
       Width = 33
       Height = 35
@@ -153,9 +153,10 @@ object Form_cg_new: TForm_cg_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
+      ExplicitLeft = 43
     end
     object cxButton3: TcxButton
-      Left = 82
+      Left = -159
       Top = 246
       Width = 33
       Height = 35
@@ -164,101 +165,178 @@ object Form_cg_new: TForm_cg_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
+      ExplicitLeft = 82
+    end
+    object cxLabel6: TcxLabel
+      Left = 384
+      Top = 94
+      Caption = #36141#36135#26041#24335
+    end
+    object DBComboBox1: TDBComboBox
+      Left = 456
+      Top = 92
+      Width = 121
+      Height = 27
+      Items.Strings = (
+        #36170
+        #29616)
+      TabOrder = 15
+    end
+    object cxLabel7: TcxLabel
+      Left = 160
+      Top = 125
+      Caption = #20379#24212#21830
+    end
+    object cxDBTextEdit3: TcxDBTextEdit
+      Left = 218
+      Top = 125
+      TabOrder = 17
+      Width = 145
+    end
+    object cxLabel8: TcxLabel
+      Left = 416
+      Top = 123
+      Caption = #33293#38646
+    end
+    object cxDBTextEdit4: TcxDBTextEdit
+      Left = 456
+      Top = 125
+      TabOrder = 19
+      Width = 121
+    end
+    object cxButton4: TcxButton
+      Left = 82
+      Top = 256
+      Width = 33
+      Height = 35
+      Action = Action_save_m
+      Anchors = [akTop, akRight]
+      LookAndFeel.SkinName = 'Office2007Black'
+      TabOrder = 20
+      Visible = False
+    end
+    object cxButton5: TcxButton
+      Left = 43
+      Top = 256
+      Width = 33
+      Height = 35
+      Action = Action_delete_m
+      Anchors = [akTop, akRight]
+      LookAndFeel.SkinName = 'Office2007Black'
+      TabOrder = 21
+    end
+    object cxButton6: TcxButton
+      Left = 4
+      Top = 256
+      Width = 33
+      Height = 35
+      Action = Action_new_m
+      Anchors = [akTop, akRight]
+      LookAndFeel.Kind = lfFlat
+      LookAndFeel.NativeStyle = True
+      LookAndFeel.SkinName = ''
+      SpeedButtonOptions.Transparent = True
+      TabOrder = 22
     end
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 281
-    Width = 984
-    Height = 380
+    Top = 297
+    Width = 743
+    Height = 314
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
+    ExplicitLeft = -241
+    ExplicitTop = 15
+    ExplicitWidth = 984
+    ExplicitHeight = 380
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
       DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <
+        item
+          Format = '0.00'
+          Kind = skSum
+          Column = cxgrdbclmncxGrid1DBTableView1DBColumn11
+        end
+        item
+          Format = #21512#35745'0'
+          Kind = skCount
+          Column = cxgrdbclmncxGrid1DBTableView1DBColumn12
+        end>
       DataController.Summary.SummaryGroups = <>
       OptionsData.CancelOnExit = False
       OptionsData.Deleting = False
       OptionsData.DeletingConfirmation = False
       OptionsData.Inserting = False
       OptionsView.ColumnAutoWidth = True
+      OptionsView.Footer = True
       OptionsView.GroupByBox = False
       object cxgrdbclmncxGrid1DBTableView1DBColumn: TcxGridDBColumn
         DataBinding.FieldName = #32534#21495
         Visible = False
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn
-        DataBinding.FieldName = #30003#35831#32534#21495
+        DataBinding.FieldName = #20837#24211#32534#21495
+        Visible = False
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
+        DataBinding.FieldName = #20837#24211#26126#32454#32534#21495
+        Visible = False
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
+        DataBinding.FieldName = #20837#24211#25209#27425
         Visible = False
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn4: TcxGridDBColumn
-        DataBinding.FieldName = #20379#24212#21830
+        DataBinding.FieldName = #20837#24211#26102#38388
         Visible = False
-        Width = 65
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
-        DataBinding.FieldName = #31867#21035
-        Options.Editing = False
-        Width = 67
-      end
-      object cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn
-        DataBinding.FieldName = #23567#31867
-        Options.Editing = False
-        Width = 64
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
-        DataBinding.FieldName = #20215#30446#32534#21495
-        Options.Editing = False
-        Width = 143
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
-        DataBinding.FieldName = #21517#31216
-        Options.Editing = False
-        Width = 238
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
-        DataBinding.FieldName = #35268#26684
-        Options.Editing = False
-        Width = 49
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
-        DataBinding.FieldName = #25968#37327
-        PropertiesClassName = 'TcxTextEditProperties'
-        Width = 54
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
-        DataBinding.FieldName = #29366#24577
-        Visible = False
-        Width = 43
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
-        DataBinding.FieldName = #21333#20301
-        Options.Editing = False
-        Width = 46
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
-        DataBinding.FieldName = #22791#27880
-        PropertiesClassName = 'TcxMemoProperties'
-        Width = 94
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
-        Caption = #36827#20215
-        DataBinding.FieldName = #21333#20215
-        Options.Editing = False
-        Width = 52
+        Width = 78
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn
-        DataBinding.FieldName = #24211#23384
+        DataBinding.FieldName = #31867#21035
         Options.Editing = False
-        Width = 51
+        Width = 59
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn13: TcxGridDBColumn
-        DataBinding.FieldName = #21407#21517#31216
+        DataBinding.FieldName = #23567#31867
         Options.Editing = False
-        Width = 124
+        Width = 62
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
+        DataBinding.FieldName = #20215#30446#32534#21495
+        Visible = False
+        Width = 102
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
+        DataBinding.FieldName = #21517#31216
+        Options.Editing = False
+        Width = 163
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
+        DataBinding.FieldName = #35268#26684
+        Options.Editing = False
+        Width = 98
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
+        DataBinding.FieldName = #25968#37327
+        Width = 90
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
+        DataBinding.FieldName = #21333#20301
+        Options.Editing = False
+        Width = 78
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
+        DataBinding.FieldName = #36827#36135#21333#20215
+        Width = 120
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
+        DataBinding.FieldName = #37329#39069
+        Options.Editing = False
+        Width = 71
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -270,28 +348,28 @@ object Form_cg_new: TForm_cg_new
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select * from ['#20013#22830#37319#36141#30003#35831#20027#34920']')
-    Left = 160
-    Top = 144
+      'select * from ['#20013#22830#37319#36141#20837#24211#20027#34920']')
+    Left = 80
+    Top = 208
   end
   object DataSource_cg_zhubiao: TDataSource
     DataSet = ADOQuery_cg_zhubiao
-    Left = 232
-    Top = 176
+    Left = 184
+    Top = 224
   end
   object ADOQuery_cg_mingxi: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select * from '#20013#22830#37319#36141#30003#35831#26126#32454#34920)
-    Left = 368
-    Top = 336
+      'select * from '#20013#22830#37319#36141#20837#24211#26126#32454#34920)
+    Left = 280
+    Top = 360
   end
   object DataSource_cg_mingxi: TDataSource
     DataSet = ADOQuery_cg_mingxi
-    Left = 496
-    Top = 328
+    Left = 392
+    Top = 360
   end
   object ActionManager1: TActionManager
     ActionBars = <
@@ -318,6 +396,7 @@ object Form_cg_new: TForm_cg_new
           end
           item
             Action = Action_delete
+            Caption = #20316#24223'(&W)'
             ImageIndex = 95
           end
           item
@@ -329,8 +408,8 @@ object Form_cg_new: TForm_cg_new
       end>
     LargeImages = DataModule1.cxImageList32
     Images = DataModule1.cxImageList32
-    Left = 600
-    Top = 64
+    Left = 632
+    Top = 48
     StyleName = 'Platform Default'
     object Action_new: TAction
       Caption = #26032#22686
@@ -340,44 +419,36 @@ object Form_cg_new: TForm_cg_new
     object Action_edit: TAction
       Caption = #20462#25913
       ImageIndex = 91
-      OnExecute = Action_editExecute
     end
     object Action_delete: TAction
       Caption = #20316#24223
       ImageIndex = 95
-      OnExecute = Action_deleteExecute
     end
     object Action_close: TAction
       Caption = #36864#20986
       ImageIndex = 89
-      OnExecute = Action_closeExecute
     end
     object Action_cancel: TAction
       Caption = #21462#28040
       ImageIndex = 96
-      OnExecute = Action_cancelExecute
     end
     object Action_save: TAction
       Caption = #20445#23384#33609#31295
       ImageIndex = 50
-      OnExecute = Action_saveExecute
     end
     object Action_new_m: TAction
+      Caption = 'Action_new_m'
       ImageIndex = 93
-      OnExecute = Action_new_mExecute
     end
     object Action_delete_m: TAction
       ImageIndex = 97
-      OnExecute = Action_delete_mExecute
     end
     object Action_save_m: TAction
       ImageIndex = 33
-      OnExecute = Action_save_mExecute
     end
     object Action_submit: TAction
       Caption = #25552#20132
       ImageIndex = 98
-      OnExecute = Action_submitExecute
     end
   end
   object ADOQuery_list: TADOQuery
@@ -386,8 +457,8 @@ object Form_cg_new: TForm_cg_new
     Parameters = <>
     SQL.Strings = (
       'select * from '#20379#24212#21830#34920' where '#26159#21542#20316#24223'=0')
-    Left = 616
-    Top = 136
+    Left = 584
+    Top = 144
   end
   object DataSource_list: TDataSource
     DataSet = ADOQuery_list
@@ -400,12 +471,12 @@ object Form_cg_new: TForm_cg_new
     Parameters = <>
     SQL.Strings = (
       'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
-    Left = 624
-    Top = 184
+    Left = 568
+    Top = 208
   end
-  object DataSource_jiamu: TDataSource
+  object x: TDataSource
     DataSet = ADOQuery_jiamu
-    Left = 688
-    Top = 184
+    Left = 672
+    Top = 208
   end
 end

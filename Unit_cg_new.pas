@@ -80,6 +80,7 @@ type
     ADOQuery_jiamu: TADOQuery;
     DataSource_jiamu: TDataSource;
     cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn;
+    Action_submit: TAction;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -91,6 +92,8 @@ type
     procedure Action_save_mExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure Action_delete_mExecute(Sender: TObject);
+    procedure Action_submitExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -121,11 +124,24 @@ end;
 
 procedure TForm_cg_new.Action_deleteExecute(Sender: TObject);
 begin
-  if cxGrid1DBTableView1.DataController.Controller.SelectedRecordCount>0 then
-  begin
-    ADOQuery_cg_zhubiao.Delete;
+   try
+    DataModule1.ADOQuery_L.Active := false;
+    DataModule1.ADOQuery_L.SQL.Text :='update ÖÐÑë²É¹ºÉêÇëÖ÷±í set ×´Ì¬ =2 where ÉêÇë±àºÅ='+ QuotedStr(ADOQuery_cg_zhubiao.FieldByName('ÉêÇë±àºÅ').AsString);
+    DataModule1.ADOQuery_L.ExecSQL;
+//    DataModule1.ADOQuery_L.Active := false;
+//    DataModule1.ADOQuery_L.SQL.Text :='update ÖÐÑë²É¹ºÉêÇëÃ÷Ï¸±í set ×´Ì¬ =2 where ÉêÇë±àºÅ='+ QuotedStr(ADOQuery_cg_zhubiao.FieldByName('ÉêÇë±àºÅ').AsString);
+//    DataModule1.ADOQuery_L.ExecSQL;
+    Application.MessageBox('×÷·Ï³É¹¦£¡', 'ÌáÊ¾', MB_OK);
+    Close;
+  except
+    Application.MessageBox('×÷·ÏÊ§°Ü£¡', '´íÎó', MB_OK + MB_ICONSTOP);
+    exit;
   end;
-  button_zhuanti('delete');
+end;
+
+procedure TForm_cg_new.Action_delete_mExecute(Sender: TObject);
+begin
+  ADOQuery_cg_mingxi.Delete;
 end;
 
 procedure TForm_cg_new.Action_editExecute(Sender: TObject);
@@ -187,13 +203,28 @@ end;
 
 procedure TForm_cg_new.Action_save_mExecute(Sender: TObject);
 begin
-  if ADOQuery_cg_mingxi.Modified then
-  begin
-    ADOQuery_cg_mingxi.Post;
+//  if ADOQuery_cg_mingxi.Modified then
+//  begin
+//    ADOQuery_cg_mingxi.Post;
+//  end;
+//  Action_new_m.Enabled := True;
+//  Action_delete_m.Enabled := True;
+//  Action_save_m.Enabled := false;
+end;
+
+procedure TForm_cg_new.Action_submitExecute(Sender: TObject);
+begin
+  try
+    DataModule1.ADOQuery_L.Active := false;
+    DataModule1.ADOQuery_L.sql.text :='update ÖÐÑë²É¹ºÉêÇëÖ÷±í set ×´Ì¬ =1 where ÉêÇë±àºÅ='+ QuotedStr(ADOQuery_cg_zhubiao.FieldByName('ÉêÇë±àºÅ').AsString);
+    DataModule1.ADOQuery_L.ExecSQL;
+    Application.MessageBox('Ìá½»³É¹¦£¡', 'ÌáÊ¾', MB_OK);
+    Close;
+  except
+    Application.MessageBox('Ìá½»Ê§°Ü£¡', '´íÎó', MB_OK + MB_ICONSTOP);
+    exit;
   end;
-  Action_new_m.Enabled := True;
-  Action_delete_m.Enabled := True;
-  Action_save_m.Enabled := false;
+
 end;
 
 procedure TForm_cg_new.button_zhuanti(button: string);
@@ -238,16 +269,37 @@ begin
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
      Action_save_m.Enabled := false;
+
+   end else if button='submit' then
+   begin
+     Action_new.Enabled := false;
+     Action_edit.Enabled := false;
+     Action_save.Enabled := false;
+     Action_close.Enabled := True;
+     Action_delete.Enabled := false;
+     Action_submit.Enabled := true;
+     Action_cancel.Enabled := False;
+     Action_new_m.Enabled := false;
+     Action_delete_m.Enabled := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxDBLookupComboBox1.Properties.ReadOnly := True;
+     cxDBMemo1.Properties.ReadOnly := true;
    end else if button='delete' then
    begin
-     Action_new.Enabled := True;
-     Action_edit.Enabled := True;
-     if ADOQuery_cg_zhubiao.RecordCount>0 then
-       Action_delete.Enabled := True
-     else
-       Action_delete.Enabled := False;
+     Action_new.Enabled := false;
+     Action_edit.Enabled := false;
+     Action_save.Enabled := false;
      Action_close.Enabled := True;
+     Action_delete.Enabled := True;
+     Action_submit.Enabled := False;
      Action_cancel.Enabled := False;
+     Action_new_m.Enabled := false;
+     Action_delete_m.Enabled := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxDBLookupComboBox1.Properties.ReadOnly := True;
+     cxDBMemo1.Properties.ReadOnly := true;
    end;
 end;
 

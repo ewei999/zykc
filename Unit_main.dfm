@@ -109,6 +109,7 @@ object Form_main: TForm_main
     object dxNavBar1Item5: TdxNavBarItem
       Caption = #20837#24211
       SmallImageIndex = 68
+      OnClick = dxNavBar1Item5Click
     end
     object dxNavBar1Item6: TdxNavBarItem
       Caption = #20184#36135#35760#24405
@@ -123,20 +124,19 @@ object Form_main: TForm_main
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet8
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 711
-    ClientRectLeft = 2
-    ClientRectRight = 1071
-    ClientRectTop = 31
+    ClientRectBottom = 716
+    ClientRectRight = 1076
+    ClientRectTop = 30
     object cxTabSheet1: TcxTabSheet
       Caption = #25552#36135#30003#35831
       ImageIndex = 0
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 70
         Align = alTop
         BevelOuter = bvNone
@@ -193,25 +193,24 @@ object Form_main: TForm_main
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1069
-        Height = 610
+        Width = 1076
+        Height = 616
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet2
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 605
-        ClientRectLeft = 2
-        ClientRectRight = 1064
-        ClientRectTop = 31
+        ClientRectBottom = 616
+        ClientRectRight = 1076
+        ClientRectTop = 30
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -281,8 +280,8 @@ object Form_main: TForm_main
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -372,7 +371,7 @@ object Form_main: TForm_main
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 137
         Align = alTop
         BevelOuter = bvNone
@@ -451,29 +450,111 @@ object Form_main: TForm_main
           LookAndFeel.SkinName = 'Black'
           TabOrder = 8
         end
+        object Panel2: TPanel
+          Left = 0
+          Top = 0
+          Width = 1076
+          Height = 137
+          Align = alTop
+          BevelOuter = bvNone
+          TabOrder = 9
+          object cxLabel5: TcxLabel
+            Left = 21
+            Top = 80
+            Caption = #30003#35831#26085#26399
+            Transparent = True
+          end
+          object cxDateEdit3: TcxDateEdit
+            Left = 95
+            Top = 78
+            Properties.DisplayFormat = 'yyyy-mm-dd'
+            Properties.EditFormat = 'yyyy-mm-dd'
+            TabOrder = 1
+            Width = 121
+          end
+          object cxLabel6: TcxLabel
+            Left = 224
+            Top = 80
+            Caption = #33267
+            Transparent = True
+          end
+          object cxDateEdit4: TcxDateEdit
+            Left = 251
+            Top = 78
+            Properties.DisplayFormat = 'yyyy-mm-dd'
+            Properties.EditFormat = 'yyyy-mm-dd'
+            TabOrder = 3
+            Width = 121
+          end
+          object cxButton9: TcxButton
+            Left = 387
+            Top = 76
+            Width = 75
+            Height = 31
+            Caption = #26597#35810
+            LookAndFeel.SkinName = 'Black'
+            TabOrder = 4
+            OnClick = cxButton4Click
+          end
+          object cxButton10: TcxButton
+            Left = 21
+            Top = 12
+            Width = 92
+            Height = 45
+            Action = Action_new
+            LookAndFeel.SkinName = 'Black'
+            TabOrder = 5
+          end
+          object cxButton11: TcxButton
+            Left = 124
+            Top = 12
+            Width = 92
+            Height = 45
+            Action = Action_edit
+            LookAndFeel.SkinName = 'Black'
+            TabOrder = 6
+          end
+          object cxButton12: TcxButton
+            Left = 226
+            Top = 12
+            Width = 92
+            Height = 45
+            Action = Action_delete
+            LookAndFeel.SkinName = 'Black'
+            TabOrder = 7
+          end
+          object cxButton13: TcxButton
+            Left = 338
+            Top = 12
+            Width = 92
+            Height = 45
+            Action = Action_submit
+            LookAndFeel.SkinName = 'Black'
+            TabOrder = 8
+          end
+        end
       end
       object cxPageControl1: TcxPageControl
         Left = 0
         Top = 137
-        Width = 1069
-        Height = 543
+        Width = 1076
+        Height = 549
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet5
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 538
-        ClientRectLeft = 2
-        ClientRectRight = 1064
-        ClientRectTop = 31
+        ClientRectBottom = 549
+        ClientRectRight = 1076
+        ClientRectTop = 30
         object cxTabSheet5: TcxTabSheet
           Caption = #37319#36141#27719#24635
           ImageIndex = 0
           object cxGrid3: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 507
+            Width = 1076
+            Height = 519
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -547,8 +628,8 @@ object Form_main: TForm_main
           object cxGrid4: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 507
+            Width = 1076
+            Height = 519
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -651,7 +732,7 @@ object Form_main: TForm_main
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 55
         Align = alTop
         BevelOuter = bvNone
@@ -737,14 +818,11 @@ object Form_main: TForm_main
       object cxGrid5: TcxGrid
         Left = 0
         Top = 55
-        Width = 1069
-        Height = 625
+        Width = 1076
+        Height = 631
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 0
-        ExplicitWidth = 1062
-        ExplicitHeight = 574
         object cxGridDBTableView4: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView4CellDblClick
@@ -814,6 +892,266 @@ object Form_main: TForm_main
         end
       end
     end
+    object cxTabSheet8: TcxTabSheet
+      Caption = #37319#36141#20837#24211
+      ImageIndex = 3
+      object Panel3: TPanel
+        Left = 0
+        Top = 0
+        Width = 1076
+        Height = 137
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        ExplicitTop = 8
+        object cxLabel7: TcxLabel
+          Left = 21
+          Top = 80
+          Caption = #30003#35831#26085#26399
+          Transparent = True
+        end
+        object cxDateEdit5: TcxDateEdit
+          Left = 95
+          Top = 78
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 1
+          Width = 121
+        end
+        object cxLabel8: TcxLabel
+          Left = 224
+          Top = 80
+          Caption = #33267
+          Transparent = True
+        end
+        object cxDateEdit6: TcxDateEdit
+          Left = 251
+          Top = 78
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 3
+          Width = 121
+        end
+        object cxButton14: TcxButton
+          Left = 387
+          Top = 76
+          Width = 75
+          Height = 31
+          Caption = #26597#35810
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 4
+          OnClick = cxButton4Click
+        end
+        object cxButton15: TcxButton
+          Left = 21
+          Top = 12
+          Width = 92
+          Height = 45
+          Action = Action_new
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 5
+        end
+        object cxButton16: TcxButton
+          Left = 124
+          Top = 12
+          Width = 92
+          Height = 45
+          Action = Action_edit
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 6
+        end
+        object cxButton17: TcxButton
+          Left = 226
+          Top = 12
+          Width = 92
+          Height = 45
+          Action = Action_delete
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 7
+        end
+        object cxButton18: TcxButton
+          Left = 338
+          Top = 12
+          Width = 92
+          Height = 45
+          Action = Action_submit
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 8
+        end
+      end
+      object cxGroupBox1: TcxGroupBox
+        Left = 0
+        Top = 137
+        Align = alClient
+        Caption = #20837#24211#21333
+        TabOrder = 1
+        ExplicitLeft = 280
+        ExplicitTop = 192
+        ExplicitWidth = 185
+        ExplicitHeight = 105
+        Height = 549
+        Width = 1076
+        object Splitter1: TSplitter
+          Left = 505
+          Top = 24
+          Height = 523
+          ExplicitLeft = 432
+          ExplicitTop = 136
+          ExplicitHeight = 100
+        end
+        object cxGrid6: TcxGrid
+          Left = 2
+          Top = 24
+          Width = 503
+          Height = 523
+          Align = alLeft
+          TabOrder = 0
+          LookAndFeel.SkinName = 'Whiteprint'
+          object cxGrid6DBTableView1: TcxGridDBTableView
+            Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = DataSource_ruku_zhubiao
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.CancelOnExit = False
+            OptionsData.Deleting = False
+            OptionsData.DeletingConfirmation = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.ColumnAutoWidth = True
+            OptionsView.GroupByBox = False
+            object cxgrdbclmncxGrid6DBTableView1DBColumn: TcxGridDBColumn
+              DataBinding.FieldName = #32534#21495
+              Visible = False
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn1: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#32534#21495
+              Width = 80
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn2: TcxGridDBColumn
+              DataBinding.FieldName = #20379#24212#21830
+              Width = 69
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn3: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#26102#38388
+              Width = 90
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn4: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#25209#27425
+              Visible = False
+              Width = 80
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn5: TcxGridDBColumn
+              DataBinding.FieldName = #37329#39069
+              Width = 82
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn6: TcxGridDBColumn
+              DataBinding.FieldName = #33293#38646
+              Width = 55
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn7: TcxGridDBColumn
+              DataBinding.FieldName = #36141#36135#26041#24335
+              Width = 68
+            end
+            object cxgrdbclmncxGrid6DBTableView1DBColumn8: TcxGridDBColumn
+              DataBinding.FieldName = #22791#27880
+              Width = 57
+            end
+          end
+          object cxGrid6Level1: TcxGridLevel
+            GridView = cxGrid6DBTableView1
+          end
+        end
+        object cxGrid7: TcxGrid
+          Left = 508
+          Top = 24
+          Width = 566
+          Height = 523
+          Align = alClient
+          TabOrder = 1
+          LookAndFeel.SkinName = 'Blueprint'
+          ExplicitLeft = 504
+          ExplicitTop = 64
+          ExplicitWidth = 250
+          ExplicitHeight = 200
+          object cxGrid7DBTableView1: TcxGridDBTableView
+            Navigator.Buttons.CustomButtons = <>
+            DataController.DataSource = DataSource_ruku_mingxi
+            DataController.Summary.DefaultGroupSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.SummaryGroups = <>
+            OptionsData.CancelOnExit = False
+            OptionsData.Deleting = False
+            OptionsData.DeletingConfirmation = False
+            OptionsData.Editing = False
+            OptionsData.Inserting = False
+            OptionsView.ColumnAutoWidth = True
+            OptionsView.GroupByBox = False
+            object cxgrdbclmncxGrid7DBTableView1DBColumn: TcxGridDBColumn
+              DataBinding.FieldName = #32534#21495
+              Visible = False
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn1: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#32534#21495
+              Visible = False
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn2: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#26126#32454#32534#21495
+              Visible = False
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn3: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#25209#27425
+              Visible = False
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn4: TcxGridDBColumn
+              DataBinding.FieldName = #20837#24211#26102#38388
+              Visible = False
+              Width = 76
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn12: TcxGridDBColumn
+              DataBinding.FieldName = #31867#21035
+              Width = 48
+            end
+            object cxgrdbclmncxGrid7DBTableView1Column1: TcxGridDBColumn
+              DataBinding.FieldName = #23567#31867
+              Width = 57
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn5: TcxGridDBColumn
+              DataBinding.FieldName = #21517#31216
+              Width = 144
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn6: TcxGridDBColumn
+              DataBinding.FieldName = #20215#30446#32534#21495
+              Visible = False
+              Width = 96
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn7: TcxGridDBColumn
+              DataBinding.FieldName = #35268#26684
+              Width = 64
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn9: TcxGridDBColumn
+              DataBinding.FieldName = #25968#37327
+              Width = 74
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn8: TcxGridDBColumn
+              DataBinding.FieldName = #21333#20301
+              Width = 54
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn10: TcxGridDBColumn
+              DataBinding.FieldName = #36827#36135#21333#20215
+              Width = 86
+            end
+            object cxgrdbclmncxGrid7DBTableView1DBColumn11: TcxGridDBColumn
+              DataBinding.FieldName = #37329#39069
+              Width = 125
+            end
+          end
+          object cxGrid7Level1: TcxGridLevel
+            GridView = cxGrid7DBTableView1
+          end
+        end
+      end
+    end
   end
   object ds_thshenqing: TDataSource
     DataSet = qry_thshenqing
@@ -835,13 +1173,13 @@ object Form_main: TForm_main
     Parameters = <>
     SQL.Strings = (
       'select * from '#27425#21345#35774#32622#34920)
-    Left = 280
-    Top = 176
+    Left = 272
+    Top = 144
   end
   object ds_thshenqing_mx: TDataSource
     DataSet = qry_thshenqing_mx
-    Left = 344
-    Top = 192
+    Left = 400
+    Top = 152
   end
   object qry_caigou_hz: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -918,10 +1256,12 @@ object Form_main: TForm_main
     object Action_edit: TAction
       Caption = #20462#25913
       ImageIndex = 91
+      OnExecute = Action_editExecute
     end
     object Action_delete: TAction
       Caption = #20316#24223
       ImageIndex = 95
+      OnExecute = Action_deleteExecute
     end
     object Action_close: TAction
       Caption = #36864#20986
@@ -930,6 +1270,7 @@ object Form_main: TForm_main
     object Action_submit: TAction
       Caption = #25552#20132
       ImageIndex = 98
+      OnExecute = Action_submitExecute
     end
   end
   object ds_fenyuan: TDataSource
@@ -959,5 +1300,77 @@ object Form_main: TForm_main
       'select * from '#27425#21345#35774#32622#34920)
     Left = 280
     Top = 368
+  end
+  object ADOQuery_ruku_zhubiao: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#20013#22830#37319#36141#20837#24211#20027#34920)
+    Left = 528
+    Top = 392
+  end
+  object DataSource_ruku_zhubiao: TDataSource
+    DataSet = ADOQuery_ruku_zhubiao
+    Left = 624
+    Top = 376
+  end
+  object ADOQuery_ruku_mingxi: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#20013#22830#37319#36141#20837#24211#26126#32454#34920)
+    Left = 856
+    Top = 360
+  end
+  object DataSource_ruku_mingxi: TDataSource
+    DataSet = ADOQuery_ruku_mingxi
+    Left = 960
+    Top = 384
+  end
+  object ActionManager2: TActionManager
+    ActionBars = <
+      item
+      end
+      item
+      end
+      item
+        Items = <
+          item
+            Action = Action4
+            Caption = #36864#20986'(&V)'
+            ImageIndex = 89
+          end>
+      end>
+    LargeImages = DataModule1.cxImageList32
+    Images = DataModule1.cxImageList32
+    Left = 656
+    Top = 56
+    StyleName = 'Platform Default'
+    object Action_new2: TAction
+      Caption = #26032#22686
+      ImageIndex = 90
+      OnExecute = Action_new2Execute
+    end
+    object Action2: TAction
+      Caption = #20462#25913
+      ImageIndex = 91
+      OnExecute = Action_editExecute
+    end
+    object Action3: TAction
+      Caption = #20316#24223
+      ImageIndex = 95
+      OnExecute = Action_deleteExecute
+    end
+    object Action4: TAction
+      Caption = #36864#20986
+      ImageIndex = 89
+    end
+    object Action5: TAction
+      Caption = #25552#20132
+      ImageIndex = 98
+      OnExecute = Action_submitExecute
+    end
   end
 end

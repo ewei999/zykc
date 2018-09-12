@@ -89,16 +89,6 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
         Options.Editing = False
         Width = 130
       end
-      object cxGrid1DBTableView1DBColumn5: TcxGridDBColumn
-        DataBinding.FieldName = #25968#37327
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 60
-      end
-      object cxGrid1DBTableView1DBColumn4: TcxGridDBColumn
-        DataBinding.FieldName = #20379#24212#21830
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 100
-      end
       object cxGrid1DBTableView1Column2: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         PropertiesClassName = 'TcxLabelProperties'
@@ -109,22 +99,28 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
         PropertiesClassName = 'TcxLabelProperties'
         Width = 60
       end
-      object cxGrid1DBTableView1Column6: TcxGridDBColumn
-        DataBinding.FieldName = #21333#20215
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 60
-      end
-      object cxGrid1DBTableView1Column7: TcxGridDBColumn
-        DataBinding.FieldName = #24211#23384
-        PropertiesClassName = 'TcxLabelProperties'
-        Width = 60
-      end
       object cxGrid1DBTableView1Column4: TcxGridDBColumn
         DataBinding.FieldName = #22791#27880
         PropertiesClassName = 'TcxBlobEditProperties'
         Properties.BlobPaintStyle = bpsText
         Properties.ReadOnly = True
-        Width = 300
+        Width = 200
+      end
+      object cxGrid1DBTableView1DBColumn5: TcxGridDBColumn
+        Caption = #30003#35831#25968#37327
+        DataBinding.FieldName = #25968#37327
+        PropertiesClassName = 'TcxLabelProperties'
+        Width = 70
+      end
+      object cxGrid1DBTableView1DBColumn4: TcxGridDBColumn
+        Caption = #29366#24577
+        DataBinding.FieldName = 'zt'
+        PropertiesClassName = 'TcxLabelProperties'
+        Width = 80
+      end
+      object cxGrid1DBTableView1Column6: TcxGridDBColumn
+        DataBinding.FieldName = #19981#20184#36135#21407#22240
+        Width = 100
       end
     end
     object cxGrid1Level1: TcxGridLevel

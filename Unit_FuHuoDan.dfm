@@ -13,6 +13,7 @@ object Form_FuHuoDan: TForm_FuHuoDan
   OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
   object img1: TImage
@@ -139,15 +140,10 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Align = alClient
     TabOrder = 3
     LookAndFeel.SkinName = 'Blue'
-    ExplicitLeft = -176
-    ExplicitTop = 71
-    ExplicitWidth = 990
-    ExplicitHeight = 472
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataModeController.SmartRefresh = True
-      DataController.DataSource = ds_thshenqing_mx
-      DataController.KeyFieldNames = #32534#21495
+      DataController.DataSource = ds_fuhuo
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <
         item
@@ -162,12 +158,13 @@ object Form_FuHuoDan: TForm_FuHuoDan
         item
           Format = #21512#35745#65306'0'
           Kind = skCount
-          Column = cxGridDBColumn3
+          Column = cxGridDBColumn4
         end>
       DataController.Summary.SummaryGroups = <>
       OptionsData.CancelOnExit = False
       OptionsData.Deleting = False
       OptionsData.DeletingConfirmation = False
+      OptionsData.Editing = False
       OptionsData.Inserting = False
       OptionsSelection.InvertSelect = False
       OptionsSelection.MultiSelect = True
@@ -175,16 +172,8 @@ object Form_FuHuoDan: TForm_FuHuoDan
       OptionsView.ColumnAutoWidth = True
       OptionsView.Footer = True
       OptionsView.GroupByBox = False
-      object cxGridDBColumn3: TcxGridDBColumn
-        DataBinding.FieldName = #30003#35831#26085#26399
-        PropertiesClassName = 'TcxDateEditProperties'
-        Properties.DisplayFormat = 'yyyy-mm-dd'
-        Options.Editing = False
-        Width = 100
-      end
       object cxGridDBColumn4: TcxGridDBColumn
-        Caption = #21517#31216
-        DataBinding.FieldName = 'mc'
+        DataBinding.FieldName = #21517#31216
         Options.Editing = False
         Width = 150
       end
@@ -198,35 +187,27 @@ object Form_FuHuoDan: TForm_FuHuoDan
         Options.Editing = False
         Width = 60
       end
-      object cxGridDBTableView1Column1: TcxGridDBColumn
-        Caption = #30003#35831#25968#37327
-        DataBinding.FieldName = #25968#37327
-        Options.Editing = False
-        Width = 60
-      end
       object cxGridDBTableView1Column5: TcxGridDBColumn
-        DataBinding.FieldName = #20379#24212#21830
-        PropertiesClassName = 'TcxLookupComboBoxProperties'
-        Properties.KeyFieldNames = #20379#24212#21830#32534#21495
-        Properties.ListColumns = <
-          item
-            FieldName = #21517#31216
-          end>
-        Properties.ListOptions.ShowHeader = False
+        Caption = #20379#24212#21830
+        DataBinding.FieldName = 'gys'
         Options.Filtering = False
         Options.Sorting = False
         Width = 100
       end
+      object cxGridDBTableView1Column1: TcxGridDBColumn
+        Caption = #20184#36135#25968#37327
+        DataBinding.FieldName = #20986#24211#25968#37327
+        Options.Editing = False
+        Width = 60
+      end
       object cxGridDBTableView1Column3: TcxGridDBColumn
         DataBinding.FieldName = #21333#20215
-        PropertiesClassName = 'TcxTextEditProperties'
         Options.Filtering = False
         Options.Sorting = False
         Width = 70
       end
       object cxGridDBTableView1Column2: TcxGridDBColumn
         DataBinding.FieldName = #33293#38646#37329#39069
-        PropertiesClassName = 'TcxTextEditProperties'
         Options.Filtering = False
         Options.Sorting = False
         Width = 70
@@ -237,10 +218,34 @@ object Form_FuHuoDan: TForm_FuHuoDan
         Options.Editing = False
         Width = 70
       end
+      object cxGridDBTableView1Column4: TcxGridDBColumn
+        Caption = #29366#24577
+        DataBinding.FieldName = 'zt'
+        Width = 70
+      end
     end
     object cxGridLevel1: TcxGridLevel
       GridView = cxGridDBTableView1
     end
+  end
+  object cxButton1: TcxButton
+    Left = 669
+    Top = 11
+    Width = 74
+    Height = 58
+    Align = alCustom
+    Action = act1
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 4
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
   end
   object actmgr1: TActionManager
     ActionBars = <
@@ -261,13 +266,18 @@ object Form_FuHuoDan: TForm_FuHuoDan
       ImageIndex = 6
       OnExecute = act_closeExecute
     end
+    object act1: TAction
+      Caption = #25171#21360#20184#36135#21333
+      ImageIndex = 24
+      OnExecute = act1Execute
+    end
   end
-  object ds_thshenqing_mx: TDataSource
-    DataSet = qry_thshenqing_mx
+  object ds_fuhuo: TDataSource
+    DataSet = qry_fuhuo
     Left = 240
     Top = 264
   end
-  object qry_thshenqing_mx: TADOQuery
+  object qry_fuhuo: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic

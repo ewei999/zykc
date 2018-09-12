@@ -59,7 +59,6 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 830
   end
   object cxButton6: TcxButton
     Left = 871
@@ -115,7 +114,6 @@ object Form_fuhuo: TForm_fuhuo
     Align = alClient
     TabOrder = 3
     LookAndFeel.SkinName = 'Blue'
-    ExplicitWidth = 891
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataModeController.SmartRefresh = True
@@ -230,7 +228,6 @@ object Form_fuhuo: TForm_fuhuo
     Height = 49
     Align = alTop
     TabOrder = 4
-    ExplicitWidth = 891
     object cxRadioButton1: TcxRadioButton
       Left = 288
       Top = 16

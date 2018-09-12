@@ -63,6 +63,9 @@ object Form_main: TForm_main
         end
         item
           Item = dxNavBar1Item2
+        end
+        item
+          Item = dxNavBar1Item6
         end>
     end
     object dxNavBar1Group2: TdxNavBarGroup
@@ -107,6 +110,11 @@ object Form_main: TForm_main
       Caption = #20837#24211
       SmallImageIndex = 68
     end
+    object dxNavBar1Item6: TdxNavBarItem
+      Caption = #20184#36135#35760#24405
+      SmallImageIndex = 24
+      OnClick = dxNavBar1Item6Click
+    end
   end
   object cxPageControl_main: TcxPageControl
     Left = 185
@@ -123,7 +131,7 @@ object Form_main: TForm_main
     ClientRectRight = 1071
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
-      Caption = 'cxTabSheet1'
+      Caption = #25552#36135#30003#35831
       ImageIndex = 0
       object pnl1: TPanel
         Left = 0
@@ -189,7 +197,7 @@ object Form_main: TForm_main
         Height = 610
         Align = alClient
         TabOrder = 1
-        Properties.ActivePage = cxTabSheet3
+        Properties.ActivePage = cxTabSheet2
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
         ClientRectBottom = 605
@@ -250,13 +258,15 @@ object Form_main: TForm_main
                 Width = 70
               end
               object cxGrid1DBTableView1Column1: TcxGridDBColumn
-                Caption = #30003#35831#26465#25968
-                DataBinding.FieldName = #30003#35831#25968
+                DataBinding.FieldName = #30003#35831#25968#37327
                 Width = 70
               end
               object cxGrid1DBTableView1DBColumn18: TcxGridDBColumn
-                Caption = #29366#24577
-                DataBinding.FieldName = 'zt'
+                DataBinding.FieldName = #24050#20184#36135#25968#37327
+                Width = 70
+              end
+              object cxGrid1DBTableView1Column2: TcxGridDBColumn
+                DataBinding.FieldName = #19981#20184#36135#25968#37327
                 Width = 70
               end
             end
@@ -635,6 +645,175 @@ object Form_main: TForm_main
         end
       end
     end
+    object cxTabSheet7: TcxTabSheet
+      Caption = #20184#36135#35760#24405
+      ImageIndex = 2
+      object pnl2: TPanel
+        Left = 0
+        Top = 0
+        Width = 1069
+        Height = 55
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object cxlbl1: TcxLabel
+          Left = 263
+          Top = 15
+          Caption = #20184#36135#26085#26399
+          Transparent = True
+        end
+        object cxDate_FH_qishi: TcxDateEdit
+          Left = 337
+          Top = 13
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 1
+          Width = 121
+        end
+        object cxlbl2: TcxLabel
+          Left = 466
+          Top = 15
+          Caption = #33267
+          Transparent = True
+        end
+        object cxDate_FH_zhongzhi: TcxDateEdit
+          Left = 493
+          Top = 13
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 3
+          Width = 121
+        end
+        object cxButton8: TcxButton
+          Left = 813
+          Top = 10
+          Width = 75
+          Height = 31
+          Caption = #26597#35810
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 4
+          OnClick = cxButton8Click
+        end
+        object cxlbl3: TcxLabel
+          Left = 31
+          Top = 15
+          Caption = #20998#38498
+          Transparent = True
+        end
+        object cxLookup_FH_fenyuan: TcxLookupComboBox
+          Left = 73
+          Top = 13
+          Properties.KeyFieldNames = 'abbr'
+          Properties.ListColumns = <
+            item
+              FieldName = 'name'
+            end>
+          Properties.ListOptions.ShowHeader = False
+          Properties.ListSource = ds_fenyuan
+          StyleDisabled.Color = clYellow
+          StyleDisabled.TextColor = clBlack
+          TabOrder = 6
+          Width = 160
+        end
+        object cxlbl4: TcxLabel
+          Left = 634
+          Top = 15
+          Caption = #29366#24577
+          Transparent = True
+        end
+        object cxCombo_FH_Zhuangtai: TcxComboBox
+          Left = 676
+          Top = 13
+          Properties.DropDownListStyle = lsEditFixedList
+          Properties.Items.Strings = (
+            #24453#25509#25910
+            #25509#25910#25104#21151
+            #25298#32477#25509#25910
+            #20840#37096)
+          TabOrder = 8
+          Width = 121
+        end
+      end
+      object cxGrid5: TcxGrid
+        Left = 0
+        Top = 55
+        Width = 1069
+        Height = 625
+        Align = alClient
+        TabOrder = 1
+        LookAndFeel.SkinName = 'Blue'
+        ExplicitTop = 0
+        ExplicitWidth = 1062
+        ExplicitHeight = 574
+        object cxGridDBTableView4: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView4CellDblClick
+          DataController.DataSource = ds_fuhuo_jilu
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn8
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn8: TcxGridDBColumn
+            DataBinding.FieldName = #20986#24211#26102#38388
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+            Width = 120
+          end
+          object cxGridDBColumn5: TcxGridDBColumn
+            DataBinding.FieldName = #20998#38498
+            Width = 80
+          end
+          object cxGridDBColumn9: TcxGridDBColumn
+            DataBinding.FieldName = #20986#24211#32534#21495
+            Width = 80
+          end
+          object cxGridDBColumn10: TcxGridDBColumn
+            Caption = #21512#35745#25968#37327
+            DataBinding.FieldName = #25968#37327
+            Width = 80
+          end
+          object cxGridDBColumn11: TcxGridDBColumn
+            Caption = #21512#35745#37329#39069
+            DataBinding.FieldName = #37329#39069
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
+            Width = 70
+          end
+          object cxGridDBColumn12: TcxGridDBColumn
+            Caption = #38376#24215#22788#29702#20154
+            DataBinding.FieldName = #38376#24215#25509#25910#20154
+            Width = 70
+          end
+          object cxGridDBTableView4Column1: TcxGridDBColumn
+            Caption = #38376#24215#22788#29702#26102#38388
+            DataBinding.FieldName = #38376#24215#25509#25910#26102#38388
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+            Width = 120
+          end
+          object cxGridDBColumn13: TcxGridDBColumn
+            Caption = #29366#24577
+            DataBinding.FieldName = 'zt'
+            Width = 70
+          end
+        end
+        object cxGridLevel4: TcxGridLevel
+          GridView = cxGridDBTableView4
+        end
+      end
+    end
   end
   object ds_thshenqing: TDataSource
     DataSet = qry_thshenqing
@@ -752,5 +931,33 @@ object Form_main: TForm_main
       Caption = #25552#20132
       ImageIndex = 98
     end
+  end
+  object ds_fenyuan: TDataSource
+    DataSet = qry_fenyuan
+    Left = 992
+    Top = 224
+  end
+  object qry_fenyuan: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 992
+    Top = 296
+  end
+  object ds_fuhuo_jilu: TDataSource
+    DataSet = qry_fuhuo_jilu
+    Left = 208
+    Top = 376
+  end
+  object qry_fuhuo_jilu: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 280
+    Top = 368
   end
 end

@@ -27,7 +27,8 @@ uses
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridCustomView,
   cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
   cxDBLookupComboBox, System.Actions, Vcl.ActnList,
-  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
+  cxCurrencyEdit,Unit_FuHuoDan;
 
 type
   TForm_main = class(TForm)
@@ -132,6 +133,34 @@ type
     cxButton6: TcxButton;
     cxButton7: TcxButton;
     Action_submit: TAction;
+    dxNavBar1Item6: TdxNavBarItem;
+    cxTabSheet7: TcxTabSheet;
+    pnl2: TPanel;
+    cxlbl1: TcxLabel;
+    cxDate_FH_qishi: TcxDateEdit;
+    cxlbl2: TcxLabel;
+    cxDate_FH_zhongzhi: TcxDateEdit;
+    cxButton8: TcxButton;
+    ds_fenyuan: TDataSource;
+    qry_fenyuan: TADOQuery;
+    cxlbl3: TcxLabel;
+    cxLookup_FH_fenyuan: TcxLookupComboBox;
+    cxGrid5: TcxGrid;
+    cxGridDBTableView4: TcxGridDBTableView;
+    cxGridDBColumn5: TcxGridDBColumn;
+    cxGridDBColumn8: TcxGridDBColumn;
+    cxGridDBColumn9: TcxGridDBColumn;
+    cxGridDBColumn10: TcxGridDBColumn;
+    cxGridDBColumn11: TcxGridDBColumn;
+    cxGridDBColumn12: TcxGridDBColumn;
+    cxGridDBColumn13: TcxGridDBColumn;
+    cxGridLevel4: TcxGridLevel;
+    ds_fuhuo_jilu: TDataSource;
+    qry_fuhuo_jilu: TADOQuery;
+    cxlbl4: TcxLabel;
+    cxCombo_FH_Zhuangtai: TcxComboBox;
+    cxGridDBTableView4Column1: TcxGridDBColumn;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -147,6 +176,11 @@ type
     procedure dxNavBar1Item2Click(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure Action_newExecute(Sender: TObject);
+    procedure cxButton8Click(Sender: TObject);
+    procedure dxNavBar1Item6Click(Sender: TObject);
+    procedure cxGridDBTableView4CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
 
   public
@@ -186,8 +220,9 @@ begin
 
   qry_thshenqing.Close;
   qry_thshenqing.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
-    ' 申请数=(select count(编号) from 提货申请明细表 where 申请编号=a.申请编号 ) ,'+
-    ' zt=(case when 状态=1 then ''已提交'' end) '+
+    ' 申请数量=(select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 ) ,'+
+    ' 已付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=2 ),0) , '+
+    ' 不付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=3 ),0)  '+
     ' from ( select * from 提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 '+tjstr+' )a order by 申请日期';
   qry_thshenqing.Open;
 
@@ -250,6 +285,40 @@ begin
   qry_cg_mingxi.Active := True;
 end;
 
+procedure TForm_main.cxButton8Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  tjstr:='';
+  if (cxLookup_FH_fenyuan.Text<>'') and (cxLookup_FH_fenyuan.Text<>'全部') then
+    tjstr:=tjstr+' and 分店代码='+QuotedStr(cxLookup_FH_fenyuan.EditValue)+'';
+  if cxDate_FH_qishi.Text<>'' then
+    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDate_FH_qishi.Text)+'';
+  if cxDate_FH_zhongzhi.Text<>'' then
+    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_FH_zhongzhi.date,1)))+'';
+  if cxCombo_FH_Zhuangtai.Text='待接收' then
+    tjstr:=tjstr+' and 状态=1 ';
+  if cxCombo_FH_Zhuangtai.Text='接收成功' then
+    tjstr:=tjstr+' and 状态=2 ';
+  if cxCombo_FH_Zhuangtai.Text='拒绝接收' then
+    tjstr:=tjstr+' and 状态=3 ';
+
+  qry_fuhuo_jilu.Close;
+  qry_fuhuo_jilu.SQL.Text:='select *,zt=(case 状态 when 1 then ''待接收'' when 2 then ''接收成功'' when 3 then ''拒绝接收'' end),'+
+    ' 分院=(select top 1 name from 分院表 where abbr=b.分店代码 )'+
+    ' from ( select *,'+
+    ' 出库时间=(select top 1 出库时间 from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
+    ' 数量=(select top 1 sum(出库数量) from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
+    ' 金额=(select top 1 sum(出库金额) from 中央库存_出库表 where 出库编号=a.出库编号),'+
+    ' 门店接收人=(select top 1 门店接收人 from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
+    ' 门店接收时间=(select top 1 门店接收时间 from 中央库存_出库表 where 出库编号=a.出库编号),'+
+    ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号), '+
+    ' 分店代码=(select top 1 分店代码 from 中央库存_出库表 where 出库编号=a.出库编号)'+
+    ' from ( select 出库编号 from 中央库存_出库表 where 是否作废=0 '+tjstr+
+    ' group by 出库编号 )a)b order by 出库时间';
+  qry_fuhuo_jilu.Open;
+end;
+
 procedure TForm_main.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -278,10 +347,22 @@ begin
   end;
 end;
 
+procedure TForm_main.cxGridDBTableView4CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_FuHuoDan := TForm_FuHuoDan.Create(nil);
+  try
+    Form_FuHuoDan.CKBianhao:=qry_fuhuo_jilu.FieldByName('出库编号').AsString;
+    Form_FuHuoDan.ShowModal;
+  finally
+    FreeAndNil(Form_FuHuoDan);
+  end;
+end;
+
 procedure TForm_main.dxNavBar1Group2Click(Sender: TObject);
 var
   str   :string;
-
 begin
   cxTabSheet4.Show;
   qry_gys_list.Open;
@@ -317,6 +398,16 @@ begin
   Form_fuhuo := tForm_fuhuo.Create(nil);
   try
     Form_fuhuo.ShowModal;
+    if Form_fuhuo.baocun then
+    begin
+      if qry_thshenqing.Active then
+        qry_thshenqing.Requery();
+      if qry_thshenqing_mx.Active then
+        qry_thshenqing_mx.Requery();
+      if qry_fuhuo_jilu.Active then
+        qry_fuhuo_jilu.Requery();
+    end;
+
   finally
     FreeAndNil(Form_fuhuo);
   end;
@@ -325,7 +416,11 @@ end;
 procedure TForm_main.dxNavBar1Item3Click(Sender: TObject);
 begin
   cxTabSheet4.Show;
+end;
 
+procedure TForm_main.dxNavBar1Item6Click(Sender: TObject);
+begin
+  cxTabSheet7.Show;
 end;
 
 procedure TForm_main.FormCreate(Sender: TObject);
@@ -335,6 +430,11 @@ begin
   cxTabSheet2.Show;
 
   cxDate_th_qishi.Date:=IncMonth(date,-1);
+  cxDate_FH_qishi.Date:=IncMonth(date,-1);
+
+  qry_fenyuan.Close;
+  qry_fenyuan.SQL.Text:='select abbr,name from 分院表 where sort_id<>0 union all select abbr=''全部'',name=''全部'' ';
+  qry_fenyuan.Open;
 end;
 
 end.

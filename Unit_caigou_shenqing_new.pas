@@ -47,8 +47,6 @@ type
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
     cxGrid1DBTableView1Column4: TcxGridDBColumn;
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
-    cxGrid1DBTableView1Column6: TcxGridDBColumn;
-    cxGrid1DBTableView1Column7: TcxGridDBColumn;
     cxButton6: TcxButton;
     act_excel: TAction;
     pnl1: TPanel;
@@ -72,6 +70,7 @@ type
     cxGrid2DBTableView1DBColumn1: TcxGridDBColumn;
     cxGridDBColumn2: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
+    cxGrid1DBTableView1Column6: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure Action_closeExecute(Sender: TObject);
     procedure act_excelExecute(Sender: TObject);
@@ -117,7 +116,9 @@ begin
     cxLabel7.Caption:= DataModule1.ADOQuery_L.FieldByName('分院').asstring;
 
     ADOQuery1.Active := false;
-    ADOQuery1.SQL.text := 'select  * from 提货申请明细表 where 申请编号 = '+ QuotedStr(cxLabel_bianhao.Caption);
+    ADOQuery1.SQL.text := 'select *,'+
+      ' zt=(case 状态 when 1 then ''待处理'' when 2 then ''已付货'' when 3 then ''不付货'' end) '+
+      ' from (select  * from 提货申请明细表 where 申请编号 = '+ QuotedStr(cxLabel_bianhao.Caption)+')a';
     ADOQuery1.Active := true;
 
     qry_shenpi.Close;

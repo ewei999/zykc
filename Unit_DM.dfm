@@ -26362,4 +26362,10 @@ object DataModule1: TDataModule1
           07FF}
       end>
   end
+  object qry_execSql: TADOQuery
+    Connection = ADOCon_ALi
+    Parameters = <>
+    Left = 88
+    Top = 288
+  end
 end

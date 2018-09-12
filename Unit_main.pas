@@ -211,7 +211,7 @@ begin
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
     ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end),'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
-    ' zt=(case when 状态=1 then ''未付货'' when 状态=2 then ''已付货'' end) '+
+    ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end) '+
     ' from ( select * from 提货申请明细表 '+
     ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1  '+tjstr+') '+
     ' )a)b order by 申请日期';

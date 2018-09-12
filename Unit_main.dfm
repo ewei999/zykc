@@ -115,19 +115,20 @@ object Form_main: TForm_main
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet4
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 716
-    ClientRectRight = 1076
-    ClientRectTop = 30
+    ClientRectBottom = 711
+    ClientRectLeft = 2
+    ClientRectRight = 1071
+    ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = 'cxTabSheet1'
       ImageIndex = 0
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 70
         Align = alTop
         BevelOuter = bvNone
@@ -184,24 +185,25 @@ object Form_main: TForm_main
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1076
-        Height = 616
+        Width = 1069
+        Height = 610
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet3
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 616
-        ClientRectRight = 1076
-        ClientRectTop = 30
+        ClientRectBottom = 605
+        ClientRectLeft = 2
+        ClientRectRight = 1064
+        ClientRectTop = 31
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
-            Width = 1076
-            Height = 586
+            Width = 1062
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -269,8 +271,8 @@ object Form_main: TForm_main
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
-            Width = 1076
-            Height = 586
+            Width = 1062
+            Height = 574
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -360,7 +362,7 @@ object Form_main: TForm_main
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 137
         Align = alTop
         BevelOuter = bvNone
@@ -443,24 +445,25 @@ object Form_main: TForm_main
       object cxPageControl1: TcxPageControl
         Left = 0
         Top = 137
-        Width = 1076
-        Height = 549
+        Width = 1069
+        Height = 543
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet5
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 549
-        ClientRectRight = 1076
-        ClientRectTop = 30
+        ClientRectBottom = 538
+        ClientRectLeft = 2
+        ClientRectRight = 1064
+        ClientRectTop = 31
         object cxTabSheet5: TcxTabSheet
           Caption = #37319#36141#27719#24635
           ImageIndex = 0
           object cxGrid3: TcxGrid
             Left = 0
             Top = 0
-            Width = 1076
-            Height = 519
+            Width = 1062
+            Height = 507
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -534,8 +537,8 @@ object Form_main: TForm_main
           object cxGrid4: TcxGrid
             Left = 0
             Top = 0
-            Width = 1076
-            Height = 519
+            Width = 1062
+            Height = 507
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'

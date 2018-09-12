@@ -54,9 +54,6 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     TabOrder = 0
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Black'
-    ExplicitLeft = 8
-    ExplicitTop = 260
-    ExplicitHeight = 404
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource1
@@ -281,7 +278,6 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     Align = alBottom
     Caption = #23457#25209#24847#35265
     TabOrder = 5
-    ExplicitLeft = 8
     Height = 161
     Width = 1131
     object cxGrid3: TcxGrid
@@ -293,8 +289,6 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       BorderStyle = cxcbsNone
       TabOrder = 0
       LookAndFeel.SkinName = 'Black'
-      ExplicitTop = 5
-      ExplicitHeight = 154
       object cxGridDBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = ds_shenpi
@@ -369,6 +363,7 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
     Top = 424
   end
   object qry_shenpi: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic
     Parameters = <>

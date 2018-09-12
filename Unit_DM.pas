@@ -18,6 +18,7 @@ type
     frxDBDataset_dayin: TfrxDBDataset;
     ADOQuery_dayin: TADOQuery;
     cxImageList32: TcxImageList;
+    qry_execSql: TADOQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     procedure InitDatabase;
@@ -26,6 +27,7 @@ type
   public
     procedure openSql(ASql:string);
     procedure openSql2(ASql:string);
+    procedure execSql(ASql:string);
     function PassWord_Code(astr,leixing:string):string;
   end;
 
@@ -37,6 +39,15 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+
+procedure TDataModule1.execSql(ASql: string);
+begin
+  qry_execSql.Active:= False;
+  qry_execSql.SQL.Text := asql;
+  qry_execSql.ExecSQL;
+end;
+
 
 function TDataModule1.PassWord_Code(astr,leixing:string):string;
 var

@@ -25,7 +25,9 @@ uses
   Vcl.StdCtrls, cxButtons,System.DateUtils, cxStyles, cxCustomData, cxFilter,
   cxData, cxDataStorage, cxNavigator, Data.DB, cxDBData, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGridCustomView,
-  cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo;
+  cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
+  cxDBLookupComboBox, System.Actions, Vcl.ActnList,
+  Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan;
 
 type
   TForm_main = class(TForm)
@@ -84,8 +86,6 @@ type
     cxLabel4: TcxLabel;
     cxDateEdit2: TcxDateEdit;
     cxButton4: TcxButton;
-    cxButton5: TcxButton;
-    cxButton6: TcxButton;
     cxPageControl1: TcxPageControl;
     cxTabSheet5: TcxTabSheet;
     cxGrid3: TcxGrid;
@@ -103,8 +103,35 @@ type
     cxGridLevel3: TcxGridLevel;
     qry_caigou_hz: TADOQuery;
     DataSource_caigou_hz: TDataSource;
-    qry_cg_mingxi: TADOQuery;
     DataSource_cg_mingxi: TDataSource;
+    qry_cg_mingxi: TADOQuery;
+    cxgrdbclmncxGridDBTableView3DBColumn: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn1: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn2: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn3: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn4: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn5: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn6: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn7: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn8: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn9: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn10: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn11: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn12: TcxGridDBColumn;
+    cxgrdbclmncxGridDBTableView3DBColumn13: TcxGridDBColumn;
+    cxButton3: TcxButton;
+    cxgrdbclmncxGridDBTableView2Column1: TcxGridDBColumn;
+    qry_gys_list: TADOQuery;
+    DataSource_gys_list: TDataSource;
+    ActionManager1: TActionManager;
+    Action_new: TAction;
+    Action_edit: TAction;
+    Action_delete: TAction;
+    Action_close: TAction;
+    cxButton5: TcxButton;
+    cxButton6: TcxButton;
+    cxButton7: TcxButton;
+    Action_submit: TAction;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -118,6 +145,8 @@ type
     procedure dxNavBar1Item3Click(Sender: TObject);
     procedure dxNavBar1Group2Click(Sender: TObject);
     procedure dxNavBar1Item2Click(Sender: TObject);
+    procedure cxButton4Click(Sender: TObject);
+    procedure Action_newExecute(Sender: TObject);
   private
 
   public
@@ -128,8 +157,22 @@ var
   Form_main: TForm_main;
 
 implementation
-  uses Unit_DM,Unit_public ;
+  uses Unit_DM,Unit_public , Unit_cg_new;
 {$R *.dfm}
+
+procedure TForm_main.Action_newExecute(Sender: TObject);
+begin
+  Form_cg_new := TForm_cg_new.Create(nil);
+  try
+    Form_cg_new.Action_newExecute(Sender);
+    Form_cg_new.button_zhuanti('new');
+    Form_cg_new.ShowModal;
+  finally
+    FreeAndNil(form_cg_new);
+  end;
+  qry_cg_mingxi.Requery();
+  qry_caigou_hz.Requery();
+end;
 
 procedure TForm_main.cxButton1Click(Sender: TObject);
 var
@@ -177,6 +220,36 @@ begin
   cxTabSheet3.Show;
 end;
 
+procedure TForm_main.cxButton4Click(Sender: TObject);
+var
+  str :string;
+begin
+  if cxDateEdit2.Text <> '' then
+  begin
+    if cxDateEdit1.Date > cxDateEdit2.Date then
+    Application.MessageBox('日期选择不正确！', '提示', MB_OK);
+    Exit;
+  end;
+
+  qry_caigou_hz.Active := false;
+  qry_caigou_hz.SQL.Text := 'select * from 中央采购申请主表 where  申请日期 >= '+QuotedStr(cxDateEdit1.Text)+
+                              ' order by 编号 desc';
+  qry_cg_mingxi.Active := false;
+  qry_cg_mingxi.SQL.Text := 'select a.*,b.申请日期,b.申请编号,b.状态 as 审批状态,待办人,b.供应商 as 供应商编号 from 中央采购申请明细表 a '+
+                          '  left outer join                             '     +
+                          '  中央采购申请主表 b  '+
+                          '  on a.申请编号=b.申请编号 where  申请日期 >= '+
+                          QuotedStr(cxDateEdit1.Text)+' order by 编号 desc';
+  if cxDateEdit2.Text <> '' then
+  begin
+    str := cxDateEdit2.Text;
+    qry_caigou_hz.SQL.Text := qry_caigou_hz.SQL.Text +' and 申请日期 <='+ QuotedStr(str) ;
+    qry_cg_mingxi.SQL.Text := qry_cg_mingxi.SQL.Text + ' and 申请日期 <='+ QuotedStr(str) ;
+  end;
+  qry_caigou_hz.Active := True;
+  qry_cg_mingxi.Active := True;
+end;
+
 procedure TForm_main.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -206,8 +279,31 @@ begin
 end;
 
 procedure TForm_main.dxNavBar1Group2Click(Sender: TObject);
+var
+  str   :string;
+
 begin
   cxTabSheet4.Show;
+  qry_gys_list.Open;
+  cxDateEdit1.Date := IncMonth(date,-1);
+  qry_caigou_hz.Active := false;
+  qry_caigou_hz.SQL.Text := 'select * from 中央采购申请主表 where  申请日期 >= '+QuotedStr(cxDateEdit1.Text)+
+                            ' order by 编号 desc';
+  qry_cg_mingxi.Active := false;
+  qry_cg_mingxi.SQL.Text := 'select a.*,b.申请日期,b.申请编号,b.状态 as 审批状态,待办人,b.供应商 as 供应商编号 from 中央采购申请明细表 a '+
+                          '  left outer join                             '     +
+                          '  中央采购申请主表 b  '+
+                          '  on a.申请编号=b.申请编号 where  申请日期 >= '+
+                          QuotedStr(cxDateEdit1.Text)+' order by 编号 desc';
+  if cxDateEdit2.Text <> '' then
+  begin
+    str := cxDateEdit2.Text;
+    qry_caigou_hz.SQL.Text := qry_caigou_hz.SQL.Text +' and 申请日期 <='+ QuotedStr(str) ;
+    qry_cg_mingxi.SQL.Text := qry_cg_mingxi.SQL.Text + ' and 申请日期 <='+ QuotedStr(str) ;
+  end;
+  qry_caigou_hz.Active := True;
+  qry_cg_mingxi.Active := True;
+
 end;
 
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
@@ -229,6 +325,7 @@ end;
 procedure TForm_main.dxNavBar1Item3Click(Sender: TObject);
 begin
   cxTabSheet4.Show;
+
 end;
 
 procedure TForm_main.FormCreate(Sender: TObject);

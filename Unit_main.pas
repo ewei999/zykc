@@ -217,12 +217,7 @@ type
     cxgrdbclmncxGrid7DBTableView1DBColumn11: TcxGridDBColumn;
     cxgrdbclmncxGrid7DBTableView1DBColumn12: TcxGridDBColumn;
     cxgrdbclmncxGrid7DBTableView1Column1: TcxGridDBColumn;
-    ActionManager2: TActionManager;
-    Action_new2: TAction;
-    Action2: TAction;
-    Action3: TAction;
-    Action4: TAction;
-    Action5: TAction;
+    Action_ruku_new: TAction;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -248,7 +243,10 @@ type
     procedure Action_deleteExecute(Sender: TObject);
     procedure caigou_shenqing;
     procedure dxNavBar1Item5Click(Sender: TObject);
-    procedure Action_new2Execute(Sender: TObject);
+    procedure cxGrid6DBTableView1CellClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure Action_ruku_newExecute(Sender: TObject);
   private
 
   public
@@ -333,20 +331,6 @@ begin
 
 end;
 
-procedure TForm_main.Action_new2Execute(Sender: TObject);
-begin
-  Form_ruku_new := TForm_ruku_new.Create(nil);
-  try
-    Form_ruku_new.Action_newExecute(Sender);
-    Form_ruku_new.button_zhuanti('new');
-    Form_ruku_new.ShowModal;
-  finally
-    FreeAndNil(Form_ruku_new);
-  end;
-  ADOQuery_ruku_zhubiao.Requery();
-  ADOQuery_ruku_mingxi.Requery();
-end;
-
 procedure TForm_main.Action_newExecute(Sender: TObject);
 begin
   Form_cg_new := TForm_cg_new.Create(nil);
@@ -356,6 +340,20 @@ begin
     Form_cg_new.ShowModal;
   finally
     FreeAndNil(Form_cg_new);
+  end;
+  ADOQuery_ruku_zhubiao.Requery();
+  ADOQuery_ruku_mingxi.Requery();
+end;
+
+procedure TForm_main.Action_ruku_newExecute(Sender: TObject);
+begin
+  Form_ruku_new := TForm_ruku_new.Create(nil);
+  try
+    Form_ruku_new.Action_newExecute(Sender);
+    Form_ruku_new.button_zhuanti('new');
+    Form_ruku_new.ShowModal;
+  finally
+    FreeAndNil(Form_ruku_new);
   end;
   ADOQuery_ruku_zhubiao.Requery();
   ADOQuery_ruku_mingxi.Requery();
@@ -517,6 +515,16 @@ begin
   finally
     FreeAndNil(Form_caigou_shenqing_new);
   end;
+end;
+
+procedure TForm_main.cxGrid6DBTableView1CellClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  ADOQuery_ruku_mingxi.Active := false;
+  ADOQuery_ruku_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='+
+                                      ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString;
+  ADOQuery_ruku_mingxi.Active := True;
 end;
 
 procedure TForm_main.cxGridDBTableView1CellDblClick(

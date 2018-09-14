@@ -903,7 +903,6 @@ object Form_main: TForm_main
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object cxLabel7: TcxLabel
           Left = 21
           Top = 80
@@ -943,11 +942,11 @@ object Form_main: TForm_main
           OnClick = cxButton4Click
         end
         object cxButton15: TcxButton
-          Left = 21
+          Left = 6
           Top = 12
-          Width = 92
+          Width = 107
           Height = 45
-          Action = Action_new
+          Action = Action_ruku_new
           LookAndFeel.SkinName = 'Black'
           TabOrder = 5
         end
@@ -970,7 +969,7 @@ object Form_main: TForm_main
           TabOrder = 7
         end
         object cxButton18: TcxButton
-          Left = 338
+          Left = 330
           Top = 12
           Width = 92
           Height = 45
@@ -985,10 +984,6 @@ object Form_main: TForm_main
         Align = alClient
         Caption = #20837#24211#21333
         TabOrder = 1
-        ExplicitLeft = 280
-        ExplicitTop = 192
-        ExplicitWidth = 185
-        ExplicitHeight = 105
         Height = 549
         Width = 1076
         object Splitter1: TSplitter
@@ -1009,6 +1004,7 @@ object Form_main: TForm_main
           LookAndFeel.SkinName = 'Whiteprint'
           object cxGrid6DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
+            OnCellClick = cxGrid6DBTableView1CellClick
             DataController.DataSource = DataSource_ruku_zhubiao
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <>
@@ -1070,10 +1066,6 @@ object Form_main: TForm_main
           Align = alClient
           TabOrder = 1
           LookAndFeel.SkinName = 'Blueprint'
-          ExplicitLeft = 504
-          ExplicitTop = 64
-          ExplicitWidth = 250
-          ExplicitHeight = 200
           object cxGrid7DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = DataSource_ruku_mingxi
@@ -1272,6 +1264,11 @@ object Form_main: TForm_main
       ImageIndex = 98
       OnExecute = Action_submitExecute
     end
+    object Action_ruku_new: TAction
+      Caption = #20837#24211#26032#22686
+      ImageIndex = 17
+      OnExecute = Action_ruku_newExecute
+    end
   end
   object ds_fenyuan: TDataSource
     DataSet = qry_fenyuan
@@ -1328,49 +1325,5 @@ object Form_main: TForm_main
     DataSet = ADOQuery_ruku_mingxi
     Left = 960
     Top = 384
-  end
-  object ActionManager2: TActionManager
-    ActionBars = <
-      item
-      end
-      item
-      end
-      item
-        Items = <
-          item
-            Action = Action4
-            Caption = #36864#20986'(&V)'
-            ImageIndex = 89
-          end>
-      end>
-    LargeImages = DataModule1.cxImageList32
-    Images = DataModule1.cxImageList32
-    Left = 656
-    Top = 56
-    StyleName = 'Platform Default'
-    object Action_new2: TAction
-      Caption = #26032#22686
-      ImageIndex = 90
-      OnExecute = Action_new2Execute
-    end
-    object Action2: TAction
-      Caption = #20462#25913
-      ImageIndex = 91
-      OnExecute = Action_editExecute
-    end
-    object Action3: TAction
-      Caption = #20316#24223
-      ImageIndex = 95
-      OnExecute = Action_deleteExecute
-    end
-    object Action4: TAction
-      Caption = #36864#20986
-      ImageIndex = 89
-    end
-    object Action5: TAction
-      Caption = #25552#20132
-      ImageIndex = 98
-      OnExecute = Action_submitExecute
-    end
   end
 end

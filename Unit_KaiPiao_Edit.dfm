@@ -1,9 +1,9 @@
-object Form_fuhuo: TForm_fuhuo
+object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
   Left = 0
   Top = 0
-  Caption = #21521#38376#24215#20184#36135
-  ClientHeight = 601
-  ClientWidth = 990
+  Caption = #24320#31080
+  ClientHeight = 498
+  ClientWidth = 682
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,12 +13,13 @@ object Form_fuhuo: TForm_fuhuo
   OldCreateOrder = False
   Position = poOwnerFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 990
+    Width = 682
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -38,51 +39,13 @@ object Form_fuhuo: TForm_fuhuo
       2F221570B32615707155A2022EAF3B3CBD0EBF0124A3A1ECAF867CCF00000000
       49454E44AE426082}
     Stretch = True
-    ExplicitLeft = -209
-    ExplicitWidth = 975
+    ExplicitLeft = -82
+    ExplicitWidth = 930
   end
-  object cxButton8: TcxButton
-    Left = 929
-    Top = 11
-    Width = 50
-    Height = 58
-    Align = alCustom
-    Action = act_close
-    Anchors = [akTop, akRight]
-    LookAndFeel.NativeStyle = False
-    LookAndFeel.SkinName = 'Black'
-    OptionsImage.Layout = blGlyphTop
-    TabOrder = 0
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object cxButton6: TcxButton
-    Left = 871
-    Top = 11
-    Width = 50
-    Height = 58
-    Align = alCustom
-    Action = act1
-    Anchors = [akTop, akRight]
-    LookAndFeel.NativeStyle = False
-    LookAndFeel.SkinName = 'Black'
-    OptionsImage.Layout = blGlyphTop
-    TabOrder = 1
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-  end
-  object cxLabel10: TcxLabel
+  object cxlbl1: TcxLabel
     Left = 7
     Top = 16
-    Caption = #21521#38376#24215#20184#36135
+    Caption = #24320#31080
     ParentFont = False
     Style.BorderColor = clMaroon
     Style.BorderStyle = ebsNone
@@ -106,17 +69,124 @@ object Form_fuhuo: TForm_fuhuo
     Properties.ShadowedColor = 3487029
     Transparent = True
   end
+  object cxButton8: TcxButton
+    Left = 617
+    Top = 11
+    Width = 50
+    Height = 58
+    Align = alCustom
+    Action = act_close
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object cxButton2: TcxButton
+    Left = 561
+    Top = 11
+    Width = 50
+    Height = 58
+    Align = alCustom
+    Action = act2
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 2
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object pnl1: TPanel
+    Left = 0
+    Top = 80
+    Width = 682
+    Height = 65
+    Align = alTop
+    TabOrder = 3
+    object cxlbl2: TcxLabel
+      Left = 244
+      Top = 17
+      Caption = #20998#38498
+      Transparent = True
+    end
+    object cxLookup_fenyuan: TcxLookupComboBox
+      Left = 286
+      Top = 15
+      Properties.KeyFieldNames = 'abbr'
+      Properties.ListColumns = <
+        item
+          FieldName = 'name'
+        end>
+      Properties.ListOptions.ShowHeader = False
+      Properties.ListSource = ds_fenyuan
+      Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
+      StyleDisabled.Color = clYellow
+      StyleDisabled.TextColor = clBlack
+      TabOrder = 1
+      OnExit = cxLookup_gysExit
+      OnKeyPress = cxLookup_gysKeyPress
+      Width = 136
+    end
+    object cxLookup_gys: TcxLookupComboBox
+      Left = 78
+      Top = 15
+      Properties.KeyFieldNames = #20379#24212#21830#32534#21495
+      Properties.ListColumns = <
+        item
+          FieldName = #21517#31216
+        end>
+      Properties.ListOptions.ShowHeader = False
+      Properties.ListSource = ds_gys
+      Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
+      StyleDisabled.Color = clYellow
+      StyleDisabled.TextColor = clBlack
+      TabOrder = 2
+      OnExit = cxLookup_gysExit
+      OnKeyPress = cxLookup_gysKeyPress
+      Width = 136
+    end
+    object cxlbl3: TcxLabel
+      Left = 20
+      Top = 17
+      Caption = #20379#24212#21830
+      Transparent = True
+    end
+    object cxlbl4: TcxLabel
+      Left = 430
+      Top = 37
+      Caption = #24050#36873#21512#35745#37329#39069#65306
+      Transparent = True
+    end
+    object cxlbl_heji: TcxLabel
+      Left = 553
+      Top = 37
+      Caption = #24050#36873#21512#35745#37329#39069#65306
+      Transparent = True
+    end
+  end
   object cxGrid2: TcxGrid
     Left = 0
-    Top = 129
-    Width = 990
-    Height = 472
+    Top = 145
+    Width = 682
+    Height = 353
     Align = alClient
-    TabOrder = 3
+    TabOrder = 4
     LookAndFeel.SkinName = 'Blue'
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
-      DataController.DataSource = ds_thshenqing_mx
+      DataController.DataModeController.SmartRefresh = True
+      DataController.DataSource = ds_liebiao
       DataController.KeyFieldNames = #32534#21495
       DataController.Summary.DefaultGroupSummaryItems = <>
       DataController.Summary.FooterSummaryItems = <
@@ -153,59 +223,32 @@ object Form_fuhuo: TForm_fuhuo
         OnHeaderClick = cxGridDBTableView1Column4HeaderClick
       end
       object cxGridDBColumn3: TcxGridDBColumn
-        DataBinding.FieldName = #30003#35831#26085#26399
+        Caption = #20184#36135#26102#38388
+        DataBinding.FieldName = #20986#24211#26102#38388
         PropertiesClassName = 'TcxDateEditProperties'
         Properties.DisplayFormat = 'yyyy-mm-dd'
         Options.Editing = False
+        Options.Moving = False
         Width = 100
       end
       object cxGridDBColumn4: TcxGridDBColumn
-        Caption = #21517#31216
-        DataBinding.FieldName = 'mc'
+        DataBinding.FieldName = #21517#31216
         Options.Editing = False
+        Options.Moving = False
         Width = 150
       end
-      object cxGridDBColumn6: TcxGridDBColumn
-        DataBinding.FieldName = #35268#26684
-        Options.Editing = False
-        Width = 70
-      end
-      object cxGridDBColumn7: TcxGridDBColumn
-        DataBinding.FieldName = #21333#20301
-        Options.Editing = False
-        Width = 60
-      end
       object cxGridDBTableView1Column1: TcxGridDBColumn
-        Caption = #30003#35831#25968#37327
-        DataBinding.FieldName = #25968#37327
+        Caption = #25968#37327
+        DataBinding.FieldName = #20986#24211#25968#37327
         Options.Editing = False
+        Options.Moving = False
         Width = 60
-      end
-      object cxGridDBTableView1Column5: TcxGridDBColumn
-        DataBinding.FieldName = #20379#24212#21830
-        PropertiesClassName = 'TcxLookupComboBoxProperties'
-        Properties.KeyFieldNames = #20379#24212#21830#32534#21495
-        Properties.ListColumns = <
-          item
-            FieldName = #21517#31216
-          end>
-        Properties.ListOptions.ShowHeader = False
-        Properties.ListSource = ds_gys
-        Options.Filtering = False
-        Options.Sorting = False
-        Width = 100
       end
       object cxGridDBTableView1Column3: TcxGridDBColumn
         DataBinding.FieldName = #21333#20215
-        PropertiesClassName = 'TcxTextEditProperties'
+        Options.Editing = False
         Options.Filtering = False
-        Options.Sorting = False
-        Width = 70
-      end
-      object cxGridDBTableView1Column2: TcxGridDBColumn
-        DataBinding.FieldName = #33293#38646#37329#39069
-        PropertiesClassName = 'TcxTextEditProperties'
-        Options.Filtering = False
+        Options.Moving = False
         Options.Sorting = False
         Width = 70
       end
@@ -213,84 +256,12 @@ object Form_fuhuo: TForm_fuhuo
         Caption = #21512#35745#37329#39069
         DataBinding.FieldName = #20986#24211#37329#39069
         Options.Editing = False
+        Options.Moving = False
         Width = 70
       end
     end
     object cxGridLevel1: TcxGridLevel
       GridView = cxGridDBTableView1
-    end
-  end
-  object pnl1: TPanel
-    Left = 0
-    Top = 80
-    Width = 990
-    Height = 49
-    Align = alTop
-    TabOrder = 4
-    object cxRadioButton1: TcxRadioButton
-      Left = 288
-      Top = 16
-      Width = 81
-      Height = 17
-      Caption = #20184#36135
-      TabOrder = 0
-      OnClick = cxRadioButton1Click
-      Transparent = True
-    end
-    object cxRadioButton2: TcxRadioButton
-      Left = 420
-      Top = 16
-      Width = 81
-      Height = 17
-      Caption = #19981#20184#36135
-      TabOrder = 1
-      OnClick = cxRadioButton2Click
-      Transparent = True
-    end
-    object cxLabel1: TcxLabel
-      Left = 507
-      Top = 12
-      Caption = #19981#20184#36135#21407#22240
-      Transparent = True
-    end
-    object cxLookupComboBox1: TcxLookupComboBox
-      Left = 597
-      Top = 10
-      Properties.KeyFieldNames = #31867#21035#21517#31216
-      Properties.ListColumns = <
-        item
-          FieldName = #31867#21035#21517#31216
-        end>
-      Properties.ListOptions.ShowHeader = False
-      Properties.ListSource = ds_yuanyin
-      StyleDisabled.Color = clYellow
-      StyleDisabled.TextColor = clBlack
-      TabOrder = 3
-      Width = 228
-    end
-    object cxLabel2: TcxLabel
-      Left = 31
-      Top = 14
-      Caption = #20998#38498
-      Transparent = True
-    end
-    object cxLookupComboBox2: TcxLookupComboBox
-      Left = 73
-      Top = 12
-      Properties.KeyFieldNames = 'abbr'
-      Properties.ListColumns = <
-        item
-          FieldName = 'name'
-        end>
-      Properties.ListOptions.ShowHeader = False
-      Properties.ListSource = ds_fenyuan
-      Properties.OnCloseUp = cxLookupComboBox2PropertiesCloseUp
-      StyleDisabled.Color = clYellow
-      StyleDisabled.TextColor = clBlack
-      TabOrder = 5
-      OnExit = cxLookupComboBox2Exit
-      OnKeyPress = cxLookupComboBox2KeyPress
-      Width = 136
     end
   end
   object actmgr1: TActionManager
@@ -312,58 +283,16 @@ object Form_fuhuo: TForm_fuhuo
       ImageIndex = 6
       OnExecute = act_closeExecute
     end
-    object act1: TAction
-      Caption = #30830#35748
-      ImageIndex = 0
-      OnExecute = act1Execute
+    object act2: TAction
+      Caption = #20445#23384
+      ImageIndex = 31
+      OnExecute = act2Execute
     end
-  end
-  object qry_thshenqing_mx: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
-    CursorType = ctStatic
-    LockType = ltBatchOptimistic
-    Parameters = <>
-    Left = 256
-    Top = 336
-  end
-  object ds_thshenqing_mx: TDataSource
-    DataSet = qry_thshenqing_mx
-    OnDataChange = ds_thshenqing_mxDataChange
-    Left = 240
-    Top = 264
-  end
-  object ds_yuanyin: TDataSource
-    DataSet = qry_yuanyin
-    Left = 496
-    Top = 216
-  end
-  object qry_yuanyin: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select * from '#27425#21345#35774#32622#34920)
-    Left = 512
-    Top = 288
-  end
-  object qry_gys: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'select * from '#20379#24212#21830#34920)
-    Left = 712
-    Top = 256
-  end
-  object ds_gys: TDataSource
-    DataSet = qry_gys
-    Left = 712
-    Top = 320
   end
   object ds_fenyuan: TDataSource
     DataSet = qry_fenyuan
-    Left = 72
-    Top = 216
+    Left = 464
+    Top = 40
   end
   object qry_fenyuan: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -371,7 +300,34 @@ object Form_fuhuo: TForm_fuhuo
     Parameters = <>
     SQL.Strings = (
       'select * from '#27425#21345#35774#32622#34920)
-    Left = 72
-    Top = 288
+    Left = 432
+    Top = 16
+  end
+  object qry_gys: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#20379#24212#21830#34920)
+    Left = 302
+    Top = 200
+  end
+  object ds_gys: TDataSource
+    DataSet = qry_gys
+    Left = 302
+    Top = 264
+  end
+  object ds_liebiao: TDataSource
+    DataSet = qry_liebiao
+    Left = 104
+    Top = 264
+  end
+  object qry_liebiao: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    Left = 88
+    Top = 336
   end
 end

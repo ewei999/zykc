@@ -28,7 +28,7 @@ uses
   cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
   cxDBLookupComboBox, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
-  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox;
+  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao;
 
 type
   TForm_main = class(TForm)
@@ -218,6 +218,45 @@ type
     cxgrdbclmncxGrid7DBTableView1DBColumn12: TcxGridDBColumn;
     cxgrdbclmncxGrid7DBTableView1Column1: TcxGridDBColumn;
     Action_ruku_new: TAction;
+    dxNavBar1Item7: TdxNavBarItem;
+    dxNavBar1Group4: TdxNavBarGroup;
+    dxNavBar1Item8: TdxNavBarItem;
+    cxTabSheet9: TcxTabSheet;
+    pnl3: TPanel;
+    cxlbl5: TcxLabel;
+    cxDate_TuiH_qishi: TcxDateEdit;
+    cxlbl6: TcxLabel;
+    cxDateEdit8: TcxDateEdit;
+    cxButton19: TcxButton;
+    cxButton20: TcxButton;
+    cxPage_TuiHuo: TcxPageControl;
+    cxTabSheet10: TcxTabSheet;
+    cxGrid8: TcxGrid;
+    cxGridDBTableView5: TcxGridDBTableView;
+    cxGridDBColumn14: TcxGridDBColumn;
+    cxGridDBColumn15: TcxGridDBColumn;
+    cxGridDBColumn16: TcxGridDBColumn;
+    cxGridDBColumn17: TcxGridDBColumn;
+    cxGridDBColumn18: TcxGridDBColumn;
+    cxGridDBColumn19: TcxGridDBColumn;
+    cxGridDBColumn20: TcxGridDBColumn;
+    cxGridDBColumn21: TcxGridDBColumn;
+    cxGridLevel5: TcxGridLevel;
+    cxTabSheet11: TcxTabSheet;
+    cxGrid9: TcxGrid;
+    cxGridDBTableView6: TcxGridDBTableView;
+    cxGridDBColumn22: TcxGridDBColumn;
+    cxGridDBColumn23: TcxGridDBColumn;
+    cxGridDBColumn24: TcxGridDBColumn;
+    cxGridDBColumn25: TcxGridDBColumn;
+    cxGridDBColumn26: TcxGridDBColumn;
+    cxGridDBColumn27: TcxGridDBColumn;
+    cxGridDBColumn28: TcxGridDBColumn;
+    cxGridDBColumn29: TcxGridDBColumn;
+    cxGridDBColumn30: TcxGridDBColumn;
+    cxGridLevel6: TcxGridLevel;
+    ds_Tuihuo: TDataSource;
+    qry_Tuihuo: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -247,6 +286,9 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure Action_ruku_newExecute(Sender: TObject);
+    procedure dxNavBar1Item7Click(Sender: TObject);
+    procedure dxNavBar1Item8Click(Sender: TObject);
+    procedure cxButton19Click(Sender: TObject);
   private
 
   public
@@ -415,6 +457,27 @@ begin
   end;
   qry_caigou_hz.Active := True;
   qry_cg_mingxi.Active := True;
+end;
+
+procedure TForm_main.cxButton19Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  tjstr:='';
+  if cxDate_th_qishi.Text<>'' then
+    tjstr:=tjstr+' and 申请日期>='+QuotedStr(cxDate_th_qishi.Text)+'';
+  if cxDate_th_zhongzhi.Text<>'' then
+    tjstr:=tjstr+' and 申请日期<'+QuotedStr(DateToStr(incday(cxDate_th_zhongzhi.date,1)))+'';
+
+  qry_Tuihuo.Close;
+  qry_Tuihuo.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
+    ' 申请数量=(select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 ) ,'+
+    ' 已付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=2 ),0) , '+
+    ' 不付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=3 ),0)  '+
+    ' from ( select * from 提货申请主表 where 是否作废=0 and 状态=2 and 类别=2 '+tjstr+' )a order by 申请日期';
+  qry_Tuihuo.Open;
+
+  cxTabSheet10.Show;
 end;
 
 procedure TForm_main.cxButton1Click(Sender: TObject);
@@ -623,14 +686,32 @@ begin
   cxTabSheet7.Show;
 end;
 
+procedure TForm_main.dxNavBar1Item7Click(Sender: TObject);
+begin
+  Form_KaiPiao := TForm_KaiPiao.Create(nil);
+  try
+    Form_KaiPiao.ShowModal;
+  finally
+    FreeAndNil(Form_KaiPiao);
+  end;
+end;
+
+procedure TForm_main.dxNavBar1Item8Click(Sender: TObject);
+begin
+  cxTabSheet9.Show;
+  cxTabSheet10.Show;
+end;
+
 procedure TForm_main.FormCreate(Sender: TObject);
 begin
   cxPageControl_main.HideTabs:=true;
   cxPage_tihuoshenqing.HideTabs:=true;
+  cxPage_TuiHuo.HideTabs:=true;
   cxTabSheet2.Show;
 
   cxDate_th_qishi.Date:=IncMonth(date,-1);
   cxDate_FH_qishi.Date:=IncMonth(date,-1);
+  cxDate_TuiH_qishi.Date:=IncMonth(date,-1);
 
   qry_fenyuan.Close;
   qry_fenyuan.SQL.Text:='select abbr,name from 分院表 where sort_id<>0 union all select abbr=''全部'',name=''全部'' ';

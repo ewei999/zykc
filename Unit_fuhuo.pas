@@ -354,7 +354,7 @@ begin
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
     ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end) '+
     ' from ( select * from 提货申请明细表'+
-    ' where 状态=1  and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 '+
+    ' where 状态=1 and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 '+
     '    and 分店代码='+QuotedStr(cxLookupComboBox2.EditValue)+' )'+
     ' )a)b left join (select 舍零金额,出库金额,出库编号,供应商,单价 from 中央库存_出库表 )c '+
     ' on b.申请编号=c.出库编号 order by 分店代码,申请日期 ';
@@ -363,6 +363,7 @@ begin
   if qry_thshenqing_mx.RecordCount>0 then
   begin
     qry_thshenqing_mx.DisableControls;
+    qry_thshenqing_mx.First;
     while not qry_thshenqing_mx.Eof do
     begin
       DataModule1.openSql('select top 1 单价,供应商 from 中央库存_出库表 '+
@@ -373,6 +374,8 @@ begin
         qry_thshenqing_mx.edit;
         qry_thshenqing_mx.FieldByName('单价').AsVariant:= DataModule1.ADOQuery_L.FieldByName('单价').AsVariant;
         qry_thshenqing_mx.FieldByName('供应商').AsVariant:= DataModule1.ADOQuery_L.FieldByName('供应商').AsVariant;
+        if qry_thshenqing_mx.FieldByName('单价').AsString<>'' then
+          qry_thshenqing_mx.FieldByName('出库金额').AsFloat:=qry_thshenqing_mx.FieldByName('数量').AsFloat*qry_thshenqing_mx.FieldByName('单价').AsFloat;
         qry_thshenqing_mx.Post;
       end;
       qry_thshenqing_mx.Next;

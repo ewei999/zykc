@@ -49,7 +49,6 @@ object Form_ruku_new: TForm_ruku_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
-      ExplicitWidth = 984
     end
     object cxLabel1: TcxLabel
       Left = 144
@@ -79,7 +78,7 @@ object Form_ruku_new: TForm_ruku_new
     object cxDBTextEdit1: TcxDBTextEdit
       Left = 218
       Top = 59
-      DataBinding.DataField = #30003#35831#32534#21495
+      DataBinding.DataField = #20837#24211#32534#21495
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
       TabOrder = 6
@@ -97,7 +96,7 @@ object Form_ruku_new: TForm_ruku_new
     object cxDBDateEdit1: TcxDBDateEdit
       Left = 456
       Top = 59
-      DataBinding.DataField = #30003#35831#26085#26399
+      DataBinding.DataField = #20837#24211#26102#38388
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
       Properties.SaveTime = False
@@ -142,7 +141,6 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = ''
       SpeedButtonOptions.Transparent = True
       TabOrder = 11
-      ExplicitLeft = 4
     end
     object cxButton2: TcxButton
       Left = -198
@@ -153,7 +151,6 @@ object Form_ruku_new: TForm_ruku_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
-      ExplicitLeft = 43
     end
     object cxButton3: TcxButton
       Left = -159
@@ -165,7 +162,6 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
-      ExplicitLeft = 82
     end
     object cxLabel6: TcxLabel
       Left = 384
@@ -173,7 +169,7 @@ object Form_ruku_new: TForm_ruku_new
       Caption = #36141#36135#26041#24335
     end
     object DBComboBox1: TDBComboBox
-      Left = 456
+      Left = 458
       Top = 92
       Width = 121
       Height = 27
@@ -183,9 +179,9 @@ object Form_ruku_new: TForm_ruku_new
       TabOrder = 15
     end
     object cxLabel7: TcxLabel
-      Left = 160
+      Left = 176
       Top = 125
-      Caption = #20379#24212#21830
+      Caption = #37329#39069
     end
     object cxDBTextEdit3: TcxDBTextEdit
       Left = 218
@@ -213,7 +209,6 @@ object Form_ruku_new: TForm_ruku_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 20
-      Visible = False
     end
     object cxButton5: TcxButton
       Left = 43
@@ -225,18 +220,25 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 21
     end
-    object cxButton6: TcxButton
+    object cxButton7: TcxButton
       Left = 4
       Top = 256
       Width = 33
       Height = 35
       Action = Action_new_m
       Anchors = [akTop, akRight]
-      LookAndFeel.Kind = lfFlat
-      LookAndFeel.NativeStyle = True
-      LookAndFeel.SkinName = ''
-      SpeedButtonOptions.Transparent = True
+      LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 22
+    end
+    object cxButton6: TcxButton
+      Left = 121
+      Top = 256
+      Width = 33
+      Height = 35
+      Action = Action_edit_m
+      Anchors = [akTop, akRight]
+      LookAndFeel.SkinName = 'Office2007Black'
+      TabOrder = 23
     end
   end
   object cxGrid1: TcxGrid
@@ -247,10 +249,6 @@ object Form_ruku_new: TForm_ruku_new
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
-    ExplicitLeft = -241
-    ExplicitTop = 15
-    ExplicitWidth = 984
-    ExplicitHeight = 380
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
@@ -331,12 +329,12 @@ object Form_ruku_new: TForm_ruku_new
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #36827#36135#21333#20215
-        Width = 120
+        Width = 85
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
         DataBinding.FieldName = #37329#39069
         Options.Editing = False
-        Width = 71
+        Width = 106
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -354,12 +352,13 @@ object Form_ruku_new: TForm_ruku_new
   end
   object DataSource_cg_zhubiao: TDataSource
     DataSet = ADOQuery_cg_zhubiao
-    Left = 184
-    Top = 224
+    Left = 176
+    Top = 200
   end
   object ADOQuery_cg_mingxi: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
+    LockType = ltBatchOptimistic
     Parameters = <>
     SQL.Strings = (
       'select * from '#20013#22830#37319#36141#20837#24211#26126#32454#34920)
@@ -427,28 +426,39 @@ object Form_ruku_new: TForm_ruku_new
     object Action_close: TAction
       Caption = #36864#20986
       ImageIndex = 89
+      OnExecute = Action_closeExecute
     end
     object Action_cancel: TAction
       Caption = #21462#28040
       ImageIndex = 96
+      OnExecute = Action_cancelExecute
     end
     object Action_save: TAction
       Caption = #20445#23384#33609#31295
       ImageIndex = 50
+      OnExecute = Action_saveExecute
     end
     object Action_new_m: TAction
       Caption = 'Action_new_m'
       ImageIndex = 93
+      OnExecute = Action_new_mExecute
     end
     object Action_delete_m: TAction
       ImageIndex = 97
+      OnExecute = Action_delete_mExecute
     end
     object Action_save_m: TAction
       ImageIndex = 33
+      OnExecute = Action_save_mExecute
     end
     object Action_submit: TAction
       Caption = #25552#20132
       ImageIndex = 98
+    end
+    object Action_edit_m: TAction
+      Caption = 'Action_edit_m'
+      ImageIndex = 53
+      OnExecute = Action_edit_mExecute
     end
   end
   object ADOQuery_list: TADOQuery

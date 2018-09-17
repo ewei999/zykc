@@ -88,9 +88,18 @@ type
     cxgrdbclmncxGrid1DBTableView1DBColumn13: TcxGridDBColumn;
     cxButton4: TcxButton;
     cxButton5: TcxButton;
+    cxButton7: TcxButton;
+    Action_edit_m: TAction;
     cxButton6: TcxButton;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
+    procedure Action_saveExecute(Sender: TObject);
+    procedure Action_cancelExecute(Sender: TObject);
+    procedure Action_closeExecute(Sender: TObject);
+    procedure Action_new_mExecute(Sender: TObject);
+    procedure Action_delete_mExecute(Sender: TObject);
+    procedure Action_save_mExecute(Sender: TObject);
+    procedure Action_edit_mExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -103,13 +112,35 @@ var
 implementation
 
 uses
-  Unit_public;
+  Unit_public, Unit_jiamubiao;
 
 {$R *.dfm}
 
+procedure TForm_ruku_new.Action_cancelExecute(Sender: TObject);
+begin
+  if ADOQuery_cg_zhubiao.Modified  then
+     ADOQuery_cg_zhubiao.Cancel;
+  button_zhuanti('cancel');
+end;
+
+procedure TForm_ruku_new.Action_closeExecute(Sender: TObject);
+begin
+  Close;
+end;
+
+procedure TForm_ruku_new.Action_delete_mExecute(Sender: TObject);
+begin
+  ADOQuery_cg_mingxi.Delete;
+end;
+
+procedure TForm_ruku_new.Action_edit_mExecute(Sender: TObject);
+begin
+  ADOQuery_cg_mingxi.Edit;
+end;
+
 procedure TForm_ruku_new.Action_newExecute(Sender: TObject);
 begin
-  button_zhuanti('new');
+
   cxDBDateEdit1.Date := XiTong_date;
   ADOQuery_cg_zhubiao.Active := false;
   ADOQuery_cg_zhubiao.SQL.Text := 'select top 0 * from 中央采购入库主表';
@@ -121,9 +152,69 @@ begin
   ADOQuery_cg_zhubiao.FieldByName('员工编号').AsString := G_user.userID;
   ADOQuery_cg_zhubiao.FieldByName('状态').AsString := '0';
   ADOQuery_cg_mingxi.Active := False;
-  ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购申请明细表 where 申请编号='+
-                                  QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
+  ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='+
+                                  QuotedStr(ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString);
   ADOQuery_cg_mingxi.Active := true;
+  button_zhuanti('new');
+end;
+
+procedure TForm_ruku_new.Action_new_mExecute(Sender: TObject);
+begin
+  Action_new_m.Enabled := false;
+  Action_delete_m.Enabled := False;
+  Action_save_m.Enabled := True;
+  Action_edit_m.Enabled := false;
+//  ADOQuery_cg_mingxi.Active := false;
+//  ADOQuery_cg_mingxi.SQL.Text := 'select  * from 中央采购申请明细表 where 申请编号= '+
+//                                    QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
+//  ADOQuery_cg_mingxi.Active := True;
+  ADOQuery_cg_mingxi.Append;
+  Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库编号').AsString := ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString;
+  Form_jiamubiao := TForm_jiamubiao.Create(nil);
+  try
+    Form_jiamubiao.ShowModal;
+  finally
+    FreeAndNil(form_jiamubiao);
+  end;
+end;
+
+procedure TForm_ruku_new.Action_saveExecute(Sender: TObject);
+begin
+  if ADOQuery_cg_zhubiao.Modified then
+  begin
+    ADOQuery_cg_zhubiao.Post;
+  end;
+  button_zhuanti('save');
+end;
+
+procedure TForm_ruku_new.Action_save_mExecute(Sender: TObject);
+begin
+  while not ADOQuery_cg_mingxi.Eof do
+  begin
+    if ADOQuery_cg_mingxi.FieldByName('名称').AsString = '' then
+    begin
+      Application.MessageBox('请填写名称', '错误', MB_OK + MB_ICONSTOP);
+      Exit;
+    end;
+    if ADOQuery_cg_mingxi.FieldByName('价目编号').AsString = '' then
+    begin
+      Application.MessageBox('请选择要入库的价目', '错误', MB_OK + MB_ICONSTOP);
+      Exit;
+    end;
+    if ADOQuery_cg_mingxi.FieldByName('数量').AsString = '' then
+    begin
+      Application.MessageBox('请填写数量', '错误', MB_OK + MB_ICONSTOP);
+      Exit;
+    end;
+  end;
+  if ADOQuery_cg_mingxi.Modified then
+  begin
+    ADOQuery_cg_mingxi.UpdateBatch();
+  end;
+  Action_new_m.Enabled := True;
+  Action_delete_m.Enabled := True;
+  Action_save_m.Enabled := false;
+  Action_edit_m.Enabled := true;
 end;
 
 procedure TForm_ruku_new.button_zhuanti(button: string);
@@ -138,6 +229,7 @@ begin
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
      Action_save_m.Enabled := false;
+     Action_edit_m.Enabled := false;
    end else if button='edit' then
    begin
      Action_new.Enabled := false;
@@ -148,6 +240,7 @@ begin
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
      Action_save_m.Enabled := false;
+     Action_edit_m.Enabled := false;
    end else if button='save' then
    begin
      Action_new.Enabled := True;
@@ -158,6 +251,7 @@ begin
      Action_new_m.Enabled := True;
      Action_delete_m.Enabled := True;
      Action_save_m.Enabled := True;
+     Action_edit_m.Enabled := true;
    end else if button='cancel' then
    begin
      Action_new.Enabled := True;
@@ -168,6 +262,7 @@ begin
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
      Action_save_m.Enabled := false;
+     Action_edit_m.Enabled := false;
 
    end else if button='submit' then
    begin
@@ -180,10 +275,12 @@ begin
      Action_cancel.Enabled := False;
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
+     Action_edit_m.Enabled := True;
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
+
    end else if button='delete' then
    begin
      Action_new.Enabled := false;
@@ -195,6 +292,7 @@ begin
      Action_cancel.Enabled := False;
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
+     Action_edit_m.Enabled := true;
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;

@@ -242,6 +242,7 @@ type
     procedure Action_submitExecute(Sender: TObject);
     procedure Action_deleteExecute(Sender: TObject);
     procedure caigou_shenqing;
+    procedure ruku_caigao;
     procedure dxNavBar1Item5Click(Sender: TObject);
     procedure cxGrid6DBTableView1CellClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
@@ -257,7 +258,7 @@ var
   Form_main: TForm_main;
 
 implementation
-  uses Unit_DM,Unit_public , Unit_cg_new, Unit_ruku_new;
+  uses Unit_DM,Unit_public , Unit_cg_new, Unit_ruku_new, Unit_ruku_caogao;
 {$R *.dfm}
 
 procedure TForm_main.Action_deleteExecute(Sender: TObject);
@@ -347,14 +348,18 @@ end;
 
 procedure TForm_main.Action_ruku_newExecute(Sender: TObject);
 begin
-  Form_ruku_new := TForm_ruku_new.Create(nil);
+  Form_ruku_caogao := TForm_ruku_caogao.Create(nil);
   try
-    Form_ruku_new.Action_newExecute(Sender);
-    Form_ruku_new.button_zhuanti('new');
-    Form_ruku_new.ShowModal;
+    Form_ruku_caogao.ShowModal;
   finally
-    FreeAndNil(Form_ruku_new);
+    FreeAndNil(form_ruku_caogao);
   end;
+//  Form_ruku_new := TForm_ruku_new.Create(nil);
+//  try
+//    Form_ruku_new.ShowModal;
+//  finally
+//    FreeAndNil(Form_ruku_new);
+//  end;
   ADOQuery_ruku_zhubiao.Requery();
   ADOQuery_ruku_mingxi.Requery();
 end;
@@ -616,6 +621,10 @@ end;
 procedure TForm_main.dxNavBar1Item5Click(Sender: TObject);
 begin
   cxTabSheet8.show;
+  qry_gys_list.Open;
+  cxDateEdit5.Date := IncMonth(date,-1);
+  ADOQuery_ruku_zhubiao.Active := false;
+  ruku_caigao;
 end;
 
 procedure TForm_main.dxNavBar1Item6Click(Sender: TObject);
@@ -635,6 +644,34 @@ begin
   qry_fenyuan.Close;
   qry_fenyuan.SQL.Text:='select abbr,name from 分院表 where sort_id<>0 union all select abbr=''全部'',name=''全部'' ';
   qry_fenyuan.Open;
+end;
+
+procedure TForm_main.ruku_caigao;
+var
+  str :string;
+begin
+  if cxDateEdit6.Text <> '' then
+  begin
+    if cxDateEdit5.Date > cxDateEdit6.Date then
+    Application.MessageBox('日期选择不正确！', '提示', MB_OK);
+    Exit;
+  end;
+
+  ADOQuery_ruku_zhubiao.Active := false;
+  ADOQuery_ruku_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 状态 <>2 and 入库时间 >= '+QuotedStr(cxDateEdit5.Text)  ;
+
+  if cxDateEdit6.Text <> '' then
+  begin
+    str := cxDateEdit6.Text;
+    ADOQuery_ruku_zhubiao.SQL.Text := ADOQuery_ruku_zhubiao.SQL.Text +' and 入库时间 <='+ QuotedStr(str) ;
+
+  end;
+  ADOQuery_ruku_zhubiao.SQL.Text := ADOQuery_ruku_zhubiao.SQL.Text + ' order by 编号 desc';
+  ADOQuery_ruku_zhubiao.Active := True;
+  ADOQuery_ruku_mingxi.Active := false;
+  ADOQuery_ruku_mingxi.SQL.Text := 'select *  from 中央采购入库明细表 where 入库编号= '+
+                                 QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
+  ADOQuery_ruku_mingxi.Active := True;
 end;
 
 end.

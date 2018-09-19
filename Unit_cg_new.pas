@@ -175,15 +175,6 @@ end;
 
 procedure TForm_cg_new.Action_new_mExecute(Sender: TObject);
 begin
-  Action_new_m.Enabled := false;
-  Action_delete_m.Enabled := False;
-  Action_save_m.Enabled := True;
-//  ADOQuery_cg_mingxi.Active := false;
-//  ADOQuery_cg_mingxi.SQL.Text := 'select  * from ÷–—Î≤…π∫…Í«Î√˜œ∏±Ì where …Í«Î±‡∫≈= '+
-//                                    QuotedStr(ADOQuery_cg_zhubiao.FieldByName('…Í«Î±‡∫≈').AsString);
-//  ADOQuery_cg_mingxi.Active := True;
-//  ADOQuery_cg_mingxi.Append;
-
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
     Form_jiamubiao.laiyuan := '≤…π∫';
@@ -197,7 +188,8 @@ procedure TForm_cg_new.Action_saveExecute(Sender: TObject);
 begin
   if ADOQuery_cg_zhubiao.Modified then
   begin
-    ADOQuery_cg_zhubiao.Post;
+    ADOQuery_cg_zhubiao.UpdateBatch();
+    ADOQuery_cg_mingxi.UpdateBatch();
   end;
   button_zhuanti('save');
 end;
@@ -237,9 +229,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
+
    end else if button='edit' then
    begin
      Action_new.Enabled := false;
@@ -247,9 +237,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
+
    end else if button='save' then
    begin
      Action_new.Enabled := True;
@@ -257,9 +245,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := True;
-     Action_delete_m.Enabled := True;
-     Action_save_m.Enabled := True;
+
    end else if button='cancel' then
    begin
      Action_new.Enabled := True;
@@ -267,9 +253,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
+
 
    end else if button='submit' then
    begin
@@ -280,8 +264,7 @@ begin
      Action_delete.Enabled := false;
      Action_submit.Enabled := true;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
+
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
@@ -295,8 +278,7 @@ begin
      Action_delete.Enabled := True;
      Action_submit.Enabled := False;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
+
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;

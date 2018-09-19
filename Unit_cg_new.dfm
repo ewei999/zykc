@@ -163,6 +163,7 @@ object Form_cg_new: TForm_cg_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
+      Visible = False
     end
   end
   object cxGrid1: TcxGrid
@@ -267,6 +268,7 @@ object Form_cg_new: TForm_cg_new
   object ADOQuery_cg_zhubiao: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
+    LockType = ltBatchOptimistic
     Parameters = <>
     SQL.Strings = (
       'select * from ['#20013#22830#37319#36141#30003#35831#20027#34920']')

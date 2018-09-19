@@ -82,11 +82,6 @@ type
     dxNavBar1Item5: TdxNavBarItem;
     cxTabSheet4: TcxTabSheet;
     Panel1: TPanel;
-    cxLabel3: TcxLabel;
-    cxDateEdit1: TcxDateEdit;
-    cxLabel4: TcxLabel;
-    cxDateEdit2: TcxDateEdit;
-    cxButton4: TcxButton;
     cxPageControl1: TcxPageControl;
     cxTabSheet5: TcxTabSheet;
     cxGrid3: TcxGrid;
@@ -163,60 +158,16 @@ type
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
     cxTabSheet8: TcxTabSheet;
     Panel2: TPanel;
-    cxLabel5: TcxLabel;
-    cxDateEdit3: TcxDateEdit;
-    cxLabel6: TcxLabel;
-    cxDateEdit4: TcxDateEdit;
-    cxButton9: TcxButton;
-    cxButton10: TcxButton;
-    cxButton11: TcxButton;
-    cxButton12: TcxButton;
-    cxButton13: TcxButton;
     Panel3: TPanel;
     cxLabel7: TcxLabel;
     cxDateEdit5: TcxDateEdit;
     cxLabel8: TcxLabel;
     cxDateEdit6: TcxDateEdit;
     cxButton14: TcxButton;
-    cxButton15: TcxButton;
-    cxButton16: TcxButton;
-    cxButton17: TcxButton;
-    cxButton18: TcxButton;
-    cxGroupBox1: TcxGroupBox;
-    cxGrid6DBTableView1: TcxGridDBTableView;
-    cxGrid6Level1: TcxGridLevel;
-    cxGrid6: TcxGrid;
     ADOQuery_ruku_zhubiao: TADOQuery;
     DataSource_ruku_zhubiao: TDataSource;
-    cxgrdbclmncxGrid6DBTableView1DBColumn: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn1: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn2: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn3: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn4: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn5: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn6: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn7: TcxGridDBColumn;
-    cxgrdbclmncxGrid6DBTableView1DBColumn8: TcxGridDBColumn;
-    cxGrid7DBTableView1: TcxGridDBTableView;
-    cxGrid7Level1: TcxGridLevel;
-    cxGrid7: TcxGrid;
-    Splitter1: TSplitter;
     ADOQuery_ruku_mingxi: TADOQuery;
     DataSource_ruku_mingxi: TDataSource;
-    cxgrdbclmncxGrid7DBTableView1DBColumn: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn1: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn2: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn3: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn4: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn5: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn6: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn7: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn8: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn9: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn10: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn11: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1DBColumn12: TcxGridDBColumn;
-    cxgrdbclmncxGrid7DBTableView1Column1: TcxGridDBColumn;
     Action_ruku_new: TAction;
     dxNavBar1Item7: TdxNavBarItem;
     dxNavBar1Group4: TdxNavBarGroup;
@@ -257,6 +208,79 @@ type
     cxGridLevel6: TcxGridLevel;
     ds_Tuihuo: TDataSource;
     qry_Tuihuo: TADOQuery;
+    cxGroupBox1: TcxGroupBox;
+    Splitter1: TSplitter;
+    cxGrid6: TcxGrid;
+    cxGrid6DBTableView1: TcxGridDBTableView;
+    cxgrdbclmncxGrid6DBTableView1DBColumn: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn1: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn2: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn3: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn4: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn5: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn6: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn7: TcxGridDBColumn;
+    cxgrdbclmncxGrid6DBTableView1DBColumn8: TcxGridDBColumn;
+    cxGrid6Level1: TcxGridLevel;
+    cxGrid7: TcxGrid;
+    cxGrid7DBTableView1: TcxGridDBTableView;
+    cxgrdbclmncxGrid7DBTableView1DBColumn: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn1: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn2: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn3: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn4: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn12: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1Column1: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn5: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn6: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn7: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn9: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn8: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn10: TcxGridDBColumn;
+    cxgrdbclmncxGrid7DBTableView1DBColumn11: TcxGridDBColumn;
+    cxGrid7Level1: TcxGridLevel;
+    cxLabel10: TcxLabel;
+    cxLabel9: TcxLabel;
+    cxButton16: TcxButton;
+    cxButton10: TcxButton;
+    cxButton11: TcxButton;
+    cxButton12: TcxButton;
+    cxLabel3: TcxLabel;
+    cxDateEdit1: TcxDateEdit;
+    cxLabel4: TcxLabel;
+    cxDateEdit2: TcxDateEdit;
+    cxButton4: TcxButton;
+    cxButton9: TcxButton;
+    ADOQuery_ruku_zhubiao编号: TAutoIncField;
+    ADOQuery_ruku_zhubiao入库编号: TWideStringField;
+    ADOQuery_ruku_zhubiao供应商: TWideStringField;
+    ADOQuery_ruku_zhubiao入库时间: TDateTimeField;
+    ADOQuery_ruku_zhubiao入库批次: TWideStringField;
+    bcdfldADOQuery_ruku_zhubiao金额: TBCDField;
+    bcdfldADOQuery_ruku_zhubiao舍零: TBCDField;
+    bcdfldADOQuery_ruku_zhubiao合计金额: TBCDField;
+    ADOQuery_ruku_zhubiao购货方式: TWideStringField;
+    ADOQuery_ruku_zhubiao备注: TWideStringField;
+    ADOQuery_ruku_zhubiao经手人: TWideStringField;
+    ADOQuery_ruku_zhubiao员工编号: TWideStringField;
+    ADOQuery_ruku_zhubiao状态: TIntegerField;
+    ADOQuery_ruku_zhubiao审核人: TWideStringField;
+    ADOQuery_ruku_zhubiao审核时间: TWideStringField;
+    ADOQuery_ruku_zhubiao选择: TBooleanField;
+    ADOQuery_ruku_mingxi编号: TAutoIncField;
+    ADOQuery_ruku_mingxi入库编号: TWideStringField;
+    ADOQuery_ruku_mingxi入库明细编号: TWideStringField;
+    ADOQuery_ruku_mingxi入库批次: TWideStringField;
+    ADOQuery_ruku_mingxi入库时间: TDateTimeField;
+    ADOQuery_ruku_mingxi名称: TWideStringField;
+    ADOQuery_ruku_mingxi价目编号: TWideStringField;
+    ADOQuery_ruku_mingxi规格: TWideStringField;
+    ADOQuery_ruku_mingxi单位: TWideStringField;
+    ADOQuery_ruku_mingxi数量: TIntegerField;
+    bcdfldADOQuery_ruku_mingxi进货单价: TBCDField;
+    bcdfldADOQuery_ruku_mingxi金额: TBCDField;
+    ADOQuery_ruku_mingxi类别: TWideStringField;
+    ADOQuery_ruku_mingxi小类: TWideStringField;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -290,6 +314,7 @@ type
     procedure dxNavBar1Item7Click(Sender: TObject);
     procedure dxNavBar1Item8Click(Sender: TObject);
     procedure cxButton19Click(Sender: TObject);
+    procedure cxButton14Click(Sender: TObject);
   private
 
   public
@@ -378,14 +403,15 @@ procedure TForm_main.Action_newExecute(Sender: TObject);
 begin
   Form_cg_new := TForm_cg_new.Create(nil);
   try
+
     Form_cg_new.Action_newExecute(Sender);
     Form_cg_new.button_zhuanti('new');
     Form_cg_new.ShowModal;
   finally
     FreeAndNil(Form_cg_new);
   end;
-  ADOQuery_ruku_zhubiao.Requery();
-  ADOQuery_ruku_mingxi.Requery();
+  qry_caigou_hz.Requery();
+  qry_cg_mingxi.Requery();
 end;
 
 procedure TForm_main.Action_ruku_newExecute(Sender: TObject);
@@ -462,6 +488,11 @@ begin
   end;
   qry_caigou_hz.Active := True;
   qry_cg_mingxi.Active := True;
+end;
+
+procedure TForm_main.cxButton14Click(Sender: TObject);
+begin
+  ruku_caigao;
 end;
 
 procedure TForm_main.cxButton19Click(Sender: TObject);
@@ -591,7 +622,7 @@ procedure TForm_main.cxGrid6DBTableView1CellClick(
 begin
   ADOQuery_ruku_mingxi.Active := false;
   ADOQuery_ruku_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='+
-                                      ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString;
+                                     QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
   ADOQuery_ruku_mingxi.Active := True;
 end;
 
@@ -739,7 +770,7 @@ begin
   end;
 
   ADOQuery_ruku_zhubiao.Active := false;
-  ADOQuery_ruku_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 状态 <>2 and 入库时间 >= '+QuotedStr(cxDateEdit5.Text)  ;
+  ADOQuery_ruku_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 状态 =1 and 入库时间 >= '+QuotedStr(cxDateEdit5.Text)  ;
 
   if cxDateEdit6.Text <> '' then
   begin

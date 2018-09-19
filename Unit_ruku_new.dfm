@@ -12,13 +12,15 @@ object Form_ruku_new: TForm_ruku_new
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
   object Panel1: TPanel
     Left = 0
     Top = 0
     Width = 743
-    Height = 297
+    Height = 337
     Align = alTop
     Anchors = []
     BevelOuter = bvNone
@@ -27,7 +29,7 @@ object Form_ruku_new: TForm_ruku_new
     TabOrder = 0
     DesignSize = (
       743
-      297)
+      337)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
@@ -67,12 +69,12 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxLabel4: TcxLabel
       Left = 176
-      Top = 159
+      Top = 195
       Caption = #22791#27880
     end
     object cxLabel5: TcxLabel
       Left = 400
-      Top = 255
+      Top = 291
       Caption = #32463#25163#20154
     end
     object cxDBTextEdit1: TcxDBTextEdit
@@ -86,8 +88,8 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxDBTextEdit2: TcxDBTextEdit
       Left = 456
-      Top = 253
-      DataBinding.DataField = #30003#35831#20154
+      Top = 289
+      DataBinding.DataField = #32463#25163#20154
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
       TabOrder = 7
@@ -121,12 +123,12 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxDBMemo1: TcxDBMemo
       Left = 218
-      Top = 158
-      DataBinding.DataField = #30003#35831#35828#26126
+      Top = 191
+      DataBinding.DataField = #22791#27880
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ScrollBars = ssVertical
       TabOrder = 10
-      Height = 89
+      Height = 87
       Width = 359
     end
     object cxButton1: TcxButton
@@ -173,6 +175,8 @@ object Form_ruku_new: TForm_ruku_new
       Top = 92
       Width = 121
       Height = 27
+      DataField = #36141#36135#26041#24335
+      DataSource = DataSource_cg_zhubiao
       Items.Strings = (
         #36170
         #29616)
@@ -186,6 +190,9 @@ object Form_ruku_new: TForm_ruku_new
     object cxDBTextEdit3: TcxDBTextEdit
       Left = 218
       Top = 125
+      DataBinding.DataField = #37329#39069
+      DataBinding.DataSource = DataSource_cg_zhubiao
+      Properties.ReadOnly = True
       TabOrder = 17
       Width = 145
     end
@@ -197,22 +204,26 @@ object Form_ruku_new: TForm_ruku_new
     object cxDBTextEdit4: TcxDBTextEdit
       Left = 456
       Top = 125
+      DataBinding.DataField = #33293#38646
+      DataBinding.DataSource = DataSource_cg_zhubiao
+      Properties.OnChange = cxDBTextEdit4PropertiesChange
       TabOrder = 19
       Width = 121
     end
     object cxButton4: TcxButton
       Left = 82
-      Top = 256
+      Top = 299
       Width = 33
       Height = 35
       Action = Action_save_m
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 20
+      Visible = False
     end
     object cxButton5: TcxButton
       Left = 43
-      Top = 256
+      Top = 299
       Width = 33
       Height = 35
       Action = Action_delete_m
@@ -222,7 +233,7 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxButton7: TcxButton
       Left = 4
-      Top = 256
+      Top = 299
       Width = 33
       Height = 35
       Action = Action_new_m
@@ -232,20 +243,35 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxButton6: TcxButton
       Left = 121
-      Top = 256
+      Top = 299
       Width = 33
       Height = 35
       Action = Action_edit_m
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 23
+      Visible = False
+    end
+    object cxLabel9: TcxLabel
+      Left = 144
+      Top = 158
+      Caption = #21512#35745#37329#39069
+    end
+    object cxDBTextEdit5: TcxDBTextEdit
+      Left = 218
+      Top = 158
+      DataBinding.DataField = #21512#35745#37329#39069
+      DataBinding.DataSource = DataSource_cg_zhubiao
+      Properties.ReadOnly = True
+      TabOrder = 25
+      Width = 145
     end
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 297
+    Top = 337
     Width = 743
-    Height = 314
+    Height = 274
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
@@ -344,6 +370,7 @@ object Form_ruku_new: TForm_ruku_new
   object ADOQuery_cg_zhubiao: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
+    LockType = ltBatchOptimistic
     Parameters = <>
     SQL.Strings = (
       'select * from ['#20013#22830#37319#36141#20837#24211#20027#34920']')
@@ -367,6 +394,7 @@ object Form_ruku_new: TForm_ruku_new
   end
   object DataSource_cg_mingxi: TDataSource
     DataSet = ADOQuery_cg_mingxi
+    OnDataChange = DataSource_cg_mingxiDataChange
     Left = 392
     Top = 360
   end
@@ -382,11 +410,6 @@ object Form_ruku_new: TForm_ruku_new
             Action = Action_save
             Caption = #20445#23384#33609#31295'(&Z)'
             ImageIndex = 50
-          end
-          item
-            Action = Action_cancel
-            Caption = #21462#28040'(&X)'
-            ImageIndex = 96
           end
           item
             Action = Action_submit
@@ -422,6 +445,7 @@ object Form_ruku_new: TForm_ruku_new
     object Action_delete: TAction
       Caption = #20316#24223
       ImageIndex = 95
+      OnExecute = Action_deleteExecute
     end
     object Action_close: TAction
       Caption = #36864#20986
@@ -439,7 +463,6 @@ object Form_ruku_new: TForm_ruku_new
       OnExecute = Action_saveExecute
     end
     object Action_new_m: TAction
-      Caption = 'Action_new_m'
       ImageIndex = 93
       OnExecute = Action_new_mExecute
     end
@@ -456,9 +479,7 @@ object Form_ruku_new: TForm_ruku_new
       ImageIndex = 98
     end
     object Action_edit_m: TAction
-      Caption = 'Action_edit_m'
       ImageIndex = 53
-      OnExecute = Action_edit_mExecute
     end
   end
   object ADOQuery_list: TADOQuery
@@ -481,12 +502,12 @@ object Form_ruku_new: TForm_ruku_new
     Parameters = <>
     SQL.Strings = (
       'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
-    Left = 568
-    Top = 208
+    Left = 592
+    Top = 200
   end
   object x: TDataSource
     DataSet = ADOQuery_jiamu
-    Left = 672
+    Left = 648
     Top = 208
   end
 end

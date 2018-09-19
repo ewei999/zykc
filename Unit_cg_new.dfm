@@ -163,7 +163,6 @@ object Form_cg_new: TForm_cg_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
-      Visible = False
     end
   end
   object cxGrid1: TcxGrid
@@ -282,6 +281,7 @@ object Form_cg_new: TForm_cg_new
   object ADOQuery_cg_mingxi: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
+    LockType = ltBatchOptimistic
     Parameters = <>
     SQL.Strings = (
       'select * from '#20013#22830#37319#36141#30003#35831#26126#32454#34920)
@@ -318,6 +318,7 @@ object Form_cg_new: TForm_cg_new
           end
           item
             Action = Action_delete
+            Caption = #20316#24223'(&W)'
             ImageIndex = 95
           end
           item

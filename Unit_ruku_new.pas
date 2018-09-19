@@ -91,15 +91,23 @@ type
     cxButton7: TcxButton;
     Action_edit_m: TAction;
     cxButton6: TcxButton;
+    cxLabel9: TcxLabel;
+    cxDBTextEdit5: TcxDBTextEdit;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_saveExecute(Sender: TObject);
     procedure Action_cancelExecute(Sender: TObject);
     procedure Action_closeExecute(Sender: TObject);
     procedure Action_new_mExecute(Sender: TObject);
-    procedure Action_delete_mExecute(Sender: TObject);
     procedure Action_save_mExecute(Sender: TObject);
-    procedure Action_edit_mExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DataSource_cg_mingxiDataChange(Sender: TObject; Field: TField);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure edit(zt:string);
+    function jine(ado:tadoquery):real;
+    procedure cxDBTextEdit4PropertiesChange(Sender: TObject);
+    procedure Action_delete_mExecute(Sender: TObject);
+    procedure Action_deleteExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -112,7 +120,7 @@ var
 implementation
 
 uses
-  Unit_public, Unit_jiamubiao;
+  Unit_public, Unit_jiamubiao, Unit_ruku_caogao, Unit_DM;
 
 {$R *.dfm}
 
@@ -128,14 +136,27 @@ begin
   Close;
 end;
 
+procedure TForm_ruku_new.Action_deleteExecute(Sender: TObject);
+begin
+  DataModule1.ADOCon_ALi.BeginTrans;
+  try
+    ADOQuery_cg_zhubiao.Delete;
+    if ADOQuery_cg_mingxi.RecordCount >0 then
+    ADOQuery_cg_mingxi.Delete;
+    ADOQuery_cg_zhubiao.UpdateBatch();
+    ADOQuery_cg_mingxi.UpdateBatch();
+    DataModule1.ADOCon_ALi.CommitTrans;
+    Application.MessageBox('作废成功！', '提示', MB_OK + MB_ICONINFORMATION);
+  except
+    DataModule1.ADOCon_ALi.RollbackTrans;
+    Application.MessageBox('作废失败！', '提示', MB_OK + MB_ICONINFORMATION);
+  end;
+  close;
+end;
+
 procedure TForm_ruku_new.Action_delete_mExecute(Sender: TObject);
 begin
   ADOQuery_cg_mingxi.Delete;
-end;
-
-procedure TForm_ruku_new.Action_edit_mExecute(Sender: TObject);
-begin
-  ADOQuery_cg_mingxi.Edit;
 end;
 
 procedure TForm_ruku_new.Action_newExecute(Sender: TObject);
@@ -160,18 +181,12 @@ end;
 
 procedure TForm_ruku_new.Action_new_mExecute(Sender: TObject);
 begin
-  Action_new_m.Enabled := false;
-  Action_delete_m.Enabled := False;
-  Action_save_m.Enabled := True;
-  Action_edit_m.Enabled := false;
-//  ADOQuery_cg_mingxi.Active := false;
-//  ADOQuery_cg_mingxi.SQL.Text := 'select  * from 中央采购申请明细表 where 申请编号= '+
-//                                    QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
-//  ADOQuery_cg_mingxi.Active := True;
-  ADOQuery_cg_mingxi.Append;
-  Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库编号').AsString := ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString;
+
+
+
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
+    Form_jiamubiao.laiyuan := '入库';
     Form_jiamubiao.ShowModal;
   finally
     FreeAndNil(form_jiamubiao);
@@ -182,7 +197,8 @@ procedure TForm_ruku_new.Action_saveExecute(Sender: TObject);
 begin
   if ADOQuery_cg_zhubiao.Modified then
   begin
-    ADOQuery_cg_zhubiao.Post;
+    ADOQuery_cg_zhubiao.UpdateBatch();
+    ADOQuery_cg_mingxi.UpdateBatch();
   end;
   button_zhuanti('save');
 end;
@@ -207,14 +223,12 @@ begin
       Exit;
     end;
   end;
+  
   if ADOQuery_cg_mingxi.Modified then
   begin
     ADOQuery_cg_mingxi.UpdateBatch();
   end;
-  Action_new_m.Enabled := True;
-  Action_delete_m.Enabled := True;
-  Action_save_m.Enabled := false;
-  Action_edit_m.Enabled := true;
+
 end;
 
 procedure TForm_ruku_new.button_zhuanti(button: string);
@@ -226,10 +240,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
-     Action_edit_m.Enabled := false;
+
    end else if button='edit' then
    begin
      Action_new.Enabled := false;
@@ -237,10 +248,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
-     Action_edit_m.Enabled := false;
+
    end else if button='save' then
    begin
      Action_new.Enabled := True;
@@ -248,10 +256,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := True;
-     Action_delete_m.Enabled := True;
-     Action_save_m.Enabled := True;
-     Action_edit_m.Enabled := true;
+
    end else if button='cancel' then
    begin
      Action_new.Enabled := True;
@@ -259,10 +264,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_save_m.Enabled := false;
-     Action_edit_m.Enabled := false;
+
 
    end else if button='submit' then
    begin
@@ -273,9 +275,7 @@ begin
      Action_delete.Enabled := false;
      Action_submit.Enabled := true;
      Action_cancel.Enabled := False;
-     Action_new_m.Enabled := false;
-     Action_delete_m.Enabled := false;
-     Action_edit_m.Enabled := True;
+
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
@@ -292,12 +292,91 @@ begin
      Action_cancel.Enabled := False;
      Action_new_m.Enabled := false;
      Action_delete_m.Enabled := false;
-     Action_edit_m.Enabled := true;
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
    end;
+end;
+
+procedure TForm_ruku_new.cxDBTextEdit4PropertiesChange(Sender: TObject);
+begin
+  if not ADOQuery_cg_zhubiao.Modified then
+     ADOQuery_cg_zhubiao.Edit;
+  ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat- StrToFloat(cxDBTextEdit4.Text);
+end;
+
+procedure TForm_ruku_new.DataSource_cg_mingxiDataChange(Sender: TObject;
+  Field: TField);
+begin
+  if ADOQuery_cg_mingxi.Modified then
+  begin
+    if (LowerCase(Field.FieldName)= '数量') and (ADOQuery_cg_mingxi.FieldByName('数量').AsString <> '') and (ADOQuery_cg_mingxi.FieldByName('进货单价').AsString <> '') then
+    begin
+      ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat;
+      ADOQuery_cg_zhubiao.Edit;
+
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
+      ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  :=  (jine(ADOQuery_cg_mingxi) - ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat);
+    end;
+    if (LowerCase(Field.FieldName)= '进货单价') and (ADOQuery_cg_mingxi.FieldByName('进货单价').AsString <> '') and (ADOQuery_cg_mingxi.FieldByName('数量').AsString <> '') then
+    begin
+      ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat;
+      ADOQuery_cg_zhubiao.Edit;
+
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
+      ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  :=  (jine(ADOQuery_cg_mingxi) - ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat);
+    end;
+
+  end;
+
+end;
+
+procedure TForm_ruku_new.edit(zt:string);
+begin
+  ADOQuery_cg_zhubiao.Active := False;
+  ADOQuery_cg_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 入库编号='+
+                                  QuotedStr(Form_ruku_caogao.ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
+  ADOQuery_cg_zhubiao.Active := true;
+  ADOQuery_cg_mingxi.Active := false;
+  ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='
+                                +QuotedStr(ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString);
+  ADOQuery_cg_mingxi.Active := true;
+  if zt='edit' then
+  begin
+    ADOQuery_cg_zhubiao.Edit;
+    ADOQuery_cg_mingxi.Edit;
+  end;
+
+
+end;
+
+procedure TForm_ruku_new.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  ADOQuery_cg_zhubiao.CancelBatch();
+  ADOQuery_cg_mingxi.CancelBatch();
+end;
+
+procedure TForm_ruku_new.FormShow(Sender: TObject);
+begin
+  ADOQuery_list.Active := True;
+end;
+
+function TForm_ruku_new.jine(ado: tadoquery): real;
+var
+  I : integer;
+  K : real;
+begin
+  result := 0;
+  if ado.RecordCount >0  then
+  begin
+    ado.First;
+    for I := 0 to ado.RecordCount-1 do
+    begin
+      result:= result+ ado.FieldByName('进货单价').AsFloat*ado.FieldByName('数量').asfloat ;
+      ado.Next;
+    end;
+  end;
 end;
 
 end.

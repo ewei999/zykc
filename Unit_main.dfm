@@ -1,4 +1,4 @@
-object Form_main: TForm_main
+﻿object Form_main: TForm_main
   Left = 0
   Top = 0
   Caption = #20013#22830#24211#23384#31649#29702#31995#32479
@@ -147,20 +147,19 @@ object Form_main: TForm_main
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet9
+    Properties.ActivePage = cxTabSheet8
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 711
-    ClientRectLeft = 2
-    ClientRectRight = 1071
-    ClientRectTop = 31
+    ClientRectBottom = 716
+    ClientRectRight = 1076
+    ClientRectTop = 30
     object cxTabSheet1: TcxTabSheet
       Caption = #25552#36135#30003#35831
       ImageIndex = 0
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 70
         Align = alTop
         BevelOuter = bvNone
@@ -217,25 +216,24 @@ object Form_main: TForm_main
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1069
-        Height = 610
+        Width = 1076
+        Height = 616
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet2
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 605
-        ClientRectLeft = 2
-        ClientRectRight = 1064
-        ClientRectTop = 31
+        ClientRectBottom = 616
+        ClientRectRight = 1076
+        ClientRectTop = 30
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -305,8 +303,8 @@ object Form_main: TForm_main
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -396,49 +394,11 @@ object Form_main: TForm_main
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1069
-        Height = 137
+        Width = 1076
+        Height = 89
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        object cxLabel3: TcxLabel
-          Left = 21
-          Top = 80
-          Caption = #30003#35831#26085#26399
-          Transparent = True
-        end
-        object cxDateEdit1: TcxDateEdit
-          Left = 95
-          Top = 78
-          Properties.DisplayFormat = 'yyyy-mm-dd'
-          Properties.EditFormat = 'yyyy-mm-dd'
-          TabOrder = 1
-          Width = 121
-        end
-        object cxLabel4: TcxLabel
-          Left = 224
-          Top = 80
-          Caption = #33267
-          Transparent = True
-        end
-        object cxDateEdit2: TcxDateEdit
-          Left = 251
-          Top = 78
-          Properties.DisplayFormat = 'yyyy-mm-dd'
-          Properties.EditFormat = 'yyyy-mm-dd'
-          TabOrder = 3
-          Width = 121
-        end
-        object cxButton4: TcxButton
-          Left = 387
-          Top = 76
-          Width = 75
-          Height = 31
-          Caption = #26597#35810
-          LookAndFeel.SkinName = 'Black'
-          TabOrder = 4
-          OnClick = cxButton4Click
-        end
         object cxButton3: TcxButton
           Left = 21
           Top = 12
@@ -446,7 +406,7 @@ object Form_main: TForm_main
           Height = 45
           Action = Action_new
           LookAndFeel.SkinName = 'Black'
-          TabOrder = 5
+          TabOrder = 0
         end
         object cxButton5: TcxButton
           Left = 124
@@ -455,7 +415,7 @@ object Form_main: TForm_main
           Height = 45
           Action = Action_edit
           LookAndFeel.SkinName = 'Black'
-          TabOrder = 6
+          TabOrder = 1
         end
         object cxButton6: TcxButton
           Left = 226
@@ -464,7 +424,7 @@ object Form_main: TForm_main
           Height = 45
           Action = Action_delete
           LookAndFeel.SkinName = 'Black'
-          TabOrder = 7
+          TabOrder = 2
         end
         object cxButton7: TcxButton
           Left = 330
@@ -473,117 +433,186 @@ object Form_main: TForm_main
           Height = 45
           Action = Action_submit
           LookAndFeel.SkinName = 'Black'
-          TabOrder = 8
+          TabOrder = 3
         end
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 1069
-          Height = 137
+          Width = 1076
+          Height = 74
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 9
-          object cxLabel5: TcxLabel
-            Left = 21
-            Top = 80
+          TabOrder = 4
+          DesignSize = (
+            1076
+            74)
+          object cxLabel9: TcxLabel
+            Left = 5
+            Top = 17
+            Caption = #37319#36141#30003#35831#21333
+            ParentFont = False
+            Style.BorderColor = clMaroon
+            Style.BorderStyle = ebsNone
+            Style.Font.Charset = ANSI_CHARSET
+            Style.Font.Color = clMaroon
+            Style.Font.Height = -32
+            Style.Font.Name = 'Microsoft Sans Serif'
+            Style.Font.Pitch = fpFixed
+            Style.Font.Style = [fsBold]
+            Style.LookAndFeel.NativeStyle = False
+            Style.Shadow = False
+            Style.TextColor = 162577
+            Style.TextStyle = [fsBold]
+            Style.IsFontAssigned = True
+            StyleDisabled.LookAndFeel.NativeStyle = False
+            StyleFocused.LookAndFeel.NativeStyle = False
+            StyleHot.LookAndFeel.NativeStyle = False
+            Properties.Depth = 5
+            Properties.LabelEffect = cxleFun
+            Properties.LabelStyle = cxlsLowered
+            Properties.ShadowedColor = 3487029
+            Transparent = True
+          end
+          object cxButton16: TcxButton
+            Left = 844
+            Top = 8
+            Width = 50
+            Height = 58
+            Action = Action_new
+            Anchors = [akTop, akRight]
+            LookAndFeel.NativeStyle = False
+            LookAndFeel.SkinName = 'Black'
+            OptionsImage.Layout = blGlyphTop
+            TabOrder = 1
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object cxButton10: TcxButton
+            Left = 900
+            Top = 8
+            Width = 50
+            Height = 58
+            Action = Action_edit
+            Anchors = [akTop, akRight]
+            LookAndFeel.NativeStyle = False
+            LookAndFeel.SkinName = 'Black'
+            OptionsImage.Layout = blGlyphTop
+            TabOrder = 2
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object cxButton11: TcxButton
+            Left = 956
+            Top = 8
+            Width = 50
+            Height = 58
+            Action = Action_submit
+            Anchors = [akTop, akRight]
+            LookAndFeel.NativeStyle = False
+            LookAndFeel.SkinName = 'Black'
+            OptionsImage.Layout = blGlyphTop
+            TabOrder = 3
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object cxButton12: TcxButton
+            Left = 1012
+            Top = 8
+            Width = 50
+            Height = 58
+            Action = Action_delete
+            Anchors = [akTop, akRight]
+            LookAndFeel.NativeStyle = False
+            LookAndFeel.SkinName = 'Black'
+            OptionsImage.Layout = blGlyphTop
+            TabOrder = 4
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'Tahoma'
+            Font.Style = []
+            ParentFont = False
+          end
+          object cxLabel3: TcxLabel
+            Left = 189
+            Top = 35
             Caption = #30003#35831#26085#26399
             Transparent = True
           end
-          object cxDateEdit3: TcxDateEdit
-            Left = 95
-            Top = 78
+          object cxDateEdit1: TcxDateEdit
+            Left = 263
+            Top = 31
             Properties.DisplayFormat = 'yyyy-mm-dd'
             Properties.EditFormat = 'yyyy-mm-dd'
-            TabOrder = 1
+            TabOrder = 6
             Width = 121
           end
-          object cxLabel6: TcxLabel
-            Left = 224
-            Top = 80
+          object cxLabel4: TcxLabel
+            Left = 392
+            Top = 35
             Caption = #33267
             Transparent = True
           end
-          object cxDateEdit4: TcxDateEdit
-            Left = 251
-            Top = 78
+          object cxDateEdit2: TcxDateEdit
+            Left = 419
+            Top = 31
             Properties.DisplayFormat = 'yyyy-mm-dd'
             Properties.EditFormat = 'yyyy-mm-dd'
-            TabOrder = 3
+            TabOrder = 8
             Width = 121
           end
-          object cxButton9: TcxButton
-            Left = 387
-            Top = 76
+          object cxButton4: TcxButton
+            Left = 555
+            Top = 27
             Width = 75
             Height = 31
             Caption = #26597#35810
             LookAndFeel.SkinName = 'Black'
-            TabOrder = 4
+            TabOrder = 9
             OnClick = cxButton4Click
-          end
-          object cxButton10: TcxButton
-            Left = 21
-            Top = 12
-            Width = 92
-            Height = 45
-            Action = Action_new
-            LookAndFeel.SkinName = 'Black'
-            TabOrder = 5
-          end
-          object cxButton11: TcxButton
-            Left = 124
-            Top = 12
-            Width = 92
-            Height = 45
-            Action = Action_edit
-            LookAndFeel.SkinName = 'Black'
-            TabOrder = 6
-          end
-          object cxButton12: TcxButton
-            Left = 226
-            Top = 12
-            Width = 92
-            Height = 45
-            Action = Action_delete
-            LookAndFeel.SkinName = 'Black'
-            TabOrder = 7
-          end
-          object cxButton13: TcxButton
-            Left = 338
-            Top = 12
-            Width = 92
-            Height = 45
-            Action = Action_submit
-            LookAndFeel.SkinName = 'Black'
-            TabOrder = 8
           end
         end
       end
       object cxPageControl1: TcxPageControl
         Left = 0
-        Top = 137
-        Width = 1069
-        Height = 543
+        Top = 89
+        Width = 1076
+        Height = 597
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet5
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 538
-        ClientRectLeft = 2
-        ClientRectRight = 1064
-        ClientRectTop = 31
+        ExplicitTop = 137
+        ExplicitHeight = 549
+        ClientRectBottom = 597
+        ClientRectRight = 1076
+        ClientRectTop = 30
         object cxTabSheet5: TcxTabSheet
           Caption = #37319#36141#27719#24635
           ImageIndex = 0
+          ExplicitHeight = 519
           object cxGrid3: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 507
+            Width = 1076
+            Height = 567
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
+            ExplicitHeight = 519
             object cxGridDBTableView2: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellDblClick = cxGrid1DBTableView1CellDblClick
@@ -651,14 +680,16 @@ object Form_main: TForm_main
         object cxTabSheet6: TcxTabSheet
           Caption = #37319#36141#26126#32454
           ImageIndex = 1
+          ExplicitHeight = 519
           object cxGrid4: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 507
+            Width = 1076
+            Height = 567
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
+            ExplicitHeight = 519
             object cxGridDBTableView3: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellDblClick = cxGridDBTableView1CellDblClick
@@ -758,7 +789,7 @@ object Form_main: TForm_main
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 55
         Align = alTop
         BevelOuter = bvNone
@@ -844,8 +875,8 @@ object Form_main: TForm_main
       object cxGrid5: TcxGrid
         Left = 0
         Top = 55
-        Width = 1069
-        Height = 625
+        Width = 1076
+        Height = 631
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
@@ -924,98 +955,112 @@ object Form_main: TForm_main
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 1069
-        Height = 137
+        Width = 1076
+        Height = 73
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        DesignSize = (
+          1076
+          73)
         object cxLabel7: TcxLabel
-          Left = 21
-          Top = 80
+          Left = 120
+          Top = 30
           Caption = #30003#35831#26085#26399
           Transparent = True
         end
         object cxDateEdit5: TcxDateEdit
-          Left = 95
-          Top = 78
+          Left = 194
+          Top = 28
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
           TabOrder = 1
           Width = 121
         end
         object cxLabel8: TcxLabel
-          Left = 224
-          Top = 80
+          Left = 323
+          Top = 30
           Caption = #33267
           Transparent = True
         end
         object cxDateEdit6: TcxDateEdit
-          Left = 251
-          Top = 78
+          Left = 350
+          Top = 28
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
           TabOrder = 3
           Width = 121
         end
         object cxButton14: TcxButton
-          Left = 387
-          Top = 76
+          Left = 486
+          Top = 26
           Width = 75
           Height = 31
           Caption = #26597#35810
           LookAndFeel.SkinName = 'Black'
           TabOrder = 4
-          OnClick = cxButton4Click
+          OnClick = cxButton14Click
         end
-        object cxButton15: TcxButton
+        object cxLabel10: TcxLabel
           Left = 6
-          Top = 12
-          Width = 107
-          Height = 45
+          Top = 16
+          Caption = #20837#24211#21333
+          ParentFont = False
+          Style.BorderColor = clMaroon
+          Style.BorderStyle = ebsNone
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clMaroon
+          Style.Font.Height = -32
+          Style.Font.Name = 'Microsoft Sans Serif'
+          Style.Font.Pitch = fpFixed
+          Style.Font.Style = [fsBold]
+          Style.LookAndFeel.NativeStyle = False
+          Style.Shadow = False
+          Style.TextColor = 162577
+          Style.TextStyle = [fsBold]
+          Style.IsFontAssigned = True
+          StyleDisabled.LookAndFeel.NativeStyle = False
+          StyleFocused.LookAndFeel.NativeStyle = False
+          StyleHot.LookAndFeel.NativeStyle = False
+          Properties.Depth = 5
+          Properties.LabelEffect = cxleFun
+          Properties.LabelStyle = cxlsLowered
+          Properties.ShadowedColor = 3487029
+          Transparent = True
+        end
+        object cxButton9: TcxButton
+          Left = 1012
+          Top = 9
+          Width = 50
+          Height = 58
           Action = Action_ruku_new
+          Anchors = [akTop, akRight]
+          LookAndFeel.NativeStyle = False
           LookAndFeel.SkinName = 'Black'
-          TabOrder = 5
-        end
-        object cxButton16: TcxButton
-          Left = 124
-          Top = 12
-          Width = 92
-          Height = 45
-          Action = Action_edit
-          LookAndFeel.SkinName = 'Black'
+          OptionsImage.Layout = blGlyphTop
           TabOrder = 6
-        end
-        object cxButton17: TcxButton
-          Left = 226
-          Top = 12
-          Width = 92
-          Height = 45
-          Action = Action_delete
-          LookAndFeel.SkinName = 'Black'
-          TabOrder = 7
-        end
-        object cxButton18: TcxButton
-          Left = 330
-          Top = 12
-          Width = 92
-          Height = 45
-          Action = Action_submit
-          LookAndFeel.SkinName = 'Black'
-          TabOrder = 8
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
         end
       end
       object cxGroupBox1: TcxGroupBox
         Left = 0
-        Top = 137
+        Top = 73
         Align = alClient
         Caption = #20837#24211#21333
         TabOrder = 1
-        Height = 543
-        Width = 1069
+        ExplicitTop = 130
+        ExplicitHeight = 556
+        Height = 613
+        Width = 1076
         object Splitter1: TSplitter
           Left = 505
           Top = 24
-          Height = 517
+          Height = 587
           ExplicitLeft = 432
           ExplicitTop = 136
           ExplicitHeight = 100
@@ -1024,10 +1069,11 @@ object Form_main: TForm_main
           Left = 2
           Top = 24
           Width = 503
-          Height = 517
+          Height = 587
           Align = alLeft
           TabOrder = 0
           LookAndFeel.SkinName = 'Whiteprint'
+          ExplicitHeight = 530
           object cxGrid6DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             OnCellClick = cxGrid6DBTableView1CellClick
@@ -1087,11 +1133,12 @@ object Form_main: TForm_main
         object cxGrid7: TcxGrid
           Left = 508
           Top = 24
-          Width = 559
-          Height = 517
+          Width = 566
+          Height = 587
           Align = alClient
           TabOrder = 1
           LookAndFeel.SkinName = 'Blueprint'
+          ExplicitHeight = 530
           object cxGrid7DBTableView1: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             DataController.DataSource = DataSource_ruku_mingxi
@@ -1176,12 +1223,11 @@ object Form_main: TForm_main
       object pnl3: TPanel
         Left = 0
         Top = 0
-        Width = 1069
+        Width = 1076
         Height = 70
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object cxlbl5: TcxLabel
           Left = 29
           Top = 24
@@ -1234,25 +1280,24 @@ object Form_main: TForm_main
       object cxPage_TuiHuo: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1069
-        Height = 610
+        Width = 1076
+        Height = 616
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet10
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ClientRectBottom = 605
-        ClientRectLeft = 2
-        ClientRectRight = 1064
-        ClientRectTop = 31
+        ClientRectBottom = 616
+        ClientRectRight = 1076
+        ClientRectTop = 30
         object cxTabSheet10: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
           object cxGrid8: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -1322,8 +1367,8 @@ object Form_main: TForm_main
           object cxGrid9: TcxGrid
             Left = 0
             Top = 0
-            Width = 1062
-            Height = 574
+            Width = 1076
+            Height = 586
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
@@ -1429,12 +1474,12 @@ object Form_main: TForm_main
     SQL.Strings = (
       'select * from '#27425#21345#35774#32622#34920)
     Left = 272
-    Top = 144
+    Top = 112
   end
   object ds_thshenqing_mx: TDataSource
     DataSet = qry_thshenqing_mx
     Left = 400
-    Top = 152
+    Top = 120
   end
   object qry_caigou_hz: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -1569,6 +1614,73 @@ object Form_main: TForm_main
       'select * from '#20013#22830#37319#36141#20837#24211#20027#34920)
     Left = 528
     Top = 392
+    object ADOQuery_ruku_zhubiao编号: TAutoIncField
+      FieldName = #32534#21495
+      ReadOnly = True
+    end
+    object ADOQuery_ruku_zhubiao入库编号: TWideStringField
+      FieldName = #20837#24211#32534#21495
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao供应商: TWideStringField
+      FieldName = #20379#24212#21830
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao入库时间: TDateTimeField
+      FieldName = #20837#24211#26102#38388
+    end
+    object ADOQuery_ruku_zhubiao入库批次: TWideStringField
+      FieldName = #20837#24211#25209#27425
+      Size = 50
+    end
+    object bcdfldADOQuery_ruku_zhubiao金额: TBCDField
+      FieldName = #37329#39069
+      DisplayFormat = '0.00'
+      Precision = 18
+      Size = 2
+    end
+    object bcdfldADOQuery_ruku_zhubiao舍零: TBCDField
+      FieldName = #33293#38646
+      DisplayFormat = '0.00'
+      Precision = 18
+      Size = 2
+    end
+    object bcdfldADOQuery_ruku_zhubiao合计金额: TBCDField
+      FieldName = #21512#35745#37329#39069
+      DisplayFormat = '0.00'
+      Precision = 18
+      Size = 2
+    end
+    object ADOQuery_ruku_zhubiao购货方式: TWideStringField
+      FieldName = #36141#36135#26041#24335
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao备注: TWideStringField
+      FieldName = #22791#27880
+      Size = 500
+    end
+    object ADOQuery_ruku_zhubiao经手人: TWideStringField
+      FieldName = #32463#25163#20154
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao员工编号: TWideStringField
+      FieldName = #21592#24037#32534#21495
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao状态: TIntegerField
+      FieldName = #29366#24577
+    end
+    object ADOQuery_ruku_zhubiao审核人: TWideStringField
+      FieldName = #23457#26680#20154
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao审核时间: TWideStringField
+      FieldName = #23457#26680#26102#38388
+      Size = 50
+    end
+    object ADOQuery_ruku_zhubiao选择: TBooleanField
+      FieldName = #36873#25321
+    end
   end
   object DataSource_ruku_zhubiao: TDataSource
     DataSet = ADOQuery_ruku_zhubiao
@@ -1583,6 +1695,64 @@ object Form_main: TForm_main
       'select * from '#20013#22830#37319#36141#20837#24211#26126#32454#34920)
     Left = 856
     Top = 360
+    object ADOQuery_ruku_mingxi编号: TAutoIncField
+      FieldName = #32534#21495
+      ReadOnly = True
+    end
+    object ADOQuery_ruku_mingxi入库编号: TWideStringField
+      FieldName = #20837#24211#32534#21495
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi入库明细编号: TWideStringField
+      FieldName = #20837#24211#26126#32454#32534#21495
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi入库批次: TWideStringField
+      FieldName = #20837#24211#25209#27425
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi入库时间: TDateTimeField
+      FieldName = #20837#24211#26102#38388
+    end
+    object ADOQuery_ruku_mingxi名称: TWideStringField
+      FieldName = #21517#31216
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi价目编号: TWideStringField
+      FieldName = #20215#30446#32534#21495
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi规格: TWideStringField
+      FieldName = #35268#26684
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi单位: TWideStringField
+      FieldName = #21333#20301
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi数量: TIntegerField
+      FieldName = #25968#37327
+    end
+    object bcdfldADOQuery_ruku_mingxi进货单价: TBCDField
+      FieldName = #36827#36135#21333#20215
+      DisplayFormat = '0.00'
+      Precision = 18
+      Size = 2
+    end
+    object bcdfldADOQuery_ruku_mingxi金额: TBCDField
+      FieldName = #37329#39069
+      DisplayFormat = '0.00'
+      Precision = 18
+      Size = 2
+    end
+    object ADOQuery_ruku_mingxi类别: TWideStringField
+      FieldName = #31867#21035
+      Size = 50
+    end
+    object ADOQuery_ruku_mingxi小类: TWideStringField
+      FieldName = #23567#31867
+      Size = 50
+    end
   end
   object DataSource_ruku_mingxi: TDataSource
     DataSet = ADOQuery_ruku_mingxi

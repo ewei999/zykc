@@ -182,10 +182,11 @@ begin
 //  ADOQuery_cg_mingxi.SQL.Text := 'select  * from ÷–—Î≤…π∫…Í«Î√˜œ∏±Ì where …Í«Î±‡∫≈= '+
 //                                    QuotedStr(ADOQuery_cg_zhubiao.FieldByName('…Í«Î±‡∫≈').AsString);
 //  ADOQuery_cg_mingxi.Active := True;
-  ADOQuery_cg_mingxi.Append;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('…Í«Î±‡∫≈').AsString := ADOQuery_cg_zhubiao.FieldByName('…Í«Î±‡∫≈').AsString;
+//  ADOQuery_cg_mingxi.Append;
+
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
+    Form_jiamubiao.laiyuan := '≤…π∫';
     Form_jiamubiao.ShowModal;
   finally
     FreeAndNil(form_jiamubiao);
@@ -203,13 +204,13 @@ end;
 
 procedure TForm_cg_new.Action_save_mExecute(Sender: TObject);
 begin
-//  if ADOQuery_cg_mingxi.Modified then
-//  begin
-//    ADOQuery_cg_mingxi.Post;
-//  end;
-//  Action_new_m.Enabled := True;
-//  Action_delete_m.Enabled := True;
-//  Action_save_m.Enabled := false;
+  if ADOQuery_cg_mingxi.Modified then
+  begin
+    ADOQuery_cg_mingxi.UpdateBatch;
+  end;
+  Action_new_m.Enabled := True;
+  Action_delete_m.Enabled := True;
+  Action_save_m.Enabled := false;
 end;
 
 procedure TForm_cg_new.Action_submitExecute(Sender: TObject);

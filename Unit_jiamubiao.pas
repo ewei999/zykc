@@ -79,6 +79,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    laiyuan :string;
   end;
 
 var
@@ -87,7 +88,7 @@ var
 implementation
 
 uses
-  Unit_DM, Unit_cg_new;
+  Unit_DM, Unit_cg_new, Unit_ruku_new, Unit_public;
 
 {$R *.dfm}
 
@@ -95,15 +96,38 @@ procedure TForm_jiamubiao.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
 begin
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('名称').AsString := ADOQuery1.FieldByName('名称').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := ADOQuery1.FieldByName('价目编号').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('规格').AsString := ADOQuery1.FieldByName('规格').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单位').AsString := ADOQuery1.FieldByName('单位').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单价').AsString := ADOQuery1.FieldByName('单价').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
-  Form_cg_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
-  close;
+  if laiyuan = '采购' then
+  begin
+    Form_cg_new.ADOQuery_cg_mingxi.Append;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('申请编号').AsString :=Form_cg_new.ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('名称').AsString := ADOQuery1.FieldByName('名称').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := ADOQuery1.FieldByName('价目编号').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('规格').AsString := ADOQuery1.FieldByName('规格').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单位').AsString := ADOQuery1.FieldByName('单位').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单价').AsString := ADOQuery1.FieldByName('单价').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
+    close;
+  end else
+  if laiyuan ='入库' then
+  begin
+    Form_ruku_new.ADOQuery_cg_mingxi.Append;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库编号').AsString := Form_ruku_new.ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库明细编号').AsString := AutoCreateNo('RKMX','入库明细');
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库批次').AsString := FormatDateTime('yyyymmddhhnnss',now);
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库时间').AsDateTime := xitong_date();
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('名称').AsString := ADOQuery1.FieldByName('名称').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := ADOQuery1.FieldByName('价目编号').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('规格').AsString := ADOQuery1.FieldByName('规格').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('单位').AsString := ADOQuery1.FieldByName('单位').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := ADOQuery1.FieldByName('单价').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
+//    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
+    close;
+  end;
+
 
 
 end;

@@ -2,7 +2,7 @@ object Form_cg_new: TForm_cg_new
   Left = 0
   Top = 0
   Caption = #37319#36141#30003#35831#21333
-  ClientHeight = 661
+  ClientHeight = 701
   ClientWidth = 984
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,7 +20,7 @@ object Form_cg_new: TForm_cg_new
     Left = 0
     Top = 0
     Width = 984
-    Height = 281
+    Height = 257
     Align = alTop
     Anchors = []
     BevelOuter = bvNone
@@ -29,7 +29,7 @@ object Form_cg_new: TForm_cg_new
     TabOrder = 0
     DesignSize = (
       984
-      281)
+      257)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
@@ -133,7 +133,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton1: TcxButton
       Left = 4
-      Top = 246
+      Top = 215
       Width = 33
       Height = 35
       Action = Action_new_m
@@ -146,7 +146,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton2: TcxButton
       Left = 43
-      Top = 246
+      Top = 215
       Width = 33
       Height = 35
       Action = Action_delete_m
@@ -156,7 +156,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton3: TcxButton
       Left = 82
-      Top = 246
+      Top = 215
       Width = 33
       Height = 35
       Action = Action_save_m
@@ -168,9 +168,9 @@ object Form_cg_new: TForm_cg_new
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 281
+    Top = 257
     Width = 984
-    Height = 380
+    Height = 327
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
@@ -265,6 +265,64 @@ object Form_cg_new: TForm_cg_new
       GridView = cxGrid1DBTableView1
     end
   end
+  object cxGroup_shenpi: TcxGroupBox
+    Left = 0
+    Top = 584
+    Align = alBottom
+    Caption = #23457#25209#24847#35265
+    TabOrder = 2
+    Height = 117
+    Width = 984
+    object cxGrid3: TcxGrid
+      Left = 2
+      Top = 24
+      Width = 980
+      Height = 91
+      Align = alClient
+      BorderStyle = cxcbsNone
+      TabOrder = 0
+      LookAndFeel.SkinName = 'Black'
+      object cxGridDBTableView1: TcxGridDBTableView
+        Navigator.Buttons.CustomButtons = <>
+        DataController.DataSource = ds_shenpi
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsData.CancelOnExit = False
+        OptionsData.Deleting = False
+        OptionsData.DeletingConfirmation = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.ColumnAutoWidth = True
+        OptionsView.GroupByBox = False
+        object cxGrid2DBTableView1DBColumn4: TcxGridDBColumn
+          DataBinding.FieldName = #23457#25209#20154
+          Width = 100
+        end
+        object cxGridDBColumn1: TcxGridDBColumn
+          DataBinding.FieldName = #29366#24577
+          Width = 80
+        end
+        object cxGrid2DBTableView1DBColumn1: TcxGridDBColumn
+          DataBinding.FieldName = #24847#35265
+          Width = 100
+        end
+        object cxGridDBTableView1Column1: TcxGridDBColumn
+          DataBinding.FieldName = #22791#27880
+          Width = 200
+        end
+        object cxGridDBColumn2: TcxGridDBColumn
+          DataBinding.FieldName = #23457#25209#26102#38388
+          PropertiesClassName = 'TcxDateEditProperties'
+          Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+          Width = 150
+        end
+      end
+      object cxGridLevel1: TcxGridLevel
+        GridView = cxGridDBTableView1
+      end
+    end
+  end
   object ADOQuery_cg_zhubiao: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
@@ -322,6 +380,16 @@ object Form_cg_new: TForm_cg_new
             Action = Action_delete
             Caption = #20316#24223'(&W)'
             ImageIndex = 95
+          end
+          item
+            Action = act1
+            Caption = #21516#24847'(&U)'
+            ImageIndex = 33
+          end
+          item
+            Action = act2
+            Caption = #36864#22238'(&T)'
+            ImageIndex = 59
           end
           item
             Action = Action_close
@@ -382,6 +450,16 @@ object Form_cg_new: TForm_cg_new
       ImageIndex = 98
       OnExecute = Action_submitExecute
     end
+    object act1: TAction
+      Caption = #21516#24847
+      ImageIndex = 33
+      OnExecute = act1Execute
+    end
+    object act2: TAction
+      Caption = #36864#22238
+      ImageIndex = 59
+      OnExecute = act2Execute
+    end
   end
   object ADOQuery_list: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -410,5 +488,20 @@ object Form_cg_new: TForm_cg_new
     DataSet = ADOQuery_jiamu
     Left = 688
     Top = 184
+  end
+  object ds_shenpi: TDataSource
+    DataSet = qry_shenpi
+    Left = 720
+    Top = 432
+  end
+  object qry_shenpi: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select top 1 * from '#37319#36141#30003#35831#26126#32454#34920)
+    Left = 648
+    Top = 433
   end
 end

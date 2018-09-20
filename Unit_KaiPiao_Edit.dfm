@@ -185,6 +185,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     LookAndFeel.SkinName = 'Blue'
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
+      OnEditChanged = cxGridDBTableView1EditChanged
       DataController.DataModeController.SmartRefresh = True
       DataController.DataSource = ds_liebiao
       DataController.KeyFieldNames = #32534#21495
@@ -215,6 +216,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
         Caption = #36873#25321
         DataBinding.ValueType = 'Boolean'
         PropertiesClassName = 'TcxCheckBoxProperties'
+        Properties.Alignment = taCenter
         Properties.NullStyle = nssUnchecked
         Options.Filtering = False
         Options.Moving = False

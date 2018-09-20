@@ -23,7 +23,7 @@ uses
   cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxCalendar, Data.Win.ADODB, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
-  cxGridCustomView, cxGrid;
+  cxGridCustomView, cxGrid,Unit_FuKuan_Edit;
 
 type
   TForm_KaiPiao = class(TForm)
@@ -48,6 +48,8 @@ type
     ds_liebiao: TDataSource;
     act3: TAction;
     cxButton3: TcxButton;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
     procedure act_closeExecute(Sender: TObject);
     procedure act1Execute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -55,6 +57,7 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure act2Execute(Sender: TObject);
+    procedure act3Execute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -98,6 +101,24 @@ begin
   DataModule1.execSql('update 中央库存_出库表 set 开票编号='''' where 开票编号='+QuotedStr(qry_liebiao.FieldByName('开票编号').AsString)+' ');
   qry_liebiao.Requery();
   Application.MessageBox('作废成功', '提示', MB_OK);
+end;
+
+procedure TForm_KaiPiao.act3Execute(Sender: TObject);
+begin
+  if qry_liebiao.Active=False then
+    exit;
+  if qry_liebiao.RecordCount=0 then
+    exit;
+  Form_FuKuan_Edit := TForm_FuKuan_Edit.Create(nil);
+  try
+    Form_FuKuan_Edit.leibiestr := '付款';
+    Form_FuKuan_Edit.KPbianhao:= qry_liebiao.FieldByName('开票编号').AsString;
+    Form_FuKuan_Edit.ShowModal;
+    if Form_FuKuan_Edit.baocun then
+      qry_liebiao.Requery();
+  finally
+    FreeAndNil(Form_FuKuan_Edit);
+  end;
 end;
 
 procedure TForm_KaiPiao.act_closeExecute(Sender: TObject);

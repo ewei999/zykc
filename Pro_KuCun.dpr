@@ -9,7 +9,12 @@ uses
   Unit_public in 'Unit_public.pas',
   Unit_main in 'Unit_main.pas' {Form_main},
   Unit_caigou_shenqing_new in 'Unit_caigou_shenqing_new.pas' {Form_caigou_shenqing_new},
-  Unit_fuhuo in 'Unit_fuhuo.pas' {Form_fuhuo};
+  Unit_fuhuo in 'Unit_fuhuo.pas' {Form_fuhuo},
+  Unit_FuHuoDan in 'Unit_FuHuoDan.pas' {Form_FuHuoDan},
+  Unit_KaiPiao in 'Unit_KaiPiao.pas' {Form_KaiPiao},
+  Unit_KaiPiao_Edit in 'Unit_KaiPiao_Edit.pas' {Form_KaiPiao_Edit},
+  Unit_FuKuan_Edit in 'Unit_FuKuan_Edit.pas' {Form_FuKuan_Edit},
+  Unit_ShouTuiHuo in 'Unit_ShouTuiHuo.pas' {Form_ShouTuiHuo};
 
 {$R *.res}
 

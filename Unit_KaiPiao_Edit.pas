@@ -65,6 +65,8 @@ type
     procedure cxLookup_gysExit(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure cxGridDBTableView1EditChanged(Sender: TcxCustomGridTableView;
+      AItem: TcxCustomGridTableItem);
   private
     xzbool:boolean;
     procedure Open_LieBiao;
@@ -205,6 +207,26 @@ begin
   end;
   cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=true;
   cxlbl_heji.Caption:=FloatToStr(heji);
+end;
+
+procedure TForm_KaiPiao_Edit.cxGridDBTableView1EditChanged(
+  Sender: TcxCustomGridTableView; AItem: TcxCustomGridTableItem);
+var
+  heji:real;
+  i:integer;
+begin
+  cxGridDBTableView1.DataController.Post();
+
+  cxlbl_heji.Caption:='0';
+  heji:=0;
+  for i :=0 to cxGridDBTableView1.DataController.RecordCount - 1 do
+  begin
+    if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
+    begin
+      heji:=heji+strtofloat(cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column6.Index]);
+    end;
+  end;
+  cxlbl_heji.Caption:=floattostr(heji);
 end;
 
 procedure TForm_KaiPiao_Edit.cxLookup_gysExit(Sender: TObject);

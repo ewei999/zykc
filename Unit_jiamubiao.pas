@@ -21,7 +21,7 @@ uses
   dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxClasses, cxGridCustomView,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxGrid, IdMailBox,
-  cxContainer, cxLabel, cxTextEdit, Data.Win.ADODB;
+  cxContainer, cxLabel, cxTextEdit, Data.Win.ADODB, dxSkinBlue;
 
 type
   TForm_jiamubiao = class(TForm)
@@ -108,6 +108,7 @@ begin
     Form_cg_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
     Form_cg_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
     Form_cg_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.Post;
     close;
   end else
   if laiyuan ='入库' then

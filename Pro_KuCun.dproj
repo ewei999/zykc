@@ -113,6 +113,26 @@
             <Form>Form_fuhuo</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Unit_FuHuoDan.pas">
+            <Form>Form_FuHuoDan</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_KaiPiao.pas">
+            <Form>Form_KaiPiao</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_KaiPiao_Edit.pas">
+            <Form>Form_KaiPiao_Edit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_FuKuan_Edit.pas">
+            <Form>Form_FuKuan_Edit</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="Unit_ShouTuiHuo.pas">
+            <Form>Form_ShouTuiHuo</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

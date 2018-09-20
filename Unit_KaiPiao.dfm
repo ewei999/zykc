@@ -176,6 +176,14 @@ object Form_KaiPiao: TForm_KaiPiao
         DataBinding.FieldName = #24320#31080#20154
         Width = 70
       end
+      object cxGrid1DBTableView1Column1: TcxGridDBColumn
+        DataBinding.FieldName = #20184#27454#32534#21495
+        Width = 70
+      end
+      object cxGrid1DBTableView1Column2: TcxGridDBColumn
+        DataBinding.FieldName = #20184#27454#22791#27880
+        Width = 150
+      end
     end
     object cxGrid1Level1: TcxGridLevel
       GridView = cxGrid1DBTableView1
@@ -232,6 +240,7 @@ object Form_KaiPiao: TForm_KaiPiao
     object act3: TAction
       Caption = #20184#27454
       ImageIndex = 85
+      OnExecute = act3Execute
     end
   end
   object qry_liebiao: TADOQuery

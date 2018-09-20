@@ -177,7 +177,7 @@ type
     cxlbl5: TcxLabel;
     cxDate_TuiH_qishi: TcxDateEdit;
     cxlbl6: TcxLabel;
-    cxDateEdit8: TcxDateEdit;
+    cxDate_TuiH_zhongzhi: TcxDateEdit;
     cxButton19: TcxButton;
     cxButton20: TcxButton;
     cxPage_TuiHuo: TcxPageControl;
@@ -281,6 +281,45 @@ type
     bcdfldADOQuery_ruku_mingxi金额: TBCDField;
     ADOQuery_ruku_mingxi类别: TWideStringField;
     ADOQuery_ruku_mingxi小类: TWideStringField;
+    dxNavBar1Item9: TdxNavBarItem;
+    cxTabSheet12: TcxTabSheet;
+    pnl4: TPanel;
+    cxButton21: TcxButton;
+    cxButton13: TcxButton;
+    cxGrid10: TcxGrid;
+    cxGridDBTableView7: TcxGridDBTableView;
+    cxGridDBColumn31: TcxGridDBColumn;
+    cxGridDBColumn32: TcxGridDBColumn;
+    cxGridDBColumn33: TcxGridDBColumn;
+    cxGridDBColumn34: TcxGridDBColumn;
+    cxGridDBColumn35: TcxGridDBColumn;
+    cxGridDBColumn36: TcxGridDBColumn;
+    cxGridLevel7: TcxGridLevel;
+    qry_CaiGou_ShenPi: TADOQuery;
+    ds_CaiGou_ShenPi: TDataSource;
+    cxGridDBTableView7Column1: TcxGridDBColumn;
+    dxNavBar1Item10: TdxNavBarItem;
+    cxTabSheet13: TcxTabSheet;
+    pnl5: TPanel;
+    cxlbl7: TcxLabel;
+    cxDate_KuCun_Qishi: TcxDateEdit;
+    cxlbl8: TcxLabel;
+    cxDate_KuCun_Zhongzhi: TcxDateEdit;
+    cxButton15: TcxButton;
+    cxTextEdit37: TcxTextEdit;
+    cxlbl9: TcxLabel;
+    cxGrid11: TcxGrid;
+    cxGridDBTableView8: TcxGridDBTableView;
+    cxGridDBColumn37: TcxGridDBColumn;
+    cxGridDBColumn38: TcxGridDBColumn;
+    cxGridDBColumn39: TcxGridDBColumn;
+    cxGridDBColumn40: TcxGridDBColumn;
+    cxGridDBColumn41: TcxGridDBColumn;
+    cxGridDBColumn42: TcxGridDBColumn;
+    cxGridDBColumn43: TcxGridDBColumn;
+    cxGridLevel8: TcxGridLevel;
+    qry_kucun: TADOQuery;
+    ds_kucun: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -315,6 +354,17 @@ type
     procedure dxNavBar1Item8Click(Sender: TObject);
     procedure cxButton19Click(Sender: TObject);
     procedure cxButton14Click(Sender: TObject);
+    procedure cxGridDBTableView2CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure dxNavBar1Item9Click(Sender: TObject);
+    procedure cxButton13Click(Sender: TObject);
+    procedure cxButton21Click(Sender: TObject);
+    procedure cxGridDBTableView7CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure dxNavBar1Item10Click(Sender: TObject);
+    procedure cxButton15Click(Sender: TObject);
   private
 
   public
@@ -332,7 +382,7 @@ procedure TForm_main.Action_deleteExecute(Sender: TObject);
 begin
   if cxGridDBTableView2.DataController.Controller.SelectedRecordCount=1 then
   begin
-    if qry_caigou_hz.FieldByName('状态').AsString='0' then
+    if (qry_caigou_hz.FieldByName('状态').AsString= '0') or (qry_caigou_hz.FieldByName('状态').AsString= '4') then
     begin
       Form_cg_new := TForm_cg_new.Create(nil);
       try
@@ -349,16 +399,16 @@ begin
                                                       ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
         Form_cg_new.ADOQuery_cg_mingxi.Active := True;
         Form_cg_new.ShowModal;
+        if Form_cg_new.baocun then
+        begin
+          qry_cg_mingxi.Requery();
+          qry_caigou_hz.Requery();
+        end;
       finally
         Form_cg_new.Free;
       end;
-      qry_cg_mingxi.Requery();
-      qry_caigou_hz.Requery();
     end;
-
   end;
-
-
 
 end;
 
@@ -366,24 +416,31 @@ procedure TForm_main.Action_editExecute(Sender: TObject);
 begin
   if cxGridDBTableView2.DataController.Controller.SelectedRecordCount=1 then
   begin
-    if qry_caigou_hz.FieldByName('状态').AsString= '0' then
+    if (qry_caigou_hz.FieldByName('状态').AsString= '0') or (qry_caigou_hz.FieldByName('状态').AsString= '4') then
     begin
       Form_cg_new := TForm_cg_new.Create(nil);
       try
-        Form_cg_new.Action_newExecute(Sender);
-        Form_cg_new.button_zhuanti('edit');
         Form_cg_new.ADOQuery_cg_zhubiao.Active := false;
         Form_cg_new.ADOQuery_cg_zhubiao.SQL.Text  := 'select  * from 中央采购申请主表'+
                                                       ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
         Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
         Form_cg_new.ADOQuery_cg_zhubiao.Edit;
+
         Form_cg_new.ADOQuery_cg_mingxi.Active := false;
         Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
                                                       ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
         Form_cg_new.ADOQuery_cg_mingxi.Active := True;
+
+        Form_cg_new.button_zhuanti('edit');
         Form_cg_new.Action_new_m.Enabled := true;
         Form_cg_new.Action_delete_m.Enabled := true;
+
         Form_cg_new.ShowModal;
+        if Form_cg_new.baocun then
+        begin
+          qry_cg_mingxi.Requery();
+          qry_caigou_hz.Requery();
+        end;
       finally
         FreeAndNil(form_cg_new);
       end;
@@ -394,8 +451,6 @@ begin
     end;
 
   end;
-  qry_cg_mingxi.Requery();
-  qry_caigou_hz.Requery();
 
 end;
 
@@ -403,15 +458,17 @@ procedure TForm_main.Action_newExecute(Sender: TObject);
 begin
   Form_cg_new := TForm_cg_new.Create(nil);
   try
-
     Form_cg_new.Action_newExecute(Sender);
     Form_cg_new.button_zhuanti('new');
     Form_cg_new.ShowModal;
+    if Form_cg_new.baocun then
+    begin
+      qry_cg_mingxi.Requery();
+      qry_caigou_hz.Requery();
+    end;
   finally
     FreeAndNil(Form_cg_new);
   end;
-  qry_caigou_hz.Requery();
-  qry_cg_mingxi.Requery();
 end;
 
 procedure TForm_main.Action_ruku_newExecute(Sender: TObject);
@@ -434,11 +491,10 @@ end;
 
 procedure TForm_main.Action_submitExecute(Sender: TObject);
 begin
-  if qry_caigou_hz.FieldByName('状态').AsString = '0'  then
+  if (qry_caigou_hz.FieldByName('状态').AsString= '0') or (qry_caigou_hz.FieldByName('状态').AsString= '4') then
   begin
     Form_cg_new := TForm_cg_new.Create(nil);
     try
-      Form_cg_new.button_zhuanti('submit');
       Form_cg_new.Action_new_m.Enabled := false;
       Form_cg_new.Action_delete_m.Enabled := False;
       Form_cg_new.ADOQuery_cg_zhubiao.Active := false;
@@ -446,17 +502,22 @@ begin
                                                     ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
       Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
       Form_cg_new.ADOQuery_cg_zhubiao.Edit;
+
       Form_cg_new.ADOQuery_cg_mingxi.Active := false;
       Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
                                                     ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
       Form_cg_new.ADOQuery_cg_mingxi.Active := True;
+      Form_cg_new.button_zhuanti('submit');
       Form_cg_new.ShowModal;
+      if Form_cg_new.baocun then
+      begin
+        qry_cg_mingxi.Requery();
+        qry_caigou_hz.Requery();
+      end;
     finally
       FreeAndNil(form_cg_new);
     end;
   end;
-   qry_cg_mingxi.Requery();
-  qry_caigou_hz.Requery();
 
 end;
 
@@ -472,8 +533,11 @@ begin
   end;
 
   qry_caigou_hz.Active := false;
-  qry_caigou_hz.SQL.Text := 'select * from 中央采购申请主表 where 状态 <>2 and 申请日期 >= '+QuotedStr(cxDateEdit1.Text)+
-                              ' order by 编号 desc';
+  qry_caigou_hz.SQL.Text := 'select *, '+
+    ' zt=(case 状态 when 0 then ''草稿'' when 1 then ''已提交'' when 3 then ''审批完成'' when 4 then ''退回'' end ), '+
+    ' 申请数=isnull((select sum(isnull(数量,0)) from 中央采购申请明细表 where 申请编号=a.申请编号),0) '+
+    ' from ( select * from 中央采购申请主表 where 状态 <>2 and 申请日期 >= '+QuotedStr(cxDateEdit1.Text)+''+
+    ' )a order by 编号 desc';
   qry_cg_mingxi.Active := false;
   qry_cg_mingxi.SQL.Text := 'select a.*,b.申请日期,b.申请编号,b.状态 as 审批状态,待办人,b.供应商 as 供应商编号 from 中央采购申请明细表 a '+
                           '  left outer join                             '     +
@@ -490,9 +554,38 @@ begin
   qry_cg_mingxi.Active := True;
 end;
 
+procedure TForm_main.cxButton13Click(Sender: TObject);
+begin
+  //待审
+  qry_CaiGou_ShenPi.Close;
+  qry_CaiGou_ShenPi.SQL.Text:='select *, '+
+    ' zt=(case 状态 when 0 then ''草稿'' when 1 then ''已提交'' when 3 then ''审批完成'' when 4 then ''退回'' end ), '+
+    ' 申请数=isnull((select sum(isnull(数量,0)) from 中央采购申请明细表 where 申请编号=a.申请编号),0) '+
+    ' from ( select * from 中央采购申请主表 where 状态 <>0 and 状态<>2 '+
+    ' and 申请编号 in (select 申请编号 from 提货申请审批表 where isnull(状态,'''')<>'''' '+
+    ' and isnull(意见,'''')='''' and 审批人='+QuotedStr(g_user.UserName)+'  ) '+
+    ' )a order by 申请日期';
+  qry_CaiGou_ShenPi.Open;
+end;
+
 procedure TForm_main.cxButton14Click(Sender: TObject);
 begin
   ruku_caigao;
+end;
+
+procedure TForm_main.cxButton15Click(Sender: TObject);
+var
+  rktjstr,cktjstr,sjdstr:string;
+begin
+  sjdstr:='';
+  rktjstr:='';
+  cktjstr:='';
+  if cxDate_KuCun_Qishi.Text<>'' then
+  begin
+    cktjstr:=' and 申请日期>='+QuotedStr(cxDate_TuiH_qishi.Text)+' ';
+  end;
+
+  qry_kucun.Close;
 end;
 
 procedure TForm_main.cxButton19Click(Sender: TObject);
@@ -500,10 +593,10 @@ var
   tjstr:string;
 begin
   tjstr:='';
-  if cxDate_th_qishi.Text<>'' then
-    tjstr:=tjstr+' and 申请日期>='+QuotedStr(cxDate_th_qishi.Text)+'';
-  if cxDate_th_zhongzhi.Text<>'' then
-    tjstr:=tjstr+' and 申请日期<'+QuotedStr(DateToStr(incday(cxDate_th_zhongzhi.date,1)))+'';
+  if cxDate_TuiH_qishi.Text<>'' then
+    tjstr:=tjstr+' and 申请日期>='+QuotedStr(cxDate_TuiH_qishi.Text)+'';
+  if cxDate_TuiH_zhongzhi.Text<>'' then
+    tjstr:=tjstr+' and 申请日期<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+'';
 
   qry_Tuihuo.Close;
   qry_Tuihuo.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
@@ -535,6 +628,20 @@ begin
   qry_thshenqing.Open;
 
   cxTabSheet2.Show;
+end;
+
+procedure TForm_main.cxButton21Click(Sender: TObject);
+begin
+  //已审
+  qry_CaiGou_ShenPi.Close;
+  qry_CaiGou_ShenPi.SQL.Text:='select *, '+
+    ' zt=(case 状态 when 0 then ''草稿'' when 1 then ''已提交'' when 3 then ''审批完成'' when 4 then ''退回'' end ), '+
+    ' 申请数=isnull((select sum(isnull(数量,0)) from 中央采购申请明细表 where 申请编号=a.申请编号),0) '+
+    ' from ( select * from 中央采购申请主表 where 状态 <>0 and 状态<>2 '+
+    ' and 申请编号 in (select 申请编号 from 提货申请审批表 where isnull(状态,'''')<>'''' '+
+    ' and isnull(意见,'''')<>'''' and 审批人='+QuotedStr(g_user.UserName)+'  ) '+
+    ' )a order by 申请日期';
+  qry_CaiGou_ShenPi.Open;
 end;
 
 procedure TForm_main.cxButton2Click(Sender: TObject);
@@ -640,6 +747,28 @@ begin
   end;
 end;
 
+procedure TForm_main.cxGridDBTableView2CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_cg_new := TForm_cg_new.Create(nil);
+  try
+    Form_cg_new.ADOQuery_cg_zhubiao.Active := false;
+    Form_cg_new.ADOQuery_cg_zhubiao.SQL.Text  := 'select  * from 中央采购申请主表'+
+                                                  ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
+    Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
+
+    Form_cg_new.ADOQuery_cg_mingxi.Active := false;
+    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
+                                                  ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
+    Form_cg_new.ADOQuery_cg_mingxi.Active := True;
+    Form_cg_new.button_zhuanti('chakan');
+    Form_cg_new.ShowModal;
+  finally
+    FreeAndNil(form_cg_new);
+  end;
+end;
+
 procedure TForm_main.cxGridDBTableView4CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -650,6 +779,35 @@ begin
     Form_FuHuoDan.ShowModal;
   finally
     FreeAndNil(Form_FuHuoDan);
+  end;
+end;
+
+procedure TForm_main.cxGridDBTableView7CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_cg_new := TForm_cg_new.Create(nil);
+  try
+    Form_cg_new.ADOQuery_cg_zhubiao.Active := false;
+    Form_cg_new.ADOQuery_cg_zhubiao.SQL.Text  := 'select  * from 中央采购申请主表'+
+                                                  ' where 申请编号='+QuotedStr(qry_CaiGou_ShenPi.FieldByName('申请编号').AsString);
+    Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
+
+    Form_cg_new.ADOQuery_cg_mingxi.Active := false;
+    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
+                                                  ' where 申请编号='+QuotedStr(qry_CaiGou_ShenPi.FieldByName('申请编号').AsString);
+    Form_cg_new.ADOQuery_cg_mingxi.Active := True;
+
+    Form_cg_new.button_zhuanti('chakan');
+    Form_cg_new.ShowModal;
+    if  Form_cg_new.baocun then
+    begin
+      qry_CaiGou_ShenPi.Requery();
+      if qry_caigou_hz.Active then
+        qry_caigou_hz.Requery();
+    end;
+  finally
+    FreeAndNil(form_cg_new);
   end;
 end;
 
@@ -679,6 +837,11 @@ begin
 //  qry_caigou_hz.Active := True;
 //  qry_cg_mingxi.Active := True;
 
+end;
+
+procedure TForm_main.dxNavBar1Item10Click(Sender: TObject);
+begin
+  cxTabSheet13.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
@@ -740,6 +903,12 @@ procedure TForm_main.dxNavBar1Item8Click(Sender: TObject);
 begin
   cxTabSheet9.Show;
   cxTabSheet10.Show;
+end;
+
+procedure TForm_main.dxNavBar1Item9Click(Sender: TObject);
+begin
+  cxTabSheet12.Show;
+  cxButton13.Click;
 end;
 
 procedure TForm_main.FormCreate(Sender: TObject);

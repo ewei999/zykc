@@ -25,7 +25,7 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.ToolWin,
   Vcl.ActnMan, Vcl.ActnCtrls, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Data.Win.ADODB, Vcl.ExtCtrls, Vcl.DBCtrls,
-  Vcl.Menus, Vcl.StdCtrls, cxButtons;
+  Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinBlue, cxGroupBox;
 
 type
   TForm_cg_new = class(TForm)
@@ -81,6 +81,19 @@ type
     DataSource_jiamu: TDataSource;
     cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn;
     Action_submit: TAction;
+    ds_shenpi: TDataSource;
+    qry_shenpi: TADOQuery;
+    cxGroup_shenpi: TcxGroupBox;
+    cxGrid3: TcxGrid;
+    cxGridDBTableView1: TcxGridDBTableView;
+    cxGrid2DBTableView1DBColumn4: TcxGridDBColumn;
+    cxGridDBColumn1: TcxGridDBColumn;
+    cxGrid2DBTableView1DBColumn1: TcxGridDBColumn;
+    cxGridDBTableView1Column1: TcxGridDBColumn;
+    cxGridDBColumn2: TcxGridDBColumn;
+    cxGridLevel1: TcxGridLevel;
+    act1: TAction;
+    act2: TAction;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -94,9 +107,13 @@ type
     procedure FormShow(Sender: TObject);
     procedure Action_delete_mExecute(Sender: TObject);
     procedure Action_submitExecute(Sender: TObject);
+    procedure act2Execute(Sender: TObject);
+    procedure act1Execute(Sender: TObject);
   private
-    { Private declarations }
+    shenpi:Boolean;
+    procedure  ShenPi_data(bj:string);
   public
+    baocun:boolean;
     { Public declarations }
   end;
 
@@ -109,6 +126,65 @@ uses
   Unit_DM, Unit_public, Unit_jiamubiao;
 
 {$R *.dfm}
+
+procedure TForm_cg_new.ShenPi_data(bj:string);
+var
+  tuihuiyuanyin:string;
+begin
+  if cxDBTextEdit1.text='' then
+    exit;
+
+  if Application.MessageBox(pchar('您的意见为：'+bj+'，确认审批吗？'), '确认', MB_OKCANCEL +
+    MB_ICONINFORMATION) = IDCANCEL then
+    exit;
+
+  DataModule1.ADOCon_ALi.BeginTrans;
+  try
+    tuihuiyuanyin:='';
+    DataModule1.execSql('update 提货申请审批表 set 意见='+QuotedStr(bj)+',审批时间=getdate(),状态=''审批完成'',备注='+QuotedStr(tuihuiyuanyin)+' '+
+      ' where 申请编号='+QuotedStr(cxDBTextEdit1.text)+' and 审批人='+QuotedStr(G_user.UserName)+' ');
+
+
+    if bj='退回' then
+    begin
+      DataModule1.execSql('update 中央采购申请主表 set 状态=4 where 申请编号='+QuotedStr(cxDBTextEdit1.text)+' ');
+    end
+    else
+    begin
+      ADOQuery_cg_mingxi.UpdateBatch();
+
+      DataModule1.openSql('select top 1 * from  提货申请审批表  '+
+        ' where 申请编号='+QuotedStr(cxDBTextEdit1.text)+' and isnull(状态,'''')='''' and 审批人<>'+QuotedStr(G_user.UserName)+' order by 编号 ');
+      if DataModule1.ADOQuery_L.Eof then
+      begin
+        DataModule1.execSql('update 中央采购申请主表 set 状态=3 where 申请编号='+QuotedStr(cxDBTextEdit1.text)+' ');     //同意
+      end
+      else
+      begin
+        DataModule1.ADOQuery_L.Edit;
+        DataModule1.ADOQuery_L.FieldByName('状态').AsString:='正在审批';
+        DataModule1.ADOQuery_L.post;
+      end;
+    end;
+    baocun:=true;
+    DataModule1.ADOCon_ALi.CommitTrans;
+    Application.MessageBox('审批完成', '提示', MB_OK);
+    close;
+  except
+    DataModule1.ADOCon_ALi.RollbackTrans;
+    Application.MessageBox('审批失败', '提示', MB_OK);
+  end;
+end;
+
+procedure TForm_cg_new.act1Execute(Sender: TObject);
+begin
+  ShenPi_data('同意');
+end;
+
+procedure TForm_cg_new.act2Execute(Sender: TObject);
+begin
+  ShenPi_data('退回');
+end;
 
 procedure TForm_cg_new.Action_cancelExecute(Sender: TObject);
 begin
@@ -131,6 +207,7 @@ begin
 //    DataModule1.ADOQuery_L.Active := false;
 //    DataModule1.ADOQuery_L.SQL.Text :='update 中央采购申请明细表 set 状态 =2 where 申请编号='+ QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
 //    DataModule1.ADOQuery_L.ExecSQL;
+    baocun:=true;
     Application.MessageBox('作废成功！', '提示', MB_OK);
     Close;
   except
@@ -186,12 +263,13 @@ end;
 
 procedure TForm_cg_new.Action_saveExecute(Sender: TObject);
 begin
-  if ADOQuery_cg_zhubiao.Modified then
+//  if ADOQuery_cg_zhubiao.Modified then
   begin
     ADOQuery_cg_zhubiao.UpdateBatch();
     ADOQuery_cg_mingxi.UpdateBatch();
   end;
   button_zhuanti('save');
+  baocun:=true;
 end;
 
 procedure TForm_cg_new.Action_save_mExecute(Sender: TObject);
@@ -207,10 +285,49 @@ end;
 
 procedure TForm_cg_new.Action_submitExecute(Sender: TObject);
 begin
+  if ADOQuery_cg_mingxi.RecordCount=0 then
+  begin
+    Application.MessageBox('至少添加一条采购物品', '提示', MB_OK);
+    exit;
+  end;
+
+  if Application.MessageBox('确认提交吗？', '确认', MB_OKCANCEL +
+    MB_ICONINFORMATION) = IDCANCEL then
+    exit;
+
   try
+    ADOQuery_cg_zhubiao.UpdateBatch();
+    ADOQuery_cg_mingxi.UpdateBatch();
+
     DataModule1.ADOQuery_L.Active := false;
     DataModule1.ADOQuery_L.sql.text :='update 中央采购申请主表 set 状态 =1 where 申请编号='+ QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
     DataModule1.ADOQuery_L.ExecSQL;
+
+
+    //写审批表
+    DataModule1.execSql('delete from 提货申请审批表 where 申请编号='+QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString)+'');
+
+    DataModule1.openSql('select 类别名称 from 基础设置表 where 类别编号=''中央采购申请审批'' order by 编号');
+    if DataModule1.ADOQuery_L.Eof then
+    begin
+      DataModule1.execSql('update 中央采购申请主表 set 状态=3 where 申请编号='+QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString)+'');
+    end
+    else
+    begin
+      DataModule1.openSql2('select top 0 * from 提货申请审批表 ');
+      while not DataModule1.ADOQuery_L.Eof do
+      begin
+        DataModule1.ADOQuery_L2.append;
+        DataModule1.ADOQuery_L2.FieldByName('申请编号').AsString:= ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString;
+        DataModule1.ADOQuery_L2.FieldByName('审批人').AsString:= DataModule1.ADOQuery_L.FieldByName('类别名称').AsString;
+        if DataModule1.ADOQuery_L.RecNo=1 then
+          DataModule1.ADOQuery_L2.FieldByName('状态').AsString:= '正在审批';
+        DataModule1.ADOQuery_L2.Post;
+
+        DataModule1.ADOQuery_L.Next;
+      end;
+    end;
+    baocun:=true;
     Application.MessageBox('提交成功！', '提示', MB_OK);
     Close;
   except
@@ -222,6 +339,9 @@ end;
 
 procedure TForm_cg_new.button_zhuanti(button: string);
 begin
+   cxGroup_shenpi.Visible:=False;
+   act1.Visible:=False;
+   act2.Visible:=False;
    if button = 'new' then
    begin
      Action_new.Enabled := false;
@@ -237,7 +357,7 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-
+     ADOQuery_cg_zhubiao.Edit;
    end else if button='save' then
    begin
      Action_new.Enabled := True;
@@ -283,17 +403,57 @@ begin
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
+   end
+   else if button='chakan' then
+   begin
+     Action_new_m.Visible := false;
+     Action_delete_m.Visible := false;
+     Action_save_m.Visible := false;
+     ActionToolBar1.Visible:=false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxDBLookupComboBox1.Properties.ReadOnly := True;
+     cxDBMemo1.Properties.ReadOnly := true;
+
+     cxGroup_shenpi.Visible:=true;
+
+     qry_shenpi.Close;
+     qry_shenpi.SQL.Text:='select * from 提货申请审批表 where 申请编号='+QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString)+' order by 编号 ';
+     qry_shenpi.Open;
+
+     shenpi:=false;
+     if qry_shenpi.Locate('审批人',G_user.UserName,[])  then
+     begin
+       if (qry_shenpi.FieldByName('状态').AsString='正在审批') and (qry_shenpi.FieldByName('意见').AsString='') then
+         shenpi:=true;
+     end;
+     if shenpi then
+     begin
+       ActionToolBar1.Visible := true;
+       act1.Visible:=true;
+       act2.Visible:=true;
+       Action_save.Visible := false;
+       Action_cancel.Visible := false;
+       Action_submit.Visible := false;
+       Action_delete.Visible := false;
+       ADOQuery_cg_mingxi.Edit;
+       cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := True;
+       cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := True;
+       Action_new_m.Visible := True;
+       Action_delete_m.Visible := True;
+     end;
    end;
 end;
 
 procedure TForm_cg_new.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if ADOQuery_cg_zhubiao.Modified then
-  ADOQuery_cg_zhubiao.Cancel;
+    ADOQuery_cg_zhubiao.Cancel;
 end;
 
 procedure TForm_cg_new.FormShow(Sender: TObject);
 begin
+  baocun:=false;
   ADOQuery_list.Active := True;
 end;
 

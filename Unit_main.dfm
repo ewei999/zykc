@@ -1583,7 +1583,6 @@
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object cxlbl7: TcxLabel
           Left = 29
           Top = 24
@@ -1643,14 +1642,17 @@
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 74
-        ExplicitHeight = 606
         object cxGridDBTableView8: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
-          OnCellDblClick = cxGridDBTableView7CellDblClick
+          OnCellDblClick = cxGridDBTableView8CellDblClick
           DataController.DataSource = ds_kucun
           DataController.Summary.DefaultGroupSummaryItems = <>
-          DataController.Summary.FooterSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn37
+            end>
           DataController.Summary.SummaryGroups = <>
           OptionsData.CancelOnExit = False
           OptionsData.Deleting = False
@@ -1658,51 +1660,52 @@
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
           OptionsView.GroupByBox = False
           object cxGridDBColumn37: TcxGridDBColumn
-            Caption = #30003#35831#37319#36141#26085#26399
-            DataBinding.FieldName = #30003#35831#26085#26399
-            PropertiesClassName = 'TcxDateEditProperties'
-            Properties.DisplayFormat = 'yyyy-mm-dd'
-            Width = 164
+            DataBinding.FieldName = #21517#31216
+            Width = 150
           end
           object cxGridDBColumn38: TcxGridDBColumn
-            Caption = #37319#36141#32534#21495
-            DataBinding.FieldName = #30003#35831#32534#21495
-            Width = 166
+            DataBinding.FieldName = #21407#21517#31216
+            Width = 150
           end
           object cxGridDBColumn39: TcxGridDBColumn
-            DataBinding.FieldName = #20379#24212#21830
-            PropertiesClassName = 'TcxLookupComboBoxProperties'
-            Properties.KeyFieldNames = #20379#24212#21830#32534#21495
-            Properties.ListColumns = <
-              item
-                FieldName = #21517#31216
-              end>
-            Properties.ListOptions.ShowHeader = False
-            Properties.ListSource = DataSource_gys_list
-            Width = 100
+            DataBinding.FieldName = #31867#21035
+            Width = 70
           end
           object cxGridDBColumn40: TcxGridDBColumn
-            Caption = #37319#36141#35828#26126
-            DataBinding.FieldName = #30003#35831#35828#26126
-            Width = 314
+            DataBinding.FieldName = #23567#31867
+            Width = 70
           end
           object cxGridDBColumn41: TcxGridDBColumn
-            Caption = #30003#35831#37319#36141#20154
-            DataBinding.FieldName = #30003#35831#20154
-            Width = 110
+            DataBinding.FieldName = #35268#26684
+            Width = 70
+          end
+          object cxGridDBTableView8Column4: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20301
+            Width = 70
           end
           object cxGridDBColumn42: TcxGridDBColumn
-            Caption = #30003#35831#26465#25968
-            DataBinding.FieldName = #30003#35831#25968
+            DataBinding.FieldName = #20837#24211#25968#37327
             PropertiesClassName = 'TcxLabelProperties'
             Properties.Alignment.Horz = taCenter
-            Width = 110
+            Width = 70
+          end
+          object cxGridDBTableView8Column1: TcxGridDBColumn
+            DataBinding.FieldName = #26102#38388#27573#20837#24211
+            Width = 70
           end
           object cxGridDBColumn43: TcxGridDBColumn
-            Caption = #29366#24577
-            DataBinding.FieldName = 'zt'
+            DataBinding.FieldName = #20986#24211#25968#37327
+            Width = 70
+          end
+          object cxGridDBTableView8Column2: TcxGridDBColumn
+            DataBinding.FieldName = #26102#38388#27573#20986#24211
+            Width = 70
+          end
+          object cxGridDBTableView8Column3: TcxGridDBColumn
+            DataBinding.FieldName = #24211#23384
             Width = 70
           end
         end

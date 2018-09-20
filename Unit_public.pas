@@ -9,7 +9,7 @@ interface
   function AutoCreateNo(aTableName:string;abeizhu:string):string;         //自动编号
   function ut_padstring(inString :string; maxLength :integer; padChar :char; left :boolean) :string;
   procedure DaochuExcel(agrid : TcxGrid);
-
+  function jisuan_danjia(jmbh: string;ckshuliang:string): real;
 
 
 type
@@ -28,6 +28,110 @@ var
 
 
 implementation
+
+
+function jisuan_danjia(jmbh: string;ckshuliang:string): real;
+var
+  a,b,c,cb,ck:Real;
+  ADOQuery_danjia :TADOQuery;
+begin
+   Result :=0;
+   ADOQuery_danjia := TADOQuery.Create(nil);
+   try
+     ADOQuery_danjia.Connection := DataModule1.ADOCon_ALi;
+     ADOQuery_danjia.SQL.Text := 'select * from ( select b.* , '+
+     ' 批次剩余库存数=(case when 小于批次-出库数量<0 then (case when 小于等于批次-出库数量<0 then 0 else (小于等于批次-出库数量) end '+
+     '	) else b.数量 end) from ( '+
+     ' select * ,'+
+     ' 小于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) and 价目编号=a.价目编号 and 入库批次<a.入库批次),0),'+
+     ' 小于等于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) and 价目编号=a.价目编号 and 入库批次<=a.入库批次),0),'+
+     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2 and 是否作废=0 and 价目编号=a.价目编号),0)'+
+     ' from ( select 价目编号,入库批次,进货单价,数量,编号 from 中央采购入库明细表 '+
+     ' where 价目编号='+QuotedStr(jmbh)+' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) )a)b)c where 批次剩余库存数>0  ' ;
+     ADOQuery_danjia.Active := true;
+     if ADOQuery_danjia.RecordCount >0 then
+     begin
+       ADOQuery_danjia.First;
+       b := 0;
+       c := 0;
+       cb :=0;
+
+       ck :=  StrToFloat(ckshuliang);
+       while not ADOQuery_danjia.Eof do
+       begin
+         b := b+1;
+
+         if ck <= ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat then
+         begin
+           if b=1 then
+           begin
+             Result := ADOQuery_danjia.FieldByName('单价').AsFloat*StrToFloat(ckshuliang);
+             Break;
+           end
+           else
+           begin
+             a := ck;
+             c := adoquery_danjia.FieldByName('单价').AsFloat;
+             cb := cb+ a*c;
+             Result := cb;
+             Break;
+           end;
+
+         end
+         else
+         begin
+           a := ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat;
+           c := adoquery_danjia.FieldByName('单价').AsFloat;
+
+           if StrToFloat(ckshuliang) <= a then
+           begin
+             cb := cb+ a*c;
+             Result := cb;
+             Break;
+           end
+           else
+           begin
+             cb := cb+ a*c;
+             ck := ck- ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat;
+           end;
+
+         end;
+         ADOQuery_danjia.Next;
+       end;
+
+       if (Result =0) then
+       begin
+         if b=0 then
+         begin
+           cb := cb+ a*c;
+           Result := cb;
+         end else if b>0 then
+         begin
+           Result := cb+ck*c;
+         end;
+       end;
+
+     end
+     else
+     begin
+       ADOQuery_danjia.Active := false;
+       ADOQuery_danjia.SQL.Text := 'select 进货单价 from 中央采购入库明细表 where 入库批次= (select max(入库批次)  from 中央采购入库明细表 '+
+       ' where 价目编号='+QuotedStr(jmbh)+' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) )';
+       ADOQuery_danjia.Active := true;
+       if ADOQuery_danjia.RecordCount>0 then
+       begin
+         Result := ADOQuery_danjia.FieldByName('进货单价').AsFloat*StrToFloat(ckshuliang);
+       end
+       else
+       begin
+         Result := -1;
+       end;
+     end;
+   finally
+     ADOQuery_danjia.Free;
+   end;
+end;
+
 
 procedure DaochuExcel(agrid: TcxGrid);
 var

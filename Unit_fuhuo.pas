@@ -343,6 +343,8 @@ begin
 end;
 
 procedure TForm_fuhuo.cxLookupComboBox2Exit(Sender: TObject);
+var
+  zongjine:real;
 begin
   if cxLookupComboBox2.Text='' then
     exit;
@@ -366,16 +368,22 @@ begin
     qry_thshenqing_mx.First;
     while not qry_thshenqing_mx.Eof do
     begin
-      DataModule1.openSql('select top 1 单价,供应商 from 中央库存_出库表 '+
+      zongjine:=jisuan_danjia(qry_thshenqing_mx.FieldByName('价目编号').AsString,qry_thshenqing_mx.FieldByName('数量').AsString);
+      if zongjine<>-1 then
+      begin
+        qry_thshenqing_mx.Edit;
+        qry_thshenqing_mx.FieldByName('单价').AsFloat:=round(zongjine*100/qry_thshenqing_mx.FieldByName('数量').asfloat)/100;
+        qry_thshenqing_mx.FieldByName('出库金额').AsFloat := zongjine;
+        qry_thshenqing_mx.Post;
+      end;
+
+      DataModule1.openSql('select top 1 供应商 from 中央库存_出库表 '+
       ' where 是否作废=0 and 价目编号='+QuotedStr(qry_thshenqing_mx.FieldByName('价目编号').AsString)+' '+
       ' and 分店代码='+QuotedStr(cxLookupComboBox2.EditValue)+' order by 编号 desc');
       if DataModule1.ADOQuery_L.Eof=False then
       begin
         qry_thshenqing_mx.edit;
-        qry_thshenqing_mx.FieldByName('单价').AsVariant:= DataModule1.ADOQuery_L.FieldByName('单价').AsVariant;
         qry_thshenqing_mx.FieldByName('供应商').AsVariant:= DataModule1.ADOQuery_L.FieldByName('供应商').AsVariant;
-        if qry_thshenqing_mx.FieldByName('单价').AsString<>'' then
-          qry_thshenqing_mx.FieldByName('出库金额').AsFloat:=qry_thshenqing_mx.FieldByName('数量').AsFloat*qry_thshenqing_mx.FieldByName('单价').AsFloat;
         qry_thshenqing_mx.Post;
       end;
       qry_thshenqing_mx.Next;

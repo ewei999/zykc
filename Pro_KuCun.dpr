@@ -14,7 +14,8 @@ uses
   Unit_KaiPiao in 'Unit_KaiPiao.pas' {Form_KaiPiao},
   Unit_KaiPiao_Edit in 'Unit_KaiPiao_Edit.pas' {Form_KaiPiao_Edit},
   Unit_FuKuan_Edit in 'Unit_FuKuan_Edit.pas' {Form_FuKuan_Edit},
-  Unit_ShouTuiHuo in 'Unit_ShouTuiHuo.pas' {Form_ShouTuiHuo};
+  Unit_ShouTuiHuo in 'Unit_ShouTuiHuo.pas' {Form_ShouTuiHuo},
+  Unit_KuCunJilu in 'Unit_KuCunJilu.pas' {Form_KuCunJilu};
 
 {$R *.res}
 

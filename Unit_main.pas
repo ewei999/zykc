@@ -28,7 +28,7 @@ uses
   cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
   cxDBLookupComboBox, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
-  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao;
+  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu;
 
 type
   TForm_main = class(TForm)
@@ -320,6 +320,10 @@ type
     cxGridLevel8: TcxGridLevel;
     qry_kucun: TADOQuery;
     ds_kucun: TDataSource;
+    cxGridDBTableView8Column1: TcxGridDBColumn;
+    cxGridDBTableView8Column2: TcxGridDBColumn;
+    cxGridDBTableView8Column3: TcxGridDBColumn;
+    cxGridDBTableView8Column4: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
@@ -365,8 +369,11 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure dxNavBar1Item10Click(Sender: TObject);
     procedure cxButton15Click(Sender: TObject);
+    procedure cxGridDBTableView8CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
-
+    rktjstr,cktjstr:string;
   public
     { Public declarations }
   end;
@@ -575,17 +582,44 @@ end;
 
 procedure TForm_main.cxButton15Click(Sender: TObject);
 var
-  rktjstr,cktjstr,sjdstr:string;
+  sjdstr,mctj:string;
 begin
   sjdstr:='';
   rktjstr:='';
   cktjstr:='';
+  mctj:='';
   if cxDate_KuCun_Qishi.Text<>'' then
   begin
-    cktjstr:=' and 申请日期>='+QuotedStr(cxDate_TuiH_qishi.Text)+' ';
+    rktjstr:=rktjstr+' and 入库时间>='+QuotedStr(cxDate_KuCun_Qishi.Text)+' ';
+    cktjstr:=cktjstr+' and 出库时间>='+QuotedStr(cxDate_KuCun_Qishi.Text)+' ';
+  end;
+  if cxDate_KuCun_Zhongzhi.Text<>'' then
+  begin
+    rktjstr:=rktjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+' ';
+    cktjstr:=cktjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+' ';
+  end;
+  if Trim(cxTextEdit37.Text)<>'' then
+    mctj:=mctj+'  and 价目编号 in (select 价目编号 from 药品用品价目表 where 名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 原名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' )';
+
+  if rktjstr='' then
+  begin
+    sjdstr:=' 时间段入库=0,时间段出库=0,';
+  end
+  else
+  begin
+    sjdstr:=' 时间段入库=isnull((select sum(isnull(数量,0)) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 '+
+      '	where 状态=1 '+rktjstr+' ) and 价目编号=a.价目编号 ),0), '+
+      ' 时间段出库=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 '+cktjstr+' and 价目编号=a.价目编号) ,0),';
   end;
 
   qry_kucun.Close;
+  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量 from ( select a.*, '+
+    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+ sjdstr+
+    ' b.名称,b.规格,b.单位,b.类别,b.小类,b.原名称 '+
+    ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
+    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) '+mctj+' group by 价目编号 '+
+    ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by 名称';
+  qry_kucun.Open;
 end;
 
 procedure TForm_main.cxButton19Click(Sender: TObject);
@@ -808,6 +842,67 @@ begin
     end;
   finally
     FreeAndNil(form_cg_new);
+  end;
+end;
+
+procedure TForm_main.cxGridDBTableView8CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+var
+  sqlstr:string;
+begin
+  if (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '入库数量')
+  or (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段入库')  then
+  begin
+    sqlstr:= 'select * , '+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=(select top 1 供应商 from 中央采购入库主表 where 入库编号=a.入库编号 )) '+
+      ' from ( select * '+
+      ' from 中央采购入库明细表 where 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' '+
+      ' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 :tj ) )a '+
+      ' order by 入库时间';
+
+    if  (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段入库')  then
+      sqlstr:=StringReplace(sqlstr,':tj',rktjstr,[rfReplaceAll])
+    else
+      sqlstr:=StringReplace(sqlstr,':tj','',[rfReplaceAll]);
+
+    Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+    try
+      Form_KuCunJilu.leibie:='入库';
+      Form_KuCunJilu.qry_leibiao.Close;
+      Form_KuCunJilu.qry_leibiao.SQL.Text:=sqlstr;
+      Form_KuCunJilu.qry_leibiao.Open;
+      Form_KuCunJilu.ShowModal;
+    finally
+      FreeAndNil(Form_KuCunJilu);
+    end;
+  end;
+  if (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '出库数量')
+  or (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段出库')  then
+  begin
+    sqlstr:= 'select * , '+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商), '+
+      ' 分店=(select top 1 name from 分院表 where abbr=a.分店代码), '+
+      ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
+      ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 )'+
+      ' from ( select * from 中央库存_出库表 '+
+      ' where 状态=2 and 是否作废=0 :tj and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
+
+    if  (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段出库')  then
+      sqlstr:=StringReplace(sqlstr,':tj',cktjstr,[rfReplaceAll])
+    else
+      sqlstr:=StringReplace(sqlstr,':tj','',[rfReplaceAll]);
+
+    Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+    try
+      Form_KuCunJilu.leibie:='出库';
+      Form_KuCunJilu.qry_leibiao.Close;
+      Form_KuCunJilu.qry_leibiao.SQL.Text:= sqlstr;
+      Form_KuCunJilu.qry_leibiao.Open;
+      Form_KuCunJilu.ShowModal;
+    finally
+      FreeAndNil(Form_KuCunJilu);
+    end;
   end;
 end;
 

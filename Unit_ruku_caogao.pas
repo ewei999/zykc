@@ -202,7 +202,7 @@ end;
 
 procedure TForm_ruku_caogao.Action_submitExecute(Sender: TObject);
 begin
-  ADOQuery_ruku_zhubiao.EnableControls;
+  ADOQuery_ruku_zhubiao.DisableControls;
   try
     ADOQuery_ruku_zhubiao.First;
     while not ADOQuery_ruku_zhubiao.Eof do
@@ -213,15 +213,15 @@ begin
         DataModule1.ADOQuery_L.SQL.Text := 'update 中央采购入库主表 set 状态=1 where 入库编号='+
                                             QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
         DataModule1.ADOQuery_L.ExecSQL;
-
       end;
       ADOQuery_ruku_zhubiao.Next;
     end;
   finally
-     ADOQuery_ruku_zhubiao.DisableControls;
+     ADOQuery_ruku_zhubiao.EnableControls;
   end;
   ADOQuery_ruku_zhubiao.Requery();
   qry_ruku_mingxi.Requery();
+
 end;
 
 procedure TForm_ruku_caogao.cxButton14Click(Sender: TObject);

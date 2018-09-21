@@ -169,8 +169,6 @@
       Align = alClient
       TabOrder = 1
       LookAndFeel.SkinName = 'Blueprint'
-      ExplicitLeft = 644
-      ExplicitTop = 23
       object cxGrid7DBTableView1: TcxGridDBTableView
         Navigator.Buttons.CustomButtons = <>
         DataController.DataSource = DataSource_ruku_mignxi

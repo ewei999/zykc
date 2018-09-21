@@ -364,6 +364,7 @@ begin
 
   if qry_thshenqing_mx.RecordCount>0 then
   begin
+    cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=false;
     qry_thshenqing_mx.DisableControls;
     qry_thshenqing_mx.First;
     while not qry_thshenqing_mx.Eof do
@@ -389,6 +390,7 @@ begin
       qry_thshenqing_mx.Next;
     end;
     qry_thshenqing_mx.EnableControls;
+    cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=true;
     qry_thshenqing_mx.edit;
   end;
 end;

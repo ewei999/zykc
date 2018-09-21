@@ -228,7 +228,7 @@ object Form_fuhuo: TForm_fuhuo
     Align = alTop
     TabOrder = 4
     object cxRadioButton1: TcxRadioButton
-      Left = 288
+      Left = 294
       Top = 16
       Width = 81
       Height = 17
@@ -290,7 +290,7 @@ object Form_fuhuo: TForm_fuhuo
       TabOrder = 5
       OnExit = cxLookupComboBox2Exit
       OnKeyPress = cxLookupComboBox2KeyPress
-      Width = 136
+      Width = 160
     end
   end
   object actmgr1: TActionManager

@@ -125,6 +125,12 @@ begin
     qry_shenpi.SQL.Text:='select * from Ã·ªı…Í«Î…Û≈˙±Ì where …Í«Î±‡∫≈='+QuotedStr(cxLabel_bianhao.Caption)+' order by ±‡∫≈ ';
     qry_shenpi.Open;
   end;
+
+  if zt='chakan' then
+  begin
+    pnl1.Enabled:=false;
+    cxGrid1DBTableView1.OptionsData.Editing:=false;
+  end;
 end;
 
 

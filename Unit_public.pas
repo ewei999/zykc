@@ -65,13 +65,13 @@ begin
          begin
            if b=1 then
            begin
-             Result := ADOQuery_danjia.FieldByName('单价').AsFloat*StrToFloat(ckshuliang);
+             Result := ADOQuery_danjia.FieldByName('进货单价').AsFloat*StrToFloat(ckshuliang);
              Break;
            end
            else
            begin
              a := ck;
-             c := adoquery_danjia.FieldByName('单价').AsFloat;
+             c := adoquery_danjia.FieldByName('进货单价').AsFloat;
              cb := cb+ a*c;
              Result := cb;
              Break;
@@ -81,7 +81,7 @@ begin
          else
          begin
            a := ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat;
-           c := adoquery_danjia.FieldByName('单价').AsFloat;
+           c := adoquery_danjia.FieldByName('进货单价').AsFloat;
 
            if StrToFloat(ckshuliang) <= a then
            begin

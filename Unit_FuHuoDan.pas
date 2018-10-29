@@ -101,7 +101,6 @@ begin
   DataModule1.frxReport_dayin.Variables['jsr'] :=QuotedStr(qry_fuhuo.FieldByName('æ≠ ÷»À').AsString);
   DataModule1.frxReport_dayin.Variables['bianhao'] :=QuotedStr(CKbianhao);
   DataModule1.frxReport_dayin.Variables['fenyuan'] :=QuotedStr(cxlbl_fenyuan.Caption);
-  DataModule1.frxReport_dayin.Variables['heji'] :=QuotedStr(cxGridDBTableView1.DataController.Summary.FooterSummaryValues[1]);
   DataModule1.frxReport_dayin.ShowReport;
 
 end;

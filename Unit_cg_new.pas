@@ -254,8 +254,21 @@ procedure TForm_cg_new.Action_new_mExecute(Sender: TObject);
 begin
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
-    Form_jiamubiao.laiyuan := '采购';
     Form_jiamubiao.ShowModal;
+    if Form_jiamubiao.baocun then
+    begin
+      ADOQuery_cg_mingxi.Append;
+      ADOQuery_cg_mingxi.FieldByName('申请编号').AsString :=ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString;
+      ADOQuery_cg_mingxi.FieldByName('名称').AsString := Form_jiamubiao.ADOQuery1.FieldByName('名称').AsString;
+      ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString;
+      ADOQuery_cg_mingxi.FieldByName('规格').AsString := Form_jiamubiao.ADOQuery1.FieldByName('规格').AsString;
+      ADOQuery_cg_mingxi.FieldByName('单位').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单位').AsString;
+      ADOQuery_cg_mingxi.FieldByName('单价').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单价').AsString;
+      ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
+      ADOQuery_cg_mingxi.FieldByName('原名称').AsString := Form_jiamubiao.ADOQuery1.FieldByName('原名称').AsString;
+      ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
+      ADOQuery_cg_mingxi.Post;
+    end;
   finally
     FreeAndNil(form_jiamubiao);
   end;

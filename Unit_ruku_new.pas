@@ -25,7 +25,7 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.StdCtrls,
   cxButtons, cxDBEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxMaskEdit, cxCalendar, cxLabel, Vcl.ToolWin,
-  Vcl.ActnCtrls, Vcl.ExtCtrls, Vcl.DBCtrls;
+  Vcl.ActnCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, dxSkinBlue;
 
 type
   TForm_ruku_new = class(TForm)
@@ -108,6 +108,9 @@ type
     procedure cxDBTextEdit4PropertiesChange(Sender: TObject);
     procedure Action_delete_mExecute(Sender: TObject);
     procedure Action_deleteExecute(Sender: TObject);
+    procedure cxDBLookupComboBox1KeyPress(Sender: TObject; var Key: Char);
+    procedure cxDBLookupComboBox1PropertiesCloseUp(Sender: TObject);
+    procedure cxDBLookupComboBox1Exit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -183,8 +186,23 @@ procedure TForm_ruku_new.Action_new_mExecute(Sender: TObject);
 begin
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
-    Form_jiamubiao.laiyuan := '入库';
     Form_jiamubiao.ShowModal;
+    if Form_jiamubiao.baocun then
+    begin
+      ADOQuery_cg_mingxi.Append;
+      ADOQuery_cg_mingxi.FieldByName('入库编号').AsString := ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString;
+      ADOQuery_cg_mingxi.FieldByName('入库明细编号').AsString := AutoCreateNo('RKMX','入库明细');
+      ADOQuery_cg_mingxi.FieldByName('入库批次').AsString := FormatDateTime('yyyymmddhhnnss',now);
+      ADOQuery_cg_mingxi.FieldByName('入库时间').AsDateTime := xitong_date();
+      ADOQuery_cg_mingxi.FieldByName('名称').AsString := Form_jiamubiao.ADOQuery1.FieldByName('名称').AsString;
+      ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString;
+      ADOQuery_cg_mingxi.FieldByName('规格').AsString := Form_jiamubiao.ADOQuery1.FieldByName('规格').AsString;
+      ADOQuery_cg_mingxi.FieldByName('单位').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单位').AsString;
+      ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单价').AsString;
+      ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
+      ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
+      ADOQuery_cg_mingxi.Post;
+    end;
   finally
     FreeAndNil(form_jiamubiao);
   end;
@@ -230,32 +248,35 @@ end;
 
 procedure TForm_ruku_new.button_zhuanti(button: string);
 begin
-   if button = 'new' then
-   begin
+  if button = 'new' then
+  begin
+    Action_new.Enabled := false;
+    Action_edit.Enabled := false;
+     Action_delete.Enabled := True;
+     Action_close.Enabled := false;
+     Action_cancel.Enabled := True;
+
+  end
+  else if button='edit' then
+  begin
      Action_new.Enabled := false;
      Action_edit.Enabled := false;
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
 
-   end else if button='edit' then
-   begin
-     Action_new.Enabled := false;
-     Action_edit.Enabled := false;
-     Action_delete.Enabled := True;
-     Action_close.Enabled := false;
-     Action_cancel.Enabled := True;
-
-   end else if button='save' then
-   begin
+  end
+  else if button='save' then
+  begin
      Action_new.Enabled := True;
      Action_edit.Enabled := True;
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := False;
 
-   end else if button='cancel' then
-   begin
+  end
+  else if button='cancel' then
+  begin
      Action_new.Enabled := True;
      Action_edit.Enabled := True;
      Action_delete.Enabled := True;
@@ -263,8 +284,9 @@ begin
      Action_cancel.Enabled := False;
 
 
-   end else if button='submit' then
-   begin
+  end
+  else if button='submit' then
+  begin
      Action_new.Enabled := false;
      Action_edit.Enabled := false;
      Action_save.Enabled := false;
@@ -278,8 +300,9 @@ begin
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
 
-   end else if button='delete' then
-   begin
+  end
+  else if button='delete' then
+  begin
      Action_new.Enabled := false;
      Action_edit.Enabled := false;
      Action_save.Enabled := false;
@@ -293,7 +316,27 @@ begin
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
-   end;
+  end;
+end;
+
+procedure TForm_ruku_new.cxDBLookupComboBox1Exit(Sender: TObject);
+begin
+  if cxDBLookupComboBox1.Text='' then
+    exit;
+  DataModule1.openSql('select 支付性质 from 供应商表 where 供应商编号='+QuotedStr(cxDBLookupComboBox1.EditValue)+'');
+  DBComboBox1.Text:= DataModule1.ADOQuery_L.FieldByName('支付性质').AsString;
+end;
+
+procedure TForm_ruku_new.cxDBLookupComboBox1KeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key = #13 then
+    cxDBTextEdit3.SetFocus;
+end;
+
+procedure TForm_ruku_new.cxDBLookupComboBox1PropertiesCloseUp(Sender: TObject);
+begin
+    cxDBTextEdit3.SetFocus;
 end;
 
 procedure TForm_ruku_new.cxDBTextEdit4PropertiesChange(Sender: TObject);

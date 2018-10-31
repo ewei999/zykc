@@ -32,16 +32,44 @@ type
     DataSource1: TDataSource;
     cxTextEdit1: TcxTextEdit;
     cxLabel1: TcxLabel;
+    cxgrdbclmncxGrid1DBTableView1DBColumn: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn4: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn13: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn14: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn15: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn16: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn17: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn18: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn19: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn20: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn21: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn22: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn23: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn24: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn25: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn26: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn27: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn28: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn29: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn30: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn31: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn32: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn33: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn34: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn35: TcxGridDBColumn;
+    cxgrdbclmncxGrid1DBTableView1DBColumn36: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn37: TcxGridDBColumn;
-    cxGrid1DBTableView1Column1: TcxGridDBColumn;
     procedure cxTextEdit1PropertiesChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
@@ -50,7 +78,8 @@ type
   private
     { Private declarations }
   public
-    baocun:boolean;
+    { Public declarations }
+    laiyuan :string;
   end;
 
 var
@@ -59,7 +88,7 @@ var
 implementation
 
 uses
-  Unit_DM;
+  Unit_DM, Unit_cg_new, Unit_ruku_new, Unit_public;
 
 {$R *.dfm}
 
@@ -67,8 +96,41 @@ procedure TForm_jiamubiao.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
 begin
-  baocun:=true;
-  close;
+  if laiyuan = '采购' then
+  begin
+    Form_cg_new.ADOQuery_cg_mingxi.Append;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('申请编号').AsString :=Form_cg_new.ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('名称').AsString := ADOQuery1.FieldByName('名称').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := ADOQuery1.FieldByName('价目编号').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('规格').AsString := ADOQuery1.FieldByName('规格').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单位').AsString := ADOQuery1.FieldByName('单位').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('单价').AsString := ADOQuery1.FieldByName('单价').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
+    Form_cg_new.ADOQuery_cg_mingxi.Post;
+    close;
+  end else
+  if laiyuan ='入库' then
+  begin
+    Form_ruku_new.ADOQuery_cg_mingxi.Append;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库编号').AsString := Form_ruku_new.ADOQuery_cg_zhubiao.FieldByName('入库编号').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库明细编号').AsString := AutoCreateNo('RKMX','入库明细');
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库批次').AsString := FormatDateTime('yyyymmddhhnnss',now);
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('入库时间').AsDateTime := xitong_date();
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('名称').AsString := ADOQuery1.FieldByName('名称').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := ADOQuery1.FieldByName('价目编号').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('规格').AsString := ADOQuery1.FieldByName('规格').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('单位').AsString := ADOQuery1.FieldByName('单位').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := ADOQuery1.FieldByName('单价').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('类别').AsString := ADOQuery1.FieldByName('类别').AsString;
+//    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('原名称').AsString := ADOQuery1.FieldByName('原名称').AsString;
+    Form_ruku_new.ADOQuery_cg_mingxi.FieldByName('小类').AsString := ADOQuery1.FieldByName('小类').AsString;
+    close;
+  end;
+
+
+
 end;
 
 procedure TForm_jiamubiao.cxTextEdit1PropertiesChange(Sender: TObject);
@@ -90,17 +152,7 @@ end;
 procedure TForm_jiamubiao.FormShow(Sender: TObject);
 begin
   ADOQuery1.Active := false;
-  ADOQuery1.SQL.Text:='select a.*,isnull(b.库存,0) as 库存 from ('+
-    ' select 价目编号,名称,原名称,类别,小类,规格,单位,单价,零售价,拼音 from 药品用品价目表 where 是否作废=0 '+
-    ' and isnull(是否套餐,0)= 0 and 标志=0 and 库存=1 )a left join ( '+
-    ' select 价目编号,库存=入库数量-出库数量 from ( select a.*, '+
-    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0) '+
-    ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
-    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
-    '  )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c )b on a.价目编号=b.价目编号 order by 名称';
   ADOQuery1.Active := True;
-  baocun:=false;
-  cxTextEdit1.SetFocus;
 end;
 
 end.

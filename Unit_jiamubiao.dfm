@@ -100,11 +100,7 @@ object Form_jiamubiao: TForm_jiamubiao
     Parameters = <>
     SQL.Strings = (
       'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0'
-<<<<<<< HEAD
-      'and '#26159#21542#22871#39184'= 0 and '#26631#24535'=0')
-=======
       'and isnull('#26159#21542#22871#39184',0)= 0 and '#26631#24535'=0')
->>>>>>> parent of b351b70... Revert "价目表"
     Left = 464
     Top = 24
   end

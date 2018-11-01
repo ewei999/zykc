@@ -87,6 +87,8 @@ type
     ds_zhudong: TDataSource;
     ds_jiamu: TDataSource;
     qry_jiamu: TADOQuery;
+    cxGridDBTableView1Column7: TcxGridDBColumn;
+    cxGridDBTableView1Column8: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -321,6 +323,7 @@ begin
             DataModule1.ADOQuery_L.FieldByName('舍零金额').AsVariant:= qry_thshenqing_mx.FieldByName('舍零金额').AsVariant;
             DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= qry_thshenqing_mx.FieldByName('供应商').AsString;
             DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_thshenqing_mx.FieldByName('分店代码').AsString;
+            DataModule1.ADOQuery_L.FieldByName('备注').AsString:= qry_thshenqing_mx.FieldByName('备注').AsString;
             DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
             DataModule1.ADOQuery_L.FieldByName('状态').AsInteger:=1;
             DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:= false;
@@ -355,10 +358,11 @@ begin
         begin
           DataModule1.ADOQuery_dayin.Close;
           DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
-          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine, '+
+          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
+          ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号)  '+
-          ' from ( select 价目编号,名称,出库数量,单价,出库金额 '+
+          ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注 '+
           ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a';
           DataModule1.ADOQuery_dayin.open;
 
@@ -569,6 +573,7 @@ begin
           DataModule1.ADOQuery_dayin.Close;
           DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
           ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine, '+
+          ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号)  '+
           ' from ( select 价目编号,名称,出库数量,单价,出库金额 '+
@@ -680,6 +685,7 @@ begin
   qry_thshenqing_mx.SQL.Text:='select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
     ' select 编号,申请编号,价目编号,数量,规格,单位, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
+    ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
     ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end) '+
     ' from ( select * from 提货申请明细表'+
@@ -844,7 +850,7 @@ begin
     qry_zhudong.Open;
 
     qry_jiamu.Close;
-    qry_jiamu.SQL.Text:='select 价目编号,规格,单位 from 药品用品价目表';
+    qry_jiamu.SQL.Text:='select 价目编号,规格,单位,包装规格 from 药品用品价目表';
     qry_jiamu.Open;
     cxTabSheet2.Show;
   end;

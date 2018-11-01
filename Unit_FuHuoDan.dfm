@@ -2,8 +2,8 @@ object Form_FuHuoDan: TForm_FuHuoDan
   Left = 0
   Top = 0
   Caption = #20184#36135#21333
-  ClientHeight = 543
-  ClientWidth = 814
+  ClientHeight = 649
+  ClientWidth = 964
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_FuHuoDan: TForm_FuHuoDan
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 814
+    Width = 964
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -72,10 +72,11 @@ object Form_FuHuoDan: TForm_FuHuoDan
   object pnl1: TPanel
     Left = 0
     Top = 80
-    Width = 814
+    Width = 964
     Height = 57
     Align = alTop
     TabOrder = 1
+    ExplicitWidth = 814
     object cxLabel2: TcxLabel
       Left = 296
       Top = 15
@@ -114,7 +115,7 @@ object Form_FuHuoDan: TForm_FuHuoDan
     end
   end
   object cxButton8: TcxButton
-    Left = 751
+    Left = 901
     Top = 11
     Width = 50
     Height = 58
@@ -131,15 +132,18 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 751
   end
   object cxGrid2: TcxGrid
     Left = 0
     Top = 137
-    Width = 814
-    Height = 406
+    Width = 964
+    Height = 512
     Align = alClient
     TabOrder = 3
     LookAndFeel.SkinName = 'Blue'
+    ExplicitWidth = 814
+    ExplicitHeight = 406
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataModeController.SmartRefresh = True
@@ -187,12 +191,17 @@ object Form_FuHuoDan: TForm_FuHuoDan
         Options.Editing = False
         Width = 60
       end
+      object cxGridDBTableView1Column7: TcxGridDBColumn
+        DataBinding.FieldName = #22791#27880
+        Options.Editing = False
+        Width = 100
+      end
       object cxGridDBTableView1Column5: TcxGridDBColumn
         Caption = #20379#24212#21830
         DataBinding.FieldName = 'gys'
         Options.Filtering = False
         Options.Sorting = False
-        Width = 100
+        Width = 80
       end
       object cxGridDBTableView1Column1: TcxGridDBColumn
         Caption = #20184#36135#25968#37327
@@ -229,7 +238,7 @@ object Form_FuHuoDan: TForm_FuHuoDan
     end
   end
   object cxButton1: TcxButton
-    Left = 669
+    Left = 819
     Top = 11
     Width = 74
     Height = 58
@@ -246,6 +255,7 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 669
   end
   object actmgr1: TActionManager
     ActionBars = <

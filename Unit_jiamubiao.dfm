@@ -57,6 +57,10 @@ object Form_jiamubiao: TForm_jiamubiao
         DataBinding.FieldName = #35268#26684
         Width = 57
       end
+      object TcxGridDBColumn
+        DataBinding.FieldName = #21253#35013#35268#26684
+        Width = 100
+      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
         Width = 52

@@ -55,6 +55,7 @@ type
     cxGridDBTableView1Column4: TcxGridDBColumn;
     act1: TAction;
     cxButton1: TcxButton;
+    cxGridDBTableView1Column7: TcxGridDBColumn;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -83,10 +84,11 @@ begin
 
   DataModule1.ADOQuery_dayin.Close;
   DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
-          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine, '+
+          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
+          ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号)  '+
-          ' from ( select 价目编号,名称,出库数量,单价,出库金额 '+
+          ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注 '+
           ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a';
   DataModule1.ADOQuery_dayin.open;
 
@@ -102,7 +104,6 @@ begin
   DataModule1.frxReport_dayin.Variables['jsr'] :=QuotedStr(qry_fuhuo.FieldByName('经手人').AsString);
   DataModule1.frxReport_dayin.Variables['bianhao'] :=QuotedStr(CKbianhao);
   DataModule1.frxReport_dayin.Variables['fenyuan'] :=QuotedStr(cxlbl_fenyuan.Caption);
-  DataModule1.frxReport_dayin.Variables['heji'] :=QuotedStr(cxGridDBTableView1.DataController.Summary.FooterSummaryValues[1]);
   DataModule1.frxReport_dayin.ShowReport;
 
 end;
@@ -131,7 +132,7 @@ begin
       ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
       ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号)'+
       ' from ( '+
-      ' select 出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人 '+
+      ' select 出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
       ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKBianhao)+' )a order by 名称';
     qry_fuhuo.Open;
 

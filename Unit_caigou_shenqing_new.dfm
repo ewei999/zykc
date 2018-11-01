@@ -112,11 +112,38 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
         PropertiesClassName = 'TcxLabelProperties'
         Width = 70
       end
+      object cxGrid1DBTableView1Column8: TcxGridDBColumn
+        DataBinding.FieldName = #20379#24212#21830
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.KeyFieldNames = #20379#24212#21830#32534#21495
+        Properties.ListColumns = <
+          item
+            FieldName = #21517#31216
+          end>
+        Properties.ListOptions.ShowHeader = False
+        Properties.ListSource = ds_gys_list
+        Width = 100
+      end
+      object cxGrid1DBTableView1Column7: TcxGridDBColumn
+        DataBinding.FieldName = #21333#20215
+        PropertiesClassName = 'TcxTextEditProperties'
+        Width = 60
+      end
+      object cxGrid1DBTableView1Column10: TcxGridDBColumn
+        DataBinding.FieldName = #21512#35745#37329#39069
+        Options.Editing = False
+        Width = 65
+      end
+      object cxGrid1DBTableView1Column9: TcxGridDBColumn
+        DataBinding.FieldName = #33293#38646#37329#39069
+        PropertiesClassName = 'TcxTextEditProperties'
+        Width = 65
+      end
       object cxGrid1DBTableView1DBColumn4: TcxGridDBColumn
         Caption = #29366#24577
         DataBinding.FieldName = 'zt'
         PropertiesClassName = 'TcxLabelProperties'
-        Width = 80
+        Width = 70
       end
       object cxGrid1DBTableView1Column6: TcxGridDBColumn
         DataBinding.FieldName = #19981#20184#36135#21407#22240
@@ -322,6 +349,42 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       end
     end
   end
+  object cxButton1: TcxButton
+    Left = 905
+    Top = 11
+    Width = 50
+    Height = 58
+    Action = act1
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 6
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object cxButton2: TcxButton
+    Left = 961
+    Top = 11
+    Width = 50
+    Height = 58
+    Action = act2
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 7
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object ADOQuery1: TADOQuery
     Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
@@ -334,6 +397,7 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
   end
   object DataSource1: TDataSource
     DataSet = ADOQuery1
+    OnDataChange = DataSource1DataChange
     Left = 128
     Top = 496
   end
@@ -352,6 +416,16 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       ImageIndex = 87
       OnExecute = act_excelExecute
     end
+    object act1: TAction
+      Caption = #21516#24847
+      ImageIndex = 0
+      OnExecute = act1Execute
+    end
+    object act2: TAction
+      Caption = #25298#32477
+      ImageIndex = 26
+      OnExecute = act2Execute
+    end
   end
   object ds_shenpi: TDataSource
     DataSet = qry_shenpi
@@ -367,5 +441,19 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       'select top 1 * from '#37319#36141#30003#35831#26126#32454#34920)
     Left = 344
     Top = 440
+  end
+  object ds_gys_list: TDataSource
+    DataSet = qry_gys_list
+    Left = 704
+    Top = 400
+  end
+  object qry_gys_list: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#20379#24212#21830#34920' where '#26159#21542#20316#24223'=0')
+    Left = 688
+    Top = 352
   end
 end

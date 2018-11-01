@@ -71,12 +71,25 @@ type
     cxGridDBColumn2: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
     cxGrid1DBTableView1Column6: TcxGridDBColumn;
+    cxButton1: TcxButton;
+    act1: TAction;
+    act2: TAction;
+    cxButton2: TcxButton;
+    cxGrid1DBTableView1Column7: TcxGridDBColumn;
+    cxGrid1DBTableView1Column8: TcxGridDBColumn;
+    ds_gys_list: TDataSource;
+    qry_gys_list: TADOQuery;
+    cxGrid1DBTableView1Column9: TcxGridDBColumn;
+    cxGrid1DBTableView1Column10: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure Action_closeExecute(Sender: TObject);
     procedure act_excelExecute(Sender: TObject);
-
+    procedure act1Execute(Sender: TObject);
+    procedure act2Execute(Sender: TObject);
+    procedure DataSource1DataChange(Sender: TObject; Field: TField);
   private
-
+    fenyuan:string;
+    procedure TuiHuoYiJian(yijian:string);
   public
     baocun:boolean;
     zt : string;
@@ -91,6 +104,127 @@ implementation
 
 uses unit_dm, Unit_public;
 
+procedure TForm_caigou_shenqing_new.TuiHuoYiJian(yijian:string);
+var
+  shijian:TDateTime;
+  danjia:Real;
+begin
+  if yijian='5' then
+  begin
+    ADOQuery1.DisableControls;
+    ADOQuery1.First;
+    while not ADOQuery1.Eof do
+    begin
+      if ADOQuery1.FieldByName('供应商').AsString='' then
+      begin
+        ADOQuery1.EnableControls;
+        ADOQuery1.edit;
+        Application.MessageBox('供应商不能为空', '提示', MB_OK);
+        exit;
+      end;
+
+      if ADOQuery1.FieldByName('单价').AsString='' then
+      begin
+        ADOQuery1.EnableControls;
+        ADOQuery1.edit;
+        Application.MessageBox('单价不能为空', '提示', MB_OK);
+        exit;
+      end;
+
+      try
+        danjia:= ADOQuery1.FieldByName('单价').asfloat;
+        if danjia<0 then
+        begin
+          ADOQuery1.EnableControls;
+          ADOQuery1.edit;
+          Application.MessageBox('单价不能小于0', '提示', MB_OK);
+          exit;
+        end;
+      except
+        ADOQuery1.EnableControls;
+        ADOQuery1.edit;
+        Application.MessageBox('单价格式不正确', '提示', MB_OK);
+        exit;
+      end;
+
+      ADOQuery1.Next;
+    end;
+    ADOQuery1.EnableControls;
+  end;
+
+  if yijian='5' then
+  begin
+    if Application.MessageBox(pchar('您的退货意见是 同意 ，确认操作吗？'), '确认', MB_OKCANCEL +
+      MB_ICONINFORMATION) = IDCANCEL then
+      exit;
+  end
+  else
+  begin
+    if Application.MessageBox(pchar('您的退货意见是 拒绝 ，确认操作吗？'), '确认', MB_OKCANCEL +
+      MB_ICONINFORMATION) = IDCANCEL then
+      exit;
+  end;
+
+  DataModule1.ADOCon_ALi.BeginTrans;
+  try
+    shijian:=XiTong_date;
+    DataModule1.execSql('update 提货申请主表 set 状态='+yijian+' where 申请编号='+QuotedStr(cxLabel_bianhao.Caption)+' ');
+
+    if yijian='5' then    //同意退货
+    begin
+      //中央库存生成负数出库单
+      ADOQuery1.DisableControls;
+      ADOQuery1.First;
+      while not ADOQuery1.Eof do
+      begin
+        DataModule1.openSql('select top 0 * from 中央库存_出库表');
+        DataModule1.ADOQuery_L.Append;
+        DataModule1.ADOQuery_L.FieldByName('出库编号').AsString:=cxLabel_bianhao.Caption;
+        DataModule1.ADOQuery_L.FieldByName('出库时间').AsDateTime:=shijian;
+        DataModule1.ADOQuery_L.FieldByName('价目编号').AsString:=ADOQuery1.FieldByName('价目编号').AsString;
+        DataModule1.ADOQuery_L.FieldByName('名称').AsString:=ADOQuery1.FieldByName('名称').AsString;
+        DataModule1.ADOQuery_L.FieldByName('出库数量').AsFloat:=ADOQuery1.FieldByName('数量').Asfloat*-1;
+        DataModule1.ADOQuery_L.FieldByName('单价').AsFloat:=ADOQuery1.FieldByName('单价').Asfloat;
+        DataModule1.ADOQuery_L.FieldByName('出库金额').AsFloat:=ADOQuery1.FieldByName('合计金额').Asfloat*-1;
+        DataModule1.ADOQuery_L.FieldByName('舍零金额').AsFloat:=ADOQuery1.FieldByName('舍零金额').Asfloat;
+        DataModule1.ADOQuery_L.FieldByName('供应商').AsString:=ADOQuery1.FieldByName('供应商').AsString;
+        DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:=fenyuan;
+        DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:=false;
+        DataModule1.ADOQuery_L.FieldByName('状态').asinteger:=1;    //状态为1，表示门店未处理，需要门店点击一下，在自己的数据库中生成一笔负数的入库单
+        DataModule1.ADOQuery_L.FieldByName('经手人').asstring:=G_user.UserName;
+        DataModule1.ADOQuery_L.post;
+
+        ADOQuery1.Next;
+      end;
+      ADOQuery1.EnableControls;
+
+      ADOQuery1.UpdateBatch();
+    end;
+
+    baocun:=true;
+    DataModule1.ADOCon_ALi.CommitTrans;
+    Application.MessageBox('操作成功', '提示', MB_OK);
+    close;
+  except
+    DataModule1.ADOCon_ALi.RollbackTrans;
+    Application.MessageBox('操作失败', '提示', MB_OK);
+  end;
+
+end;
+
+procedure TForm_caigou_shenqing_new.act1Execute(Sender: TObject);
+begin
+  if cxLabel_bianhao.Caption='' then
+    exit;
+  TuiHuoYiJian('5');    //同意
+end;
+
+procedure TForm_caigou_shenqing_new.act2Execute(Sender: TObject);
+begin
+  if cxLabel_bianhao.Caption='' then
+    exit;
+  TuiHuoYiJian('6');  //拒绝
+end;
 
 procedure TForm_caigou_shenqing_new.Action_closeExecute(Sender: TObject);
 begin
@@ -102,8 +236,43 @@ begin
   DaochuExcel(cxGrid1);
 end;
 
+procedure TForm_caigou_shenqing_new.DataSource1DataChange(Sender: TObject;
+  Field: TField);
+begin
+  if Self.Caption<>'退货申请单' then
+    exit;
+
+  if (ADOQuery1.Modified) and (ADOQuery1.State = dsEdit) then
+  begin
+    if (LowerCase(Field.FieldName)= '单价') or (LowerCase(Field.FieldName)= '舍零金额') then
+    begin
+      if ADOQuery1.FieldByName('单价').AsString='' then
+      begin
+        Application.MessageBox('单价不能为空', '提示', MB_OK);
+        exit;
+      end;
+      if ADOQuery1.FieldByName('舍零金额').AsString<>'' then
+        ADOQuery1.FieldByName('合计金额').AsFloat:=ADOQuery1.FieldByName('数量').AsFloat*ADOQuery1.FieldByName('单价').AsFloat
+          -ADOQuery1.FieldByName('舍零金额').AsFloat
+      else
+        ADOQuery1.FieldByName('合计金额').AsFloat:=ADOQuery1.FieldByName('数量').AsFloat*ADOQuery1.FieldByName('单价').AsFloat;
+    end;
+  end;
+end;
+
 procedure TForm_caigou_shenqing_new.FormShow(Sender: TObject);
 begin
+  cxButton1.Visible:=false;
+  cxButton2.Visible:=false;
+  cxGrid1DBTableView1Column7.Visible:=false;
+  cxGrid1DBTableView1Column8.Visible:=false;
+  cxGrid1DBTableView1Column9.Visible:=false;
+  cxGrid1DBTableView1Column10.Visible:=false;
+  if zt='chakan' then
+  begin
+    pnl1.Enabled:=false;
+    cxGrid1DBTableView1.OptionsData.Editing:=false;
+  end;
   if cxLabel_bianhao.Caption<>'' then
   begin
     DataModule1.openSql('select *,'+
@@ -114,22 +283,51 @@ begin
     cxLabel5.Caption := DataModule1.ADOQuery_L.FieldByName('申请人').asstring;
     cxMemo1.Lines.text := DataModule1.ADOQuery_L.FieldByName('申请说明').asstring;
     cxLabel7.Caption:= DataModule1.ADOQuery_L.FieldByName('分院').asstring;
-
-    ADOQuery1.Active := false;
-    ADOQuery1.SQL.text := 'select *,'+
-      ' zt=(case 状态 when 1 then ''待处理'' when 2 then ''已付货'' when 3 then ''不付货'' end) '+
-      ' from (select  * from 提货申请明细表 where 申请编号 = '+ QuotedStr(cxLabel_bianhao.Caption)+')a';
-    ADOQuery1.Active := true;
+    fenyuan:= DataModule1.ADOQuery_L.FieldByName('分店代码').asstring;
 
     qry_shenpi.Close;
     qry_shenpi.SQL.Text:='select * from 提货申请审批表 where 申请编号='+QuotedStr(cxLabel_bianhao.Caption)+' order by 编号 ';
     qry_shenpi.Open;
-  end;
 
-  if zt='chakan' then
-  begin
-    pnl1.Enabled:=false;
-    cxGrid1DBTableView1.OptionsData.Editing:=false;
+    if DataModule1.ADOQuery_L.FieldByName('类别').AsInteger=2 then
+    begin
+      qry_gys_list.Close;
+      qry_gys_list.SQL.Text:='select * from 供应商表 where 是否作废=0';
+      qry_gys_list.Open;
+      Self.Caption:='退货申请单';
+      cxLabel10.Caption:=self.Caption;
+      cxGrid1DBTableView1Column6.Visible:=false;
+      cxGrid1DBTableView1DBColumn5.Caption:='退货数量';
+      cxGrid1DBTableView1Column7.Visible:=true;
+      cxGrid1DBTableView1Column8.Visible:=true;
+      cxGrid1DBTableView1DBColumn4.Visible:=false;
+      cxGrid1DBTableView1Column9.Visible:=true;
+      cxGrid1DBTableView1Column10.Visible:=true;
+      cxGrid1DBTableView1.OptionsData.Editing:=true;
+      if DataModule1.ADOQuery_L.FieldByName('状态').AsInteger=2 then
+      begin
+        cxButton1.Visible:=true;
+        cxButton2.Visible:=true;
+      end
+      else
+      begin
+        cxGrid1DBTableView1.OptionsData.Editing:=false;
+      end;
+      ADOQuery1.Active := false;
+      ADOQuery1.SQL.text := 'select *,'+
+        ' zt=(case 状态 when 1 then ''待处理'' when 2 then ''已退货'' when 3 then ''拒绝退货'' end) '+
+        ' from (select  * from 提货申请明细表 where 申请编号 = '+ QuotedStr(cxLabel_bianhao.Caption)+')a';
+      ADOQuery1.Active := true;
+    end
+    else
+    begin
+      ADOQuery1.Active := false;
+      ADOQuery1.SQL.text := 'select *,'+
+        ' zt=(case 状态 when 1 then ''待处理'' when 2 then ''已付货'' when 3 then ''不付货'' end) '+
+        ' from (select  * from 提货申请明细表 where 申请编号 = '+ QuotedStr(cxLabel_bianhao.Caption)+')a';
+      ADOQuery1.Active := true;
+    end;
+
   end;
 end;
 

@@ -272,7 +272,7 @@ begin
   qry_fenyuan.Open;
 
   qry_gys.Close;
-  qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where 是否作废=0';
+  qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where isnull(是否作废,0)=0 and 支付性质=''赊购''';
   qry_gys.Open;
 end;
 

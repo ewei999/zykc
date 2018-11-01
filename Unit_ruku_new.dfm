@@ -118,7 +118,10 @@ object Form_ruku_new: TForm_ruku_new
         end>
       Properties.ListOptions.ShowHeader = False
       Properties.ListSource = DataSource_list
+      Properties.OnCloseUp = cxDBLookupComboBox1PropertiesCloseUp
       TabOrder = 9
+      OnExit = cxDBLookupComboBox1Exit
+      OnKeyPress = cxDBLookupComboBox1KeyPress
       Width = 145
     end
     object cxDBMemo1: TcxDBMemo
@@ -178,13 +181,13 @@ object Form_ruku_new: TForm_ruku_new
       DataField = #36141#36135#26041#24335
       DataSource = DataSource_cg_zhubiao
       Items.Strings = (
-        #36170
-        #29616)
+        #36170#36141
+        #29616#36141)
       TabOrder = 15
     end
     object cxLabel7: TcxLabel
       Left = 176
-      Top = 125
+      Top = 128
       Caption = #37329#39069
     end
     object cxDBTextEdit3: TcxDBTextEdit
@@ -198,7 +201,7 @@ object Form_ruku_new: TForm_ruku_new
     end
     object cxLabel8: TcxLabel
       Left = 416
-      Top = 123
+      Top = 126
       Caption = #33293#38646
     end
     object cxDBTextEdit4: TcxDBTextEdit

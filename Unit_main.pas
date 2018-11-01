@@ -28,7 +28,7 @@ uses
   cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
   cxDBLookupComboBox, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
-  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu;
+  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu,Unit_gongyingshang;
 
 type
   TForm_main = class(TForm)
@@ -36,7 +36,6 @@ type
     dxNavBar1: TdxNavBar;
     cxPageControl_main: TcxPageControl;
     dxNavBar1Group1: TdxNavBarGroup;
-    dxNavBar1Item1: TdxNavBarItem;
     cxTabSheet1: TcxTabSheet;
     pnl1: TPanel;
     cxLabel1: TcxLabel;
@@ -171,7 +170,6 @@ type
     Action_ruku_new: TAction;
     dxNavBar1Item7: TdxNavBarItem;
     dxNavBar1Group4: TdxNavBarGroup;
-    dxNavBar1Item8: TdxNavBarItem;
     cxTabSheet9: TcxTabSheet;
     pnl3: TPanel;
     cxlbl5: TcxLabel;
@@ -179,33 +177,6 @@ type
     cxlbl6: TcxLabel;
     cxDate_TuiH_zhongzhi: TcxDateEdit;
     cxButton19: TcxButton;
-    cxButton20: TcxButton;
-    cxPage_TuiHuo: TcxPageControl;
-    cxTabSheet10: TcxTabSheet;
-    cxGrid8: TcxGrid;
-    cxGridDBTableView5: TcxGridDBTableView;
-    cxGridDBColumn14: TcxGridDBColumn;
-    cxGridDBColumn15: TcxGridDBColumn;
-    cxGridDBColumn16: TcxGridDBColumn;
-    cxGridDBColumn17: TcxGridDBColumn;
-    cxGridDBColumn18: TcxGridDBColumn;
-    cxGridDBColumn19: TcxGridDBColumn;
-    cxGridDBColumn20: TcxGridDBColumn;
-    cxGridDBColumn21: TcxGridDBColumn;
-    cxGridLevel5: TcxGridLevel;
-    cxTabSheet11: TcxTabSheet;
-    cxGrid9: TcxGrid;
-    cxGridDBTableView6: TcxGridDBTableView;
-    cxGridDBColumn22: TcxGridDBColumn;
-    cxGridDBColumn23: TcxGridDBColumn;
-    cxGridDBColumn24: TcxGridDBColumn;
-    cxGridDBColumn25: TcxGridDBColumn;
-    cxGridDBColumn26: TcxGridDBColumn;
-    cxGridDBColumn27: TcxGridDBColumn;
-    cxGridDBColumn28: TcxGridDBColumn;
-    cxGridDBColumn29: TcxGridDBColumn;
-    cxGridDBColumn30: TcxGridDBColumn;
-    cxGridLevel6: TcxGridLevel;
     ds_Tuihuo: TDataSource;
     qry_Tuihuo: TADOQuery;
     cxGroupBox1: TcxGroupBox;
@@ -324,8 +295,47 @@ type
     cxGridDBTableView8Column2: TcxGridDBColumn;
     cxGridDBTableView8Column3: TcxGridDBColumn;
     cxGridDBTableView8Column4: TcxGridDBColumn;
+    dxNavBar1Item11: TdxNavBarItem;
+    cxGrid8: TcxGrid;
+    cxGridDBTableView5: TcxGridDBTableView;
+    cxGridDBColumn14: TcxGridDBColumn;
+    cxGridDBColumn15: TcxGridDBColumn;
+    cxGridDBColumn16: TcxGridDBColumn;
+    cxGridDBColumn17: TcxGridDBColumn;
+    cxGridDBColumn18: TcxGridDBColumn;
+    cxGridDBColumn19: TcxGridDBColumn;
+    cxGridDBColumn21: TcxGridDBColumn;
+    cxGridLevel5: TcxGridLevel;
+    dxNavBar1Item1: TdxNavBarItem;
+    cxTabSheet10: TcxTabSheet;
+    pnl6: TPanel;
+    cxlbl10: TcxLabel;
+    cxDateEdit3: TcxDateEdit;
+    cxlbl11: TcxLabel;
+    cxDateEdit4: TcxDateEdit;
+    cxButton17: TcxButton;
+    cxlbl12: TcxLabel;
+    cxLookupComboBox1: TcxLookupComboBox;
+    cxlbl13: TcxLabel;
+    cxComboBox1: TcxComboBox;
+    cxGrid9: TcxGrid;
+    cxGridDBTableView6: TcxGridDBTableView;
+    cxGridDBColumn20: TcxGridDBColumn;
+    cxGridDBColumn22: TcxGridDBColumn;
+    cxGridDBColumn23: TcxGridDBColumn;
+    cxGridDBColumn24: TcxGridDBColumn;
+    cxGridDBColumn25: TcxGridDBColumn;
+    cxGridDBColumn26: TcxGridDBColumn;
+    cxGridDBColumn27: TcxGridDBColumn;
+    cxGridDBColumn28: TcxGridDBColumn;
+    cxGridLevel6: TcxGridLevel;
+    ds_TuiHuoJiLu: TDataSource;
+    qry_TuiHuoJiLu: TADOQuery;
+    cxGridDBTableView6Column1: TcxGridDBColumn;
+    cxGridDBTableView6Column2: TcxGridDBColumn;
+    cxGridDBTableView6Column3: TcxGridDBColumn;
+    dxNavBar1Item8: TdxNavBarItem;
     procedure FormCreate(Sender: TObject);
-    procedure dxNavBar1Item1Click(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
     procedure cxGrid1DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
@@ -355,7 +365,6 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure Action_ruku_newExecute(Sender: TObject);
     procedure dxNavBar1Item7Click(Sender: TObject);
-    procedure dxNavBar1Item8Click(Sender: TObject);
     procedure cxButton19Click(Sender: TObject);
     procedure cxButton14Click(Sender: TObject);
     procedure cxGridDBTableView2CellDblClick(Sender: TcxCustomGridTableView;
@@ -370,6 +379,18 @@ type
     procedure dxNavBar1Item10Click(Sender: TObject);
     procedure cxButton15Click(Sender: TObject);
     procedure cxGridDBTableView8CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure dxNavBar1Item11Click(Sender: TObject);
+    procedure dxNavBar1Item4Click(Sender: TObject);
+    procedure cxGridDBTableView5CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
+    procedure dxNavBar1Group1Click(Sender: TObject);
+    procedure dxNavBar1Group4Click(Sender: TObject);
+    procedure dxNavBar1Item1Click(Sender: TObject);
+    procedure cxButton17Click(Sender: TObject);
+    procedure cxGridDBTableView6CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
   private
@@ -622,6 +643,32 @@ begin
   qry_kucun.Open;
 end;
 
+procedure TForm_main.cxButton17Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  tjstr:='';
+  if (cxLookupComboBox1.Text<>'') and (cxLookupComboBox1.Text<>'全部') then
+    tjstr:=tjstr+' and 分店代码='+QuotedStr(cxLookupComboBox1.EditValue)+'';
+  if cxDateEdit3.Text<>'' then
+    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDateEdit3.Text)+'';
+  if cxDateEdit4.Text<>'' then
+    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit4.date,1)))+'';
+  if cxComboBox1.Text='待处理' then
+    tjstr:=tjstr+' and 状态=1 ';
+  if cxComboBox1.Text='已处理' then
+    tjstr:=tjstr+' and 状态=2 ';
+
+  qry_TuiHuoJiLu.Close;
+  qry_TuiHuoJiLu.SQL.Text:='select *, '+
+    ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码) ,'+
+    ' zt=(case 状态 when 1 then ''待处理'' when 2 then ''已处理''  end) '+
+    ' from ( select 出库编号,出库时间,名称,出库数量,出库金额,单价,舍零金额,分店代码,供应商,状态,'+
+    ' 门店接收人,门店接收时间 from 中央库存_出库表 where 是否作废=0  and left(出库编号,2)=''TH'' '+tjstr+
+    ' )a order by  出库时间';
+  qry_TuiHuoJiLu.Open;
+end;
+
 procedure TForm_main.cxButton19Click(Sender: TObject);
 var
   tjstr:string;
@@ -635,12 +682,9 @@ begin
   qry_Tuihuo.Close;
   qry_Tuihuo.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
     ' 申请数量=(select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 ) ,'+
-    ' 已付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=2 ),0) , '+
-    ' 不付货数量=isnull((select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 and 状态=3 ),0)  '+
-    ' from ( select * from 提货申请主表 where 是否作废=0 and 状态=2 and 类别=2 '+tjstr+' )a order by 申请日期';
+    ' zt=(case 状态 when 2 then ''待处理'' when 5 then ''同意退货'' when 6 then ''拒绝退货'' end)  '+
+    ' from ( select * from 提货申请主表 where 是否作废=0 and 状态 not in (0,1,3,4) and 类别=2 '+tjstr+' )a order by 申请日期';
   qry_Tuihuo.Open;
-
-  cxTabSheet10.Show;
 end;
 
 procedure TForm_main.cxButton1Click(Sender: TObject);
@@ -738,7 +782,7 @@ begin
     ' 门店接收时间=(select top 1 门店接收时间 from 中央库存_出库表 where 出库编号=a.出库编号),'+
     ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号), '+
     ' 分店代码=(select top 1 分店代码 from 中央库存_出库表 where 出库编号=a.出库编号)'+
-    ' from ( select 出库编号 from 中央库存_出库表 where 是否作废=0 '+tjstr+
+    ' from ( select 出库编号 from 中央库存_出库表 where 是否作废=0 and left(出库编号,2)<>''TH'' '+tjstr+
     ' group by 出库编号 )a)b order by 出库时间';
   qry_fuhuo_jilu.Open;
 end;
@@ -813,6 +857,36 @@ begin
     Form_FuHuoDan.ShowModal;
   finally
     FreeAndNil(Form_FuHuoDan);
+  end;
+end;
+
+procedure TForm_main.cxGridDBTableView5CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_caigou_shenqing_new := TForm_caigou_shenqing_new.Create(nil);
+  try
+    Form_caigou_shenqing_new.zt := 'chakan';
+    Form_caigou_shenqing_new.cxLabel_bianhao.Caption := qry_Tuihuo.FieldByName('申请编号').asstring;
+    Form_caigou_shenqing_new.ShowModal;
+    if Form_caigou_shenqing_new.baocun then
+      qry_Tuihuo.Requery();
+  finally
+    FreeAndNil(Form_caigou_shenqing_new);
+  end;
+end;
+
+procedure TForm_main.cxGridDBTableView6CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_caigou_shenqing_new := TForm_caigou_shenqing_new.Create(nil);
+  try
+    Form_caigou_shenqing_new.zt := 'chakan';
+    Form_caigou_shenqing_new.cxLabel_bianhao.Caption := qry_TuiHuoJiLu.FieldByName('出库编号').asstring;
+    Form_caigou_shenqing_new.ShowModal;
+  finally
+    FreeAndNil(Form_caigou_shenqing_new);
   end;
 end;
 
@@ -906,6 +980,12 @@ begin
   end;
 end;
 
+procedure TForm_main.dxNavBar1Group1Click(Sender: TObject);
+begin
+  cxTabSheet1.Show;
+  cxTabSheet2.Show;
+end;
+
 procedure TForm_main.dxNavBar1Group2Click(Sender: TObject);
 var
   str   :string;
@@ -934,21 +1014,42 @@ begin
 
 end;
 
+procedure TForm_main.dxNavBar1Group4Click(Sender: TObject);
+begin
+  cxTabSheet9.Show;
+end;
+
 procedure TForm_main.dxNavBar1Item10Click(Sender: TObject);
 begin
   cxTabSheet13.Show;
 end;
 
+procedure TForm_main.dxNavBar1Item11Click(Sender: TObject);
+begin
+  Form_fuhuo := tForm_fuhuo.Create(nil);
+  try
+    Form_fuhuo.laiyuan:='主动付货';
+    Form_fuhuo.ShowModal;
+    if Form_fuhuo.baocun then
+    begin
+      if qry_fuhuo_jilu.Active then
+        qry_fuhuo_jilu.Requery();
+    end;
+  finally
+    FreeAndNil(Form_fuhuo);
+  end;
+end;
+
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
 begin
-  cxTabSheet1.Show;
-  cxTabSheet2.Show;
+  cxTabSheet10.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item2Click(Sender: TObject);
 begin
   Form_fuhuo := tForm_fuhuo.Create(nil);
   try
+    Form_fuhuo.laiyuan:='按申请单';
     Form_fuhuo.ShowModal;
     if Form_fuhuo.baocun then
     begin
@@ -959,7 +1060,6 @@ begin
       if qry_fuhuo_jilu.Active then
         qry_fuhuo_jilu.Requery();
     end;
-
   finally
     FreeAndNil(Form_fuhuo);
   end;
@@ -968,6 +1068,16 @@ end;
 procedure TForm_main.dxNavBar1Item3Click(Sender: TObject);
 begin
   cxTabSheet4.Show;
+end;
+
+procedure TForm_main.dxNavBar1Item4Click(Sender: TObject);
+begin
+  Form_gongyingshang := TForm_gongyingshang.Create(nil);
+  try
+    Form_gongyingshang.ShowModal;
+  finally
+    FreeAndNil(Form_gongyingshang);
+  end;
 end;
 
 procedure TForm_main.dxNavBar1Item5Click(Sender: TObject);
@@ -994,12 +1104,6 @@ begin
   end;
 end;
 
-procedure TForm_main.dxNavBar1Item8Click(Sender: TObject);
-begin
-  cxTabSheet9.Show;
-  cxTabSheet10.Show;
-end;
-
 procedure TForm_main.dxNavBar1Item9Click(Sender: TObject);
 begin
   cxTabSheet12.Show;
@@ -1010,12 +1114,12 @@ procedure TForm_main.FormCreate(Sender: TObject);
 begin
   cxPageControl_main.HideTabs:=true;
   cxPage_tihuoshenqing.HideTabs:=true;
-  cxPage_TuiHuo.HideTabs:=true;
   cxTabSheet2.Show;
 
   cxDate_th_qishi.Date:=IncMonth(date,-1);
   cxDate_FH_qishi.Date:=IncMonth(date,-1);
   cxDate_TuiH_qishi.Date:=IncMonth(date,-1);
+  cxDateEdit3.Date:=IncMonth(date,-1);
 
   qry_fenyuan.Close;
   qry_fenyuan.SQL.Text:='select abbr,name from 分院表 where sort_id<>0 union all select abbr=''全部'',name=''全部'' ';

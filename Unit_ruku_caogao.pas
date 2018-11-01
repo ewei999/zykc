@@ -25,7 +25,7 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.ExtCtrls,
   cxGroupBox, System.Actions, Vcl.ActnList, Vcl.PlatformDefaultStyleActnCtrls,
   Vcl.ActnMan, Vcl.ToolWin, Vcl.ActnCtrls, dxGDIPlusClasses, IdMailBox,
-  Data.Win.ADODB,DateUtils, cxDBLookupComboBox, cxCheckBox;
+  Data.Win.ADODB,DateUtils, cxDBLookupComboBox, cxCheckBox, dxSkinBlue;
 
 type
   TForm_ruku_caogao = class(TForm)

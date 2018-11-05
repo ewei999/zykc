@@ -114,7 +114,7 @@ object Form_fuhuo: TForm_fuhuo
     Height = 621
     Align = alClient
     TabOrder = 3
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 616

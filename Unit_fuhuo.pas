@@ -683,7 +683,7 @@ begin
 
   qry_thshenqing_mx.Close;
   qry_thshenqing_mx.SQL.Text:='select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
-    ' select 编号,申请编号,价目编号,数量,规格,单位, '+
+    ' select 编号,申请编号,价目编号,数量,规格,单位,备注, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
     ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+

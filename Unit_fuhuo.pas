@@ -488,36 +488,43 @@ begin
 
       //判断中央仓库是此物品的库存是否够本次付货
       if qry_kucun.Locate('价目编号',qry_zhudong.FieldByName('价目编号').asstring,[]) = False then
+      begin
+        danjia:= ChaXunKuCun(qry_zhudong.FieldByName('价目编号').asstring);
+        if danjia<>-1 then
         begin
-          danjia:= ChaXunKuCun(qry_zhudong.FieldByName('价目编号').asstring);
-          if danjia<>-1 then
-          begin
-            qry_kucun.Append;
-            qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
-            qry_kucun.FieldByName('库存').AsFloat:= danjia-qry_zhudong.FieldByName('出库数量').asfloat;
-            qry_kucun.Post;
-          end
-          else
+          qry_kucun.Append;
+          qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
+          qry_kucun.FieldByName('库存').AsFloat:= danjia;
+          qry_kucun.Post;
+          if qry_kucun.FieldByName('库存').AsFloat<0 then
           begin
             qry_zhudong.EnableControls;
             qry_zhudong.edit;
-            Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存错误，不能付货'), '提示', MB_OK);
+            Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
             exit;
           end;
         end
+        else
+        begin
+          qry_zhudong.EnableControls;
+          qry_zhudong.edit;
+          Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存错误，不能付货'), '提示', MB_OK);
+          exit;
+        end;
+      end
       else
       begin
         qry_kucun.Edit;
         qry_kucun.FieldByName('库存').AsFloat:= qry_kucun.FieldByName('库存').AsFloat-qry_zhudong.FieldByName('出库数量').asfloat;
         qry_kucun.Post;
-      end;
 
-      if qry_kucun.FieldByName('库存').AsFloat<=0 then
-      begin
-        qry_zhudong.EnableControls;
-        qry_zhudong.edit;
-        Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
-        exit;
+        if qry_kucun.FieldByName('库存').AsFloat<=0 then
+        begin
+          qry_zhudong.EnableControls;
+          qry_zhudong.edit;
+          Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
+          exit;
+        end;
       end;
 
       qry_zhudong.Next;
@@ -572,11 +579,11 @@ begin
         begin
           DataModule1.ADOQuery_dayin.Close;
           DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
-          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine, '+
+          ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
           ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号)  '+
-          ' from ( select 价目编号,名称,出库数量,单价,出库金额 '+
+          ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注 '+
           ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' and 分店代码='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('分店代码').AsString)+'  )a';
           DataModule1.ADOQuery_dayin.open;
 

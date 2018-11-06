@@ -102,6 +102,12 @@ begin
     cxlbl1.Caption:='出库记录';
     Self.Caption:='出库记录';
   end;
+  if leibie='未接收' then
+  begin
+    cxTabSheet2.Show;
+    cxlbl1.Caption:='未接收记录';
+    Self.Caption:='未接收记录';
+  end;
 end;
 
 end.

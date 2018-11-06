@@ -335,6 +335,8 @@ type
     cxGridDBTableView6Column2: TcxGridDBColumn;
     cxGridDBTableView6Column3: TcxGridDBColumn;
     dxNavBar1Item8: TdxNavBarItem;
+    cxGridDBTableView8Column5: TcxGridDBColumn;
+    cxButton18: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -634,8 +636,9 @@ begin
   end;
 
   qry_kucun.Close;
-  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量 from ( select a.*, '+
+  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收 from ( select a.*, '+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+ sjdstr+
+    ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
     ' b.名称,b.规格,b.单位,b.类别,b.小类,b.原名称 '+
     ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
     ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) '+mctj+' group by 价目编号 '+
@@ -978,6 +981,28 @@ begin
       FreeAndNil(Form_KuCunJilu);
     end;
   end;
+  if (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '未接收数量') then
+  begin
+    sqlstr:= 'select * , '+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商), '+
+      ' 分店=(select top 1 name from 分院表 where abbr=a.分店代码), '+
+      ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
+      ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 )'+
+      ' from ( select * from 中央库存_出库表 '+
+      ' where 状态=1 and 是否作废=0 and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
+
+    Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+    try
+      Form_KuCunJilu.leibie:='未接收';
+      Form_KuCunJilu.qry_leibiao.Close;
+      Form_KuCunJilu.qry_leibiao.SQL.Text:= sqlstr;
+      Form_KuCunJilu.qry_leibiao.Open;
+      Form_KuCunJilu.ShowModal;
+    finally
+      FreeAndNil(Form_KuCunJilu);
+    end;
+  end;
+
 end;
 
 procedure TForm_main.dxNavBar1Group1Click(Sender: TObject);

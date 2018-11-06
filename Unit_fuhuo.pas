@@ -266,7 +266,7 @@ begin
             qry_kucun.Post;
           end;
 
-          if qry_kucun.FieldByName('库存').AsFloat<=0 then
+          if qry_kucun.FieldByName('库存').AsFloat<0 then
           begin
             cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=True;
             qry_thshenqing_mx.EnableControls;
@@ -494,15 +494,8 @@ begin
         begin
           qry_kucun.Append;
           qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
-          qry_kucun.FieldByName('库存').AsFloat:= danjia;
+          qry_kucun.FieldByName('库存').AsFloat:= danjia-qry_zhudong.FieldByName('出库数量').asfloat;
           qry_kucun.Post;
-          if qry_kucun.FieldByName('库存').AsFloat<0 then
-          begin
-            qry_zhudong.EnableControls;
-            qry_zhudong.edit;
-            Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
-            exit;
-          end;
         end
         else
         begin
@@ -517,16 +510,15 @@ begin
         qry_kucun.Edit;
         qry_kucun.FieldByName('库存').AsFloat:= qry_kucun.FieldByName('库存').AsFloat-qry_zhudong.FieldByName('出库数量').asfloat;
         qry_kucun.Post;
-
-        if qry_kucun.FieldByName('库存').AsFloat<=0 then
-        begin
-          qry_zhudong.EnableControls;
-          qry_zhudong.edit;
-          Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
-          exit;
-        end;
       end;
 
+      if qry_kucun.FieldByName('库存').AsFloat<0 then
+      begin
+        qry_zhudong.EnableControls;
+        qry_zhudong.edit;
+        Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
+        exit;
+      end;
       qry_zhudong.Next;
     end;
     qry_zhudong.EnableControls;

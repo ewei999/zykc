@@ -176,27 +176,24 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet8
+    Properties.ActivePage = cxTabSheet13
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 716
-    ClientRectRight = 1076
-    ClientRectTop = 30
+    ClientRectBottom = 711
+    ClientRectLeft = 2
+    ClientRectRight = 1071
+    ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = #25552#36135#30003#35831
       ImageIndex = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 70
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1069
         object cxLabel1: TcxLabel
           Left = 29
           Top = 24
@@ -249,24 +246,20 @@
       object cxPage_tihuoshenqing: TcxPageControl
         Left = 0
         Top = 70
-        Width = 1076
-        Height = 616
+        Width = 1069
+        Height = 610
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet2
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1069
-        ExplicitHeight = 610
-        ClientRectBottom = 616
-        ClientRectRight = 1076
-        ClientRectTop = 30
+        ClientRectBottom = 605
+        ClientRectLeft = 2
+        ClientRectRight = 1064
+        ClientRectTop = 31
         object cxTabSheet2: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object cxGrid1: TcxGrid
             Left = 0
             Top = 0
@@ -338,9 +331,6 @@
         object cxTabSheet3: TcxTabSheet
           Caption = #26126#32454
           ImageIndex = 1
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object cxGrid2: TcxGrid
             Left = 0
             Top = 0
@@ -435,7 +425,7 @@
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 89
         Align = alTop
         BevelOuter = bvNone
@@ -479,13 +469,13 @@
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 1076
+          Width = 1069
           Height = 74
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 4
           DesignSize = (
-            1076
+            1069
             74)
           object cxLabel9: TcxLabel
             Left = 5
@@ -515,7 +505,7 @@
             Transparent = True
           end
           object cxButton16: TcxButton
-            Left = 844
+            Left = 837
             Top = 8
             Width = 50
             Height = 58
@@ -531,10 +521,9 @@
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 837
           end
           object cxButton10: TcxButton
-            Left = 900
+            Left = 893
             Top = 8
             Width = 50
             Height = 58
@@ -550,10 +539,9 @@
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 893
           end
           object cxButton11: TcxButton
-            Left = 956
+            Left = 949
             Top = 8
             Width = 50
             Height = 58
@@ -569,10 +557,9 @@
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 949
           end
           object cxButton12: TcxButton
-            Left = 1012
+            Left = 1005
             Top = 8
             Width = 50
             Height = 58
@@ -588,7 +575,6 @@
             Font.Name = 'Tahoma'
             Font.Style = []
             ParentFont = False
-            ExplicitLeft = 1005
           end
           object cxLabel3: TcxLabel
             Left = 189
@@ -633,24 +619,20 @@
       object cxPageControl1: TcxPageControl
         Left = 0
         Top = 89
-        Width = 1076
-        Height = 597
+        Width = 1069
+        Height = 591
         Align = alClient
         TabOrder = 1
         Properties.ActivePage = cxTabSheet5
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1069
-        ExplicitHeight = 591
-        ClientRectBottom = 597
-        ClientRectRight = 1076
-        ClientRectTop = 30
+        ClientRectBottom = 586
+        ClientRectLeft = 2
+        ClientRectRight = 1064
+        ClientRectTop = 31
         object cxTabSheet5: TcxTabSheet
           Caption = #37319#36141#27719#24635
           ImageIndex = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object cxGrid3: TcxGrid
             Left = 0
             Top = 0
@@ -728,9 +710,6 @@
         object cxTabSheet6: TcxTabSheet
           Caption = #37319#36141#26126#32454
           ImageIndex = 1
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object cxGrid4: TcxGrid
             Left = 0
             Top = 0
@@ -834,19 +813,14 @@
     object cxTabSheet7: TcxTabSheet
       Caption = #20184#36135#35760#24405
       ImageIndex = 2
-      ExplicitLeft = 2
-      ExplicitTop = 31
-      ExplicitWidth = 1069
-      ExplicitHeight = 680
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 55
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1069
         object cxlbl1: TcxLabel
           Left = 263
           Top = 15
@@ -928,13 +902,11 @@
       object cxGrid5: TcxGrid
         Left = 0
         Top = 55
-        Width = 1076
-        Height = 631
+        Width = 1069
+        Height = 625
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1069
-        ExplicitHeight = 625
         object cxGridDBTableView4: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView4CellDblClick
@@ -1010,13 +982,13 @@
       object Panel3: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 73
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
         DesignSize = (
-          1076
+          1069
           73)
         object cxLabel7: TcxLabel
           Left = 120
@@ -1084,7 +1056,7 @@
           Transparent = True
         end
         object cxButton9: TcxButton
-          Left = 1012
+          Left = 1005
           Top = 9
           Width = 50
           Height = 58
@@ -1108,12 +1080,12 @@
         Align = alClient
         Caption = #20837#24211#21333
         TabOrder = 1
-        Height = 613
-        Width = 1076
+        Height = 607
+        Width = 1069
         object Splitter1: TSplitter
           Left = 633
           Top = 24
-          Height = 587
+          Height = 581
           ExplicitLeft = 432
           ExplicitTop = 136
           ExplicitHeight = 100
@@ -1122,7 +1094,7 @@
           Left = 2
           Top = 24
           Width = 631
-          Height = 587
+          Height = 581
           Align = alLeft
           TabOrder = 0
           LookAndFeel.SkinName = 'Whiteprint'
@@ -1194,8 +1166,8 @@
         object cxGrid7: TcxGrid
           Left = 636
           Top = 24
-          Width = 438
-          Height = 587
+          Width = 431
+          Height = 581
           Align = alClient
           TabOrder = 1
           LookAndFeel.SkinName = 'Blueprint'
@@ -1280,19 +1252,14 @@
     object cxTabSheet9: TcxTabSheet
       Caption = #36864#36135#30003#35831
       ImageIndex = 4
-      ExplicitLeft = 2
-      ExplicitTop = 31
-      ExplicitWidth = 1069
-      ExplicitHeight = 680
       object pnl3: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 70
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1069
         object cxlbl5: TcxLabel
           Left = 29
           Top = 24
@@ -1335,13 +1302,11 @@
       object cxGrid8: TcxGrid
         Left = 0
         Top = 70
-        Width = 1076
-        Height = 616
+        Width = 1069
+        Height = 610
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1069
-        ExplicitHeight = 610
         object cxGridDBTableView5: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView5CellDblClick
@@ -1403,9 +1368,6 @@
     object cxTabSheet12: TcxTabSheet
       Caption = #37319#36141#23457#25209
       ImageIndex = 5
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object pnl4: TPanel
         Left = 0
         Top = 0
@@ -1512,19 +1474,14 @@
     object cxTabSheet13: TcxTabSheet
       Caption = #24211#23384#32479#35745
       ImageIndex = 6
-      ExplicitLeft = 2
-      ExplicitTop = 31
-      ExplicitWidth = 1069
-      ExplicitHeight = 680
       object pnl5: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 70
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1069
         object cxlbl7: TcxLabel
           Left = 29
           Top = 24
@@ -1575,17 +1532,24 @@
           Caption = #21517#31216
           Transparent = True
         end
+        object cxButton18: TcxButton
+          Left = 863
+          Top = 19
+          Width = 78
+          Height = 31
+          Caption = #25171#21360
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 7
+        end
       end
       object cxGrid11: TcxGrid
         Left = 0
         Top = 70
-        Width = 1076
-        Height = 616
+        Width = 1069
+        Height = 610
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1069
-        ExplicitHeight = 610
         object cxGridDBTableView8: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView8CellDblClick
@@ -1648,6 +1612,11 @@
             DataBinding.FieldName = #26102#38388#27573#20986#24211
             Width = 70
           end
+          object cxGridDBTableView8Column5: TcxGridDBColumn
+            Caption = #26410#25509#25910#25968#37327
+            DataBinding.FieldName = #26410#25509#25910
+            Width = 70
+          end
           object cxGridDBTableView8Column3: TcxGridDBColumn
             DataBinding.FieldName = #24211#23384
             Width = 70
@@ -1661,19 +1630,14 @@
     object cxTabSheet10: TcxTabSheet
       Caption = #36864#36135#35760#24405
       ImageIndex = 7
-      ExplicitLeft = 2
-      ExplicitTop = 31
-      ExplicitWidth = 1069
-      ExplicitHeight = 680
       object pnl6: TPanel
         Left = 0
         Top = 0
-        Width = 1076
+        Width = 1069
         Height = 55
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitWidth = 1069
         object cxlbl10: TcxLabel
           Left = 263
           Top = 15
@@ -1754,15 +1718,11 @@
       object cxGrid9: TcxGrid
         Left = 0
         Top = 55
-        Width = 1076
-        Height = 631
+        Width = 1069
+        Height = 625
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitLeft = 4
-        ExplicitTop = 54
-        ExplicitWidth = 1069
-        ExplicitHeight = 625
         object cxGridDBTableView6: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView6CellDblClick

@@ -87,7 +87,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 687
   end
   object cxPageControl1: TcxPageControl
     Left = 0
@@ -99,9 +98,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ExplicitTop = 75
-    ExplicitWidth = 747
-    ExplicitHeight = 422
     ClientRectBottom = 544
     ClientRectLeft = 2
     ClientRectRight = 1062
@@ -109,10 +105,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
     object cxTabSheet1: TcxTabSheet
       Caption = #20837#24211#35760#24405
       ImageIndex = 0
-      ExplicitLeft = 0
-      ExplicitTop = 30
-      ExplicitWidth = 747
-      ExplicitHeight = 392
       object cxGrid11: TcxGrid
         Left = 0
         Top = 0
@@ -205,8 +197,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
     object cxTabSheet2: TcxTabSheet
       Caption = #20986#24211#35760#24405
       ImageIndex = 1
-      ExplicitWidth = 862
-      ExplicitHeight = 386
       object cxGrid1: TcxGrid
         Left = 0
         Top = 0
@@ -215,9 +205,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
         Align = alClient
         TabOrder = 0
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 70
-        ExplicitWidth = 1069
-        ExplicitHeight = 610
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_leibiao

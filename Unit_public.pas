@@ -91,8 +91,9 @@ begin
    try
      ADOQuery_danjia.Connection := DataModule1.ADOCon_ALi;
      ADOQuery_danjia.Close;
-     ADOQuery_danjia.SQL.Text:='select 库存=入库数量-出库数量 from ( select a.*, '+
-      ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0) '+
+     ADOQuery_danjia.SQL.Text:='select 库存=入库数量-出库数量-未接收 from ( select a.*, '+
+      ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
+      ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0) '+
       ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
       ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号='+QuotedStr(jmbh)+' group by 价目编号 '+
       ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c';

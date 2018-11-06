@@ -91,7 +91,7 @@ procedure TForm_jiamubiao.FormShow(Sender: TObject);
 begin
   ADOQuery1.Active := false;
   ADOQuery1.SQL.Text:='select a.*,isnull(b.库存,0) as 库存 from ('+
-    ' select 价目编号,名称,原名称,类别,小类,规格,单位,单价,零售价,拼音 from 药品用品价目表 where 是否作废=0 '+
+    ' select 价目编号,名称,原名称,类别,小类,规格,单位,单价,零售价,拼音,包装规格 from 药品用品价目表 where 是否作废=0 '+
     ' and isnull(是否套餐,0)= 0 and 标志=0 and 库存=1 )a left join ( '+
     ' select 价目编号,库存=入库数量-出库数量 from ( select a.*, '+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0) '+
@@ -99,6 +99,7 @@ begin
     ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
     '  )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c )b on a.价目编号=b.价目编号 order by 名称';
   ADOQuery1.Active := True;
+
   baocun:=false;
   cxTextEdit1.SetFocus;
 end;

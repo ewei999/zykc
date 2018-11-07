@@ -176,7 +176,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet13
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -250,7 +250,7 @@
         Height = 610
         Align = alClient
         TabOrder = 1
-        Properties.ActivePage = cxTabSheet2
+        Properties.ActivePage = cxTabSheet3
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
         ClientRectBottom = 605
@@ -1540,6 +1540,7 @@
           Caption = #25171#21360
           LookAndFeel.SkinName = 'Black'
           TabOrder = 7
+          OnClick = cxButton18Click
         end
       end
       object cxGrid11: TcxGrid

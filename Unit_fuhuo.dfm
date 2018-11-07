@@ -114,7 +114,7 @@ object Form_fuhuo: TForm_fuhuo
     Height = 621
     Align = alClient
     TabOrder = 3
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 616
@@ -270,6 +270,11 @@ object Form_fuhuo: TForm_fuhuo
             DataBinding.FieldName = #21253#35013#35268#26684
             Options.Editing = False
             Width = 100
+          end
+          object cxGridDBTableView1Column9: TcxGridDBColumn
+            DataBinding.FieldName = #24211#23384
+            Options.Editing = False
+            Width = 60
           end
           object cxGridDBTableView1Column8: TcxGridDBColumn
             DataBinding.FieldName = #22791#27880

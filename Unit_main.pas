@@ -395,6 +395,7 @@ type
     procedure cxGridDBTableView6CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure cxButton18Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
   public
@@ -672,6 +673,30 @@ begin
   qry_TuiHuoJiLu.Open;
 end;
 
+procedure TForm_main.cxButton18Click(Sender: TObject);
+var
+  j:integer;
+begin
+  DataModule1.ADOQuery_dayin.Close;
+  DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by mc ) rank,*,kc=rk-ck-fjs from ( select a.*, '+
+    ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
+    ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
+    ' b.名称 as mc,b.规格 as gg,b.单位 as dw,b.包装规格 as bz '+
+    ' from ( select 价目编号,sum(isnull(数量,0)) as rk from 中央采购入库明细表 '+
+    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
+    ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by mc';
+  DataModule1.ADOQuery_dayin.open;
+
+  DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
+  for j:=0 to DataModule1.frxDBDataset_dayin.Dataset.FieldCount-1 do
+  begin
+    DataModule1.frxDBDataset_dayin.FieldAliases.Add(DataModule1.frxDBDataset_dayin.dataset.Fields[j].FullName+'='+DataModule1.frxDBDataset_dayin.dataset.Fields[j].FullName);
+  end;
+  DataModule1.frxReport_dayin.LoadFromFile(ExtractFilePath(Application.ExeName)+'\Report\kucun.fr3');
+  DataModule1.frxReport_dayin.Variables['riqi'] :=QuotedStr(FormatDateTime('yyyy-mm-dd',Date));
+  DataModule1.frxReport_dayin.ShowReport();
+end;
+
 procedure TForm_main.cxButton19Click(Sender: TObject);
 var
   tjstr:string;
@@ -740,7 +765,7 @@ begin
     ' 分院=(select top 1 name from 分院表 where abbr=(select top 1 分店代码 from 提货申请主表 '+
     ' 	where  申请编号=a.申请编号) ) , '+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
-    ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end),'+
+    ' mc=名称,'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
     ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end) '+
     ' from ( select * from 提货申请明细表 '+

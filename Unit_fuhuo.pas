@@ -89,6 +89,7 @@ type
     qry_jiamu: TADOQuery;
     cxGridDBTableView1Column7: TcxGridDBColumn;
     cxGridDBTableView1Column8: TcxGridDBColumn;
+    cxGridDBTableView1Column9: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -682,11 +683,11 @@ begin
 
   qry_thshenqing_mx.Close;
   qry_thshenqing_mx.SQL.Text:='select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
-    ' select 编号,申请编号,价目编号,数量,规格,单位,备注, '+
+    ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
     ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
-    ' mc=(case when isnull(原名称,'''')='''' then 名称 else 原名称 end) '+
+    ' mc=名称 '+
     ' from ( select * from 提货申请明细表'+
     ' where 状态=1 and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 '+
     '    and 分店代码='+QuotedStr(cxLookupComboBox2.EditValue)+' )'+

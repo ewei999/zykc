@@ -139,21 +139,10 @@ type
     qry_fenyuan: TADOQuery;
     cxlbl3: TcxLabel;
     cxLookup_FH_fenyuan: TcxLookupComboBox;
-    cxGrid5: TcxGrid;
-    cxGridDBTableView4: TcxGridDBTableView;
-    cxGridDBColumn5: TcxGridDBColumn;
-    cxGridDBColumn8: TcxGridDBColumn;
-    cxGridDBColumn9: TcxGridDBColumn;
-    cxGridDBColumn10: TcxGridDBColumn;
-    cxGridDBColumn11: TcxGridDBColumn;
-    cxGridDBColumn12: TcxGridDBColumn;
-    cxGridDBColumn13: TcxGridDBColumn;
-    cxGridLevel4: TcxGridLevel;
     ds_fuhuo_jilu: TDataSource;
     qry_fuhuo_jilu: TADOQuery;
     cxlbl4: TcxLabel;
     cxCombo_FH_Zhuangtai: TcxComboBox;
-    cxGridDBTableView4Column1: TcxGridDBColumn;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
     cxTabSheet8: TcxTabSheet;
     Panel2: TPanel;
@@ -337,6 +326,40 @@ type
     dxNavBar1Item8: TdxNavBarItem;
     cxGridDBTableView8Column5: TcxGridDBColumn;
     cxButton18: TcxButton;
+    cxButton20: TcxButton;
+    cxPageControl2: TcxPageControl;
+    cxTabSheet11: TcxTabSheet;
+    cxGrid5: TcxGrid;
+    cxGridDBTableView4: TcxGridDBTableView;
+    cxGridDBColumn8: TcxGridDBColumn;
+    cxGridDBColumn5: TcxGridDBColumn;
+    cxGridDBColumn9: TcxGridDBColumn;
+    cxGridDBColumn10: TcxGridDBColumn;
+    cxGridDBColumn11: TcxGridDBColumn;
+    cxGridDBColumn12: TcxGridDBColumn;
+    cxGridDBTableView4Column1: TcxGridDBColumn;
+    cxGridDBColumn13: TcxGridDBColumn;
+    cxGridLevel4: TcxGridLevel;
+    cxTabSheet14: TcxTabSheet;
+    cxGrid12: TcxGrid;
+    cxGridDBTableView9: TcxGridDBTableView;
+    cxGridDBColumn29: TcxGridDBColumn;
+    cxGridDBColumn30: TcxGridDBColumn;
+    cxGridDBColumn45: TcxGridDBColumn;
+    cxGridDBColumn46: TcxGridDBColumn;
+    cxGridDBColumn47: TcxGridDBColumn;
+    cxGridDBColumn48: TcxGridDBColumn;
+    cxGridDBColumn49: TcxGridDBColumn;
+    cxGridDBColumn50: TcxGridDBColumn;
+    cxGridLevel9: TcxGridLevel;
+    qry_fuhuo_jilu_xiangxi: TADOQuery;
+    ds_fuhuo_jilu_xiangxi: TDataSource;
+    cxGridDBTableView9Column1: TcxGridDBColumn;
+    cxGridDBTableView9Column2: TcxGridDBColumn;
+    cxGridDBTableView9Column3: TcxGridDBColumn;
+    cxGridDBTableView9Column4: TcxGridDBColumn;
+    dxNavBar1Item12: TdxNavBarItem;
+    dxNavBar1Item13: TdxNavBarItem;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -396,6 +419,7 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure cxButton18Click(Sender: TObject);
+    procedure cxButton20Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
   public
@@ -678,13 +702,15 @@ var
   j:integer;
 begin
   DataModule1.ADOQuery_dayin.Close;
-  DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by mc ) rank,*,kc=rk-ck-fjs from ( select a.*, '+
-    ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
-    ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
-    ' b.名称 as mc,b.规格 as gg,b.单位 as dw,b.包装规格 as bz '+
-    ' from ( select 价目编号,sum(isnull(数量,0)) as rk from 中央采购入库明细表 '+
-    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
-    ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by mc';
+  DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by gys,mc ) rank,*,kc=rk-ck-fjs from ( select a.rk, '+
+  '  gys=(select top 1 名称 from 供应商表 where 供应商编号=a.gys),'+
+  ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
+  ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
+  ' b.名称 as mc,b.规格 as gg,b.单位 as dw,b.包装规格 as bz  from ('+
+  '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
+  ' select *  ,gys=(select top 1 供应商  from 中央采购入库主表 where 入库编号 =x.入库编号 )'+
+  ' from (  select 价目编号,入库编号,数量  from 中央采购入库明细表  where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)'+
+  '  )x)y  group by 价目编号,gys )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by gys,mc';
   DataModule1.ADOQuery_dayin.open;
 
   DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
@@ -734,6 +760,37 @@ begin
   qry_thshenqing.Open;
 
   cxTabSheet2.Show;
+end;
+
+procedure TForm_main.cxButton20Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  tjstr:='';
+  if (cxLookup_FH_fenyuan.Text<>'') and (cxLookup_FH_fenyuan.Text<>'全部') then
+    tjstr:=tjstr+' and 分店代码='+QuotedStr(cxLookup_FH_fenyuan.EditValue)+'';
+  if cxDate_FH_qishi.Text<>'' then
+    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDate_FH_qishi.Text)+'';
+  if cxDate_FH_zhongzhi.Text<>'' then
+    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_FH_zhongzhi.date,1)))+'';
+  if cxCombo_FH_Zhuangtai.Text='待接收' then
+    tjstr:=tjstr+' and 状态=1 ';
+  if cxCombo_FH_Zhuangtai.Text='接收成功' then
+    tjstr:=tjstr+' and 状态=2 ';
+  if cxCombo_FH_Zhuangtai.Text='拒绝接收' then
+    tjstr:=tjstr+' and 状态=3 ';
+
+  qry_fuhuo_jilu_xiangxi.Close;
+  qry_fuhuo_jilu_xiangxi.SQL.Text:='select *,zt=(case 状态 when 1 then ''待接收'' when 2 then ''接收成功'' when 3 then ''不同意接收'' end) , '+
+  ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
+  ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商),'+
+  ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
+  ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) from ( '+
+  ' select 出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
+  ' from 中央库存_出库表 where 是否作废=0 '+tjstr+' )a order by 出库时间';
+  qry_fuhuo_jilu_xiangxi.Open;
+
+  cxTabSheet14.Show;
 end;
 
 procedure TForm_main.cxButton21Click(Sender: TObject);
@@ -1142,6 +1199,7 @@ end;
 procedure TForm_main.dxNavBar1Item6Click(Sender: TObject);
 begin
   cxTabSheet7.Show;
+  cxTabSheet11.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item7Click(Sender: TObject);
@@ -1164,6 +1222,7 @@ procedure TForm_main.FormCreate(Sender: TObject);
 begin
   cxPageControl_main.HideTabs:=true;
   cxPage_tihuoshenqing.HideTabs:=true;
+  cxPageControl2.HideTabs:=true;
   cxTabSheet2.Show;
 
   cxDate_th_qishi.Date:=IncMonth(date,-1);

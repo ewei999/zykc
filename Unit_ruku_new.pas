@@ -210,6 +210,12 @@ end;
 
 procedure TForm_ruku_new.Action_saveExecute(Sender: TObject);
 begin
+  if DBComboBox1.Text ='' then
+  begin
+    Application.MessageBox('请输入购货方式！', '提示', MB_OK + MB_ICONINFORMATION);
+    exit;
+  end;
+
   if ADOQuery_cg_zhubiao.Modified then
   begin
     ADOQuery_cg_zhubiao.UpdateBatch();
@@ -324,7 +330,8 @@ begin
   if cxDBLookupComboBox1.Text='' then
     exit;
   DataModule1.openSql('select 支付性质 from 供应商表 where 供应商编号='+QuotedStr(cxDBLookupComboBox1.EditValue)+'');
-  DBComboBox1.Text:= DataModule1.ADOQuery_L.FieldByName('支付性质').AsString;
+  ADOQuery_cg_zhubiao.Edit;
+  ADOQuery_cg_zhubiao.FieldByName('购货方式').AsString:= DataModule1.ADOQuery_L.FieldByName('支付性质').AsString;
 end;
 
 procedure TForm_ruku_new.cxDBLookupComboBox1KeyPress(Sender: TObject;

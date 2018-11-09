@@ -39,47 +39,47 @@ object Form_jiamubiao: TForm_jiamubiao
       OptionsView.GroupByBox = False
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
-        Width = 47
+        Width = 40
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn24: TcxGridDBColumn
         DataBinding.FieldName = #23567#31867
-        Width = 49
+        Width = 41
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn
         DataBinding.FieldName = #20215#30446#32534#21495
-        Width = 99
+        Width = 83
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
-        Width = 188
+        Width = 159
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
-        Width = 57
+        Width = 48
       end
       object TcxGridDBColumn
         DataBinding.FieldName = #21253#35013#35268#26684
-        Width = 100
+        Width = 84
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
-        Width = 52
+        Width = 44
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
         DataBinding.FieldName = #21333#20215
-        Width = 56
+        Width = 47
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #38646#21806#20215
-        Width = 55
+        Width = 46
       end
       object cxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = #24211#23384
-        Width = 60
+        Width = 49
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn37: TcxGridDBColumn
         DataBinding.FieldName = #21407#21517#31216
-        Width = 143
+        Width = 122
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -103,8 +103,10 @@ object Form_jiamubiao: TForm_jiamubiao
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0'
-      'and isnull('#26159#21542#22871#39184',0)= 0 and '#26631#24535'=0')
+      'select '#20215#30446#32534#21495','#21517#31216','#25340#38899','#35268#26684','#21333#20215','#21333#20301','#31867#21035','#38646#21806#20215','#24211#23384','#23567#31867','#21253#35013#35268#26684',isnull('#24211#23384#21333#20301','#21333#20301')'#21333#20301
+      ' from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0'
+      'and isnull('#26159#21542#22871#39184',0)= 0 and '#26631#24535'=0'
+      '')
     Left = 464
     Top = 24
   end

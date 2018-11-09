@@ -360,6 +360,22 @@ type
     cxGridDBTableView9Column4: TcxGridDBColumn;
     dxNavBar1Item12: TdxNavBarItem;
     dxNavBar1Item13: TdxNavBarItem;
+    dxNavBar1Item14: TdxNavBarItem;
+    cxTabSheet15: TcxTabSheet;
+    pnl7: TPanel;
+    cxlbl14: TcxLabel;
+    cxDate_YL_Qishi: TcxDateEdit;
+    cxlbl15: TcxLabel;
+    cxDate_YL_Zhongzhi: TcxDateEdit;
+    cxButton22: TcxButton;
+    cxGrid13: TcxGrid;
+    cxGridDBTableView10: TcxGridDBTableView;
+    cxGridLevel10: TcxGridLevel;
+    ds_yongliang: TDataSource;
+    qry_yongliang: TADOQuery;
+    cxlbl16: TcxLabel;
+    cxText_YL_MC: TcxTextEdit;
+    cxButton23: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -420,8 +436,12 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure cxButton18Click(Sender: TObject);
     procedure cxButton20Click(Sender: TObject);
+    procedure dxNavBar1Item14Click(Sender: TObject);
+    procedure cxButton22Click(Sender: TObject);
+    procedure cxButton23Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
+    procedure CreateGrid;
   public
     { Public declarations }
   end;
@@ -664,7 +684,7 @@ begin
   qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收 from ( select a.*, '+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+ sjdstr+
     ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
-    ' b.名称,b.规格,b.单位,b.类别,b.小类,b.原名称 '+
+    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类,b.原名称 '+
     ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
     ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) '+mctj+' group by 价目编号 '+
     ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by 名称';
@@ -706,7 +726,7 @@ begin
   '  gys=(select top 1 名称 from 供应商表 where 供应商编号=a.gys),'+
   ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
   ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
-  ' b.名称 as mc,b.规格 as gg,b.单位 as dw,b.包装规格 as bz  from ('+
+  ' b.名称 as mc,b.规格 as gg,dw=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.包装规格 as bz  from ('+
   '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
   ' select *  ,gys=(select top 1 供应商  from 中央采购入库主表 where 入库编号 =x.入库编号 )'+
   ' from (  select 价目编号,入库编号,数量  from 中央采购入库明细表  where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)'+
@@ -805,6 +825,103 @@ begin
     ' and isnull(意见,'''')<>'''' and 审批人='+QuotedStr(g_user.UserName)+'  ) '+
     ' )a order by 申请日期';
   qry_CaiGou_ShenPi.Open;
+end;
+
+
+procedure TForm_main.CreateGrid;
+var
+  i,x :integer;
+  cl  : TcxGridDBcolumn;
+begin
+  x:=0;
+  cxGridDBTableView10.BeginUpdate;
+  try
+    cxGridDBTableView10.ClearItems;
+    cxGridDBTableView10.DataController.Summary.FooterSummaryItems.Clear;
+
+    for i := 0 to cxGridDBTableView10.DataController.DataSet.FieldCount - 1 do
+    begin
+      cl  :=  cxGridDBTableView10.CreateColumn;
+      cl.DataBinding.FieldName := cxGridDBTableView10.DataController.DataSet.Fields[i].FieldName;
+
+      if (cl.DataBinding.FieldName='价目编号') then
+        cl.Width := 90
+      else if (cl.DataBinding.FieldName='名称') then
+        cl.Width := 150
+      else if (cl.DataBinding.FieldName='原名称') then
+        cl.Width := 100
+      else
+        cl.Width := 70;
+
+      if (cl.Visible) and (x=0) then
+      begin
+        x:=11;
+        cl.Summary.FooterKind:=skCount;
+        cl.Summary.FooterFormat:='合计：0';
+      end;
+    end;
+  finally
+    cxGridDBTableView10.EndUpdate;
+  end;
+end;
+
+procedure TForm_main.cxButton22Click(Sender: TObject);
+var
+  sysj,cksj,fenystr,sqlstr,mcstr:string;
+begin
+  sysj:='';
+  cksj:='';
+  if cxDate_YL_Qishi.Text<>'' then
+  begin
+    sysj:=sysj+' and 收费时间>='+QuotedStr(cxDate_YL_Qishi.Text)+'';
+    cksj:=cksj+' and 出库时间>='+QuotedStr(cxDate_YL_Qishi.Text)+'';
+  end;
+  if cxDate_YL_Zhongzhi.Text<>'' then
+  begin
+    sysj:=sysj+' and 收费时间<'+QuotedStr(DateToStr(incday(cxDate_YL_Zhongzhi.date,1)))+'';
+    cksj:=cksj+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_YL_Zhongzhi.date,1)))+'';
+  end;
+
+  mcstr:='';
+  if trim(cxText_YL_MC.Text)<>'' then
+    mcstr:=' and (名称 like '+QuotedStr('%'+Trim(cxText_YL_MC.Text)+'%')+' or 原名称 like '+QuotedStr('%'+Trim(cxText_YL_MC.Text)+'%')+') ';
+
+  fenystr:='';
+  sqlstr:='';
+  DataModule1.openSql('select name,abbr from 分院表 where sort_id<>0');
+  while not DataModule1.ADOQuery_L.Eof do
+  begin
+    if fenystr='' then
+      fenystr:=','+DataModule1.ADOQuery_L.FieldByName('name').AsString+'=isnull('+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'.数量,0) '
+    else
+      fenystr:=fenystr+','+DataModule1.ADOQuery_L.FieldByName('name').AsString+'=isnull('+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'.数量,0) ';
+
+
+    sqlstr:=sqlstr+' left join ( select 价目编号,sum(数量) as 数量 from ('+
+    ' select 价目编号,数量 from [mgpet'+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'].[dbo].[单据明细表] where 状态 in (2,3) '+
+    ' and 收费编号 in (select 收费编号 from [mgpet'+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'].[dbo].[收费记录表] '+
+    ' where 1=1 '+sysj+' )  union all '+
+    ' select 价目编号,出库数量 from [mgpet'+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'].[dbo].[出库表] where 是否作废=0 and left(备注,2)=''MX'' '+cksj+
+    ' )x group by 价目编号 )'+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+' on a.价目编号='+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'.价目编号';
+
+
+    DataModule1.ADOQuery_L.Next;
+  end;
+
+  qry_yongliang.Close;
+  qry_yongliang.SQL.Text:='select * from ( select a.* '+fenystr+'  from ( '+
+    '  select 价目编号,名称,原名称,类别,规格,单位 from 药品用品价目表  where 是否作废=0 and 库存=1 and isnull(是否套餐,0)=0 '+
+    ' and 类别 in (''药品'',''化验'') '+mcstr+' )a'+sqlstr+')t order by 名称 ';
+  qry_yongliang.Open;
+
+  if cxGridDBTableView10.DataController.ItemCount=0 then
+    CreateGrid;
+
+end;
+
+procedure TForm_main.cxButton23Click(Sender: TObject);
+begin
+  DaochuExcel(cxGrid13);
 end;
 
 procedure TForm_main.cxButton2Click(Sender: TObject);
@@ -1147,6 +1264,11 @@ begin
   end;
 end;
 
+procedure TForm_main.dxNavBar1Item14Click(Sender: TObject);
+begin
+  cxTabSheet15.Show;
+end;
+
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);
 begin
   cxTabSheet10.Show;
@@ -1229,6 +1351,7 @@ begin
   cxDate_FH_qishi.Date:=IncMonth(date,-1);
   cxDate_TuiH_qishi.Date:=IncMonth(date,-1);
   cxDateEdit3.Date:=IncMonth(date,-1);
+  cxDate_YL_Qishi.Date:=IncMonth(date,-1);
 
   qry_fenyuan.Close;
   qry_fenyuan.SQL.Text:='select abbr,name from 分院表 where sort_id<>0 union all select abbr=''全部'',name=''全部'' ';

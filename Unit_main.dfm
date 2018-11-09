@@ -107,6 +107,9 @@
           Item = dxNavBar1Item10
         end
         item
+          Item = dxNavBar1Item14
+        end
+        item
           Item = dxNavBar1Item9
         end>
     end
@@ -183,6 +186,11 @@
       Caption = #36864#36135#30003#35831#35760#24405
       SmallImageIndex = 31
       OnClick = dxNavBar1Group4Click
+    end
+    object dxNavBar1Item14: TdxNavBarItem
+      Caption = #38376#24215#29992#37327#32479#35745
+      SmallImageIndex = 58
+      OnClick = dxNavBar1Item14Click
     end
   end
   object cxPageControl_main: TcxPageControl
@@ -935,10 +943,6 @@
         Properties.ActivePage = cxTabSheet11
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
-        ExplicitLeft = 4
-        ExplicitTop = 88
-        ExplicitWidth = 925
-        ExplicitHeight = 561
         ClientRectBottom = 620
         ClientRectLeft = 2
         ClientRectRight = 1064
@@ -946,8 +950,6 @@
         object cxTabSheet11: TcxTabSheet
           Caption = #27719#24635
           ImageIndex = 0
-          ExplicitWidth = 918
-          ExplicitHeight = 525
           object cxGrid5: TcxGrid
             Left = 0
             Top = 0
@@ -956,10 +958,6 @@
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
-            ExplicitLeft = -151
-            ExplicitTop = -100
-            ExplicitWidth = 1069
-            ExplicitHeight = 625
             object cxGridDBTableView4: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellDblClick = cxGridDBTableView4CellDblClick
@@ -1040,7 +1038,6 @@
             Align = alClient
             TabOrder = 0
             LookAndFeel.SkinName = 'Blue'
-            ExplicitHeight = 574
             object cxGridDBTableView9: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               DataController.DataModeController.SmartRefresh = True
@@ -1964,6 +1961,111 @@
         end
       end
     end
+    object cxTabSheet15: TcxTabSheet
+      Caption = #38376#24215#29992#37327#32479#35745
+      ImageIndex = 8
+      object pnl7: TPanel
+        Left = 0
+        Top = 0
+        Width = 1069
+        Height = 55
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object cxlbl14: TcxLabel
+          Left = 46
+          Top = 15
+          Caption = #32479#35745#26085#26399
+          Transparent = True
+        end
+        object cxDate_YL_Qishi: TcxDateEdit
+          Left = 120
+          Top = 13
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 1
+          Width = 121
+        end
+        object cxlbl15: TcxLabel
+          Left = 249
+          Top = 15
+          Caption = #33267
+          Transparent = True
+        end
+        object cxDate_YL_Zhongzhi: TcxDateEdit
+          Left = 276
+          Top = 13
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 3
+          Width = 121
+        end
+        object cxButton22: TcxButton
+          Left = 747
+          Top = 11
+          Width = 75
+          Height = 31
+          Caption = #32479#35745
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 4
+          OnClick = cxButton22Click
+        end
+        object cxlbl16: TcxLabel
+          Left = 414
+          Top = 15
+          Caption = #21517#31216
+          Transparent = True
+        end
+        object cxText_YL_MC: TcxTextEdit
+          Left = 456
+          Top = 13
+          TabOrder = 6
+          Width = 266
+        end
+        object cxButton23: TcxButton
+          Left = 843
+          Top = 11
+          Width = 75
+          Height = 31
+          Caption = 'Excel'
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 7
+          OnClick = cxButton23Click
+        end
+      end
+      object cxGrid13: TcxGrid
+        Left = 0
+        Top = 55
+        Width = 1069
+        Height = 625
+        Align = alClient
+        TabOrder = 1
+        LookAndFeel.SkinName = 'Blue'
+        object cxGridDBTableView10: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView6CellDblClick
+          DataController.DataSource = ds_yongliang
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+        end
+        object cxGridLevel10: TcxGridLevel
+          GridView = cxGridDBTableView10
+        end
+      end
+    end
   end
   object ds_thshenqing: TDataSource
     DataSet = qry_thshenqing
@@ -2340,5 +2442,19 @@
     DataSet = qry_fuhuo_jilu_xiangxi
     Left = 504
     Top = 528
+  end
+  object ds_yongliang: TDataSource
+    DataSet = qry_yongliang
+    Left = 1128
+    Top = 264
+  end
+  object qry_yongliang: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 1136
+    Top = 312
   end
 end

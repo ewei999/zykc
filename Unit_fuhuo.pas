@@ -101,6 +101,8 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
+    cxGridDBTableView2Column1: TcxGridDBColumn;
+    cxGridDBTableView2Column2: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -121,6 +123,9 @@ type
     procedure N1Click(Sender: TObject);
     procedure N2Click(Sender: TObject);
     procedure act2Execute(Sender: TObject);
+    procedure cxGridDBTableView2CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     CKbianhao,fenyuanm:string;
     xzbool,shifoujisuan:boolean;
@@ -186,13 +191,21 @@ begin
       begin
         if cxRadioButton1.Checked then
         begin
+          if qry_thshenqing_mx.FieldByName('付货数量').AsString='' then
+          begin
+            qry_thshenqing_mx.EnableControls;
+            qry_thshenqing_mx.edit;
+            Application.MessageBox('付货数量不能为空', '提示', MB_OK);
+            exit;
+          end;
+
           try
             danjia:= qry_thshenqing_mx.FieldByName('付货数量').asfloat;
-            if danjia<0 then
+            if danjia<=0 then
             begin
               qry_thshenqing_mx.EnableControls;
               qry_thshenqing_mx.edit;
-              Application.MessageBox('付货数量不能小于0', '提示', MB_OK);
+              Application.MessageBox('付货数量不能小于等于0', '提示', MB_OK);
               exit;
             end;
           except
@@ -439,7 +452,7 @@ begin
     qry_zhudong.edit;
     qry_zhudong.post;
     qry_kucun.Close;
-    qry_kucun.SQL.Text:='select top 0 价目编号,单价 as 库存 from 中央库存_出库表';
+    qry_kucun.SQL.Text:='select top 0 价目编号,单价,供应商,单价 as 待付数量 from 中央库存_出库表';
     qry_kucun.Open;
     qry_zhudong.DisableControls;
     qry_zhudong.First;
@@ -474,7 +487,7 @@ begin
         exit;
       end;
       try
-        danjia:= qry_zhudong.FieldByName('出库数量').asfloat;
+        danjia:= qry_zhudong.FieldByName('付货数量').asfloat;
         if danjia<0 then
         begin
           qry_zhudong.EnableControls;
@@ -505,58 +518,62 @@ begin
         exit;
       end;
 
-      if qry_zhudong.FieldByName('舍零金额').asstring<>'' then
+      //判断中央仓库是此物品的库存是否够本次付货  ,分单价和供应商
+      qry1.Clone(jisuan_danjia(qry_zhudong.FieldByName('价目编号').AsString ,qry_zhudong.FieldByName('仓库库存').AsString));
+      while not qry1.Eof do
       begin
-        try
-          danjia:= qry_zhudong.FieldByName('舍零金额').asfloat;
-          if danjia<0 then
+        if (qry1.FieldByName('供应商编号').AsString=qry_zhudong.FieldByName('供应商').AsString)
+        and (qry1.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat) then
+        begin
+          if qry_zhudong.FieldByName('付货数量').AsFloat>qry1.FieldByName('数量').AsFloat then
           begin
             qry_zhudong.EnableControls;
             qry_zhudong.edit;
-            Application.MessageBox('舍零金额不能小于0', '提示', MB_OK);
+            Application.MessageBox(pchar(qry_zhudong.FieldByName('名称').AsString+' 库存不足'), '提示', MB_OK);
             exit;
+          end
+          else
+          begin
+            qry_kucun.First;
+            x:=0;
+            while not qry_kucun.Eof do
+            begin
+              if (qry_kucun.FieldByName('价目编号').AsString=qry_zhudong.FieldByName('价目编号').asstring)
+              and (qry_kucun.FieldByName('供应商').asstring=qry_zhudong.FieldByName('供应商').asstring)
+              and (qry_kucun.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat) then
+              begin
+                qry_kucun.Edit;
+                qry_kucun.FieldByName('待付数量').AsFloat:= qry_kucun.FieldByName('待付数量').AsFloat+qry_zhudong.FieldByName('付货数量').asfloat;
+                qry_kucun.Post;
+                x:=1;
+                Break;
+              end;
+              qry_kucun.Next;
+            end;
+            if x=0 then
+            begin
+              qry_kucun.Append;
+              qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
+              qry_kucun.FieldByName('单价').asstring:= qry_zhudong.FieldByName('单价').asstring;
+              qry_kucun.FieldByName('供应商').asstring:= qry_zhudong.FieldByName('供应商').asstring;
+              qry_kucun.FieldByName('待付数量').AsFloat:= qry_zhudong.FieldByName('付货数量').asfloat;
+              qry_kucun.Post;
+            end;
+
+            if qry_kucun.FieldByName('待付数量').AsFloat>qry1.FieldByName('数量').AsFloat then
+            begin
+              qry_zhudong.EnableControls;
+              qry_zhudong.edit;
+              Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+
+                  ' 单价：'+qry_zhudong.FieldByName('单价').asstring+' 供应商：'+qry_zhudong.FieldByName('供应商').asstring+
+                  ' 库存不足，不能付货'), '提示', MB_OK);
+              exit;
+            end;
           end;
-        except
-          qry_zhudong.EnableControls;
-          qry_zhudong.edit;
-          Application.MessageBox('舍零金额格式不正确', '提示', MB_OK);
-          exit;
         end;
+        qry1.Next;
       end;
 
-      //判断中央仓库是此物品的库存是否够本次付货
-      if qry_kucun.Locate('价目编号',qry_zhudong.FieldByName('价目编号').asstring,[]) = False then
-      begin
-        danjia:= ChaXunKuCun(qry_zhudong.FieldByName('价目编号').asstring);
-        if danjia<>-1 then
-        begin
-          qry_kucun.Append;
-          qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
-          qry_kucun.FieldByName('库存').AsFloat:= danjia-qry_zhudong.FieldByName('出库数量').asfloat;
-          qry_kucun.Post;
-        end
-        else
-        begin
-          qry_zhudong.EnableControls;
-          qry_zhudong.edit;
-          Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存错误，不能付货'), '提示', MB_OK);
-          exit;
-        end;
-      end
-      else
-      begin
-        qry_kucun.Edit;
-        qry_kucun.FieldByName('库存').AsFloat:= qry_kucun.FieldByName('库存').AsFloat-qry_zhudong.FieldByName('出库数量').asfloat;
-        qry_kucun.Post;
-      end;
-
-      if qry_kucun.FieldByName('库存').AsFloat<0 then
-      begin
-        qry_zhudong.EnableControls;
-        qry_zhudong.edit;
-        Application.MessageBox(pchar('名称：'+qry_zhudong.FieldByName('名称').asstring+'  库存不足，不能付货'), '提示', MB_OK);
-        exit;
-      end;
       qry_zhudong.Next;
     end;
     qry_zhudong.EnableControls;
@@ -578,10 +595,9 @@ begin
         DataModule1.ADOQuery_L.FieldByName('出库时间').AsDateTime:= shijian;
         DataModule1.ADOQuery_L.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').AsString;
         DataModule1.ADOQuery_L.FieldByName('名称').AsString:= qry_zhudong.FieldByName('名称').AsString;
-        DataModule1.ADOQuery_L.FieldByName('出库数量').AsVariant:= qry_zhudong.FieldByName('出库数量').AsVariant;
+        DataModule1.ADOQuery_L.FieldByName('出库数量').AsVariant:= qry_zhudong.FieldByName('付货数量').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('单价').AsVariant:= qry_zhudong.FieldByName('单价').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('出库金额').AsVariant:= qry_zhudong.FieldByName('出库金额').AsVariant;
-        DataModule1.ADOQuery_L.FieldByName('舍零金额').AsVariant:= qry_zhudong.FieldByName('舍零金额').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= qry_zhudong.FieldByName('供应商').AsString;
         DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_zhudong.FieldByName('分店代码').AsString;
         DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
@@ -664,6 +680,7 @@ begin
       qry_zhudong.Append;
       qry_zhudong.FieldByName('价目编号').AsString := Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString;
       qry_zhudong.FieldByName('名称').AsString := Form_jiamubiao.ADOQuery1.FieldByName('名称').AsString;
+      qry_zhudong.FieldByName('仓库库存').AsFloat:= ChaXunKuCun(qry_zhudong.FieldByName('价目编号').asstring);
       qry_zhudong.Post;
       qry_zhudong.Edit;
       shifoujisuan:=true;
@@ -681,8 +698,6 @@ begin
     exit;
   qry_zhudong.Delete;
 end;
-
-
 
 
 
@@ -712,7 +727,9 @@ begin
             qry_thshenqing_mx.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
         end
         else
+        begin
           qry_thshenqing_mx.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
+        end;
 
         qry_thshenqing_mx.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
         qry_thshenqing_mx.FieldByName('出库金额').AsFloat := qry_thshenqing_mx.FieldByName('单价').AsFloat*qry_thshenqing_mx.FieldByName('付货数量').AsFloat;
@@ -740,6 +757,34 @@ begin
     qry_thshenqing_mx.Next;
   end;
   qry_thshenqing_mx.EnableControls;
+end;
+
+procedure TForm_fuhuo.cxGridDBTableView2CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  if (cxGridDBTableView2.Controller.FocusedColumn.VisibleCaption = '仓库库存') then
+  begin
+    Form_FuKuan_Edit := TForm_FuKuan_Edit.Create(nil);
+    try
+      Form_FuKuan_Edit.leibiestr:='库存列表';
+      Form_FuKuan_Edit.cxlbl1.Caption:= qry_zhudong.FieldByName('名称').AsString ;
+      Form_FuKuan_Edit.cxlbl1.Style.Font.Size:=16;
+      Form_FuKuan_Edit.qry_liebiao.Clone(jisuan_danjia(qry_zhudong.FieldByName('价目编号').AsString ,qry_zhudong.FieldByName('仓库库存').AsString));
+      Form_FuKuan_Edit.ShowModal;
+      if Form_FuKuan_Edit.baocun then
+      begin
+        qry_zhudong.Edit;
+        qry_zhudong.FieldByName('单价').AsFloat:=Form_FuKuan_Edit.qry_liebiao.FieldByName('单价').AsFloat;
+        qry_zhudong.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
+        qry_zhudong.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
+        qry_zhudong.FieldByName('出库金额').AsFloat := qry_zhudong.FieldByName('单价').AsFloat*qry_zhudong.FieldByName('付货数量').AsFloat;
+        qry_zhudong.Post;
+      end;
+    finally
+      FreeAndNil(Form_FuKuan_Edit);
+    end;
+  end;
 end;
 
 procedure TForm_fuhuo.cxLookupComboBox2Exit(Sender: TObject);
@@ -786,7 +831,7 @@ begin
     qry_thshenqing_mx.FieldByName('单价').AsVariant:= null;
     qry_thshenqing_mx.FieldByName('供应商').asstring:= '';
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
-    qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
+//    qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
     qry_thshenqing_mx.FieldByName('仓库库存').AsFloat:= ChaXunKuCun(qry_thshenqing_mx.FieldByName('价目编号').asstring);
     qry_thshenqing_mx.Post;
@@ -795,7 +840,8 @@ begin
   end;
   qry_thshenqing_mx.EnableControls;
   hide_RuntimeInfo;
-  qry_thshenqing_mx.Edit;
+  if qry_thshenqing_mx.RecordCount>0 then
+    qry_thshenqing_mx.Edit;
 end;
 
 procedure TForm_fuhuo.cxLookupComboBox2KeyPress(Sender: TObject; var Key: Char);
@@ -880,7 +926,7 @@ begin
   qry_thshenqing_mx.FieldByName('单价').AsVariant:= null;
   qry_thshenqing_mx.FieldByName('供应商').asstring:= '';
   qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
-  qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
+//  qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
   qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
   qry_thshenqing_mx.FieldByName('仓库库存').asfloat:=ChaXunKuCun(jmbh);
   qry_thshenqing_mx.Post;
@@ -893,7 +939,7 @@ var
 begin
   if (qry_thshenqing_mx.Modified) and (qry_thshenqing_mx.State = dsEdit) and (shifoujisuan=true)  then
   begin
-    if ((LowerCase(Field.FieldName)= '舍零金额')  or (LowerCase(Field.FieldName)= '付货数量')) and (shifoujisuan=true)  then
+    if  (LowerCase(Field.FieldName)= '付货数量') and (shifoujisuan=true)  then
     begin
       shifoujisuan:=false;
 
@@ -916,41 +962,13 @@ begin
 end;
 
 procedure TForm_fuhuo.ds_zhudongDataChange(Sender: TObject; Field: TField);
-var
-  zongjine:real;
 begin
-  if (qry_zhudong.Modified) and (qry_zhudong.State = dsEdit) and (shifoujisuan) then
+  if (qry_zhudong.Modified) and (qry_zhudong.State = dsEdit) then
   begin
-    if (LowerCase(Field.FieldName)= '单价') or (LowerCase(Field.FieldName)= '舍零金额') or (LowerCase(Field.FieldName)= '出库数量')  then
+    if (LowerCase(Field.FieldName)= '付货数量')  then
     begin
-      DataModule1.openSql('select top 1 供应商 from 中央库存_出库表 '+
-      ' where 是否作废=0 and 价目编号='+QuotedStr(qry_zhudong.FieldByName('价目编号').AsString)+' '+
-      ' and 分店代码='+QuotedStr(qry_zhudong.FieldByName('分店代码').AsString)+' order by 编号 desc');
-      if DataModule1.ADOQuery_L.Eof=False then
-      begin
-        qry_zhudong.FieldByName('供应商').AsVariant:= DataModule1.ADOQuery_L.FieldByName('供应商').AsVariant;
-      end;
-
-      if qry_zhudong.FieldByName('出库数量').AsString<>'' then
-      begin
- //       zongjine:=jisuan_danjia(qry_zhudong.FieldByName('价目编号').AsString,qry_zhudong.FieldByName('出库数量').AsString);
-        if zongjine<>-1 then
-        begin
-          shifoujisuan:=false;
-          qry_zhudong.FieldByName('单价').AsFloat:=round(zongjine*100/qry_zhudong.FieldByName('出库数量').asfloat)/100;
-          qry_zhudong.FieldByName('出库金额').AsFloat := zongjine;
-          shifoujisuan:=true;
-        end;
-      end;
-
-      if (qry_zhudong.FieldByName('单价').AsString<>'') and (qry_zhudong.FieldByName('出库数量').AsString<>'') then
-      begin
-        if qry_zhudong.FieldByName('舍零金额').AsString<>'' then
-          qry_zhudong.FieldByName('出库金额').AsFloat:=qry_zhudong.FieldByName('出库数量').AsFloat*qry_zhudong.FieldByName('单价').AsFloat
-            -qry_zhudong.FieldByName('舍零金额').AsFloat
-        else
-          qry_zhudong.FieldByName('出库金额').AsFloat:=qry_zhudong.FieldByName('出库数量').AsFloat*qry_zhudong.FieldByName('单价').AsFloat;
-      end;
+      if (qry_zhudong.FieldByName('单价').AsString<>'') and (qry_zhudong.FieldByName('付货数量').AsString<>'') then
+        qry_zhudong.FieldByName('出库金额').AsFloat:=qry_zhudong.FieldByName('付货数量').AsFloat*qry_zhudong.FieldByName('单价').AsFloat;
     end;
   end;
 end;
@@ -992,7 +1010,8 @@ begin
     cxLabel10.Caption:='向门店付货（主动付货）';
     Self.Caption:=cxLabel10.Caption;
     qry_zhudong.Close;
-    qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量,单价,出库金额,舍零金额,供应商 from 中央库存_出库表';
+    qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
+      ' 名称 as 包装规格,单价 as 仓库库存 from 中央库存_出库表';
     qry_zhudong.Open;
 
     qry_jiamu.Close;

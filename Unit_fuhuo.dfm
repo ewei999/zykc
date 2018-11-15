@@ -116,7 +116,7 @@ object Form_fuhuo: TForm_fuhuo
     Height = 621
     Align = alClient
     TabOrder = 3
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ExplicitWidth = 1008
@@ -356,6 +356,7 @@ object Form_fuhuo: TForm_fuhuo
           object cxGridDBTableView1Column2: TcxGridDBColumn
             DataBinding.FieldName = #33293#38646#37329#39069
             PropertiesClassName = 'TcxTextEditProperties'
+            Visible = False
             Options.Filtering = False
             Options.Sorting = False
             Width = 66
@@ -422,6 +423,7 @@ object Form_fuhuo: TForm_fuhuo
         ExplicitWidth = 1001
         object cxGridDBTableView2: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView2CellDblClick
           DataController.DataSource = ds_zhudong
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -476,7 +478,9 @@ object Form_fuhuo: TForm_fuhuo
             Properties.ListOptions.ShowHeader = False
             Properties.ListSource = ds_jiamu
             Options.Editing = False
-            Width = 60
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 70
           end
           object cxGridDBColumn9: TcxGridDBColumn
             Caption = #21333#20301
@@ -490,13 +494,39 @@ object Form_fuhuo: TForm_fuhuo
             Properties.ListOptions.ShowHeader = False
             Properties.ListSource = ds_jiamu
             Options.Editing = False
-            Width = 60
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 70
+          end
+          object cxGridDBTableView2Column2: TcxGridDBColumn
+            DataBinding.FieldName = #21253#35013#35268#26684
+            PropertiesClassName = 'TcxLookupComboBoxProperties'
+            Properties.KeyFieldNames = #20215#30446#32534#21495
+            Properties.ListColumns = <
+              item
+                FieldName = #21253#35013#35268#26684
+              end>
+            Properties.ListSource = ds_jiamu
+            Options.Editing = False
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 70
           end
           object cxGridDBColumn10: TcxGridDBColumn
-            Caption = #20184#36135#25968#37327
-            DataBinding.FieldName = #20986#24211#25968#37327
+            DataBinding.FieldName = #20184#36135#25968#37327
             PropertiesClassName = 'TcxTextEditProperties'
-            Width = 100
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 70
+          end
+          object cxGridDBTableView2Column1: TcxGridDBColumn
+            DataBinding.FieldName = #20179#24211#24211#23384
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Options.Filtering = False
+            Options.Sorting = False
+            Styles.Content = cxStyle1
+            Width = 70
           end
           object cxGridDBColumn11: TcxGridDBColumn
             DataBinding.FieldName = #20379#24212#21830
@@ -508,20 +538,23 @@ object Form_fuhuo: TForm_fuhuo
               end>
             Properties.ListOptions.ShowHeader = False
             Properties.ListSource = ds_gys
+            Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
-            Width = 114
+            Width = 100
           end
           object cxGridDBColumn12: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
             PropertiesClassName = 'TcxTextEditProperties'
+            Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
-            Width = 68
+            Width = 70
           end
           object cxGridDBColumn13: TcxGridDBColumn
             DataBinding.FieldName = #33293#38646#37329#39069
             PropertiesClassName = 'TcxTextEditProperties'
+            Visible = False
             Options.Filtering = False
             Options.Sorting = False
             Width = 68
@@ -530,7 +563,9 @@ object Form_fuhuo: TForm_fuhuo
             Caption = #21512#35745#37329#39069
             DataBinding.FieldName = #20986#24211#37329#39069
             Options.Editing = False
-            Width = 68
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 70
           end
         end
         object cxGridLevel2: TcxGridLevel

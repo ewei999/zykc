@@ -70,6 +70,9 @@
         end
         item
           Item = dxNavBar1Item7
+        end
+        item
+          Item = dxNavBar1Item15
         end>
     end
     object dxNavBar1Group4: TdxNavBarGroup
@@ -192,6 +195,11 @@
       SmallImageIndex = 58
       OnClick = dxNavBar1Item14Click
     end
+    object dxNavBar1Item15: TdxNavBarItem
+      Caption = #24050#25552#20132#26410#23457#25209#35760#24405
+      SmallImageIndex = 11
+      OnClick = dxNavBar1Item15Click
+    end
   end
   object cxPageControl_main: TcxPageControl
     Left = 185
@@ -200,7 +208,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet13
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -274,7 +282,7 @@
         Height = 610
         Align = alClient
         TabOrder = 1
-        Properties.ActivePage = cxTabSheet3
+        Properties.ActivePage = cxTabSheet2
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
         ClientRectBottom = 605
@@ -1727,10 +1735,6 @@
             DataBinding.FieldName = #21517#31216
             Width = 150
           end
-          object cxGridDBColumn38: TcxGridDBColumn
-            DataBinding.FieldName = #21407#21517#31216
-            Width = 150
-          end
           object cxGridDBColumn39: TcxGridDBColumn
             DataBinding.FieldName = #31867#21035
             Width = 70
@@ -1773,6 +1777,10 @@
           object cxGridDBTableView8Column3: TcxGridDBColumn
             DataBinding.FieldName = #24211#23384
             Width = 70
+          end
+          object cxGridDBTableView8Column6: TcxGridDBColumn
+            DataBinding.FieldName = #20379#24212#21830
+            Width = 100
           end
         end
         object cxGridLevel8: TcxGridLevel
@@ -2043,7 +2051,6 @@
         LookAndFeel.SkinName = 'Blue'
         object cxGridDBTableView10: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
-          OnCellDblClick = cxGridDBTableView6CellDblClick
           DataController.DataSource = ds_yongliang
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
@@ -2063,6 +2070,72 @@
         end
         object cxGridLevel10: TcxGridLevel
           GridView = cxGridDBTableView10
+        end
+      end
+    end
+    object cxTabSheet16: TcxTabSheet
+      Caption = #24050#25552#20132#26410#23457#25209
+      ImageIndex = 9
+      object cxGrid14: TcxGrid
+        Left = 0
+        Top = 0
+        Width = 1069
+        Height = 680
+        Align = alClient
+        TabOrder = 0
+        LookAndFeel.SkinName = 'Blue'
+        ExplicitWidth = 1062
+        ExplicitHeight = 574
+        object cxGridDBTableView11: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView11CellDblClick
+          DataController.DataSource = ds_weishenpi
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn38
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn38: TcxGridDBColumn
+            DataBinding.FieldName = #20998#38498
+            Width = 80
+          end
+          object cxGridDBColumn51: TcxGridDBColumn
+            Caption = #31867#21035
+            DataBinding.FieldName = #31867#21035'1'
+            Width = 80
+          end
+          object cxGridDBColumn44: TcxGridDBColumn
+            DataBinding.FieldName = #30003#35831#26085#26399
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd'
+            Width = 100
+          end
+          object cxGridDBColumn53: TcxGridDBColumn
+            DataBinding.FieldName = #30003#35831#20154
+            Width = 70
+          end
+          object cxGridDBColumn54: TcxGridDBColumn
+            DataBinding.FieldName = #30003#35831#25968#37327
+            Width = 70
+          end
+          object cxGridDBColumn52: TcxGridDBColumn
+            DataBinding.FieldName = #30003#35831#35828#26126
+            Width = 200
+          end
+        end
+        object cxGridLevel11: TcxGridLevel
+          GridView = cxGridDBTableView11
         end
       end
     end
@@ -2092,8 +2165,8 @@
   end
   object ds_thshenqing_mx: TDataSource
     DataSet = qry_thshenqing_mx
-    Left = 408
-    Top = 208
+    Left = 336
+    Top = 168
   end
   object qry_caigou_hz: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -2456,5 +2529,20 @@
       'select * from '#27425#21345#35774#32622#34920)
     Left = 1136
     Top = 312
+  end
+  object qry_weishenpi: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 520
+    Top = 152
+  end
+  object ds_weishenpi: TDataSource
+    DataSet = qry_weishenpi
+    Left = 448
+    Top = 160
   end
 end

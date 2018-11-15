@@ -271,7 +271,6 @@ type
     cxGrid11: TcxGrid;
     cxGridDBTableView8: TcxGridDBTableView;
     cxGridDBColumn37: TcxGridDBColumn;
-    cxGridDBColumn38: TcxGridDBColumn;
     cxGridDBColumn39: TcxGridDBColumn;
     cxGridDBColumn40: TcxGridDBColumn;
     cxGridDBColumn41: TcxGridDBColumn;
@@ -376,6 +375,20 @@ type
     cxlbl16: TcxLabel;
     cxText_YL_MC: TcxTextEdit;
     cxButton23: TcxButton;
+    cxGridDBTableView8Column6: TcxGridDBColumn;
+    dxNavBar1Item15: TdxNavBarItem;
+    cxTabSheet16: TcxTabSheet;
+    cxGrid14: TcxGrid;
+    cxGridDBTableView11: TcxGridDBTableView;
+    cxGridDBColumn38: TcxGridDBColumn;
+    cxGridDBColumn44: TcxGridDBColumn;
+    cxGridDBColumn51: TcxGridDBColumn;
+    cxGridDBColumn52: TcxGridDBColumn;
+    cxGridDBColumn53: TcxGridDBColumn;
+    cxGridDBColumn54: TcxGridDBColumn;
+    cxGridLevel11: TcxGridLevel;
+    qry_weishenpi: TADOQuery;
+    ds_weishenpi: TDataSource;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -439,6 +452,10 @@ type
     procedure dxNavBar1Item14Click(Sender: TObject);
     procedure cxButton22Click(Sender: TObject);
     procedure cxButton23Click(Sender: TObject);
+    procedure dxNavBar1Item15Click(Sender: TObject);
+    procedure cxGridDBTableView11CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid;
@@ -681,10 +698,13 @@ begin
   end;
 
   qry_kucun.Close;
-  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收 from ( select a.*, '+
+  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收,'+
+    ' 供应商=(select top 1 名称 from 供应商表 where 供应商编号=(select top 1 供应商 from 中央采购入库主表 where 入库编号=c.入库编号) )'+
+    ' from ( select a.*, '+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+ sjdstr+
     ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
-    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类,b.原名称 '+
+    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类, '+
+    ' 入库编号=(select top 1 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc )'+
     ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
     ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) '+mctj+' group by 价目编号 '+
     ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by 名称';
@@ -867,7 +887,7 @@ end;
 
 procedure TForm_main.cxButton22Click(Sender: TObject);
 var
-  sysj,cksj,fenystr,sqlstr,mcstr:string;
+  sysj,cksj,fenystr,sqlstr,mcstr,hejistr:string;
 begin
   sysj:='';
   cksj:='';
@@ -888,6 +908,7 @@ begin
 
   fenystr:='';
   sqlstr:='';
+  hejistr:=',合计=0';
   DataModule1.openSql('select name,abbr from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
@@ -896,6 +917,7 @@ begin
     else
       fenystr:=fenystr+','+DataModule1.ADOQuery_L.FieldByName('name').AsString+'=isnull('+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'.数量,0) ';
 
+    hejistr:=hejistr+'+isnull('+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'.数量,0)';
 
     sqlstr:=sqlstr+' left join ( select 价目编号,sum(数量) as 数量 from ('+
     ' select 价目编号,数量 from [mgpet'+DataModule1.ADOQuery_L.FieldByName('abbr').AsString+'].[dbo].[单据明细表] where 状态 in (2,3) '+
@@ -909,9 +931,9 @@ begin
   end;
 
   qry_yongliang.Close;
-  qry_yongliang.SQL.Text:='select * from ( select a.* '+fenystr+'  from ( '+
+  qry_yongliang.SQL.Text:='select * from ( select a.* '+fenystr+hejistr+'  from ( '+
     '  select 价目编号,名称,原名称,类别,规格,单位 from 药品用品价目表  where 是否作废=0 and 库存=1 and isnull(是否套餐,0)=0 '+
-    ' and 类别 in (''药品'',''化验'') '+mcstr+' )a'+sqlstr+')t order by 名称 ';
+    ' and 类别 in (''药品'',''化验'',''疫苗'') '+mcstr+' )a'+sqlstr+')t order by 名称 ';
   qry_yongliang.Open;
 
   if cxGridDBTableView10.DataController.ItemCount=0 then
@@ -987,6 +1009,7 @@ begin
     ' from ( select 出库编号 from 中央库存_出库表 where 是否作废=0 and left(出库编号,2)<>''TH'' '+tjstr+
     ' group by 出库编号 )a)b order by 出库时间';
   qry_fuhuo_jilu.Open;
+  cxTabSheet11.Show;
 end;
 
 procedure TForm_main.cxGrid1DBTableView1CellDblClick(
@@ -1011,6 +1034,20 @@ begin
   ADOQuery_ruku_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='+
                                      QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
   ADOQuery_ruku_mingxi.Active := True;
+end;
+
+procedure TForm_main.cxGridDBTableView11CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_caigou_shenqing_new := TForm_caigou_shenqing_new.Create(nil);
+  try
+    Form_caigou_shenqing_new.zt := 'chakan';
+    Form_caigou_shenqing_new.cxLabel_bianhao.Caption := qry_weishenpi.FieldByName('申请编号').asstring;
+    Form_caigou_shenqing_new.ShowModal;
+  finally
+    FreeAndNil(Form_caigou_shenqing_new);
+  end;
 end;
 
 procedure TForm_main.cxGridDBTableView1CellDblClick(
@@ -1267,6 +1304,18 @@ end;
 procedure TForm_main.dxNavBar1Item14Click(Sender: TObject);
 begin
   cxTabSheet15.Show;
+end;
+
+procedure TForm_main.dxNavBar1Item15Click(Sender: TObject);
+begin
+  qry_weishenpi.close;
+  qry_weishenpi.SQL.Text:='select * , '+
+  ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) , '+
+  ' 类别1=(case when 类别=1 then ''提货'' else ''退 货'' end), '+
+  ' 申请数量=(select sum(数量) from 提货申请明细表 where 申请编号=a.申请编号 ) '+
+  ' from ( select * from 提货申请主表 where 是否作废=0 and 状态=1 )a order by 申请日期';
+  qry_weishenpi.Open;
+  cxTabSheet16.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);

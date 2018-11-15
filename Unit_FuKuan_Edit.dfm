@@ -191,6 +191,8 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
           end
           object cxGrid3DBTableView1Column3: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
             Width = 70
           end
           object cxGrid3DBTableView1Column4: TcxGridDBColumn

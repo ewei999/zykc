@@ -96,6 +96,11 @@ type
     N1: TMenuItem;
     cxlbl3: TcxLabel;
     qry1: TADOQuery;
+    act2: TAction;
+    cxButton1: TcxButton;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    cxStyle2: TcxStyle;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -115,6 +120,7 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure N1Click(Sender: TObject);
     procedure N2Click(Sender: TObject);
+    procedure act2Execute(Sender: TObject);
   private
     CKbianhao,fenyuanm:string;
     xzbool,shifoujisuan:boolean;
@@ -388,14 +394,14 @@ begin
           MB_ICONQUESTION) = IDOK then
         begin
           DataModule1.ADOQuery_dayin.Close;
-          DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
+          DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 供应商,名称 ) AS xh ,'+
           ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
           ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),  '+
           ' gysmc=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商)'+
           ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注,供应商 '+
-          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a';
+          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a ORDER BY 供应商,名称';
           DataModule1.ADOQuery_dayin.open;
 
           DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
@@ -602,14 +608,15 @@ begin
         while not DataModule1.ADOQuery_L.Eof do
         begin
           DataModule1.ADOQuery_dayin.Close;
-          DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
+          DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 供应商,名称) AS xh ,'+
           ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
           ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号) , '+
           ' gysmc=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商)'+
           ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注,供应商 '+
-          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' and 分店代码='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('分店代码').AsString)+'  )a';
+          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' '+
+          ' and 分店代码='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('分店代码').AsString)+'  )a ORDER BY 供应商,名称';
           DataModule1.ADOQuery_dayin.open;
 
           DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
@@ -632,6 +639,11 @@ begin
     end;
     {$ENDREGION}
   end;
+end;
+
+procedure TForm_fuhuo.act2Execute(Sender: TObject);
+begin
+  DaochuExcel(cxGrid2);
 end;
 
 procedure TForm_fuhuo.act_closeExecute(Sender: TObject);
@@ -683,6 +695,8 @@ begin
     Form_FuKuan_Edit := TForm_FuKuan_Edit.Create(nil);
     try
       Form_FuKuan_Edit.leibiestr:='库存列表';
+      Form_FuKuan_Edit.cxlbl1.Caption:= qry_thshenqing_mx.FieldByName('名称').AsString ;
+      Form_FuKuan_Edit.cxlbl1.Style.Font.Size:=16;
       Form_FuKuan_Edit.qry_liebiao.Clone(jisuan_danjia(qry_thshenqing_mx.FieldByName('价目编号').AsString ,qry_thshenqing_mx.FieldByName('仓库库存').AsString));
       Form_FuKuan_Edit.ShowModal;
       if Form_FuKuan_Edit.baocun then
@@ -719,6 +733,8 @@ begin
   begin
     qry_thshenqing_mx.Edit;
     qry_thshenqing_mx.FieldByName('选择').AsBoolean:= xzbool;
+    if qry_thshenqing_mx.FieldByName('仓库库存').AsFloat=0 then
+      qry_thshenqing_mx.FieldByName('选择').AsBoolean:= false;
     qry_thshenqing_mx.Post;
 
     qry_thshenqing_mx.Next;
@@ -963,7 +979,7 @@ end;
 
 procedure TForm_fuhuo.FormShow(Sender: TObject);
 begin
-  self.WindowState:=wsMaximized;
+//  self.WindowState:=wsMaximized;
   if laiyuan='按申请单' then
   begin
     cxLabel10.Caption:='向门店付货（按申请单）';

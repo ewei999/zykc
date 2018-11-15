@@ -83,14 +83,14 @@ begin
   end;
 
   DataModule1.ADOQuery_dayin.Close;
-  DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 名称 DESC) AS xh ,'+
+  DataModule1.ADOQuery_dayin.SQL.Text :='select RANK () OVER (ORDER BY 供应商,名称 ) AS xh ,'+
           ' 名称 as mc,出库数量 as sl,单价 as danjia,出库金额 as jine,备注 as beizhu, '+
           ' bz=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' dw=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
           ' gg=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),  '+
           ' gysmc=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商)'+
           ' from ( select 价目编号,名称,出库数量,单价,出库金额,备注,供应商 '+
-          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a';
+          ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKbianhao)+' )a order by 供应商,名称';
   DataModule1.ADOQuery_dayin.open;
 
   DataModule1.frxDBDataset_dayin.FieldAliases.Clear;

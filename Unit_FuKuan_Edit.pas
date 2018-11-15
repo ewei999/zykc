@@ -24,7 +24,7 @@ uses
   cxButtons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomTableView,
   cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
-  Data.Win.ADODB;
+  Data.Win.ADODB, cxCurrencyEdit;
 
 type
   TForm_FuKuan_Edit = class(TForm)
@@ -152,8 +152,6 @@ begin
 
   if leibiestr='库存列表' then
   begin
-    cxlbl1.Caption:='库存列表';
-    self.Caption:='库存列表';
     cxButton2.Visible:=false;
 
     cxTabSheet2.Show;

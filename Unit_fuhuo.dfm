@@ -3,7 +3,7 @@ object Form_fuhuo: TForm_fuhuo
   Top = 0
   Caption = #21521#38376#24215#20184#36135
   ClientHeight = 701
-  ClientWidth = 1008
+  ClientWidth = 1113
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_fuhuo: TForm_fuhuo
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 1008
+    Width = 1113
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -43,7 +43,7 @@ object Form_fuhuo: TForm_fuhuo
     ExplicitWidth = 975
   end
   object cxButton8: TcxButton
-    Left = 934
+    Left = 1039
     Top = 11
     Width = 50
     Height = 58
@@ -60,14 +60,15 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 934
   end
   object cxButton6: TcxButton
-    Left = 878
+    Left = 983
     Top = 11
     Width = 50
     Height = 58
     Align = alCustom
-    Action = act1
+    Action = act2
     Anchors = [akTop, akRight]
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Black'
@@ -79,6 +80,7 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 878
   end
   object cxLabel10: TcxLabel
     Left = 7
@@ -110,27 +112,30 @@ object Form_fuhuo: TForm_fuhuo
   object cxPageControl1: TcxPageControl
     Left = 0
     Top = 80
-    Width = 1008
+    Width = 1113
     Height = 621
     Align = alClient
     TabOrder = 3
     Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
+    ExplicitWidth = 1008
     ClientRectBottom = 616
     ClientRectLeft = 2
-    ClientRectRight = 1003
+    ClientRectRight = 1108
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = #25353#30003#35831#21333
       ImageIndex = 0
+      ExplicitWidth = 1001
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1001
+        Width = 1106
         Height = 49
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1001
         object cxRadioButton1: TcxRadioButton
           Left = 301
           Top = 18
@@ -206,12 +211,13 @@ object Form_fuhuo: TForm_fuhuo
       object cxGrid2: TcxGrid
         Left = 0
         Top = 49
-        Width = 1001
+        Width = 1106
         Height = 536
         Align = alClient
         PopupMenu = pm_shenqingdan
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitTop = 45
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView1CellDblClick
@@ -245,7 +251,7 @@ object Form_fuhuo: TForm_fuhuo
             Options.Filtering = False
             Options.Moving = False
             Options.Sorting = False
-            Width = 50
+            Width = 47
             OnHeaderClick = cxGridDBTableView1Column4HeaderClick
           end
           object cxGridDBColumn4: TcxGridDBColumn
@@ -254,50 +260,69 @@ object Form_fuhuo: TForm_fuhuo
             Options.Editing = False
             SortIndex = 0
             SortOrder = soAscending
-            Width = 200
+            Width = 186
           end
           object cxGridDBColumn6: TcxGridDBColumn
             DataBinding.FieldName = #35268#26684
             Options.Editing = False
-            Width = 64
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 60
           end
           object cxGridDBColumn7: TcxGridDBColumn
             DataBinding.FieldName = #21333#20301
             Options.Editing = False
-            Width = 63
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 59
           end
           object cxGridDBTableView1Column7: TcxGridDBColumn
             DataBinding.FieldName = #21253#35013#35268#26684
             Options.Editing = False
-            Width = 100
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 93
           end
           object cxGridDBTableView1Column9: TcxGridDBColumn
             DataBinding.FieldName = #30003#35831#26102#24211#23384
             Options.Editing = False
-            Width = 80
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 85
           end
           object cxGridDBTableView1Column8: TcxGridDBColumn
             Caption = #38376#24215#22791#27880
             DataBinding.FieldName = #22791#27880
             Options.Editing = False
-            Width = 100
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 92
           end
           object cxGridDBTableView1Column1: TcxGridDBColumn
             DataBinding.FieldName = #30003#35831#25968#37327
             PropertiesClassName = 'TcxLabelProperties'
             Options.Editing = False
-            Width = 70
+            Options.Filtering = False
+            Options.Sorting = False
+            Styles.Content = cxStyle2
+            Width = 64
           end
           object cxGridDBTableView1Column10: TcxGridDBColumn
             DataBinding.FieldName = #20184#36135#25968#37327
             PropertiesClassName = 'TcxTextEditProperties'
-            Width = 70
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 64
           end
           object cxGridDBTableView1Column11: TcxGridDBColumn
             DataBinding.FieldName = #20179#24211#24211#23384
             PropertiesClassName = 'TcxLabelProperties'
+            Properties.ShadowedColor = clBlack
             Options.Editing = False
-            Width = 70
+            Options.Filtering = False
+            Options.Sorting = False
+            Styles.Content = cxStyle1
+            Width = 64
           end
           object cxGridDBTableView1Column5: TcxGridDBColumn
             DataBinding.FieldName = #20379#24212#21830
@@ -311,27 +336,29 @@ object Form_fuhuo: TForm_fuhuo
             Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
-            Width = 121
+            Width = 92
           end
           object cxGridDBTableView1Column3: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
             Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
-            Width = 74
+            Width = 68
           end
           object cxGridDBTableView1Column6: TcxGridDBColumn
             Caption = #21512#35745#37329#39069
             DataBinding.FieldName = #20986#24211#37329#39069
             Options.Editing = False
-            Width = 71
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 64
           end
           object cxGridDBTableView1Column2: TcxGridDBColumn
             DataBinding.FieldName = #33293#38646#37329#39069
             PropertiesClassName = 'TcxTextEditProperties'
             Options.Filtering = False
             Options.Sorting = False
-            Width = 72
+            Width = 66
           end
         end
         object cxGridLevel1: TcxGridLevel
@@ -342,13 +369,15 @@ object Form_fuhuo: TForm_fuhuo
     object cxTabSheet2: TcxTabSheet
       Caption = #20027#21160#20184#36135
       ImageIndex = 1
+      ExplicitWidth = 1001
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 1001
+        Width = 1106
         Height = 49
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1001
         object cxButton3: TcxButton
           Left = 27
           Top = 14
@@ -385,11 +414,12 @@ object Form_fuhuo: TForm_fuhuo
       object cxGrid1: TcxGrid
         Left = 0
         Top = 49
-        Width = 1001
+        Width = 1106
         Height = 536
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitWidth = 1001
         object cxGridDBTableView2: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_zhudong
@@ -509,6 +539,25 @@ object Form_fuhuo: TForm_fuhuo
       end
     end
   end
+  object cxButton1: TcxButton
+    Left = 927
+    Top = 11
+    Width = 50
+    Height = 58
+    Align = alCustom
+    Action = act1
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 4
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object actmgr1: TActionManager
     ActionBars = <
       item
@@ -532,6 +581,11 @@ object Form_fuhuo: TForm_fuhuo
       Caption = #30830#35748
       ImageIndex = 0
       OnExecute = act1Execute
+    end
+    object act2: TAction
+      Caption = 'Excel'
+      ImageIndex = 87
+      OnExecute = act2Execute
     end
   end
   object qry_thshenqing_mx: TADOQuery
@@ -647,5 +701,23 @@ object Form_fuhuo: TForm_fuhuo
     Parameters = <>
     Left = 144
     Top = 520
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 248
+    Top = 512
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object cxStyle2: TcxStyle
+      AssignedValues = [svColor]
+      Color = clInfoBk
+    end
   end
 end

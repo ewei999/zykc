@@ -21,7 +21,10 @@ uses
   dxGDIPlusClasses, Vcl.ExtCtrls, dxSkinscxPCPainter, dxBarBuiltInMenu, cxPC,
   cxMemo, cxTextEdit, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, Vcl.Menus, Vcl.StdCtrls,
-  cxButtons;
+  cxButtons, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
+  cxNavigator, Data.DB, cxDBData, cxGridLevel, cxGridCustomTableView,
+  cxGridTableView, cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,
+  Data.Win.ADODB;
 
 type
   TForm_FuKuan_Edit = class(TForm)
@@ -44,10 +47,22 @@ type
     act2: TAction;
     cxButton8: TcxButton;
     cxButton2: TcxButton;
+    cxTabSheet2: TcxTabSheet;
+    cxGrid3: TcxGrid;
+    cxGrid3DBTableView1: TcxGridDBTableView;
+    cxGrid3DBTableView1Column1: TcxGridDBColumn;
+    cxGrid3DBTableView1Column3: TcxGridDBColumn;
+    cxGrid3DBTableView1Column4: TcxGridDBColumn;
+    cxGrid3Level1: TcxGridLevel;
+    ds_liebiao: TDataSource;
+    qry_liebiao: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
     procedure act2Execute(Sender: TObject);
+    procedure cxGrid3DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     { Private declarations }
   public
@@ -90,6 +105,24 @@ begin
   close;
 end;
 
+procedure TForm_FuKuan_Edit.cxGrid3DBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  if qry_liebiao.FieldByName('供应商').AsString='无货' then
+  begin
+    Application.MessageBox('库存无货', '提示', MB_OK);
+    exit;
+  end;
+  if qry_liebiao.FieldByName('供应商').AsString='库存不足' then
+  begin
+    Application.MessageBox('库存不足', '提示', MB_OK);
+    exit;
+  end;
+  baocun:=true;
+  close;
+end;
+
 procedure TForm_FuKuan_Edit.FormCreate(Sender: TObject);
 begin
   baocun:=false;
@@ -116,6 +149,16 @@ begin
     end;
     cxTabSheet1.Show;
   end;
+
+  if leibiestr='库存列表' then
+  begin
+    cxlbl1.Caption:='库存列表';
+    self.Caption:='库存列表';
+    cxButton2.Visible:=false;
+
+    cxTabSheet2.Show;
+  end;
+
 end;
 
 end.

@@ -76,7 +76,6 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Height = 57
     Align = alTop
     TabOrder = 1
-    ExplicitWidth = 814
     object cxLabel2: TcxLabel
       Left = 296
       Top = 15
@@ -132,7 +131,6 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 751
   end
   object cxGrid2: TcxGrid
     Left = 0
@@ -142,8 +140,6 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Align = alClient
     TabOrder = 3
     LookAndFeel.SkinName = 'Blue'
-    ExplicitWidth = 814
-    ExplicitHeight = 406
     object cxGridDBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataModeController.SmartRefresh = True
@@ -255,7 +251,6 @@ object Form_FuHuoDan: TForm_FuHuoDan
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 669
   end
   object actmgr1: TActionManager
     ActionBars = <

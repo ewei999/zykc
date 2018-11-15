@@ -76,12 +76,9 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     Height = 261
     Align = alClient
     TabOrder = 1
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ExplicitTop = 70
-    ExplicitWidth = 289
-    ExplicitHeight = 193
     ClientRectBottom = 256
     ClientRectLeft = 2
     ClientRectRight = 459
@@ -89,10 +86,6 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     object cxTabSheet1: TcxTabSheet
       Caption = #20184#27454
       ImageIndex = 0
-      ExplicitLeft = 4
-      ExplicitTop = 33
-      ExplicitWidth = 447
-      ExplicitHeight = 234
       object cxlbl3: TcxLabel
         Left = 20
         Top = 9
@@ -167,6 +160,50 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
         Width = 329
       end
     end
+    object cxTabSheet2: TcxTabSheet
+      Caption = #24211#23384#21015#34920
+      ImageIndex = 1
+      object cxGrid3: TcxGrid
+        Left = 0
+        Top = 0
+        Width = 457
+        Height = 225
+        Align = alClient
+        TabOrder = 0
+        LookAndFeel.SkinName = 'Black'
+        object cxGrid3DBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGrid3DBTableView1CellDblClick
+          DataController.DataSource = ds_liebiao
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.GroupByBox = False
+          object cxGrid3DBTableView1Column1: TcxGridDBColumn
+            DataBinding.FieldName = #20379#24212#21830
+            Width = 100
+          end
+          object cxGrid3DBTableView1Column3: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20215
+            Width = 70
+          end
+          object cxGrid3DBTableView1Column4: TcxGridDBColumn
+            Caption = #21487#20184#36135#25968#37327
+            DataBinding.FieldName = #25968#37327
+            Width = 70
+          end
+        end
+        object cxGrid3Level1: TcxGridLevel
+          GridView = cxGrid3DBTableView1
+        end
+      end
+    end
   end
   object cxButton8: TcxButton
     Left = 400
@@ -230,5 +267,20 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
       ImageIndex = 31
       OnExecute = act2Execute
     end
+  end
+  object ds_liebiao: TDataSource
+    DataSet = qry_liebiao
+    Left = 212
+    Top = 145
+  end
+  object qry_liebiao: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#20379#24212#21830#34920)
+    Left = 76
+    Top = 169
   end
 end

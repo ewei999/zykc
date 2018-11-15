@@ -43,7 +43,7 @@ object Form_fuhuo: TForm_fuhuo
     ExplicitWidth = 975
   end
   object cxButton8: TcxButton
-    Left = 947
+    Left = 934
     Top = 11
     Width = 50
     Height = 58
@@ -62,7 +62,7 @@ object Form_fuhuo: TForm_fuhuo
     ParentFont = False
   end
   object cxButton6: TcxButton
-    Left = 891
+    Left = 878
     Top = 11
     Width = 50
     Height = 58
@@ -196,6 +196,12 @@ object Form_fuhuo: TForm_fuhuo
           OnKeyPress = cxLookupComboBox2KeyPress
           Width = 200
         end
+        object cxlbl3: TcxLabel
+          Left = 834
+          Top = 14
+          Caption = #21491#38190#21487#26032#22686#21024#38500#35760#24405
+          Transparent = True
+        end
       end
       object cxGrid2: TcxGrid
         Left = 0
@@ -203,18 +209,18 @@ object Form_fuhuo: TForm_fuhuo
         Width = 1001
         Height = 536
         Align = alClient
+        PopupMenu = pm_shenqingdan
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView1CellDblClick
           DataController.DataSource = ds_thshenqing_mx
-          DataController.KeyFieldNames = #32534#21495
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
             item
               Format = #21512#35745#65306'0'
               Kind = skCount
-              Column = cxGridDBColumn3
             end
             item
               Format = '0.00'
@@ -233,8 +239,7 @@ object Form_fuhuo: TForm_fuhuo
           OptionsView.Footer = True
           OptionsView.GroupByBox = False
           object cxGridDBTableView1Column4: TcxGridDBColumn
-            Caption = #36873#25321
-            DataBinding.ValueType = 'Boolean'
+            DataBinding.FieldName = #36873#25321
             PropertiesClassName = 'TcxCheckBoxProperties'
             Properties.NullStyle = nssUnchecked
             Options.Filtering = False
@@ -243,17 +248,12 @@ object Form_fuhuo: TForm_fuhuo
             Width = 50
             OnHeaderClick = cxGridDBTableView1Column4HeaderClick
           end
-          object cxGridDBColumn3: TcxGridDBColumn
-            DataBinding.FieldName = #30003#35831#26085#26399
-            PropertiesClassName = 'TcxDateEditProperties'
-            Properties.DisplayFormat = 'yyyy-mm-dd'
-            Options.Editing = False
-            Width = 100
-          end
           object cxGridDBColumn4: TcxGridDBColumn
-            Caption = #21517#31216
-            DataBinding.FieldName = 'mc'
+            DataBinding.FieldName = #21517#31216
+            PropertiesClassName = 'TcxLabelProperties'
             Options.Editing = False
+            SortIndex = 0
+            SortOrder = soAscending
             Width = 200
           end
           object cxGridDBColumn6: TcxGridDBColumn
@@ -272,20 +272,32 @@ object Form_fuhuo: TForm_fuhuo
             Width = 100
           end
           object cxGridDBTableView1Column9: TcxGridDBColumn
-            DataBinding.FieldName = #24211#23384
+            DataBinding.FieldName = #30003#35831#26102#24211#23384
             Options.Editing = False
-            Width = 60
+            Width = 80
           end
           object cxGridDBTableView1Column8: TcxGridDBColumn
+            Caption = #38376#24215#22791#27880
             DataBinding.FieldName = #22791#27880
             Options.Editing = False
             Width = 100
           end
           object cxGridDBTableView1Column1: TcxGridDBColumn
-            Caption = #30003#35831'/'#20184#36135#25968#37327
-            DataBinding.FieldName = #25968#37327
+            DataBinding.FieldName = #30003#35831#25968#37327
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBTableView1Column10: TcxGridDBColumn
+            DataBinding.FieldName = #20184#36135#25968#37327
             PropertiesClassName = 'TcxTextEditProperties'
-            Width = 106
+            Width = 70
+          end
+          object cxGridDBTableView1Column11: TcxGridDBColumn
+            DataBinding.FieldName = #20179#24211#24211#23384
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
           end
           object cxGridDBTableView1Column5: TcxGridDBColumn
             DataBinding.FieldName = #20379#24212#21830
@@ -295,15 +307,15 @@ object Form_fuhuo: TForm_fuhuo
               item
                 FieldName = #21517#31216
               end>
-            Properties.ListOptions.ShowHeader = False
             Properties.ListSource = ds_gys
+            Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
             Width = 121
           end
           object cxGridDBTableView1Column3: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
-            PropertiesClassName = 'TcxTextEditProperties'
+            Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
             Width = 74
@@ -613,5 +625,27 @@ object Form_fuhuo: TForm_fuhuo
     Parameters = <>
     Left = 600
     Top = 488
+  end
+  object pm_shenqingdan: TPopupMenu
+    AutoHotkeys = maManual
+    AutoLineReduction = maManual
+    Left = 88
+    Top = 398
+    object N2: TMenuItem
+      Caption = #26032#22686#35760#24405
+      OnClick = N2Click
+    end
+    object N1: TMenuItem
+      Caption = #21024#38500#35760#24405
+      OnClick = N1Click
+    end
+  end
+  object qry1: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    Left = 144
+    Top = 520
   end
 end

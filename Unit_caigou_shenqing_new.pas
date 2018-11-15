@@ -46,7 +46,6 @@ type
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
     cxGrid1DBTableView1Column4: TcxGridDBColumn;
-    cxGrid1DBTableView1Column5: TcxGridDBColumn;
     cxButton6: TcxButton;
     act_excel: TAction;
     pnl1: TPanel;
@@ -79,7 +78,6 @@ type
     cxGrid1DBTableView1Column8: TcxGridDBColumn;
     ds_gys_list: TDataSource;
     qry_gys_list: TADOQuery;
-    cxGrid1DBTableView1Column9: TcxGridDBColumn;
     cxGrid1DBTableView1Column10: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure Action_closeExecute(Sender: TObject);
@@ -186,7 +184,7 @@ begin
         DataModule1.ADOQuery_L.FieldByName('出库数量').AsFloat:=ADOQuery1.FieldByName('数量').Asfloat*-1;
         DataModule1.ADOQuery_L.FieldByName('单价').AsFloat:=ADOQuery1.FieldByName('单价').Asfloat;
         DataModule1.ADOQuery_L.FieldByName('出库金额').AsFloat:=ADOQuery1.FieldByName('合计金额').Asfloat*-1;
-        DataModule1.ADOQuery_L.FieldByName('舍零金额').AsFloat:=ADOQuery1.FieldByName('舍零金额').Asfloat;
+//       DataModule1.ADOQuery_L.FieldByName('舍零金额').AsFloat:=ADOQuery1.FieldByName('舍零金额').Asfloat;
         DataModule1.ADOQuery_L.FieldByName('供应商').AsString:=ADOQuery1.FieldByName('供应商').AsString;
         DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:=fenyuan;
         DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:=false;
@@ -264,15 +262,13 @@ procedure TForm_caigou_shenqing_new.FormShow(Sender: TObject);
 begin
   cxButton1.Visible:=false;
   cxButton2.Visible:=false;
-  cxGrid1DBTableView1Column7.Visible:=false;
-  cxGrid1DBTableView1Column8.Visible:=false;
-  cxGrid1DBTableView1Column9.Visible:=false;
-  cxGrid1DBTableView1Column10.Visible:=false;
+
   if zt='chakan' then
   begin
     pnl1.Enabled:=false;
     cxGrid1DBTableView1.OptionsData.Editing:=false;
   end;
+
   if cxLabel_bianhao.Caption<>'' then
   begin
     DataModule1.openSql('select *,'+
@@ -298,11 +294,7 @@ begin
       cxLabel10.Caption:=self.Caption;
       cxGrid1DBTableView1Column6.Visible:=false;
       cxGrid1DBTableView1DBColumn5.Caption:='退货数量';
-      cxGrid1DBTableView1Column7.Visible:=true;
-      cxGrid1DBTableView1Column8.Visible:=true;
       cxGrid1DBTableView1DBColumn4.Visible:=false;
-      cxGrid1DBTableView1Column9.Visible:=true;
-      cxGrid1DBTableView1Column10.Visible:=true;
       cxGrid1DBTableView1.OptionsData.Editing:=true;
       if DataModule1.ADOQuery_L.FieldByName('状态').AsInteger=2 then
       begin

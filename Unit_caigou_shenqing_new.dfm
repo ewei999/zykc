@@ -75,41 +75,37 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
       object cxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
         PropertiesClassName = 'TcxLabelProperties'
+        Options.Editing = False
         Width = 60
       end
       object cxGrid1DBTableView1DBColumn2: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
         PropertiesClassName = 'TcxLabelProperties'
         Options.Editing = False
-        Width = 130
-      end
-      object cxGrid1DBTableView1Column5: TcxGridDBColumn
-        DataBinding.FieldName = #21407#21517#31216
-        PropertiesClassName = 'TcxLabelProperties'
-        Options.Editing = False
-        Width = 130
+        Width = 180
       end
       object cxGrid1DBTableView1Column2: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         PropertiesClassName = 'TcxLabelProperties'
+        Options.Editing = False
         Width = 60
       end
       object cxGrid1DBTableView1Column3: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
         PropertiesClassName = 'TcxLabelProperties'
+        Options.Editing = False
         Width = 60
       end
       object cxGrid1DBTableView1Column4: TcxGridDBColumn
         DataBinding.FieldName = #22791#27880
-        PropertiesClassName = 'TcxBlobEditProperties'
-        Properties.BlobPaintStyle = bpsText
-        Properties.ReadOnly = True
-        Width = 200
+        Options.Editing = False
+        Width = 150
       end
       object cxGrid1DBTableView1DBColumn5: TcxGridDBColumn
         Caption = #30003#35831#25968#37327
         DataBinding.FieldName = #25968#37327
         PropertiesClassName = 'TcxLabelProperties'
+        Options.Editing = False
         Width = 70
       end
       object cxGrid1DBTableView1Column8: TcxGridDBColumn
@@ -122,11 +118,13 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
           end>
         Properties.ListOptions.ShowHeader = False
         Properties.ListSource = ds_gys_list
+        Options.Editing = False
         Width = 100
       end
       object cxGrid1DBTableView1Column7: TcxGridDBColumn
         DataBinding.FieldName = #21333#20215
         PropertiesClassName = 'TcxTextEditProperties'
+        Options.Editing = False
         Width = 60
       end
       object cxGrid1DBTableView1Column10: TcxGridDBColumn
@@ -134,19 +132,16 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
         Options.Editing = False
         Width = 65
       end
-      object cxGrid1DBTableView1Column9: TcxGridDBColumn
-        DataBinding.FieldName = #33293#38646#37329#39069
-        PropertiesClassName = 'TcxTextEditProperties'
-        Width = 65
-      end
       object cxGrid1DBTableView1DBColumn4: TcxGridDBColumn
         Caption = #29366#24577
         DataBinding.FieldName = 'zt'
         PropertiesClassName = 'TcxLabelProperties'
+        Options.Editing = False
         Width = 70
       end
       object cxGrid1DBTableView1Column6: TcxGridDBColumn
         DataBinding.FieldName = #19981#20184#36135#21407#22240
+        Options.Editing = False
         Width = 100
       end
     end

@@ -60,7 +60,6 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 934
   end
   object cxButton6: TcxButton
     Left = 983
@@ -80,7 +79,6 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 878
   end
   object cxLabel10: TcxLabel
     Left = 7
@@ -116,10 +114,9 @@ object Form_fuhuo: TForm_fuhuo
     Height = 621
     Align = alClient
     TabOrder = 3
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ExplicitWidth = 1008
     ClientRectBottom = 616
     ClientRectLeft = 2
     ClientRectRight = 1108
@@ -127,7 +124,6 @@ object Form_fuhuo: TForm_fuhuo
     object cxTabSheet1: TcxTabSheet
       Caption = #25353#30003#35831#21333
       ImageIndex = 0
-      ExplicitWidth = 1001
       object pnl1: TPanel
         Left = 0
         Top = 0
@@ -135,7 +131,6 @@ object Form_fuhuo: TForm_fuhuo
         Height = 49
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 1001
         object cxRadioButton1: TcxRadioButton
           Left = 301
           Top = 18
@@ -217,7 +212,6 @@ object Form_fuhuo: TForm_fuhuo
         PopupMenu = pm_shenqingdan
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 45
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView1CellDblClick
@@ -370,7 +364,6 @@ object Form_fuhuo: TForm_fuhuo
     object cxTabSheet2: TcxTabSheet
       Caption = #20027#21160#20184#36135
       ImageIndex = 1
-      ExplicitWidth = 1001
       object pnl2: TPanel
         Left = 0
         Top = 0
@@ -378,7 +371,6 @@ object Form_fuhuo: TForm_fuhuo
         Height = 49
         Align = alTop
         TabOrder = 0
-        ExplicitWidth = 1001
         object cxButton3: TcxButton
           Left = 27
           Top = 14
@@ -420,7 +412,6 @@ object Form_fuhuo: TForm_fuhuo
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitWidth = 1001
         object cxGridDBTableView2: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView2CellDblClick

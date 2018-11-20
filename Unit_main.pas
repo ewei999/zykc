@@ -389,6 +389,12 @@ type
     cxGridLevel11: TcxGridLevel;
     qry_weishenpi: TADOQuery;
     ds_weishenpi: TDataSource;
+    cxGridDBTableView1Column4: TcxGridDBColumn;
+    cxGridDBTableView1Column5: TcxGridDBColumn;
+    cxComboBox2: TcxComboBox;
+    cxlbl17: TcxLabel;
+    cxGridDBTableView1Column6: TcxGridDBColumn;
+    cxButton24: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -456,6 +462,7 @@ type
     procedure cxGridDBTableView11CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure cxButton24Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid;
@@ -790,6 +797,10 @@ begin
     tjstr:=tjstr+' and 申请日期>='+QuotedStr(cxDate_th_qishi.Text)+'';
   if cxDate_th_zhongzhi.Text<>'' then
     tjstr:=tjstr+' and 申请日期<'+QuotedStr(DateToStr(incday(cxDate_th_zhongzhi.date,1)))+'';
+  if (cxComboBox2.Text='未处理') then
+    tjstr:=tjstr+' and 申请编号 in (select 申请编号 from 提货申请明细表 where 状态=1)'
+  else if (cxComboBox2.Text='已处理') then
+    tjstr:=tjstr+' and 申请编号 in (select 申请编号 from 提货申请明细表 where 状态 in (2,3))';
 
   qry_thshenqing.Close;
   qry_thshenqing.SQL.Text:='select *, 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ) ,'+
@@ -946,26 +957,40 @@ begin
   DaochuExcel(cxGrid13);
 end;
 
+procedure TForm_main.cxButton24Click(Sender: TObject);
+begin
+  DaochuExcel(cxGrid11);
+end;
+
 procedure TForm_main.cxButton2Click(Sender: TObject);
 var
-  tjstr:string;
+  tjstr,ztstr:string;
 begin
   tjstr:='';
+  ztstr:='';
   if cxDate_th_qishi.Text<>'' then
     tjstr:=tjstr+' and 申请日期>='+QuotedStr(cxDate_th_qishi.Text)+'';
   if cxDate_th_zhongzhi.Text<>'' then
     tjstr:=tjstr+' and 申请日期<'+QuotedStr(DateToStr(incday(cxDate_th_zhongzhi.date,1)))+'';
+  if cxComboBox2.Text='未处理' then
+    ztstr:=ztstr+' and 状态=1 '
+  else if cxComboBox2.Text='已处理' then
+    ztstr:=ztstr+' and 状态 in (2,3) ';
 
   qry_thshenqing_mx.Close;
-  qry_thshenqing_mx.SQL.Text:='select * from ( select *,'+
+  qry_thshenqing_mx.SQL.Text:='select *,仓库库存=入库数量-出库数量 from ( select *,'+
     ' 分院=(select top 1 name from 分院表 where abbr=(select top 1 分店代码 from 提货申请主表 '+
     ' 	where  申请编号=a.申请编号) ) , '+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
+    ' 审批日期=(select top 1 审批时间 from 提货申请审批表 where 申请编号=a.申请编号 order by 编号 desc),'+
     ' mc=名称,'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
-    ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end) '+
+    ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end), '+
+    ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
+    '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
+    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
     ' from ( select * from 提货申请明细表 '+
-    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1  '+tjstr+') '+
+    ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1  '+tjstr+') '+ztstr+
     ' )a)b order by 申请日期';
   qry_thshenqing_mx.Open;
 

@@ -62,6 +62,7 @@ type
     cxGridDBColumn9: TcxGridDBColumn;
     cxGridDBColumn10: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
+    cxGridDBTableView8Column5: TcxGridDBColumn;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);

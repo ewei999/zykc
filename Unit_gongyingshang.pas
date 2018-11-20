@@ -155,7 +155,7 @@ begin
   Action_zf.Enabled := True;
 
   if ADOQuery1.FieldByName('供应商编号').AsString= '' then
-    ADOQuery1.FieldByName('供应商编号').AsString :=AutoCreateNo('GYS','供应商');
+    ADOQuery1.FieldByName('供应商编号').AsString :=AutoCreateNo('ZGYS','供应商');
 
   ADOQuery1.FieldByName('拼音').AsString := HZToPY(ADOQuery1.FieldByName('名称').AsString);
   ADOQuery1.FieldByName('是否作废').AsBoolean:=false;

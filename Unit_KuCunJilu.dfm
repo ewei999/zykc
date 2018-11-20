@@ -95,7 +95,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Height = 549
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 544
@@ -113,9 +113,6 @@ object Form_KuCunJilu: TForm_KuCunJilu
         Align = alClient
         TabOrder = 0
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 70
-        ExplicitWidth = 1069
-        ExplicitHeight = 610
         object cxGridDBTableView8: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_leibiao
@@ -140,6 +137,10 @@ object Form_KuCunJilu: TForm_KuCunJilu
           OptionsView.ColumnAutoWidth = True
           OptionsView.Footer = True
           OptionsView.GroupByBox = False
+          object cxGridDBTableView8Column5: TcxGridDBColumn
+            DataBinding.FieldName = #20837#24211#32534#21495
+            Width = 100
+          end
           object cxGridDBTableView8Column1: TcxGridDBColumn
             DataBinding.FieldName = #20837#24211#26102#38388
             PropertiesClassName = 'TcxDateEditProperties'

@@ -165,6 +165,22 @@ object Form_cg_new: TForm_cg_new
       TabOrder = 13
       Visible = False
     end
+    object cxButton4: TcxButton
+      Left = 121
+      Top = 220
+      Width = 136
+      Height = 31
+      Caption = #23548#20837#26080#24211#23384#30003#35831#20215#30446
+      LookAndFeel.SkinName = 'Black'
+      TabOrder = 14
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = cxButton4Click
+    end
   end
   object cxGrid1: TcxGrid
     Left = 0
@@ -186,19 +202,6 @@ object Form_cg_new: TForm_cg_new
       OptionsData.Inserting = False
       OptionsView.ColumnAutoWidth = True
       OptionsView.GroupByBox = False
-      object cxgrdbclmncxGrid1DBTableView1DBColumn: TcxGridDBColumn
-        DataBinding.FieldName = #32534#21495
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn
-        DataBinding.FieldName = #30003#35831#32534#21495
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn4: TcxGridDBColumn
-        DataBinding.FieldName = #20379#24212#21830
-        Visible = False
-        Width = 65
-      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
         Options.Editing = False
@@ -207,58 +210,49 @@ object Form_cg_new: TForm_cg_new
       object cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = #23567#31867
         Options.Editing = False
-        Width = 64
+        Width = 67
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
         DataBinding.FieldName = #20215#30446#32534#21495
         Options.Editing = False
-        Width = 143
+        Width = 112
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
         Options.Editing = False
-        Width = 238
+        Width = 223
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         Options.Editing = False
-        Width = 49
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
-        DataBinding.FieldName = #25968#37327
-        PropertiesClassName = 'TcxTextEditProperties'
-        Width = 54
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
-        DataBinding.FieldName = #29366#24577
-        Visible = False
-        Width = 43
+        Width = 67
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
         Options.Editing = False
-        Width = 46
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
-        DataBinding.FieldName = #22791#27880
-        PropertiesClassName = 'TcxMemoProperties'
-        Width = 94
+        Width = 67
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
         Caption = #36827#20215
         DataBinding.FieldName = #21333#20215
         Options.Editing = False
-        Width = 52
+        Width = 67
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
+        DataBinding.FieldName = #25968#37327
+        PropertiesClassName = 'TcxTextEditProperties'
+        Width = 55
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
+        DataBinding.FieldName = #22791#27880
+        PropertiesClassName = 'TcxMemoProperties'
+        Width = 109
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn
+        Caption = #20179#24211#24211#23384
         DataBinding.FieldName = #24211#23384
         Options.Editing = False
-        Width = 51
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn13: TcxGridDBColumn
-        DataBinding.FieldName = #21407#21517#31216
-        Options.Editing = False
-        Width = 124
+        Width = 70
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -395,6 +389,10 @@ object Form_cg_new: TForm_cg_new
             Action = Action_close
             Caption = #36864#20986'(&V)'
             ImageIndex = 89
+          end
+          item
+            Action = act3
+            ImageIndex = 87
           end>
         ActionBar = ActionToolBar1
       end>
@@ -459,6 +457,11 @@ object Form_cg_new: TForm_cg_new
       Caption = #36864#22238
       ImageIndex = 59
       OnExecute = act2Execute
+    end
+    object act3: TAction
+      Caption = #23548#20986'Excel'
+      ImageIndex = 87
+      OnExecute = act3Execute
     end
   end
   object ADOQuery_list: TADOQuery

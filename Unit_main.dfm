@@ -208,7 +208,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet4
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -291,6 +291,16 @@
           Top = 24
           Caption = #29366#24577
           Transparent = True
+        end
+        object cxButton25: TcxButton
+          Left = 760
+          Top = 20
+          Width = 95
+          Height = 31
+          Caption = #23548#20986'Excel'
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 8
+          OnClick = cxButton25Click
         end
       end
       object cxPage_tihuoshenqing: TcxPageControl
@@ -433,7 +443,7 @@
                 Width = 100
               end
               object cxGridDBColumn2: TcxGridDBColumn
-                DataBinding.FieldName = #30003#35831#32534#21495
+                DataBinding.FieldName = #20215#30446#32534#21495
                 Options.Editing = False
                 Width = 80
               end
@@ -457,6 +467,12 @@
                 DataBinding.FieldName = #21333#20301
                 Options.Editing = False
                 Width = 70
+              end
+              object cxGridDBTableView1Column7: TcxGridDBColumn
+                Caption = #20379#24212#21830
+                DataBinding.FieldName = 'gys'
+                Options.Editing = False
+                Width = 90
               end
               object cxGridDBTableView1Column1: TcxGridDBColumn
                 DataBinding.FieldName = #25968#37327

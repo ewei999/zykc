@@ -646,7 +646,7 @@ begin
           DataModule1.frxReport_dayin.Variables['shijian'] :=QuotedStr(FormatDateTime('yyyy-mm-dd hh:mm',shijian));
           DataModule1.frxReport_dayin.Variables['jsr'] :=QuotedStr(G_user.username);
           DataModule1.frxReport_dayin.Variables['bianhao'] :=QuotedStr(CKbianhao);
-          DataModule1.frxReport_dayin.Variables['fenyuan'] :=QuotedStr(DataModule1.ADOQuery_L.FieldByName('·Öµê´úÂë').AsString);
+          DataModule1.frxReport_dayin.Variables['fenyuan'] :=QuotedStr(DataModule1.ADOQuery_L.FieldByName('fy').AsString);
           DataModule1.frxReport_dayin.ShowReport;
           DataModule1.ADOQuery_L.Next;
         end;

@@ -395,6 +395,8 @@ type
     cxlbl17: TcxLabel;
     cxGridDBTableView1Column6: TcxGridDBColumn;
     cxButton24: TcxButton;
+    cxGridDBTableView1Column7: TcxGridDBColumn;
+    cxButton25: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -463,6 +465,7 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure cxButton24Click(Sender: TObject);
+    procedure cxButton25Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid;
@@ -634,7 +637,7 @@ begin
   qry_caigou_hz.Active := false;
   qry_caigou_hz.SQL.Text := 'select *, '+
     ' zt=(case 状态 when 0 then ''草稿'' when 1 then ''已提交'' when 3 then ''审批完成'' when 4 then ''退回'' end ), '+
-    ' 申请数=isnull((select sum(isnull(数量,0)) from 中央采购申请明细表 where 申请编号=a.申请编号),0) '+
+    ' 申请数=(select count(*) from 中央采购申请明细表 where 申请编号=a.申请编号) '+
     ' from ( select * from 中央采购申请主表 where 状态 <>2 and 申请日期 >= '+QuotedStr(cxDateEdit1.Text)+''+
     ' )a order by 编号 desc';
   qry_cg_mingxi.Active := false;
@@ -751,7 +754,7 @@ begin
   DataModule1.ADOQuery_dayin.Close;
   DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by gys,mc ) rank,*,kc=rk-ck-fjs from ( select a.rk, '+
   '  gys=(select top 1 名称 from 供应商表 where 供应商编号=a.gys),'+
-  ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
+  ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0),'+
   ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
   ' b.名称 as mc,b.规格 as gg,dw=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.包装规格 as bz  from ('+
   '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
@@ -962,6 +965,14 @@ begin
   DaochuExcel(cxGrid11);
 end;
 
+procedure TForm_main.cxButton25Click(Sender: TObject);
+begin
+  if cxPage_tihuoshenqing.ActivePage=cxTabSheet2 then
+    DaochuExcel(cxGrid1);
+  if cxPage_tihuoshenqing.ActivePage=cxTabSheet3 then
+    DaochuExcel(cxGrid2);
+end;
+
 procedure TForm_main.cxButton2Click(Sender: TObject);
 var
   tjstr,ztstr:string;
@@ -978,7 +989,9 @@ begin
     ztstr:=ztstr+' and 状态 in (2,3) ';
 
   qry_thshenqing_mx.Close;
-  qry_thshenqing_mx.SQL.Text:='select *,仓库库存=入库数量-出库数量 from ( select *,'+
+  qry_thshenqing_mx.SQL.Text:='select *,仓库库存=入库数量-出库数量,'+
+    ' gys=(select top 1 名称 from 供应商表 where 供应商编号 =(select top 1 供应商 from 中央采购入库主表 where 入库编号=b.cgrk))'+
+    ' from ( select *,'+
     ' 分院=(select top 1 name from 分院表 where abbr=(select top 1 分店代码 from 提货申请主表 '+
     ' 	where  申请编号=a.申请编号) ) , '+
     ' 申请日期=(select top 1 申请日期 from 提货申请主表 where 申请编号=a.申请编号),'+
@@ -988,6 +1001,7 @@ begin
     ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end), '+
     ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
     '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
+    '  cgrk=(select top 1 入库编号  from 中央采购入库明细表  where  价目编号=a.价目编号 order by 编号 desc),'+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
     ' from ( select * from 提货申请明细表 '+
     ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1  '+tjstr+') '+ztstr+

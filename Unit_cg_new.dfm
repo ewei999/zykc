@@ -392,6 +392,7 @@ object Form_cg_new: TForm_cg_new
           end
           item
             Action = act3
+            Caption = #23548#20986'Excel(&E)'
             ImageIndex = 87
           end>
         ActionBar = ActionToolBar1

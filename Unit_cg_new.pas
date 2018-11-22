@@ -506,7 +506,7 @@ begin
   '    where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0), '+
   ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
   ' from ( select 名称,价目编号 from 提货申请明细表 '+
-  ' where 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 ) group  by 名称,价目编号 )a '+
+  ' where 状态=1 and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 ) group  by 名称,价目编号 )a '+
   ' left join (select 类别,小类,规格,单位,价目编号,单价 from 药品用品价目表)yp on a.价目编号=yp.价目编号'+
   ' )b where 入库数量-出库数量<=0 )c where 供应商='+QuotedStr(cxDBLookupComboBox1.EditValue)+'  order by 供应商,名称');
   if DataModule1.ADOQuery_L.RecordCount=0 then

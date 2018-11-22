@@ -25,7 +25,8 @@ uses
   cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
   cxClasses, cxGridCustomView, cxGrid, Data.Win.ADODB, dxBarBuiltInMenu, cxPC,
   cxRadioGroup, cxTextEdit, cxMaskEdit, cxDropDownEdit, cxLookupEdit,
-  cxDBLookupEdit, cxDBLookupComboBox,Unit_jiamubiao,RunTimeInfo,unit_FuKuan_Edit;
+  cxDBLookupEdit, cxDBLookupComboBox,Unit_jiamubiao,RunTimeInfo,unit_FuKuan_Edit,
+  cxCurrencyEdit;
 
 type
   TForm_fuhuo = class(TForm)
@@ -375,13 +376,15 @@ begin
             DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
             DataModule1.ADOQuery_L.FieldByName('状态').AsInteger:=1;
             DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:= false;
-            DataModule1.ADOQuery_L.post;
 
             if qry_thshenqing_mx.FieldByName('申请数量').AsString<>'' then
             begin
+              DataModule1.ADOQuery_L.FieldByName('申请编号').AsString:= qry_thshenqing_mx.FieldByName('编号').AsString;
+
               DataModule1.execSql('update 提货申请明细表 set 状态=2,出库编号='+QuotedStr(ckbianhao)+' '+
               ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
             end;
+            DataModule1.ADOQuery_L.post;
           end;
           if cxRadioButton2.Checked then  //不付货
           begin
@@ -436,7 +439,8 @@ begin
       else
       begin
         Application.MessageBox('操作成功', '提示', MB_OK);
-        close;
+        fenyuanm:='';
+        cxLookupComboBox2Exit(Sender);
       end;
     end;
     {$ENDREGION}
@@ -651,7 +655,10 @@ begin
           DataModule1.ADOQuery_L.Next;
         end;
       end;
-      close;
+      qry_zhudong.Close;
+      qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
+        ' 名称 as 包装规格,单价 as 仓库库存 from 中央库存_出库表';
+      qry_zhudong.Open;
     end;
     {$ENDREGION}
   end;

@@ -23,7 +23,7 @@ uses
   cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxCalendar, cxDBLookupComboBox, cxTextEdit,
   cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxClasses, cxGridCustomView, cxGrid, Data.Win.ADODB;
+  cxClasses, cxGridCustomView, cxGrid, Data.Win.ADODB, cxCurrencyEdit;
 
 type
   TForm_FuHuoDan = class(TForm)
@@ -147,16 +147,31 @@ begin
       Application.MessageBox('付货数量格式不正确', '提示', MB_OK);
       exit;
     end;
-
     qry_fuhuo.Next;
   end;
   qry_fuhuo.EnableControls;
 
-
   if Application.MessageBox('确认保存修改吗？', '确认', MB_OKCANCEL + MB_ICONINFORMATION) = IDCANCEL then
     exit;
+
   qry_fuhuo.Edit;
   qry_fuhuo.Post;
+
+  qry_fuhuo.First;
+  qry_fuhuo.DisableControls;
+  while not qry_fuhuo.Eof do
+  begin
+    if qry_fuhuo.FieldByName('出库数量').AsInteger=0 then
+    begin
+      DataModule1.execSql('update 提货申请明细表 set 状态=1,出库编号='''' where 编号='+(qry_fuhuo.FieldByName('申请编号').AsString)+' ');
+
+      qry_fuhuo.Delete;
+    end
+    else
+      qry_fuhuo.Next;
+  end;
+  qry_fuhuo.EnableControls;
+
   qry_fuhuo.UpdateBatch();
   qry_fuhuo.Edit;
   Application.MessageBox('修改成功', '提示', MB_OK);

@@ -334,6 +334,8 @@ object Form_fuhuo: TForm_fuhuo
           end
           object cxGridDBTableView1Column3: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
             Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False
@@ -342,6 +344,8 @@ object Form_fuhuo: TForm_fuhuo
           object cxGridDBTableView1Column6: TcxGridDBColumn
             Caption = #21512#35745#37329#39069
             DataBinding.FieldName = #20986#24211#37329#39069
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
             Options.Editing = False
             Options.Filtering = False
             Options.Sorting = False

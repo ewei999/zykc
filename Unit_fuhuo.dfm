@@ -3,7 +3,7 @@ object Form_fuhuo: TForm_fuhuo
   Top = 0
   Caption = #21521#38376#24215#20184#36135
   ClientHeight = 701
-  ClientWidth = 1113
+  ClientWidth = 1155
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_fuhuo: TForm_fuhuo
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 1113
+    Width = 1155
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -43,7 +43,7 @@ object Form_fuhuo: TForm_fuhuo
     ExplicitWidth = 975
   end
   object cxButton8: TcxButton
-    Left = 1039
+    Left = 1081
     Top = 11
     Width = 50
     Height = 58
@@ -60,9 +60,10 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 1039
   end
   object cxButton6: TcxButton
-    Left = 983
+    Left = 1025
     Top = 11
     Width = 50
     Height = 58
@@ -79,6 +80,7 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 983
   end
   object cxLabel10: TcxLabel
     Left = 7
@@ -110,27 +112,30 @@ object Form_fuhuo: TForm_fuhuo
   object cxPageControl1: TcxPageControl
     Left = 0
     Top = 80
-    Width = 1113
+    Width = 1155
     Height = 621
     Align = alClient
     TabOrder = 3
     Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
+    ExplicitWidth = 1113
     ClientRectBottom = 616
     ClientRectLeft = 2
-    ClientRectRight = 1108
+    ClientRectRight = 1150
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = #25353#30003#35831#21333
       ImageIndex = 0
+      ExplicitWidth = 1106
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 1106
+        Width = 1148
         Height = 49
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1106
         object cxRadioButton1: TcxRadioButton
           Left = 301
           Top = 18
@@ -206,12 +211,13 @@ object Form_fuhuo: TForm_fuhuo
       object cxGrid2: TcxGrid
         Left = 0
         Top = 49
-        Width = 1106
+        Width = 1148
         Height = 536
         Align = alClient
         PopupMenu = pm_shenqingdan
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitWidth = 1106
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView1CellDblClick
@@ -247,6 +253,11 @@ object Form_fuhuo: TForm_fuhuo
             Options.Sorting = False
             Width = 47
             OnHeaderClick = cxGridDBTableView1Column4HeaderClick
+          end
+          object cxGridDBTableView1Column12: TcxGridDBColumn
+            DataBinding.FieldName = #23457#25209#26085#26399
+            Options.Editing = False
+            Width = 100
           end
           object cxGridDBColumn4: TcxGridDBColumn
             DataBinding.FieldName = #21517#31216
@@ -368,13 +379,15 @@ object Form_fuhuo: TForm_fuhuo
     object cxTabSheet2: TcxTabSheet
       Caption = #20027#21160#20184#36135
       ImageIndex = 1
+      ExplicitWidth = 1106
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 1106
+        Width = 1148
         Height = 49
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 1106
         object cxButton3: TcxButton
           Left = 27
           Top = 14
@@ -411,11 +424,12 @@ object Form_fuhuo: TForm_fuhuo
       object cxGrid1: TcxGrid
         Left = 0
         Top = 49
-        Width = 1106
+        Width = 1148
         Height = 536
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitWidth = 1106
         object cxGridDBTableView2: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView2CellDblClick
@@ -570,7 +584,7 @@ object Form_fuhuo: TForm_fuhuo
     end
   end
   object cxButton1: TcxButton
-    Left = 927
+    Left = 969
     Top = 11
     Width = 50
     Height = 58
@@ -587,6 +601,7 @@ object Form_fuhuo: TForm_fuhuo
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 927
   end
   object actmgr1: TActionManager
     ActionBars = <

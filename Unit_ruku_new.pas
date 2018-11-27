@@ -201,6 +201,12 @@ begin
       ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单价').AsString;
       ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
       ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
+
+      DataModule1.openSql('select top 1 进货单价 from 中央采购入库明细表 '+
+        ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+' order by 编号 desc');
+      if DataModule1.ADOQuery_L.Eof=false then
+        ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
+
       ADOQuery_cg_mingxi.Post;
     end;
   finally

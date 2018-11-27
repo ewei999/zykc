@@ -208,7 +208,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet13
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -481,6 +481,7 @@
               end
               object cxGridDBTableView1Column6: TcxGridDBColumn
                 DataBinding.FieldName = #22791#27880
+                Options.Editing = False
                 Width = 100
               end
               object cxGridDBTableView1Column3: TcxGridDBColumn
@@ -906,13 +907,13 @@
         BevelOuter = bvNone
         TabOrder = 0
         object cxlbl1: TcxLabel
-          Left = 263
+          Left = 226
           Top = 15
           Caption = #20184#36135#26085#26399
           Transparent = True
         end
         object cxDate_FH_qishi: TcxDateEdit
-          Left = 337
+          Left = 300
           Top = 13
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
@@ -920,13 +921,13 @@
           Width = 121
         end
         object cxlbl2: TcxLabel
-          Left = 466
+          Left = 429
           Top = 15
           Caption = #33267
           Transparent = True
         end
         object cxDate_FH_zhongzhi: TcxDateEdit
-          Left = 493
+          Left = 456
           Top = 13
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
@@ -934,7 +935,7 @@
           Width = 121
         end
         object cxButton8: TcxButton
-          Left = 813
+          Left = 776
           Top = 10
           Width = 75
           Height = 31
@@ -962,16 +963,16 @@
           StyleDisabled.Color = clYellow
           StyleDisabled.TextColor = clBlack
           TabOrder = 6
-          Width = 160
+          Width = 144
         end
         object cxlbl4: TcxLabel
-          Left = 634
+          Left = 597
           Top = 15
           Caption = #29366#24577
           Transparent = True
         end
         object cxCombo_FH_Zhuangtai: TcxComboBox
-          Left = 676
+          Left = 639
           Top = 13
           Properties.DropDownListStyle = lsEditFixedList
           Properties.Items.Strings = (
@@ -983,7 +984,7 @@
           Width = 121
         end
         object cxButton20: TcxButton
-          Left = 905
+          Left = 868
           Top = 10
           Width = 75
           Height = 31
@@ -991,6 +992,16 @@
           LookAndFeel.SkinName = 'Black'
           TabOrder = 9
           OnClick = cxButton20Click
+        end
+        object cxButton26: TcxButton
+          Left = 967
+          Top = 10
+          Width = 78
+          Height = 31
+          Caption = #23548#20986'Excel'
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 10
+          OnClick = cxButton26Click
         end
       end
       object cxPageControl2: TcxPageControl
@@ -1000,7 +1011,7 @@
         Height = 625
         Align = alClient
         TabOrder = 1
-        Properties.ActivePage = cxTabSheet11
+        Properties.ActivePage = cxTabSheet14
         Properties.CustomButtons.Buttons = <>
         LookAndFeel.SkinName = 'Blue'
         ClientRectBottom = 620
@@ -1108,6 +1119,11 @@
                   Format = #21512#35745#65306'0'
                   Kind = skCount
                   Column = cxGridDBColumn29
+                end
+                item
+                  Format = '0.00'
+                  Kind = skSum
+                  Column = cxGridDBTableView9Column2
                 end>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
@@ -1124,6 +1140,11 @@
                 DataBinding.FieldName = #20998#38498
                 Options.Editing = False
                 Width = 80
+              end
+              object cxGridDBTableView9Column5: TcxGridDBColumn
+                DataBinding.FieldName = #20986#24211#32534#21495
+                Options.Editing = False
+                Width = 100
               end
               object cxGridDBColumn30: TcxGridDBColumn
                 DataBinding.FieldName = #20986#24211#26102#38388
@@ -1160,14 +1181,23 @@
               end
               object cxGridDBTableView9Column1: TcxGridDBColumn
                 DataBinding.FieldName = #21333#20215
+                PropertiesClassName = 'TcxCurrencyEditProperties'
+                Properties.DisplayFormat = '0.00'
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBTableView9Column2: TcxGridDBColumn
                 DataBinding.FieldName = #20986#24211#37329#39069
+                PropertiesClassName = 'TcxCurrencyEditProperties'
+                Properties.DisplayFormat = '0.00'
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBTableView9Column3: TcxGridDBColumn
                 DataBinding.FieldName = #33293#38646#37329#39069
+                PropertiesClassName = 'TcxCurrencyEditProperties'
+                Properties.DisplayFormat = '0.00'
+                Options.Editing = False
                 Width = 70
               end
               object cxGridDBColumn50: TcxGridDBColumn
@@ -1178,6 +1208,7 @@
               end
               object cxGridDBTableView9Column4: TcxGridDBColumn
                 DataBinding.FieldName = #24320#31080#32534#21495
+                Options.Editing = False
                 Width = 70
               end
             end
@@ -1268,7 +1299,7 @@
           Transparent = True
         end
         object cxButton9: TcxButton
-          Left = 1005
+          Left = 901
           Top = 9
           Width = 50
           Height = 58
@@ -1284,6 +1315,37 @@
           Font.Name = 'Tahoma'
           Font.Style = []
           ParentFont = False
+        end
+        object cxButton27: TcxButton
+          Left = 578
+          Top = 26
+          Width = 78
+          Height = 31
+          Caption = #23548#20986'Excel'
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 7
+          OnClick = cxButton27Click
+        end
+        object cxButton28: TcxButton
+          Left = 957
+          Top = 9
+          Width = 50
+          Height = 58
+          Anchors = [akTop, akRight]
+          Caption = #20837#24211#20462#25913
+          LookAndFeel.NativeStyle = False
+          LookAndFeel.SkinName = 'Black'
+          OptionsImage.ImageIndex = 17
+          OptionsImage.Layout = blGlyphTop
+          TabOrder = 8
+          Visible = False
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          OnClick = Action_ruku_newExecute
         end
       end
       object cxGroupBox1: TcxGroupBox
@@ -1315,7 +1377,12 @@
             OnCellClick = cxGrid6DBTableView1CellClick
             DataController.DataSource = DataSource_ruku_zhubiao
             DataController.Summary.DefaultGroupSummaryItems = <>
-            DataController.Summary.FooterSummaryItems = <>
+            DataController.Summary.FooterSummaryItems = <
+              item
+                Format = '0.00'
+                Kind = skSum
+                Column = cxgrdbclmncxGrid6DBTableView1DBColumn5
+              end>
             DataController.Summary.SummaryGroups = <>
             OptionsData.CancelOnExit = False
             OptionsData.Deleting = False
@@ -1323,6 +1390,7 @@
             OptionsData.Editing = False
             OptionsData.Inserting = False
             OptionsView.ColumnAutoWidth = True
+            OptionsView.Footer = True
             OptionsView.GroupByBox = False
             object cxgrdbclmncxGrid6DBTableView1DBColumn: TcxGridDBColumn
               DataBinding.FieldName = #32534#21495
@@ -1783,6 +1851,11 @@
               Format = #21512#35745#65306'0'
               Kind = skCount
               Column = cxGridDBColumn37
+            end
+            item
+              Format = '0.00'
+              Kind = skSum
+              Column = cxGridDBTableView8Column7
             end>
           DataController.Summary.SummaryGroups = <>
           OptionsData.CancelOnExit = False
@@ -1796,6 +1869,10 @@
           object cxGridDBColumn37: TcxGridDBColumn
             DataBinding.FieldName = #21517#31216
             Width = 150
+          end
+          object cxGridDBTableView8Column6: TcxGridDBColumn
+            DataBinding.FieldName = #20379#24212#21830
+            Width = 100
           end
           object cxGridDBColumn39: TcxGridDBColumn
             DataBinding.FieldName = #31867#21035
@@ -1840,9 +1917,12 @@
             DataBinding.FieldName = #24211#23384
             Width = 70
           end
-          object cxGridDBTableView8Column6: TcxGridDBColumn
-            DataBinding.FieldName = #20379#24212#21830
-            Width = 100
+          object cxGridDBTableView8Column7: TcxGridDBColumn
+            DataBinding.FieldName = #24211#23384#37329#39069
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
+            Options.Editing = False
+            Width = 90
           end
         end
         object cxGridLevel8: TcxGridLevel

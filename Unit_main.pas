@@ -397,6 +397,11 @@ type
     cxButton24: TcxButton;
     cxGridDBTableView1Column7: TcxGridDBColumn;
     cxButton25: TcxButton;
+    cxGridDBTableView9Column5: TcxGridDBColumn;
+    cxButton26: TcxButton;
+    cxButton27: TcxButton;
+    cxGridDBTableView8Column7: TcxGridDBColumn;
+    cxButton28: TcxButton;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -466,6 +471,8 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure cxButton24Click(Sender: TObject);
     procedure cxButton25Click(Sender: TObject);
+    procedure cxButton26Click(Sender: TObject);
+    procedure cxButton27Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid;
@@ -708,16 +715,20 @@ begin
   end;
 
   qry_kucun.Close;
-  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收,'+
-    ' 供应商=(select top 1 名称 from 供应商表 where 供应商编号=(select top 1 供应商 from 中央采购入库主表 where 入库编号=c.入库编号) )'+
+  qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收,库存金额=(case when 入库数量-出库数量-未接收=0 then 0 else 入库金额-出库金额 end),'+
+    ' 供应商=(select top 1 名称 from 供应商表 where 供应商编号=c.gys) '+
     ' from ( select a.*, '+
-    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+ sjdstr+
-    ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0), '+
-    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类, '+
-    ' 入库编号=(select top 1 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc )'+
-    ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
-    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) '+mctj+' group by 价目编号 '+
-    ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by 名称';
+    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+ sjdstr+
+    ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+
+    ' 出库金额=isnull((select sum(出库金额) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号  and 供应商=a.gys) ,0), '+
+    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类'+
+    ' from ( '+
+    ' select 价目编号,gys,sum(isnull(数量,0)) as 入库数量,sum(isnull(金额,0)) as 入库金额   from ('+
+    ' select * ,gys=(select top 1 供应商 from 中央采购入库主表 where 入库编号=t.入库编号 ) from ('+
+    '  select 价目编号,入库编号 ,数量,金额 from 中央采购入库明细表 '+
+    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)'+ mctj+
+    ' )t)y group by 价目编号,gys '+
+    ' )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c  order by gys,名称';
   qry_kucun.Open;
 end;
 
@@ -755,7 +766,7 @@ begin
   DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by gys,mc ) rank,*,kc=rk-ck-fjs from ( select a.rk, '+
   '  gys=(select top 1 名称 from 供应商表 where 供应商编号=a.gys),'+
   ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0),'+
-  ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号) ,0),'+
+  ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0),'+
   ' b.名称 as mc,b.规格 as gg,dw=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.包装规格 as bz  from ('+
   '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
   ' select *  ,gys=(select top 1 供应商  from 中央采购入库主表 where 入库编号 =x.入库编号 )'+
@@ -840,8 +851,8 @@ begin
   ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商),'+
   ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
   ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) from ( '+
-  ' select 出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
-  ' from 中央库存_出库表 where 是否作废=0 '+tjstr+' )a order by 出库时间';
+  ' select 出库编号,出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
+  ' from 中央库存_出库表 where 是否作废=0 and 出库数量<>0 '+tjstr+' )a order by 出库时间';
   qry_fuhuo_jilu_xiangxi.Open;
 
   cxTabSheet14.Show;
@@ -971,6 +982,19 @@ begin
     DaochuExcel(cxGrid1);
   if cxPage_tihuoshenqing.ActivePage=cxTabSheet3 then
     DaochuExcel(cxGrid2);
+end;
+
+procedure TForm_main.cxButton26Click(Sender: TObject);
+begin
+  if cxPageControl2.ActivePage=cxTabSheet11 then
+    DaochuExcel(cxGrid5);
+  if cxPageControl2.ActivePage=cxTabSheet14 then
+    DaochuExcel(cxGrid12);
+end;
+
+procedure TForm_main.cxButton27Click(Sender: TObject);
+begin
+  DaochuExcel(cxGrid6);
 end;
 
 procedure TForm_main.cxButton2Click(Sender: TObject);

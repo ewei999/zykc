@@ -104,6 +104,7 @@ type
     cxStyle2: TcxStyle;
     cxGridDBTableView2Column1: TcxGridDBColumn;
     cxGridDBTableView2Column2: TcxGridDBColumn;
+    cxGridDBTableView1Column12: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -806,13 +807,14 @@ begin
   fenyuanm:=cxLookupComboBox2.Text;
   qry_thshenqing_mx.Close;
   qry_thshenqing_mx.SQL.Text:='select top 0 状态 as 编号,选择,价目编号,数量 as 申请数量,数量 as 付货数量,规格,单位,备注,库存 as 申请时库存,单价,单位 as 供应商,'+
-    ' 单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,库存 as 仓库库存 from 提货申请明细表';
+    ' 单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,库存 as 仓库库存,价目编号 as 审批日期 from 提货申请明细表';
   qry_thshenqing_mx.Open;
 
   Show_RuntimeInfo('正在打开');
   DataModule1.openSql('select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
     ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
+    ' 审批日期=(select top 1 convert(char(10),审批时间,120) from 提货申请审批表 where 申请编号=a.申请编号 and 审批时间 is not null order by 编号 desc ),'+
     ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) '+
     ' from ( select * from 提货申请明细表'+
     ' where 状态=1 and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 '+
@@ -835,6 +837,7 @@ begin
     qry_thshenqing_mx.FieldByName('包装规格').asstring:= DataModule1.ADOQuery_L.FieldByName('包装规格').AsString;
     qry_thshenqing_mx.FieldByName('名称').asstring:= DataModule1.ADOQuery_L.FieldByName('名称').AsString;
     qry_thshenqing_mx.FieldByName('分店代码').asstring:= DataModule1.ADOQuery_L.FieldByName('分店代码').AsString;
+    qry_thshenqing_mx.FieldByName('审批日期').asstring:= DataModule1.ADOQuery_L.FieldByName('审批日期').AsString;
     qry_thshenqing_mx.FieldByName('单价').AsVariant:= null;
     qry_thshenqing_mx.FieldByName('供应商').asstring:= '';
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;

@@ -93,6 +93,9 @@ type
     act3: TAction;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
+    cxGrid1DBTableView1Column3: TcxGridDBColumn;
+    cxButton5: TcxButton;
+    cxGrid1DBTableView1Column4: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -111,6 +114,7 @@ type
     procedure cxButton4Click(Sender: TObject);
     procedure act3Execute(Sender: TObject);
     procedure DataSource_cg_mingxiDataChange(Sender: TObject; Field: TField);
+    procedure cxButton5Click(Sender: TObject);
   private
     shenpi:Boolean;
     procedure  ShenPi_data(bj:string);
@@ -397,7 +401,7 @@ begin
      Action_new.Enabled := false;
      Action_edit.Enabled := false;
      Action_delete.Enabled := True;
-     Action_close.Enabled := false;
+     Action_close.Enabled := True;
      Action_cancel.Enabled := True;
 
    end else if button='edit' then
@@ -405,7 +409,7 @@ begin
      Action_new.Enabled := false;
      Action_edit.Enabled := false;
      Action_delete.Enabled := True;
-     Action_close.Enabled := false;
+     Action_close.Enabled := True;
      Action_cancel.Enabled := True;
      ADOQuery_cg_zhubiao.Edit;
    end else if button='save' then
@@ -437,6 +441,8 @@ begin
 
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn11.Options.Editing := false;
+     cxGrid1DBTableView1Column1.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
    end else if button='delete' then
@@ -451,6 +457,8 @@ begin
 
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn11.Options.Editing := false;
+     cxGrid1DBTableView1Column1.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
    end
@@ -459,10 +467,18 @@ begin
      Action_new_m.Visible := false;
      Action_delete_m.Visible := false;
      Action_save_m.Visible := false;
-     ActionToolBar1.Visible:=false;
+     Action_save.Visible := false;
+     Action_cancel.Visible := false;
+     Action_delete.Visible := false;
+     Action_submit.Visible := false;
+     act1.Visible := false;
+     act2.Visible := false;
+ //    ActionToolBar1.Visible:=false;
      cxButton4.Visible:=false;
      cxgrdbclmncxGrid1DBTableView1DBColumn5.Options.Editing := false;
      cxgrdbclmncxGrid1DBTableView1DBColumn10.Options.Editing := false;
+     cxgrdbclmncxGrid1DBTableView1DBColumn11.Options.Editing := false;
+     cxGrid1DBTableView1Column1.Options.Editing := false;
      cxDBLookupComboBox1.Properties.ReadOnly := True;
      cxDBMemo1.Properties.ReadOnly := true;
 
@@ -519,7 +535,7 @@ begin
   ' )b where 入库数量-出库数量<=0 )c  order by 供应商,名称');
   if DataModule1.ADOQuery_L.RecordCount=0 then
   begin
-    Application.MessageBox('无记录', '错误', MB_OK + MB_ICONSTOP);
+    Application.MessageBox('无记录', '提示', MB_OK );
     exit;
   end;
   
@@ -546,6 +562,49 @@ begin
 
 end;
 
+procedure TForm_cg_new.cxButton5Click(Sender: TObject);
+begin
+  if ADOQuery_cg_mingxi.Active=False then
+    exit;
+
+  DataModule1.openSql('select * from ( '+
+  ' select 名称,价目编号, 类别,小类,规格,单位,单价=(case when 进价=0 then 单价 else 进价 end ),供应商,警戒量,'+
+  ' 仓库库存=入库数量-出库数量 from ( select a.*, '+
+  ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号 in (select 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 ) order by 编号 desc ),'+
+  ' 进价=isnull((select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc),0),'+
+  ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
+  '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
+  ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
+  ' from (   select 价目编号,名称,规格,单位,类别,小类,警戒量,单价  from 药品用品价目表 '+
+  '  where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )a )b )c  order by 名称');
+  if DataModule1.ADOQuery_L.RecordCount=0 then
+  begin
+    Application.MessageBox('无记录', '提示', MB_OK );
+    exit;
+  end;
+
+  ADOQuery_cg_mingxi.DisableControls;
+  while not DataModule1.ADOQuery_L.Eof do
+  begin
+    ADOQuery_cg_mingxi.Append;
+    ADOQuery_cg_mingxi.FieldByName('申请编号').AsString :=ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString;
+    ADOQuery_cg_mingxi.FieldByName('名称').AsString := DataModule1.ADOQuery_L.FieldByName('名称').AsString;
+    ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := DataModule1.ADOQuery_L.FieldByName('价目编号').AsString;
+    ADOQuery_cg_mingxi.FieldByName('规格').AsString := DataModule1.ADOQuery_L.FieldByName('规格').AsString;
+    ADOQuery_cg_mingxi.FieldByName('单位').AsString := DataModule1.ADOQuery_L.FieldByName('单位').AsString;
+    ADOQuery_cg_mingxi.FieldByName('单价').AsString := DataModule1.ADOQuery_L.FieldByName('单价').AsString;
+    ADOQuery_cg_mingxi.FieldByName('类别').AsString := DataModule1.ADOQuery_L.FieldByName('类别').AsString;
+    ADOQuery_cg_mingxi.FieldByName('小类').AsString := DataModule1.ADOQuery_L.FieldByName('小类').AsString;
+    ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
+    ADOQuery_cg_mingxi.FieldByName('库存').AsString := DataModule1.ADOQuery_L.FieldByName('仓库库存').AsString;
+    ADOQuery_cg_mingxi.Post;
+
+    DataModule1.ADOQuery_L.Next;
+  end;
+  ADOQuery_cg_mingxi.EnableControls;
+  Application.MessageBox('导入完成', '提示', MB_OK);
+end;
+
 procedure TForm_cg_new.DataSource_cg_mingxiDataChange(Sender: TObject;
   Field: TField);
 begin
@@ -569,6 +628,7 @@ procedure TForm_cg_new.FormShow(Sender: TObject);
 begin
   baocun:=false;
   ADOQuery_list.Active := True;
+  ADOQuery_jiamu.Open;
 end;
 
 end.

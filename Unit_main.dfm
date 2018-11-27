@@ -113,6 +113,9 @@
           Item = dxNavBar1Item14
         end
         item
+          Item = dxNavBar1Item16
+        end
+        item
           Item = dxNavBar1Item9
         end>
     end
@@ -200,6 +203,11 @@
       SmallImageIndex = 11
       OnClick = dxNavBar1Item15Click
     end
+    object dxNavBar1Item16: TdxNavBarItem
+      Caption = #24120#22791#33647#21697#31649#29702
+      SmallImageIndex = 19
+      OnClick = dxNavBar1Item16Click
+    end
   end
   object cxPageControl_main: TcxPageControl
     Left = 185
@@ -208,7 +216,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet13
+    Properties.ActivePage = cxTabSheet4
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -1763,13 +1771,13 @@
         BevelOuter = bvNone
         TabOrder = 0
         object cxlbl7: TcxLabel
-          Left = 29
+          Left = 6
           Top = 24
           Caption = #24320#22987#26085#26399
           Transparent = True
         end
         object cxDate_KuCun_Qishi: TcxDateEdit
-          Left = 103
+          Left = 80
           Top = 22
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
@@ -1777,13 +1785,13 @@
           Width = 121
         end
         object cxlbl8: TcxLabel
-          Left = 232
+          Left = 209
           Top = 24
           Caption = #32467#26463#26085#26399
           Transparent = True
         end
         object cxDate_KuCun_Zhongzhi: TcxDateEdit
-          Left = 306
+          Left = 285
           Top = 22
           Properties.DisplayFormat = 'yyyy-mm-dd'
           Properties.EditFormat = 'yyyy-mm-dd'
@@ -1791,7 +1799,7 @@
           Width = 121
         end
         object cxButton15: TcxButton
-          Left = 763
+          Left = 704
           Top = 19
           Width = 75
           Height = 31
@@ -1801,29 +1809,35 @@
           OnClick = cxButton15Click
         end
         object cxTextEdit37: TcxTextEdit
-          Left = 479
+          Left = 456
           Top = 22
           TabOrder = 5
-          Width = 266
+          Width = 233
         end
         object cxlbl9: TcxLabel
-          Left = 439
+          Left = 416
           Top = 24
           Caption = #21517#31216
           Transparent = True
         end
         object cxButton18: TcxButton
-          Left = 959
+          Left = 885
           Top = 19
           Width = 78
           Height = 31
-          Caption = #25171#21360
+          Caption = #25171#21360#30424#28857#34920
           LookAndFeel.SkinName = 'Black'
           TabOrder = 7
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
           OnClick = cxButton18Click
         end
         object cxButton24: TcxButton
-          Left = 863
+          Left = 795
           Top = 19
           Width = 78
           Height = 31
@@ -1831,6 +1845,22 @@
           LookAndFeel.SkinName = 'Black'
           TabOrder = 8
           OnClick = cxButton24Click
+        end
+        object cxButton29: TcxButton
+          Left = 977
+          Top = 19
+          Width = 86
+          Height = 31
+          Caption = #24120#22791#33647#21697#24211#23384
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 9
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -14
+          Font.Name = 'Tahoma'
+          Font.Style = []
+          ParentFont = False
+          OnClick = cxButton29Click
         end
       end
       object cxGrid11: TcxGrid
@@ -1923,6 +1953,11 @@
             Properties.DisplayFormat = '0.00'
             Options.Editing = False
             Width = 90
+          end
+          object cxGridDBTableView8Column8: TcxGridDBColumn
+            DataBinding.FieldName = #35686#25106#37327
+            Options.Editing = False
+            Width = 60
           end
         end
         object cxGridLevel8: TcxGridLevel

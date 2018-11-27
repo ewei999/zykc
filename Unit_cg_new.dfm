@@ -183,6 +183,22 @@ object Form_cg_new: TForm_cg_new
       ParentFont = False
       OnClick = cxButton4Click
     end
+    object cxButton5: TcxButton
+      Left = 281
+      Top = 196
+      Width = 136
+      Height = 31
+      Caption = #23548#20837#24120#22791#33647#21697#20215#30446
+      LookAndFeel.SkinName = 'Black'
+      TabOrder = 15
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = cxButton5Click
+    end
   end
   object cxGrid1: TcxGrid
     Left = 0
@@ -192,20 +208,29 @@ object Form_cg_new: TForm_cg_new
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
-    ExplicitTop = 256
-    ExplicitHeight = 327
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
       DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <>
+      DataController.Summary.FooterSummaryItems = <
+        item
+          Format = #21512#35745#65306'0'
+          Kind = skCount
+          Column = cxgrdbclmncxGrid1DBTableView1DBColumn2
+        end>
       DataController.Summary.SummaryGroups = <>
       OptionsData.CancelOnExit = False
       OptionsData.Deleting = False
       OptionsData.DeletingConfirmation = False
       OptionsData.Inserting = False
       OptionsView.ColumnAutoWidth = True
+      OptionsView.Footer = True
       OptionsView.GroupByBox = False
+      object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
+        DataBinding.FieldName = #21517#31216
+        Options.Editing = False
+        Width = 200
+      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
         Options.Editing = False
@@ -222,15 +247,24 @@ object Form_cg_new: TForm_cg_new
         Options.Editing = False
         Width = 100
       end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
-        DataBinding.FieldName = #21517#31216
-        Options.Editing = False
-        Width = 200
-      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         Options.Editing = False
         Width = 67
+      end
+      object cxGrid1DBTableView1Column3: TcxGridDBColumn
+        Caption = #21253#35013#35268#26684
+        DataBinding.FieldName = #20215#30446#32534#21495
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.KeyFieldNames = #20215#30446#32534#21495
+        Properties.ListColumns = <
+          item
+            FieldName = #21253#35013#35268#26684
+          end>
+        Properties.ListOptions.ShowHeader = False
+        Properties.ListSource = DataSource_jiamu
+        Options.Editing = False
+        Width = 80
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
@@ -277,6 +311,19 @@ object Form_cg_new: TForm_cg_new
         DataBinding.FieldName = #24211#23384
         Options.Editing = False
         Width = 70
+      end
+      object cxGrid1DBTableView1Column4: TcxGridDBColumn
+        Caption = #35686#25106#37327
+        DataBinding.FieldName = #20215#30446#32534#21495
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.KeyFieldNames = #20215#30446#32534#21495
+        Properties.ListColumns = <
+          item
+            FieldName = #35686#25106#37327
+          end>
+        Properties.ListSource = DataSource_jiamu
+        Options.Editing = False
+        Width = 60
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -353,8 +400,8 @@ object Form_cg_new: TForm_cg_new
   end
   object DataSource_cg_zhubiao: TDataSource
     DataSet = ADOQuery_cg_zhubiao
-    Left = 232
-    Top = 176
+    Left = 256
+    Top = 144
   end
   object ADOQuery_cg_mingxi: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -509,9 +556,9 @@ object Form_cg_new: TForm_cg_new
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
-    Left = 624
-    Top = 184
+      'select '#20215#30446#32534#21495','#21253#35013#35268#26684','#35686#25106#37327' from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
+    Left = 568
+    Top = 192
   end
   object DataSource_jiamu: TDataSource
     DataSet = ADOQuery_jiamu

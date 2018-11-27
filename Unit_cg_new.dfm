@@ -20,7 +20,7 @@ object Form_cg_new: TForm_cg_new
     Left = 0
     Top = 0
     Width = 984
-    Height = 257
+    Height = 233
     Align = alTop
     Anchors = []
     BevelOuter = bvNone
@@ -29,7 +29,7 @@ object Form_cg_new: TForm_cg_new
     TabOrder = 0
     DesignSize = (
       984
-      257)
+      233)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
@@ -63,18 +63,19 @@ object Form_cg_new: TForm_cg_new
       Caption = #30003#35831#26085#26399
     end
     object cxLabel3: TcxLabel
-      Left = 160
-      Top = 94
+      Left = 624
+      Top = 61
       Caption = #20379#24212#21830
+      Visible = False
     end
     object cxLabel4: TcxLabel
       Left = 144
-      Top = 124
+      Top = 93
       Caption = #30003#35831#35828#26126
     end
     object cxLabel5: TcxLabel
-      Left = 400
-      Top = 222
+      Left = 592
+      Top = 156
       Caption = #30003#35831#20154
     end
     object cxDBTextEdit1: TcxDBTextEdit
@@ -87,8 +88,8 @@ object Form_cg_new: TForm_cg_new
       Width = 145
     end
     object cxDBTextEdit2: TcxDBTextEdit
-      Left = 456
-      Top = 220
+      Left = 648
+      Top = 154
       DataBinding.DataField = #30003#35831#20154
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
@@ -107,8 +108,8 @@ object Form_cg_new: TForm_cg_new
       Width = 121
     end
     object cxDBLookupComboBox1: TcxDBLookupComboBox
-      Left = 218
-      Top = 92
+      Left = 682
+      Top = 59
       DataBinding.DataField = #20379#24212#21830
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.KeyFieldNames = #20379#24212#21830#32534#21495
@@ -119,11 +120,12 @@ object Form_cg_new: TForm_cg_new
       Properties.ListOptions.ShowHeader = False
       Properties.ListSource = DataSource_list
       TabOrder = 9
+      Visible = False
       Width = 145
     end
     object cxDBMemo1: TcxDBMemo
       Left = 218
-      Top = 123
+      Top = 92
       DataBinding.DataField = #30003#35831#35828#26126
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ScrollBars = ssVertical
@@ -133,7 +135,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton1: TcxButton
       Left = 4
-      Top = 215
+      Top = 191
       Width = 33
       Height = 35
       Action = Action_new_m
@@ -146,7 +148,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton2: TcxButton
       Left = 43
-      Top = 215
+      Top = 191
       Width = 33
       Height = 35
       Action = Action_delete_m
@@ -156,7 +158,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton3: TcxButton
       Left = 82
-      Top = 215
+      Top = 191
       Width = 33
       Height = 35
       Action = Action_save_m
@@ -167,7 +169,7 @@ object Form_cg_new: TForm_cg_new
     end
     object cxButton4: TcxButton
       Left = 121
-      Top = 220
+      Top = 196
       Width = 136
       Height = 31
       Caption = #23548#20837#26080#24211#23384#30003#35831#20215#30446
@@ -184,12 +186,14 @@ object Form_cg_new: TForm_cg_new
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 257
+    Top = 233
     Width = 984
-    Height = 327
+    Height = 351
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
+    ExplicitTop = 256
+    ExplicitHeight = 327
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
@@ -205,22 +209,23 @@ object Form_cg_new: TForm_cg_new
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
         Options.Editing = False
-        Width = 67
+        Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = #23567#31867
         Options.Editing = False
-        Width = 67
+        Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
         DataBinding.FieldName = #20215#30446#32534#21495
+        Visible = False
         Options.Editing = False
-        Width = 112
+        Width = 100
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
         Options.Editing = False
-        Width = 223
+        Width = 200
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
@@ -232,16 +237,35 @@ object Form_cg_new: TForm_cg_new
         Options.Editing = False
         Width = 67
       end
+      object cxGrid1DBTableView1Column1: TcxGridDBColumn
+        DataBinding.FieldName = #20379#24212#21830
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.KeyFieldNames = #20379#24212#21830#32534#21495
+        Properties.ListColumns = <
+          item
+            FieldName = #21517#31216
+          end>
+        Properties.ListOptions.ShowHeader = False
+        Properties.ListSource = DataSource_list
+        Width = 90
+      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
         Caption = #36827#20215
         DataBinding.FieldName = #21333#20215
-        Options.Editing = False
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
         Width = 67
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
         DataBinding.FieldName = #25968#37327
         PropertiesClassName = 'TcxTextEditProperties'
         Width = 55
+      end
+      object cxGrid1DBTableView1Column2: TcxGridDBColumn
+        DataBinding.FieldName = #37329#39069
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
+        Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #22791#27880
@@ -344,6 +368,7 @@ object Form_cg_new: TForm_cg_new
   end
   object DataSource_cg_mingxi: TDataSource
     DataSet = ADOQuery_cg_mingxi
+    OnDataChange = DataSource_cg_mingxiDataChange
     Left = 496
     Top = 328
   end

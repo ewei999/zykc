@@ -25,7 +25,7 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.ToolWin,
   Vcl.ActnMan, Vcl.ActnCtrls, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Data.Win.ADODB, Vcl.ExtCtrls, Vcl.DBCtrls,
-  Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinBlue, cxGroupBox;
+  Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinBlue, cxGroupBox, cxCurrencyEdit;
 
 type
   TForm_cg_new = class(TForm)
@@ -91,6 +91,8 @@ type
     act2: TAction;
     cxButton4: TcxButton;
     act3: TAction;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -108,6 +110,7 @@ type
     procedure act1Execute(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure act3Execute(Sender: TObject);
+    procedure DataSource_cg_mingxiDataChange(Sender: TObject; Field: TField);
   private
     shenpi:Boolean;
     procedure  ShenPi_data(bj:string);
@@ -497,11 +500,11 @@ procedure TForm_cg_new.cxButton4Click(Sender: TObject);
 begin
   if ADOQuery_cg_mingxi.Active=False then
     exit;
-  if cxDBLookupComboBox1.Text='' then
-  begin
-    Application.MessageBox('先选择供应商', '错误', MB_OK + MB_ICONSTOP);
-    exit;
-  end;
+//  if cxDBLookupComboBox1.Text='' then
+//  begin
+//    Application.MessageBox('先选择供应商', '错误', MB_OK + MB_ICONSTOP);
+//    exit;
+//  end;
   DataModule1.openSql('select * from ( select 名称,价目编号, 类别,小类,规格,单位,单价=(case when 进价=0 then 单价 else 进价 end ),供应商,'+
   ' 仓库库存=入库数量-出库数量 from ( select a.*, yp.类别,yp.小类,yp.规格,yp.单位,yp.单价, '+
   ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号 in (select 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 ) order by 编号 desc ),'+
@@ -513,7 +516,7 @@ begin
   ' where 状态=1 and 价目编号 in (select 价目编号 from 药品用品价目表 where 是否作废=0 and 库存=1 and 提货=1 )'+
   ' and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 ) group  by 名称,价目编号 )a '+
   ' left join (select 类别,小类,规格,单位,价目编号,单价 from 药品用品价目表)yp on a.价目编号=yp.价目编号'+
-  ' )b where 入库数量-出库数量<=0 )c where 供应商='+QuotedStr(cxDBLookupComboBox1.EditValue)+'  order by 供应商,名称');
+  ' )b where 入库数量-出库数量<=0 )c  order by 供应商,名称');
   if DataModule1.ADOQuery_L.RecordCount=0 then
   begin
     Application.MessageBox('无记录', '错误', MB_OK + MB_ICONSTOP);
@@ -532,7 +535,7 @@ begin
     ADOQuery_cg_mingxi.FieldByName('单价').AsString := DataModule1.ADOQuery_L.FieldByName('单价').AsString;
     ADOQuery_cg_mingxi.FieldByName('类别').AsString := DataModule1.ADOQuery_L.FieldByName('类别').AsString;
     ADOQuery_cg_mingxi.FieldByName('小类').AsString := DataModule1.ADOQuery_L.FieldByName('小类').AsString;
-//    ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
+    ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
     ADOQuery_cg_mingxi.FieldByName('库存').AsString := DataModule1.ADOQuery_L.FieldByName('仓库库存').AsString;
     ADOQuery_cg_mingxi.Post;
 
@@ -541,6 +544,19 @@ begin
   ADOQuery_cg_mingxi.EnableControls;
   Application.MessageBox('导入完成', '提示', MB_OK);
 
+end;
+
+procedure TForm_cg_new.DataSource_cg_mingxiDataChange(Sender: TObject;
+  Field: TField);
+begin
+  if (ADOQuery_cg_mingxi.Modified) and (ADOQuery_cg_mingxi.State = dsEdit) then
+  begin
+    if (LowerCase(Field.FieldName)= '单价') or (LowerCase(Field.FieldName)= '数量')   then
+    begin
+      if (ADOQuery_cg_mingxi.FieldByName('单价').AsString<>'') and (ADOQuery_cg_mingxi.FieldByName('数量').AsString<>'') then
+        ADOQuery_cg_mingxi.FieldByName('金额').AsFloat:=ADOQuery_cg_mingxi.FieldByName('单价').AsFloat*ADOQuery_cg_mingxi.FieldByName('数量').AsFloat;
+    end;
+  end;
 end;
 
 procedure TForm_cg_new.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -1262,7 +1262,7 @@ begin
       ' gys=(select top 1 名称 from 供应商表 where 供应商编号=(select top 1 供应商 from 中央采购入库主表 where 入库编号=a.入库编号 )) '+
       ' from ( select * '+
       ' from 中央采购入库明细表 where 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' '+
-      ' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 :tj ) )a '+
+      ' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 and 供应商='+QuotedStr(qry_kucun.FieldByName('gys').AsString)+' :tj ) )a '+
       ' order by 入库时间';
 
     if  (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段入库')  then
@@ -1290,7 +1290,8 @@ begin
       ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
       ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 )'+
       ' from ( select * from 中央库存_出库表 '+
-      ' where 状态=2 and 是否作废=0 :tj and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
+      ' where 状态=2 and 是否作废=0 :tj and 供应商='+QuotedStr(qry_kucun.FieldByName('gys').AsString)+' '+
+      ' and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
 
     if  (cxGridDBTableView8.Controller.FocusedColumn.VisibleCaption = '时间段出库')  then
       sqlstr:=StringReplace(sqlstr,':tj',cktjstr,[rfReplaceAll])
@@ -1316,7 +1317,8 @@ begin
       ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
       ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 )'+
       ' from ( select * from 中央库存_出库表 '+
-      ' where 状态=1 and 是否作废=0 and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
+      ' where 状态=1 and 是否作废=0 and 供应商='+QuotedStr(qry_kucun.FieldByName('gys').AsString)+''+
+      ' and 价目编号='+QuotedStr(qry_kucun.FieldByName('价目编号').AsString)+' )a order by 出库时间';
 
     Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
     try

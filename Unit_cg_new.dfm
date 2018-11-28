@@ -241,12 +241,6 @@ object Form_cg_new: TForm_cg_new
         Options.Editing = False
         Width = 70
       end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
-        DataBinding.FieldName = #20215#30446#32534#21495
-        Visible = False
-        Options.Editing = False
-        Width = 100
-      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         Options.Editing = False
@@ -306,10 +300,16 @@ object Form_cg_new: TForm_cg_new
         PropertiesClassName = 'TcxMemoProperties'
         Width = 109
       end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
+        DataBinding.FieldName = #38376#24215#30003#35831#25968#37327
+        Options.Editing = False
+        Width = 100
+      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn
         Caption = #20179#24211#24211#23384
         DataBinding.FieldName = #24211#23384
         Options.Editing = False
+        Styles.Content = cxStyle1
         Width = 70
       end
       object cxGrid1DBTableView1Column4: TcxGridDBColumn
@@ -579,5 +579,23 @@ object Form_cg_new: TForm_cg_new
       'select top 1 * from '#37319#36141#30003#35831#26126#32454#34920)
     Left = 648
     Top = 433
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 184
+    Top = 400
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object cxStyle2: TcxStyle
+      AssignedValues = [svColor]
+      Color = clInfoBk
+    end
   end
 end

@@ -96,6 +96,9 @@ type
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
     cxButton5: TcxButton;
     cxGrid1DBTableView1Column4: TcxGridDBColumn;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    cxStyle2: TcxStyle;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -284,6 +287,12 @@ begin
       if DataModule1.ADOQuery_L.Eof=false then
         ADOQuery_cg_mingxi.FieldByName('单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
 
+      DataModule1.openSql('select sum(数量) as 门店申请数量 from 提货申请明细表 '+
+        ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+''+
+        ' and 状态=1 and 申请编号 in (select 申请编号 from 提货申请主表 where 状态=2)');
+      if DataModule1.ADOQuery_L.Eof=false then
+        ADOQuery_cg_mingxi.FieldByName('门店申请数量').AsString := DataModule1.ADOQuery_L.FieldByName('门店申请数量').AsString;
+
       ADOQuery_cg_mingxi.Post;
     end;
   finally
@@ -471,6 +480,7 @@ begin
      Action_cancel.Visible := false;
      Action_delete.Visible := false;
      Action_submit.Visible := false;
+     cxButton5.Visible := false;
      act1.Visible := false;
      act2.Visible := false;
  //    ActionToolBar1.Visible:=false;
@@ -522,13 +532,13 @@ begin
 //    exit;
 //  end;
   DataModule1.openSql('select * from ( select 名称,价目编号, 类别,小类,规格,单位,单价=(case when 进价=0 then 单价 else 进价 end ),供应商,'+
-  ' 仓库库存=入库数量-出库数量 from ( select a.*, yp.类别,yp.小类,yp.规格,yp.单位,yp.单价, '+
+  ' 仓库库存=入库数量-出库数量,门店申请数量 from ( select a.*, yp.类别,yp.小类,yp.规格,yp.单位,yp.单价, '+
   ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号 in (select 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 ) order by 编号 desc ),'+
   ' 进价=isnull((select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc),0), '+
   ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
   '    where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0), '+
   ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
-  ' from ( select 名称,价目编号 from 提货申请明细表 '+
+  ' from ( select 名称,价目编号,sum(数量) as 门店申请数量 from 提货申请明细表 '+
   ' where 状态=1 and 价目编号 in (select 价目编号 from 药品用品价目表 where 是否作废=0 and 库存=1 and 提货=1 )'+
   ' and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 ) group  by 名称,价目编号 )a '+
   ' left join (select 类别,小类,规格,单位,价目编号,单价 from 药品用品价目表)yp on a.价目编号=yp.价目编号'+
@@ -553,6 +563,7 @@ begin
     ADOQuery_cg_mingxi.FieldByName('小类').AsString := DataModule1.ADOQuery_L.FieldByName('小类').AsString;
     ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
     ADOQuery_cg_mingxi.FieldByName('库存').AsString := DataModule1.ADOQuery_L.FieldByName('仓库库存').AsString;
+    ADOQuery_cg_mingxi.FieldByName('门店申请数量').AsString := DataModule1.ADOQuery_L.FieldByName('门店申请数量').AsString;
     ADOQuery_cg_mingxi.Post;
 
     DataModule1.ADOQuery_L.Next;
@@ -569,7 +580,8 @@ begin
 
   DataModule1.openSql('select * from ( '+
   ' select 名称,价目编号, 类别,小类,规格,单位,单价=(case when 进价=0 then 单价 else 进价 end ),供应商,警戒量,'+
-  ' 仓库库存=入库数量-出库数量 from ( select a.*, '+
+  ' 仓库库存=入库数量-出库数量,门店申请数量 from ( select a.*, '+
+  ' 门店申请数量=isnull((select sum(数量) from 提货申请明细表 where 状态=1 and 申请编号 in (select 申请编号 from 提货申请主表 where 状态=2) and 价目编号=a.价目编号),0),'+
   ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号 in (select 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 ) order by 编号 desc ),'+
   ' 进价=isnull((select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc),0),'+
   ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
@@ -597,6 +609,7 @@ begin
     ADOQuery_cg_mingxi.FieldByName('小类').AsString := DataModule1.ADOQuery_L.FieldByName('小类').AsString;
     ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
     ADOQuery_cg_mingxi.FieldByName('库存').AsString := DataModule1.ADOQuery_L.FieldByName('仓库库存').AsString;
+    ADOQuery_cg_mingxi.FieldByName('门店申请数量').AsString := DataModule1.ADOQuery_L.FieldByName('门店申请数量').AsString;
     ADOQuery_cg_mingxi.Post;
 
     DataModule1.ADOQuery_L.Next;

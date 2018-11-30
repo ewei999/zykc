@@ -3,7 +3,7 @@ object Form_cg_new: TForm_cg_new
   Top = 0
   Caption = #37319#36141#30003#35831#21333
   ClientHeight = 701
-  ClientWidth = 984
+  ClientWidth = 1132
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_cg_new: TForm_cg_new
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 984
+    Width = 1132
     Height = 233
     Align = alTop
     Anchors = []
@@ -27,13 +27,10 @@ object Form_cg_new: TForm_cg_new
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    DesignSize = (
-      984
-      233)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
-      Width = 984
+      Width = 1132
       Height = 42
       ActionManager = ActionManager1
       BiDiMode = bdLeftToRight
@@ -139,7 +136,6 @@ object Form_cg_new: TForm_cg_new
       Width = 33
       Height = 35
       Action = Action_new_m
-      Anchors = [akTop, akRight]
       LookAndFeel.Kind = lfFlat
       LookAndFeel.NativeStyle = True
       LookAndFeel.SkinName = ''
@@ -152,7 +148,6 @@ object Form_cg_new: TForm_cg_new
       Width = 33
       Height = 35
       Action = Action_delete_m
-      Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
     end
@@ -162,7 +157,6 @@ object Form_cg_new: TForm_cg_new
       Width = 33
       Height = 35
       Action = Action_save_m
-      Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
@@ -203,7 +197,7 @@ object Form_cg_new: TForm_cg_new
   object cxGrid1: TcxGrid
     Left = 0
     Top = 233
-    Width = 984
+    Width = 1132
     Height = 351
     Align = alClient
     TabOrder = 1
@@ -229,20 +223,30 @@ object Form_cg_new: TForm_cg_new
       object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
         Options.Editing = False
+        Options.CellMerging = True
         Width = 200
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Horz = taLeftJustify
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = #23567#31867
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Horz = taLeftJustify
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Horz = taLeftJustify
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Width = 67
       end
@@ -262,6 +266,8 @@ object Form_cg_new: TForm_cg_new
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Width = 67
       end
@@ -293,21 +299,46 @@ object Form_cg_new: TForm_cg_new
         DataBinding.FieldName = #37329#39069
         PropertiesClassName = 'TcxCurrencyEditProperties'
         Properties.DisplayFormat = '0.00'
+        Options.Editing = False
         Width = 70
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #22791#27880
-        PropertiesClassName = 'TcxMemoProperties'
+        PropertiesClassName = 'TcxTextEditProperties'
         Width = 109
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
         DataBinding.FieldName = #38376#24215#30003#35831#25968#37327
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Width = 100
+      end
+      object cxGrid1DBTableView1Column6: TcxGridDBColumn
+        Caption = #30003#35831#38376#24215
+        DataBinding.FieldName = #38376#24215#21517#31216
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Vert = taVCenter
+        Width = 80
+      end
+      object cxGrid1DBTableView1Column7: TcxGridDBColumn
+        DataBinding.FieldName = #23457#25209#26085#26399
+        PropertiesClassName = 'TcxDateEditProperties'
+        Properties.DisplayFormat = 'yyyy-mm-dd'
+        Options.Editing = False
+        Width = 100
+      end
+      object cxGrid1DBTableView1Column5: TcxGridDBColumn
+        DataBinding.FieldName = #38376#24215#22791#27880
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Vert = taVCenter
+        Width = 150
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn
         Caption = #20179#24211#24211#23384
         DataBinding.FieldName = #24211#23384
+        PropertiesClassName = 'TcxLabelProperties'
+        Properties.Alignment.Vert = taVCenter
         Options.Editing = False
         Styles.Content = cxStyle1
         Width = 70
@@ -337,11 +368,11 @@ object Form_cg_new: TForm_cg_new
     Caption = #23457#25209#24847#35265
     TabOrder = 2
     Height = 117
-    Width = 984
+    Width = 1132
     object cxGrid3: TcxGrid
       Left = 2
       Top = 24
-      Width = 980
+      Width = 1128
       Height = 91
       Align = alClient
       BorderStyle = cxcbsNone

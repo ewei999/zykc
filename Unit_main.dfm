@@ -92,8 +92,11 @@
       Caption = #20013#22830#20179#24211#31649#29702
       SelectedLinkIndex = -1
       TopVisibleLinkIndex = 0
-      OnClick = dxNavBar1Group2Click
+      OnClick = dxNavBar1Item10Click
       Links = <
+        item
+          Item = dxNavBar1Item10
+        end
         item
           Item = dxNavBar1Item3
         end
@@ -105,9 +108,6 @@
         end
         item
           Item = dxNavBar1Item8
-        end
-        item
-          Item = dxNavBar1Item10
         end
         item
           Item = dxNavBar1Item14
@@ -263,7 +263,7 @@
           Width = 121
         end
         object cxButton1: TcxButton
-          Left = 570
+          Left = 772
           Top = 20
           Width = 75
           Height = 31
@@ -273,7 +273,7 @@
           OnClick = cxButton1Click
         end
         object cxButton2: TcxButton
-          Left = 666
+          Left = 868
           Top = 20
           Width = 75
           Height = 31
@@ -292,7 +292,7 @@
             #20840#37096)
           TabOrder = 6
           Text = #26410#22788#29702
-          Width = 121
+          Width = 94
         end
         object cxlbl17: TcxLabel
           Left = 393
@@ -301,7 +301,7 @@
           Transparent = True
         end
         object cxButton25: TcxButton
-          Left = 760
+          Left = 962
           Top = 20
           Width = 95
           Height = 31
@@ -309,6 +309,18 @@
           LookAndFeel.SkinName = 'Black'
           TabOrder = 8
           OnClick = cxButton25Click
+        end
+        object cxTextEdit1: TcxTextEdit
+          Left = 577
+          Top = 22
+          TabOrder = 9
+          Width = 189
+        end
+        object cxlbl18: TcxLabel
+          Left = 535
+          Top = 24
+          Caption = #21517#31216
+          Transparent = True
         end
       end
       object cxPage_tihuoshenqing: TcxPageControl

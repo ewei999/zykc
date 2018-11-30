@@ -405,6 +405,8 @@ type
     dxNavBar1Item16: TdxNavBarItem;
     cxButton29: TcxButton;
     cxGridDBTableView8Column8: TcxGridDBColumn;
+    cxTextEdit1: TcxTextEdit;
+    cxlbl18: TcxLabel;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -415,7 +417,6 @@ type
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
     procedure dxNavBar1Item3Click(Sender: TObject);
-    procedure dxNavBar1Group2Click(Sender: TObject);
     procedure dxNavBar1Item2Click(Sender: TObject);
     procedure cxButton4Click(Sender: TObject);
     procedure Action_newExecute(Sender: TObject);
@@ -1039,6 +1040,8 @@ begin
     ztstr:=ztstr+' and 状态=1 '
   else if cxComboBox2.Text='已处理' then
     ztstr:=ztstr+' and 状态 in (2,3) ';
+  if Trim(cxTextEdit1.Text)<>'' then
+    ztstr:=ztstr+'  and 价目编号 in (select 价目编号 from 药品用品价目表 where 名称 like ''%'+Trim(cxTextEdit1.Text)+'%'' or 原名称 like ''%'+Trim(cxTextEdit1.Text)+'%'' )';
 
   qry_thshenqing_mx.Close;
   qry_thshenqing_mx.SQL.Text:='select *,仓库库存=入库数量-出库数量,'+
@@ -1340,34 +1343,6 @@ begin
   cxTabSheet2.Show;
 end;
 
-procedure TForm_main.dxNavBar1Group2Click(Sender: TObject);
-var
-  str   :string;
-begin
-  cxTabSheet4.Show;
-  qry_gys_list.Open;
-  cxDateEdit1.Date := IncMonth(date,-1);
-  caigou_shenqing;
-//  qry_caigou_hz.Active := false;
-//  qry_caigou_hz.SQL.Text := 'select * from 中央采购申请主表 where 状态<>2 and  申请日期 >= '+QuotedStr(cxDateEdit1.Text)+
-//                            ' order by 编号 desc';
-//  qry_cg_mingxi.Active := false;
-//  qry_cg_mingxi.SQL.Text := 'select a.*,b.申请日期,b.申请编号,b.状态 as 审批状态,待办人,b.供应商 as 供应商编号 from 中央采购申请明细表 a '+
-//                          '  left outer join                             '     +
-//                          '  中央采购申请主表 b  '+
-//                          '  on a.申请编号=b.申请编号 where  申请日期 >= '+
-//                          QuotedStr(cxDateEdit1.Text)+' order by 编号 desc';
-//  if cxDateEdit2.Text <> '' then
-//  begin
-//    str := cxDateEdit2.Text;
-//    qry_caigou_hz.SQL.Text := qry_caigou_hz.SQL.Text +' and 申请日期 <='+ QuotedStr(str) ;
-//    qry_cg_mingxi.SQL.Text := qry_cg_mingxi.SQL.Text + ' and 申请日期 <='+ QuotedStr(str) ;
-//  end;
-//  qry_caigou_hz.Active := True;
-//  qry_cg_mingxi.Active := True;
-
-end;
-
 procedure TForm_main.dxNavBar1Group4Click(Sender: TObject);
 begin
   cxTabSheet9.Show;
@@ -1448,6 +1423,10 @@ end;
 
 procedure TForm_main.dxNavBar1Item3Click(Sender: TObject);
 begin
+  cxTabSheet4.Show;
+  qry_gys_list.Open;
+  cxDateEdit1.Date := IncMonth(date,-1);
+  caigou_shenqing;
   cxTabSheet4.Show;
 end;
 

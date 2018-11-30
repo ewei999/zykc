@@ -293,7 +293,7 @@ object Form_fuhuo: TForm_fuhuo
           object cxGridDBTableView1Column8: TcxGridDBColumn
             Caption = #38376#24215#22791#27880
             DataBinding.FieldName = #22791#27880
-            Options.Editing = False
+            PropertiesClassName = 'TcxTextEditProperties'
             Options.Filtering = False
             Options.Sorting = False
             Width = 92

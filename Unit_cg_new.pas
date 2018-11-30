@@ -99,6 +99,9 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
+    cxGrid1DBTableView1Column5: TcxGridDBColumn;
+    cxGrid1DBTableView1Column6: TcxGridDBColumn;
+    cxGrid1DBTableView1Column7: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -257,11 +260,11 @@ begin
   ADOQuery_cg_zhubiao.FieldByName('申请人').AsString := G_user.UserName;
   ADOQuery_cg_zhubiao.FieldByName('员工编号').AsString := G_user.userID;
   ADOQuery_cg_zhubiao.FieldByName('状态').AsString := '0';
+
   ADOQuery_cg_mingxi.Active := False;
   ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购申请明细表 where 申请编号='+
                                   QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
   ADOQuery_cg_mingxi.Active := true;
-
 end;
 
 procedure TForm_cg_new.Action_new_mExecute(Sender: TObject);
@@ -532,17 +535,20 @@ begin
 //    exit;
 //  end;
   DataModule1.openSql('select * from ( select 名称,价目编号, 类别,小类,规格,单位,单价=(case when 进价=0 then 单价 else 进价 end ),供应商,'+
-  ' 仓库库存=入库数量-出库数量,门店申请数量 from ( select a.*, yp.类别,yp.小类,yp.规格,yp.单位,yp.单价, '+
+  ' 仓库库存=入库数量-出库数量,门店申请数量,门店备注,门店名称=(select top 1 name from 分院表 where abbr=b.代码),审批日期'+
+  ' from ( select a.*, yp.类别,yp.小类,yp.规格,yp.单位,yp.单价, '+
   ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号 in (select 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 ) order by 编号 desc ),'+
   ' 进价=isnull((select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc),0), '+
   ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
   '    where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0), '+
-  ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
-  ' from ( select 名称,价目编号,sum(数量) as 门店申请数量 from 提货申请明细表 '+
+  ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0),'+
+  ' 代码=(select top 1 分店代码  from 提货申请主表 where 申请编号=a.申请编号),'+
+  ' 审批日期=(select top 1 审批时间 from 提货申请审批表 where 申请编号=a.申请编号 and 审批时间 is not null order by 编号 desc )'+
+  ' from ( select 名称,价目编号,数量 as 门店申请数量,备注 as 门店备注,申请编号 from 提货申请明细表 '+
   ' where 状态=1 and 价目编号 in (select 价目编号 from 药品用品价目表 where 是否作废=0 and 库存=1 and 提货=1 )'+
-  ' and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 ) group  by 名称,价目编号 )a '+
+  ' and 申请编号 in (select 申请编号 from  提货申请主表 where 是否作废=0 and 状态=2 and 类别=1 )  )a '+
   ' left join (select 类别,小类,规格,单位,价目编号,单价 from 药品用品价目表)yp on a.价目编号=yp.价目编号'+
-  ' )b where 入库数量-出库数量<=0 )c  order by 供应商,名称');
+  ' )b where 入库数量-出库数量<=0 )c  order by 价目编号');
   if DataModule1.ADOQuery_L.RecordCount=0 then
   begin
     Application.MessageBox('无记录', '提示', MB_OK );
@@ -564,10 +570,14 @@ begin
     ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('供应商').AsString;
     ADOQuery_cg_mingxi.FieldByName('库存').AsString := DataModule1.ADOQuery_L.FieldByName('仓库库存').AsString;
     ADOQuery_cg_mingxi.FieldByName('门店申请数量').AsString := DataModule1.ADOQuery_L.FieldByName('门店申请数量').AsString;
+    ADOQuery_cg_mingxi.FieldByName('门店备注').AsString := DataModule1.ADOQuery_L.FieldByName('门店备注').AsString;
+    ADOQuery_cg_mingxi.FieldByName('门店名称').AsString := DataModule1.ADOQuery_L.FieldByName('门店名称').AsString;
+    ADOQuery_cg_mingxi.FieldByName('审批日期').AsString := DataModule1.ADOQuery_L.FieldByName('审批日期').AsString;
     ADOQuery_cg_mingxi.Post;
 
     DataModule1.ADOQuery_L.Next;
   end;
+  ADOQuery_cg_mingxi.First;
   ADOQuery_cg_mingxi.EnableControls;
   Application.MessageBox('导入完成', '提示', MB_OK);
 
@@ -614,6 +624,7 @@ begin
 
     DataModule1.ADOQuery_L.Next;
   end;
+  ADOQuery_cg_mingxi.First;
   ADOQuery_cg_mingxi.EnableControls;
   Application.MessageBox('导入完成', '提示', MB_OK);
 end;
@@ -639,6 +650,7 @@ end;
 
 procedure TForm_cg_new.FormShow(Sender: TObject);
 begin
+  Self.WindowState:=wsMaximized;
   baocun:=false;
   ADOQuery_list.Active := True;
   ADOQuery_jiamu.Open;

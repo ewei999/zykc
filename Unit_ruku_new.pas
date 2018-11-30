@@ -198,6 +198,9 @@ begin
       ADOQuery_cg_mingxi.FieldByName('价目编号').AsString := Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString;
       ADOQuery_cg_mingxi.FieldByName('规格').AsString := Form_jiamubiao.ADOQuery1.FieldByName('规格').AsString;
       ADOQuery_cg_mingxi.FieldByName('单位').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单位').AsString;
+      if Form_jiamubiao.ADOQuery1.FieldByName('库存单位').AsString<>'' then
+        ADOQuery_cg_mingxi.FieldByName('单位').AsString := Form_jiamubiao.ADOQuery1.FieldByName('库存单位').AsString;
+
       ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := Form_jiamubiao.ADOQuery1.FieldByName('单价').AsString;
       ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
       ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;

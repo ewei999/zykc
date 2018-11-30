@@ -398,7 +398,7 @@ begin
       qry_thshenqing_mx.EnableControls;
       if cxRadioButton2.Checked then  //不付货
       begin
-        DataModule1.openSql('select * from 基础设置表 where 类别编号=''不付货原因'' where 类别名称='+QuotedStr(trim(cxLookupComboBox1.Text))+' ');
+        DataModule1.openSql('select * from 基础设置表 where 类别编号=''不付货原因'' and 类别名称='+QuotedStr(trim(cxLookupComboBox1.Text))+' ');
         if DataModule1.ADOQuery_L.Eof then
         begin
           DataModule1.ADOQuery_L.Append;

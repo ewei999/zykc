@@ -598,7 +598,7 @@ begin
   '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
   ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
   ' from (   select 价目编号,名称,规格,单位,类别,小类,警戒量,单价  from 药品用品价目表 '+
-  '  where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )a )b )c  order by 名称');
+  '  where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )a )b )c   order by 名称');
   if DataModule1.ADOQuery_L.RecordCount=0 then
   begin
     Application.MessageBox('无记录', '提示', MB_OK );

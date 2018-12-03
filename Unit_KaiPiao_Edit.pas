@@ -57,6 +57,8 @@ type
     cxGridLevel1: TcxGridLevel;
     ds_liebiao: TDataSource;
     qry_liebiao: TADOQuery;
+    act1: TAction;
+    cxButton1: TcxButton;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure act2Execute(Sender: TObject);
@@ -67,6 +69,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure cxGridDBTableView1EditChanged(Sender: TcxCustomGridTableView;
       AItem: TcxCustomGridTableItem);
+    procedure act1Execute(Sender: TObject);
   private
     xzbool:boolean;
     procedure Open_LieBiao;
@@ -82,6 +85,74 @@ var
 implementation
   uses Unit_DM,Unit_public;
 {$R *.dfm}
+
+procedure TForm_KaiPiao_Edit.act1Execute(Sender: TObject);
+var
+  heji:Real;
+  i:integer;
+  bianh:string;
+begin
+  if cxLookup_gys.Text='' then
+  begin
+    Application.MessageBox('请选择供应商', '提示', MB_OK);
+    exit;
+  end;
+  if cxLookup_fenyuan.Text='' then
+  begin
+    Application.MessageBox('请选择分院', '提示', MB_OK);
+    exit;
+  end;
+
+  cxlbl_heji.Caption:='0';
+  heji:=0;
+
+  bianh:='';
+
+  qry_liebiao.DisableControls;
+  qry_liebiao.First;
+  cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=false;
+  for i:=0 to qry_liebiao.RecordCount - 1 do
+  begin
+    if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
+    begin
+      if bianh='' then
+        bianh:=qry_liebiao.FieldByName('编号').AsString
+      else
+        bianh:=bianh+','+qry_liebiao.FieldByName('编号').AsString;
+      heji:=heji+strtofloat(cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column6.Index]);
+    end;
+    qry_liebiao.Next;
+  end;
+  cxlbl_heji.Caption:=floattostr(heji);
+  qry_liebiao.First;
+  cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=true;
+  qry_liebiao.EnableControls;
+
+  if bianh='' then
+  begin
+    Application.MessageBox('请选择需要打印的记录', '提示', MB_OK);
+    exit;
+  end;
+
+  DataModule1.ADOQuery_dayin.Close;
+  DataModule1.ADOQuery_dayin.SQL.Text :=' select * , '+
+  ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
+  ' RANK () OVER (ORDER BY 编号 ) AS 序号  from ( '+
+  ' select 编号,出库时间,名称,出库数量,单价,出库金额,价目编号 '+
+  ' from 中央库存_出库表 where 编号 in ('+bianh+')  )a  order by 出库时间';
+  DataModule1.ADOQuery_dayin.open;
+
+  DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
+  for i:=0 to DataModule1.frxDBDataset_dayin.Dataset.FieldCount-1 do
+  begin
+    DataModule1.frxDBDataset_dayin.FieldAliases.Add(DataModule1.frxDBDataset_dayin.dataset.Fields[i].FullName+'='+
+        DataModule1.frxDBDataset_dayin.dataset.Fields[i].FullName);
+  end;
+  DataModule1.frxReport_dayin.LoadFromFile(ExtractFilePath(Application.ExeName) + 'Report\chuku.fr3');
+  DataModule1.frxReport_dayin.Variables['gys'] :=QuotedStr(cxLookup_gys.text);
+  DataModule1.frxReport_dayin.Variables['fenyuan'] :=QuotedStr(cxLookup_fenyuan.text);
+  DataModule1.frxReport_dayin.ShowReport;
+end;
 
 procedure TForm_KaiPiao_Edit.act2Execute(Sender: TObject);
 var

@@ -211,6 +211,11 @@ object Form_cg_new: TForm_cg_new
           Format = #21512#35745#65306'0'
           Kind = skCount
           Column = cxgrdbclmncxGrid1DBTableView1DBColumn2
+        end
+        item
+          Format = '0.00'
+          Kind = skSum
+          Column = cxGrid1DBTableView1Column2
         end>
       DataController.Summary.SummaryGroups = <>
       OptionsData.CancelOnExit = False

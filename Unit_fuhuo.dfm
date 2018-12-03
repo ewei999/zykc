@@ -132,7 +132,7 @@ object Form_fuhuo: TForm_fuhuo
         Align = alTop
         TabOrder = 0
         object cxRadioButton1: TcxRadioButton
-          Left = 301
+          Left = 223
           Top = 18
           Width = 81
           Height = 17
@@ -142,7 +142,7 @@ object Form_fuhuo: TForm_fuhuo
           Transparent = True
         end
         object cxRadioButton2: TcxRadioButton
-          Left = 404
+          Left = 619
           Top = 18
           Width = 81
           Height = 17
@@ -152,14 +152,14 @@ object Form_fuhuo: TForm_fuhuo
           Transparent = True
         end
         object cxlbl1: TcxLabel
-          Left = 491
+          Left = 706
           Top = 14
-          Caption = #19981#20184#36135#21407#22240
+          Caption = #21407#22240
           Transparent = True
         end
         object cxLookupComboBox1: TcxLookupComboBox
-          Left = 581
-          Top = 12
+          Left = 749
+          Top = 13
           Properties.DropDownListStyle = lsEditList
           Properties.KeyFieldNames = #31867#21035#21517#31216
           Properties.ListColumns = <
@@ -171,16 +171,16 @@ object Form_fuhuo: TForm_fuhuo
           StyleDisabled.Color = clYellow
           StyleDisabled.TextColor = clBlack
           TabOrder = 3
-          Width = 228
+          Width = 207
         end
         object cxlbl2: TcxLabel
-          Left = 31
+          Left = 18
           Top = 14
           Caption = #20998#38498
           Transparent = True
         end
         object cxLookupComboBox2: TcxLookupComboBox
-          Left = 73
+          Left = 60
           Top = 12
           Properties.KeyFieldNames = 'abbr'
           Properties.ListColumns = <
@@ -195,13 +195,29 @@ object Form_fuhuo: TForm_fuhuo
           TabOrder = 5
           OnExit = cxLookupComboBox2Exit
           OnKeyPress = cxLookupComboBox2KeyPress
-          Width = 200
+          Width = 144
         end
         object cxlbl3: TcxLabel
-          Left = 834
+          Left = 974
           Top = 14
           Caption = #21491#38190#21487#26032#22686#21024#38500#35760#24405
           Transparent = True
+        end
+        object cxRadioButton3: TcxRadioButton
+          Left = 303
+          Top = 18
+          Width = 81
+          Height = 17
+          Caption = #26242#19981#20184#36135
+          TabOrder = 7
+          OnClick = cxRadioButton1Click
+          Transparent = True
+        end
+        object cxTextEdit37: TcxTextEdit
+          Left = 390
+          Top = 13
+          TabOrder = 8
+          Width = 204
         end
       end
       object cxGrid2: TcxGrid
@@ -365,6 +381,12 @@ object Form_fuhuo: TForm_fuhuo
             Options.Sorting = False
             Width = 66
           end
+          object cxGridDBTableView1Column13: TcxGridDBColumn
+            Caption = #20179#24211#22791#27880
+            DataBinding.FieldName = #19981#20184#36135#21407#22240
+            Options.Editing = False
+            Width = 100
+          end
         end
         object cxGridLevel1: TcxGridLevel
           GridView = cxGridDBTableView1
@@ -374,6 +396,10 @@ object Form_fuhuo: TForm_fuhuo
     object cxTabSheet2: TcxTabSheet
       Caption = #20027#21160#20184#36135
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object pnl2: TPanel
         Left = 0
         Top = 0

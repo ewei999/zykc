@@ -105,6 +105,9 @@ type
     cxGridDBTableView2Column1: TcxGridDBColumn;
     cxGridDBTableView2Column2: TcxGridDBColumn;
     cxGridDBTableView1Column12: TcxGridDBColumn;
+    cxRadioButton3: TcxRadioButton;
+    cxTextEdit37: TcxTextEdit;
+    cxGridDBTableView1Column13: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -162,10 +165,20 @@ begin
       exit;
     end;
 
-    if (cxRadioButton1.Checked=False) and (cxRadioButton2.Checked=False) then
+    if (cxRadioButton1.Checked=False) and (cxRadioButton2.Checked=False) and (cxRadioButton3.Checked=false) then
     begin
-      Application.MessageBox('请选择付货或不付货', '提示', MB_OK);
+      Application.MessageBox('请选择付货，暂不付货或不付货', '提示', MB_OK);
       exit;
+    end;
+
+    if cxRadioButton3.Checked then
+    begin
+      if cxTextEdit37.text='' then
+      begin
+        Application.MessageBox('请输入暂不付货备注', '提示', MB_OK);
+        cxTextEdit37.SetFocus;
+        exit;
+      end;
     end;
 
     if cxRadioButton2.Checked then
@@ -343,6 +356,8 @@ begin
       tishi:='付货';
     if cxRadioButton2.Checked then
       tishi:='不付货  '+cxLookupComboBox1.text;
+    if cxRadioButton3.Checked then
+      tishi:='暂不付货  '+cxTextEdit37.text;
 
     if Application.MessageBox(pchar('已选择 '+inttostr(j)+' 条记录，操作为：'+tishi+' 确认操作吗？'), '确认', MB_OKCANCEL +
       MB_ICONINFORMATION) = IDCANCEL then
@@ -387,6 +402,13 @@ begin
             end;
             DataModule1.ADOQuery_L.post;
           end;
+
+          if cxRadioButton3.Checked then  //暂不付货
+          begin
+            DataModule1.execSql('update 提货申请明细表 set 不付货原因='+QuotedStr(cxTextEdit37.Text)+' '+
+            ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
+          end;
+
           if cxRadioButton2.Checked then  //不付货
           begin
             DataModule1.execSql('update 提货申请明细表 set 状态=3,不付货原因='+QuotedStr(cxLookupComboBox1.Text)+' '+
@@ -818,12 +840,12 @@ begin
   fenyuanm:=cxLookupComboBox2.Text;
   qry_thshenqing_mx.Close;
   qry_thshenqing_mx.SQL.Text:='select top 0 状态 as 编号,选择,价目编号,数量 as 申请数量,数量 as 付货数量,规格,单位,备注,库存 as 申请时库存,单价,单位 as 供应商,'+
-    ' 单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,库存 as 仓库库存,价目编号 as 审批日期 from 提货申请明细表';
+    ' 单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,库存 as 仓库库存,价目编号 as 审批日期,不付货原因 from 提货申请明细表';
   qry_thshenqing_mx.Open;
 
   Show_RuntimeInfo('正在打开');
   DataModule1.openSql('select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
-    ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称, '+
+    ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称,不付货原因, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
     ' 审批日期=(select top 1 convert(char(10),审批时间,120) from 提货申请审批表 where 申请编号=a.申请编号 and 审批时间 is not null order by 编号 desc ),'+
     ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) '+
@@ -849,6 +871,7 @@ begin
     qry_thshenqing_mx.FieldByName('名称').asstring:= DataModule1.ADOQuery_L.FieldByName('名称').AsString;
     qry_thshenqing_mx.FieldByName('分店代码').asstring:= DataModule1.ADOQuery_L.FieldByName('分店代码').AsString;
     qry_thshenqing_mx.FieldByName('审批日期').asstring:= DataModule1.ADOQuery_L.FieldByName('审批日期').AsString;
+    qry_thshenqing_mx.FieldByName('不付货原因').asstring:= DataModule1.ADOQuery_L.FieldByName('不付货原因').AsString;
     qry_thshenqing_mx.FieldByName('单价').AsVariant:= null;
     qry_thshenqing_mx.FieldByName('供应商').asstring:= '';
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
@@ -1018,12 +1041,12 @@ end;
 
 procedure TForm_fuhuo.FormShow(Sender: TObject);
 begin
-//  self.WindowState:=wsMaximized;
   if laiyuan='按申请单' then
   begin
     cxLabel10.Caption:='向门店付货（按申请单）';
     Self.Caption:=cxLabel10.Caption;
     shifoujisuan:=true;
+    self.WindowState:=wsMaximized;
     cxTabSheet1.Show;
   end;
   if laiyuan='主动付货' then

@@ -407,6 +407,21 @@ type
     cxGridDBTableView8Column8: TcxGridDBColumn;
     cxTextEdit1: TcxTextEdit;
     cxlbl18: TcxLabel;
+    cxGridDBTableView1Column8: TcxGridDBColumn;
+    dxNavBar1Item17: TdxNavBarItem;
+    cxTabSheet17: TcxTabSheet;
+    pnl8: TPanel;
+    cxlbl19: TcxLabel;
+    cxDateEdit7: TcxDateEdit;
+    cxlbl20: TcxLabel;
+    cxDateEdit8: TcxDateEdit;
+    cxButton30: TcxButton;
+    cxButton31: TcxButton;
+    cxGrid15: TcxGrid;
+    cxGridDBTableView12: TcxGridDBTableView;
+    cxGridLevel12: TcxGridLevel;
+    ds_caiwu: TDataSource;
+    qry_caiwu: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -479,6 +494,8 @@ type
     procedure cxButton27Click(Sender: TObject);
     procedure dxNavBar1Item16Click(Sender: TObject);
     procedure cxButton29Click(Sender: TObject);
+    procedure dxNavBar1Item17Click(Sender: TObject);
+    procedure cxButton30Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid;
@@ -1053,7 +1070,7 @@ begin
     ' 审批日期=(select top 1 审批时间 from 提货申请审批表 where 申请编号=a.申请编号 order by 编号 desc),'+
     ' mc=名称,'+
     ' 申请人=(select top 1 申请人 from 提货申请主表 where 申请编号=a.申请编号) ,'+
-    ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then 不付货原因 end), '+
+    ' zt=(case when 状态=1 then ''未处理'' when 状态=2 then ''已付货'' when 状态=3 then ''不付货'' end), '+
     ' 入库数量=isnull((select sum(isnull(数量,0))  from 中央采购入库明细表 '+
     '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
     '  cgrk=(select top 1 入库编号  from 中央采购入库明细表  where  价目编号=a.价目编号 order by 编号 desc),'+
@@ -1064,6 +1081,30 @@ begin
   qry_thshenqing_mx.Open;
 
   cxTabSheet3.Show;
+end;
+
+procedure TForm_main.cxButton30Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  if cxDateEdit7.Text='' then
+  begin
+    Application.MessageBox('请选择统计开始日期', '提示', MB_OK);
+    exit;
+  end;
+  if cxDateEdit8.Text='' then
+  begin
+    Application.MessageBox('请选择统计终止日期', '提示', MB_OK);
+    exit;
+  end;
+
+  if cxDateEdit7.Text<>'' then
+    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+'';
+  if cxDateEdit8.Text<>'' then
+    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+'';
+
+
+
 end;
 
 procedure TForm_main.cxButton4Click(Sender: TObject);
@@ -1394,6 +1435,11 @@ begin
   finally
     FreeAndNil(Form_JingJieLiang);
   end;
+end;
+
+procedure TForm_main.dxNavBar1Item17Click(Sender: TObject);
+begin
+  cxTabSheet17.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);

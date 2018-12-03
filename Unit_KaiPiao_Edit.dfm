@@ -89,7 +89,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     ParentFont = False
   end
   object cxButton2: TcxButton
-    Left = 561
+    Left = 505
     Top = 11
     Width = 50
     Height = 58
@@ -266,6 +266,25 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
       GridView = cxGridDBTableView1
     end
   end
+  object cxButton1: TcxButton
+    Left = 561
+    Top = 11
+    Width = 50
+    Height = 58
+    Align = alCustom
+    Action = act1
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 5
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
   object actmgr1: TActionManager
     ActionBars = <
       item
@@ -277,7 +296,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
           end>
       end>
     Images = DataModule1.cxImageList32
-    Left = 368
+    Left = 288
     Top = 8
     StyleName = 'Platform Default'
     object act_close: TAction
@@ -290,11 +309,16 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
       ImageIndex = 31
       OnExecute = act2Execute
     end
+    object act1: TAction
+      Caption = #25171#21360
+      ImageIndex = 24
+      OnExecute = act1Execute
+    end
   end
   object ds_fenyuan: TDataSource
     DataSet = qry_fenyuan
-    Left = 464
-    Top = 40
+    Left = 344
+    Top = 56
   end
   object qry_fenyuan: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -302,8 +326,8 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Parameters = <>
     SQL.Strings = (
       'select * from '#27425#21345#35774#32622#34920)
-    Left = 432
-    Top = 16
+    Left = 352
+    Top = 8
   end
   object qry_gys: TADOQuery
     Connection = DataModule1.ADOCon_ALi

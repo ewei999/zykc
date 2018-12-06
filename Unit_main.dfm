@@ -120,6 +120,9 @@
         end
         item
           Item = dxNavBar1Item17
+        end
+        item
+          Item = dxNavBar1Item18
         end>
     end
     object dxNavBar1Group3: TdxNavBarGroup
@@ -216,6 +219,11 @@
       SmallImageIndex = 65
       OnClick = dxNavBar1Item17Click
     end
+    object dxNavBar1Item18: TdxNavBarItem
+      Caption = #20215#30446#34920
+      SmallImageIndex = 45
+      OnClick = dxNavBar1Item18Click
+    end
   end
   object cxPageControl_main: TcxPageControl
     Left = 185
@@ -224,7 +232,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet17
+    Properties.ActivePage = cxTabSheet4
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -2351,7 +2359,6 @@
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 8
         object cxlbl19: TcxLabel
           Left = 46
           Top = 15
@@ -2430,6 +2437,147 @@
         end
         object cxGridLevel12: TcxGridLevel
           GridView = cxGridDBTableView12
+        end
+      end
+    end
+    object cxTabSheet18: TcxTabSheet
+      Caption = #20215#30446#34920
+      ImageIndex = 11
+      object pnl9: TPanel
+        Left = 0
+        Top = 0
+        Width = 1069
+        Height = 55
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 0
+        object cxButton33: TcxButton
+          Left = 589
+          Top = 9
+          Width = 75
+          Height = 31
+          Caption = 'Excel'
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 0
+          OnClick = cxButton33Click
+        end
+        object cxTextEdit2: TcxTextEdit
+          Left = 208
+          Top = 11
+          Properties.OnChange = cxTextEdit2PropertiesChange
+          TabOrder = 1
+          Width = 266
+        end
+        object cxlbl21: TcxLabel
+          Left = 166
+          Top = 13
+          Caption = #21517#31216
+          Transparent = True
+        end
+        object cxButton32: TcxButton
+          Left = 493
+          Top = 9
+          Width = 75
+          Height = 31
+          Caption = #20445#23384
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 3
+          OnClick = cxButton32Click
+        end
+      end
+      object cxGrid16: TcxGrid
+        Left = 0
+        Top = 55
+        Width = 1069
+        Height = 625
+        Align = alClient
+        TabOrder = 1
+        LookAndFeel.SkinName = 'Blue'
+        object cxGridDBTableView13: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView8CellDblClick
+          DataController.DataSource = ds_JMB
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn55
+            end
+            item
+              Format = '0.00'
+              Kind = skSum
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn55: TcxGridDBColumn
+            DataBinding.FieldName = #21517#31216
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 200
+          end
+          object cxGridDBColumn57: TcxGridDBColumn
+            DataBinding.FieldName = #31867#21035
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn58: TcxGridDBColumn
+            DataBinding.FieldName = #23567#31867
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn59: TcxGridDBColumn
+            DataBinding.FieldName = #35268#26684
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn60: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20301
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn56: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20215
+            PropertiesClassName = 'TcxLabelProperties'
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn61: TcxGridDBColumn
+            DataBinding.FieldName = #38646#21806#20215
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Horz = taLeftJustify
+            Options.Editing = False
+            Width = 70
+          end
+          object cxGridDBColumn62: TcxGridDBColumn
+            DataBinding.FieldName = #21253#35013#35268#26684
+            PropertiesClassName = 'TcxTextEditProperties'
+            Width = 100
+          end
+          object cxGridDBColumn63: TcxGridDBColumn
+            DataBinding.FieldName = #24211#23384#21333#20301
+            PropertiesClassName = 'TcxTextEditProperties'
+            Properties.Alignment.Horz = taLeftJustify
+            Width = 100
+          end
+          object cxGridDBTableView13Column1: TcxGridDBColumn
+            DataBinding.FieldName = #35686#25106#37327
+            PropertiesClassName = 'TcxMaskEditProperties'
+            Width = 60
+          end
+        end
+        object cxGridLevel13: TcxGridLevel
+          GridView = cxGridDBTableView13
         end
       end
     end
@@ -2853,5 +3001,20 @@
       'select * from '#27425#21345#35774#32622#34920)
     Left = 960
     Top = 120
+  end
+  object qry_JMB: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 880
+    Top = 480
+  end
+  object ds_JMB: TDataSource
+    DataSet = qry_JMB
+    Left = 800
+    Top = 472
   end
 end

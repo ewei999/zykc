@@ -28,7 +28,8 @@ uses
   cxGrid, Data.Win.ADODB,Unit_caigou_shenqing_new, cxCheckBox,Unit_fuhuo,
   cxDBLookupComboBox, System.Actions, Vcl.ActnList, unit_JingJieLiang,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
-  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu,Unit_gongyingshang;
+  cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu,Unit_gongyingshang,
+  RuntimeInfo;
 
 type
   TForm_main = class(TForm)
@@ -422,6 +423,28 @@ type
     cxGridLevel12: TcxGridLevel;
     ds_caiwu: TDataSource;
     qry_caiwu: TADOQuery;
+    dxNavBar1Item18: TdxNavBarItem;
+    cxTabSheet18: TcxTabSheet;
+    pnl9: TPanel;
+    cxButton33: TcxButton;
+    cxTextEdit2: TcxTextEdit;
+    cxlbl21: TcxLabel;
+    cxGrid16: TcxGrid;
+    cxGridDBTableView13: TcxGridDBTableView;
+    cxGridDBColumn55: TcxGridDBColumn;
+    cxGridDBColumn56: TcxGridDBColumn;
+    cxGridDBColumn57: TcxGridDBColumn;
+    cxGridDBColumn58: TcxGridDBColumn;
+    cxGridDBColumn59: TcxGridDBColumn;
+    cxGridDBColumn60: TcxGridDBColumn;
+    cxGridDBColumn61: TcxGridDBColumn;
+    cxGridDBColumn62: TcxGridDBColumn;
+    cxGridDBColumn63: TcxGridDBColumn;
+    cxGridLevel13: TcxGridLevel;
+    cxButton32: TcxButton;
+    qry_JMB: TADOQuery;
+    ds_JMB: TDataSource;
+    cxGridDBTableView13Column1: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -496,9 +519,13 @@ type
     procedure cxButton29Click(Sender: TObject);
     procedure dxNavBar1Item17Click(Sender: TObject);
     procedure cxButton30Click(Sender: TObject);
+    procedure dxNavBar1Item18Click(Sender: TObject);
+    procedure cxButton32Click(Sender: TObject);
+    procedure cxTextEdit2PropertiesChange(Sender: TObject);
+    procedure cxButton33Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
-    procedure CreateGrid;
+    procedure CreateGrid(cxgridA:TcxGridDBTableView);
   public
     { Public declarations }
   end;
@@ -660,8 +687,10 @@ begin
   if cxDateEdit2.Text <> '' then
   begin
     if cxDateEdit1.Date > cxDateEdit2.Date then
-    Application.MessageBox('日期选择不正确！', '提示', MB_OK);
-    Exit;
+    begin
+      Application.MessageBox('日期选择不正确！', '提示', MB_OK);
+      Exit;
+    end;
   end;
 
   qry_caigou_hz.Active := false;
@@ -899,21 +928,27 @@ begin
 end;
 
 
-procedure TForm_main.CreateGrid;
+procedure TForm_main.CreateGrid(cxgridA:TcxGridDBTableView);
 var
   i,x :integer;
   cl  : TcxGridDBcolumn;
 begin
   x:=0;
-  cxGridDBTableView10.BeginUpdate;
+  cxgridA.BeginUpdate;
   try
-    cxGridDBTableView10.ClearItems;
-    cxGridDBTableView10.DataController.Summary.FooterSummaryItems.Clear;
+    cxgridA.ClearItems;
+    cxgridA.DataController.Summary.FooterSummaryItems.Clear;
 
-    for i := 0 to cxGridDBTableView10.DataController.DataSet.FieldCount - 1 do
+    for i := 0 to cxgridA.DataController.DataSet.FieldCount - 1 do
     begin
-      cl  :=  cxGridDBTableView10.CreateColumn;
-      cl.DataBinding.FieldName := cxGridDBTableView10.DataController.DataSet.Fields[i].FieldName;
+      cl  :=  cxgridA.CreateColumn;
+      cl.DataBinding.FieldName := cxgridA.DataController.DataSet.Fields[i].FieldName;
+
+      if (cl.DataBinding.FieldName='购入')  then
+      begin
+        cl.PropertiesClassName := 'TcxCurrencyEditProperties';
+        TcxCurrencyEditProperties(cl.PropertiesClassName).DisplayFormat:='0.00';
+      end;
 
       if (cl.DataBinding.FieldName='价目编号') then
         cl.Width := 90
@@ -932,7 +967,7 @@ begin
       end;
     end;
   finally
-    cxGridDBTableView10.EndUpdate;
+    cxgridA.EndUpdate;
   end;
 end;
 
@@ -988,7 +1023,7 @@ begin
   qry_yongliang.Open;
 
   if cxGridDBTableView10.DataController.ItemCount=0 then
-    CreateGrid;
+    CreateGrid(cxGridDBTableView10);
 
 end;
 
@@ -1098,13 +1133,76 @@ begin
     exit;
   end;
 
+  Show_RuntimeInfo('正在统计');
+  tjstr:='select  top 0 申请编号 as 序号,申请编号 as 供应商名称,  单价 as 购入 ';
+  DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
+  while not DataModule1.ADOQuery_L.Eof do
+  begin
+    tjstr:=tjstr+',单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+',申请编号 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票';
+    DataModule1.ADOQuery_L.Next;
+  end;
+
+  tjstr:=tjstr+',单价 as 合计 from 提货申请明细表';
+  qry_caiwu.Close;
+  qry_caiwu.SQL.Text:=tjstr;
+  qry_caiwu.Open;
+
+  tjstr:='';
   if cxDateEdit7.Text<>'' then
-    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+'';
+  begin
+    tjstr:=tjstr+' and 入库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
+  end;
   if cxDateEdit8.Text<>'' then
-    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+'';
+  begin
+    tjstr:=tjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
+  end;
+
+
+  DataModule1.openSql('select top 3 供应商编号,名称 from 供应商表 where 是否作废=0');
+  while not DataModule1.ADOQuery_L.Eof do
+  begin
+    qry_caiwu.Append;
+    qry_caiwu.FieldByName('序号').AsString:=IntToStr(DataModule1.ADOQuery_L.RecNo);
+    qry_caiwu.FieldByName('供应商名称').AsString:=DataModule1.ADOQuery_L.FieldByName('名称').AsString;
+    qry_caiwu.FieldByName('购入').AsFloat:=0;
+    DataModule1.openSql2('select sum(合计金额) as 购入 from 中央采购入库主表 where 状态=1 '+
+      ' and 供应商='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('供应商编号').AsString)+' '+tjstr);
+    if DataModule1.ADOQuery_L2.FieldByName('购入').AsString<>'' then
+      qry_caiwu.FieldByName('购入').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('购入').AsFloat;
+
+    qry_caiwu.Post;
 
 
 
+    DataModule1.ADOQuery_L.Next;
+  end;
+
+
+  if cxGridDBTableView12.DataController.ItemCount=0 then
+    CreateGrid(cxGridDBTableView12);
+
+
+
+  hide_RuntimeInfo;
+
+
+end;
+
+procedure TForm_main.cxButton32Click(Sender: TObject);
+begin
+  if Application.MessageBox('确认保存吗？', '确认', MB_OKCANCEL +
+      MB_ICONINFORMATION) = IDCANCEL then
+      exit;
+  qry_JMB.Edit;
+  qry_JMB.Post;
+  qry_JMB.UpdateBatch();
+  qry_JMB.Edit;
+  Application.MessageBox('保存成功', '提示', MB_OK);
+end;
+
+procedure TForm_main.cxButton33Click(Sender: TObject);
+begin
+  DaochuExcel(cxGrid16);
 end;
 
 procedure TForm_main.cxButton4Click(Sender: TObject);
@@ -1378,6 +1476,19 @@ begin
 
 end;
 
+procedure TForm_main.cxTextEdit2PropertiesChange(Sender: TObject);
+begin
+  if Trim(cxTextEdit2.Text)<> '' then
+  begin
+    qry_JMB.Filtered := False;
+    qry_JMB.Filter :='拼音 like '+QuotedStr('%'+cxTextEdit2.Text+'%')+' or 原名称 like '+QuotedStr('%'+cxTextEdit2.Text+'%')+' or 名称 like '+QuotedStr('%'+cxTextEdit2.Text+'%');
+    qry_JMB.Filtered := True;
+  end else
+  begin
+    qry_JMB.Filtered := False;
+  end;
+end;
+
 procedure TForm_main.dxNavBar1Group1Click(Sender: TObject);
 begin
   cxTabSheet1.Show;
@@ -1440,6 +1551,19 @@ end;
 procedure TForm_main.dxNavBar1Item17Click(Sender: TObject);
 begin
   cxTabSheet17.Show;
+end;
+
+procedure TForm_main.dxNavBar1Item18Click(Sender: TObject);
+begin
+  qry_JMB.Close;
+  qry_JMB.SQL.Text:='	select 编号,价目编号,名称,规格,单价=(case when isnull(进价,0)=0 then 单价 else 进价 end),'+
+    ' 单位,类别,小类,零售价,包装规格,库存单位,拼音,原名称,警戒量'+
+    '	from ( select 编号,价目编号,名称,规格,单价,单位,类别,小类,零售价,包装规格,库存单位,拼音,原名称,警戒量, '+
+    ' 进价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=药品用品价目表.价目编号 order by 编号 desc) '+
+    '	from 药品用品价目表	where 是否作废=0 and 提货=1 and 库存=1)a	order by 名称';
+  qry_JMB.Open;
+  qry_JMB.Edit;
+  cxTabSheet18.Show;
 end;
 
 procedure TForm_main.dxNavBar1Item1Click(Sender: TObject);

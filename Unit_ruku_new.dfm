@@ -301,27 +301,6 @@ object Form_ruku_new: TForm_ruku_new
       OptionsView.ColumnAutoWidth = True
       OptionsView.Footer = True
       OptionsView.GroupByBox = False
-      object cxgrdbclmncxGrid1DBTableView1DBColumn: TcxGridDBColumn
-        DataBinding.FieldName = #32534#21495
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn
-        DataBinding.FieldName = #20837#24211#32534#21495
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn
-        DataBinding.FieldName = #20837#24211#26126#32454#32534#21495
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn
-        DataBinding.FieldName = #20837#24211#25209#27425
-        Visible = False
-      end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn4: TcxGridDBColumn
-        DataBinding.FieldName = #20837#24211#26102#38388
-        Visible = False
-        Width = 78
-      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
         Options.Editing = False
@@ -332,11 +311,6 @@ object Form_ruku_new: TForm_ruku_new
         Options.Editing = False
         Width = 62
       end
-      object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
-        DataBinding.FieldName = #20215#30446#32534#21495
-        Visible = False
-        Width = 102
-      end
       object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
         DataBinding.FieldName = #21517#31216
         Options.Editing = False
@@ -345,7 +319,20 @@ object Form_ruku_new: TForm_ruku_new
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #35268#26684
         Options.Editing = False
-        Width = 98
+        Width = 80
+      end
+      object cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn
+        Caption = #21253#35013#35268#26684
+        DataBinding.FieldName = #20215#30446#32534#21495
+        PropertiesClassName = 'TcxLookupComboBoxProperties'
+        Properties.KeyFieldNames = #20215#30446#32534#21495
+        Properties.ListColumns = <
+          item
+            FieldName = #21253#35013#35268#26684
+          end>
+        Properties.ListSource = ds_jiamu
+        Options.Editing = False
+        Width = 100
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #25968#37327
@@ -504,11 +491,11 @@ object Form_ruku_new: TForm_ruku_new
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
-      'select * from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
+      'select '#20215#30446#32534#21495','#21253#35013#35268#26684' from '#33647#21697#29992#21697#20215#30446#34920' where '#26159#21542#20316#24223'=0 ')
     Left = 592
     Top = 200
   end
-  object x: TDataSource
+  object ds_jiamu: TDataSource
     DataSet = ADOQuery_jiamu
     Left = 648
     Top = 208

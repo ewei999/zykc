@@ -170,6 +170,7 @@ begin
 
     if yijian='5' then    //同意退货
     begin
+      DataModule1.execSql('update 提货申请明细表 set 状态=2 where 申请编号='+QuotedStr(cxLabel_bianhao.Caption)+' ');
       //中央库存生成负数出库单
       ADOQuery1.DisableControls;
       ADOQuery1.First;
@@ -197,6 +198,10 @@ begin
       ADOQuery1.EnableControls;
 
       ADOQuery1.UpdateBatch();
+    end
+    else
+    begin
+      DataModule1.execSql('update 提货申请明细表 set 状态=3 where 申请编号='+QuotedStr(cxLabel_bianhao.Caption)+' ');
     end;
 
     baocun:=true;

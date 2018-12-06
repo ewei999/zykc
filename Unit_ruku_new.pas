@@ -65,18 +65,13 @@ type
     ADOQuery_list: TADOQuery;
     DataSource_list: TDataSource;
     ADOQuery_jiamu: TADOQuery;
-    x: TDataSource;
+    ds_jiamu: TDataSource;
     cxLabel6: TcxLabel;
     DBComboBox1: TDBComboBox;
     cxLabel7: TcxLabel;
     cxDBTextEdit3: TcxDBTextEdit;
     cxLabel8: TcxLabel;
     cxDBTextEdit4: TcxDBTextEdit;
-    cxgrdbclmncxGrid1DBTableView1DBColumn: TcxGridDBColumn;
-    cxgrdbclmncxGrid1DBTableView1DBColumn1: TcxGridDBColumn;
-    cxgrdbclmncxGrid1DBTableView1DBColumn2: TcxGridDBColumn;
-    cxgrdbclmncxGrid1DBTableView1DBColumn3: TcxGridDBColumn;
-    cxgrdbclmncxGrid1DBTableView1DBColumn4: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn6: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn;
@@ -435,6 +430,7 @@ end;
 procedure TForm_ruku_new.FormShow(Sender: TObject);
 begin
   ADOQuery_list.Active := True;
+  ADOQuery_jiamu.Active := True;
 end;
 
 function TForm_ruku_new.jine(ado: tadoquery): real;

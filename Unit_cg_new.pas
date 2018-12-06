@@ -285,10 +285,15 @@ begin
       ADOQuery_cg_mingxi.FieldByName('原名称').AsString := Form_jiamubiao.ADOQuery1.FieldByName('原名称').AsString;
       ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
       ADOQuery_cg_mingxi.FieldByName('库存').AsFloat := ChaXunKuCun(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString);
-      DataModule1.openSql('select top 1 进货单价 from 中央采购入库明细表 '+
-        ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+' order by 编号 desc');
+
+      DataModule1.openSql('select *,gys=(select top 1 供应商 from 中央采购入库主表 where 入库编号=a.入库编号) '+
+        ' from (select top 1 入库编号,进货单价 from 中央采购入库明细表 '+
+        ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+' order by 编号 desc)a');
       if DataModule1.ADOQuery_L.Eof=false then
+      begin
         ADOQuery_cg_mingxi.FieldByName('单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
+        ADOQuery_cg_mingxi.FieldByName('供应商').AsString := DataModule1.ADOQuery_L.FieldByName('gys').AsString;
+      end;
 
       DataModule1.openSql('select sum(数量) as 门店申请数量 from 提货申请明细表 '+
         ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+''+

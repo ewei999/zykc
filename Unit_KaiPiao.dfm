@@ -143,6 +143,11 @@ object Form_KaiPiao: TForm_KaiPiao
           Format = #21512#35745#65306'0'
           Kind = skCount
           Column = cxGrid1DBTableView1DBColumn2
+        end
+        item
+          Format = '0.00'
+          Kind = skSum
+          Column = cxGrid1DBTableView1DBColumn17
         end>
       DataController.Summary.SummaryGroups = <>
       OptionsData.CancelOnExit = False

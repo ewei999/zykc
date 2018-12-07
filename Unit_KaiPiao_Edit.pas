@@ -327,7 +327,7 @@ begin
     exit;
 
   qry_liebiao.SQL.Text:='select 编号,出库时间,名称,出库数量,单价,出库金额 '+
-    ' from 中央库存_出库表 where 状态=2 and isnull(开票编号,'''')='''''+
+    ' from 中央库存_出库表 where 状态 in (1,2) and isnull(开票编号,'''')='''''+
     ' and 供应商='+QuotedStr(cxLookup_gys.EditValue)+' and 分店代码='+QuotedStr(cxLookup_fenyuan.EditValue)+' order by 出库时间';
   qry_liebiao.Open;
 end;
@@ -343,7 +343,7 @@ begin
   qry_fenyuan.Open;
 
   qry_gys.Close;
-  qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where isnull(是否作废,0)=0 and 支付性质=''赊购''';
+  qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where isnull(是否作废,0)=0 ';
   qry_gys.Open;
 end;
 

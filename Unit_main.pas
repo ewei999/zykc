@@ -29,7 +29,7 @@ uses
   cxDBLookupComboBox, System.Actions, Vcl.ActnList, unit_JingJieLiang,
   Vcl.PlatformDefaultStyleActnCtrls, Vcl.ActnMan, cxLookupEdit, cxDBLookupEdit,
   cxCurrencyEdit,Unit_FuHuoDan, cxGroupBox,unit_KaiPiao,Unit_KuCunJilu,Unit_gongyingshang,
-  RuntimeInfo;
+  RuntimeInfo,system.StrUtils;
 
 type
   TForm_main = class(TForm)
@@ -523,6 +523,7 @@ type
     procedure cxButton32Click(Sender: TObject);
     procedure cxTextEdit2PropertiesChange(Sender: TObject);
     procedure cxButton33Click(Sender: TObject);
+    procedure cxButton31Click(Sender: TObject);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid(cxgridA:TcxGridDBTableView);
@@ -944,10 +945,12 @@ begin
       cl  :=  cxgridA.CreateColumn;
       cl.DataBinding.FieldName := cxgridA.DataController.DataSet.Fields[i].FieldName;
 
-      if (cl.DataBinding.FieldName='购入')  then
+      if (cl.DataBinding.FieldName='购入') or (RightStr(cl.DataBinding.FieldName,2)='出库')  then
       begin
         cl.PropertiesClassName := 'TcxCurrencyEditProperties';
-        TcxCurrencyEditProperties(cl.PropertiesClassName).DisplayFormat:='0.00';
+        TcxCurrencyEditProperties(cl.Properties).DisplayFormat:='0.00';
+        cl.Summary.FooterKind:=skSum;
+        cl.Summary.FooterFormat:='0.00';
       end;
 
       if (cl.DataBinding.FieldName='价目编号') then
@@ -1120,7 +1123,9 @@ end;
 
 procedure TForm_main.cxButton30Click(Sender: TObject);
 var
-  tjstr:string;
+  tjstr,ckstr,fystr:string;
+  i:integer;
+  heji:Real;
 begin
   if cxDateEdit7.Text='' then
   begin
@@ -1138,27 +1143,30 @@ begin
   DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
-    tjstr:=tjstr+',单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+',申请编号 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票';
+    tjstr:=tjstr+',单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'出库,申请编号 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票';
     DataModule1.ADOQuery_L.Next;
   end;
 
-  tjstr:=tjstr+',单价 as 合计 from 提货申请明细表';
+  tjstr:=tjstr+',单价 as 小计,单价 as 差额 from 提货申请明细表';
   qry_caiwu.Close;
   qry_caiwu.SQL.Text:=tjstr;
   qry_caiwu.Open;
 
   tjstr:='';
+  ckstr:='';
   if cxDateEdit7.Text<>'' then
   begin
     tjstr:=tjstr+' and 入库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
+    ckstr:=ckstr+' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
   end;
   if cxDateEdit8.Text<>'' then
   begin
     tjstr:=tjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
+    ckstr:=ckstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
   end;
 
 
-  DataModule1.openSql('select top 3 供应商编号,名称 from 供应商表 where 是否作废=0');
+  DataModule1.openSql('select  供应商编号,名称 from 供应商表 where 是否作废=0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
     qry_caiwu.Append;
@@ -1170,9 +1178,33 @@ begin
     if DataModule1.ADOQuery_L2.FieldByName('购入').AsString<>'' then
       qry_caiwu.FieldByName('购入').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('购入').AsFloat;
 
+    heji:=0;
+    for I := 3 to qry_caiwu.FieldCount-1 do
+    begin
+      if RightStr(qry_caiwu.Fields[i].FieldName,2)='开票' then
+      begin
+        qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsString:='';
+      end
+      else
+      begin
+        qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat:=0;
+
+        fystr:= qry_caiwu.Fields[i].FieldName;
+        fystr:= Copy(fystr,1,length(fystr)-2);
+
+        DataModule1.openSql2('select sum(出库金额) as 金额 from 中央库存_出库表 '+
+        '	where 是否作废=0 and 供应商='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('供应商编号').AsString)+''+
+        ' and 分店代码 in (select abbr from 分院表 where name='+QuotedStr(fystr)+') '+ckstr+' ');
+
+        if DataModule1.ADOQuery_L2.FieldByName('金额').AsString<>'' then
+          qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat:=DataModule1.ADOQuery_L2.FieldByName('金额').AsFloat;
+
+        heji:=heji+qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat;
+      end;
+    end;
+    qry_caiwu.FieldByName('小计').AsFloat:=heji;
+    qry_caiwu.FieldByName('差额').AsFloat:=qry_caiwu.FieldByName('购入').AsFloat-heji;
     qry_caiwu.Post;
-
-
 
     DataModule1.ADOQuery_L.Next;
   end;
@@ -1186,6 +1218,11 @@ begin
   hide_RuntimeInfo;
 
 
+end;
+
+procedure TForm_main.cxButton31Click(Sender: TObject);
+begin
+  DaochuExcel(cxGrid15);
 end;
 
 procedure TForm_main.cxButton32Click(Sender: TObject);

@@ -232,7 +232,7 @@
     Height = 716
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet4
+    Properties.ActivePage = cxTabSheet17
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 711
@@ -2405,7 +2405,7 @@
           Caption = 'Excel'
           LookAndFeel.SkinName = 'Black'
           TabOrder = 5
-          OnClick = cxButton23Click
+          OnClick = cxButton31Click
         end
       end
       object cxGrid15: TcxGrid

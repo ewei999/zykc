@@ -113,7 +113,14 @@ begin
   cxGridDBTableView1.DataController.DataModeController.SmartRefresh:=false;
   for i:=0 to qry_liebiao.RecordCount - 1 do
   begin
-    if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
+    if cxGridDBTableView1Column4.Visible=False then
+    begin
+      if bianh='' then
+        bianh:=qry_liebiao.FieldByName('±àºÅ').AsString
+      else
+        bianh:=bianh+','+qry_liebiao.FieldByName('±àºÅ').AsString;
+    end
+    else if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
     begin
       if bianh='' then
         bianh:=qry_liebiao.FieldByName('±àºÅ').AsString

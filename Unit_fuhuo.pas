@@ -817,7 +817,8 @@ begin
       begin
         qry_zhudong.Edit;
         qry_zhudong.FieldByName('单价').AsFloat:=Form_FuKuan_Edit.qry_liebiao.FieldByName('单价').AsFloat;
-        qry_zhudong.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
+//        qry_zhudong.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
+        qry_zhudong.FieldByName('付货数量').AsFloat:= 0;
         qry_zhudong.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
         qry_zhudong.FieldByName('出库金额').AsFloat := qry_zhudong.FieldByName('单价').AsFloat*qry_zhudong.FieldByName('付货数量').AsFloat;
         qry_zhudong.Post;

@@ -1204,6 +1204,16 @@
                   Options.Editing = False
                   Width = 100
                 end
+                object cxGridDBTableView9Column6: TcxGridDBColumn
+                  DataBinding.FieldName = #31867#21035
+                  Options.Editing = False
+                  Width = 60
+                end
+                object cxGridDBTableView9Column7: TcxGridDBColumn
+                  DataBinding.FieldName = #23567#31867
+                  Options.Editing = False
+                  Width = 60
+                end
                 object cxGridDBColumn45: TcxGridDBColumn
                   DataBinding.FieldName = #21517#31216
                   Options.Editing = False
@@ -1990,17 +2000,17 @@
               DataBinding.FieldName = #24211#23384
               Width = 70
             end
+            object cxGridDBTableView8Column8: TcxGridDBColumn
+              DataBinding.FieldName = #35686#25106#37327
+              Options.Editing = False
+              Width = 60
+            end
             object cxGridDBTableView8Column7: TcxGridDBColumn
               DataBinding.FieldName = #24211#23384#37329#39069
               PropertiesClassName = 'TcxCurrencyEditProperties'
               Properties.DisplayFormat = '0.00'
               Options.Editing = False
               Width = 90
-            end
-            object cxGridDBTableView8Column8: TcxGridDBColumn
-              DataBinding.FieldName = #35686#25106#37327
-              Options.Editing = False
-              Width = 60
             end
           end
           object cxGridLevel8: TcxGridLevel
@@ -2398,7 +2408,7 @@
           end
           object cxButton30: TcxButton
             Left = 419
-            Top = 11
+            Top = 10
             Width = 75
             Height = 31
             Caption = #32479#35745
@@ -2427,6 +2437,7 @@
           LookAndFeel.SkinName = 'Blue'
           object cxGridDBTableView12: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
+            OnCellDblClick = cxGridDBTableView12CellDblClick
             DataController.DataSource = ds_caiwu
             DataController.Summary.DefaultGroupSummaryItems = <>
             DataController.Summary.FooterSummaryItems = <
@@ -3049,5 +3060,23 @@
     DataSet = qry_JMB
     Left = 800
     Top = 472
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 776
+    Top = 152
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
+    object cxStyle2: TcxStyle
+      AssignedValues = [svColor]
+      Color = clInfoBk
+    end
   end
 end

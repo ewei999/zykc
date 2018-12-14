@@ -448,6 +448,11 @@ type
     cxGridLevel13: TcxGridLevel;
     pnl11: TPanel;
     cxlblLabel_main: TcxLabel;
+    cxGridDBTableView9Column6: TcxGridDBColumn;
+    cxGridDBTableView9Column7: TcxGridDBColumn;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    cxStyle2: TcxStyle;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -527,6 +532,9 @@ type
     procedure cxTextEdit2PropertiesChange(Sender: TObject);
     procedure cxButton33Click(Sender: TObject);
     procedure cxButton31Click(Sender: TObject);
+    procedure cxGridDBTableView12CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid(cxgridA:TcxGridDBTableView);
@@ -787,7 +795,6 @@ begin
   cxGridDBTableView8Column1.Visible:=true;
   cxGridDBTableView8Column2.Visible:=true;
   cxGridDBTableView8Column7.Visible:=true;
-  cxGridDBTableView8Column8.Visible:=false;
   qry_kucun.Close;
   qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收,库存金额=(case when 入库数量-出库数量-未接收=0 then 0 else 入库金额-出库金额 end),'+
     ' 供应商=(select top 1 名称 from 供应商表 where 供应商编号=c.gys) '+
@@ -795,7 +802,7 @@ begin
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+ sjdstr+
     ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+
     ' 出库金额=isnull((select sum(出库金额) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号  and 供应商=a.gys) ,0), '+
-    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类'+
+    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类,b.警戒量'+
     ' from ( '+
     ' select 价目编号,gys,sum(isnull(数量,0)) as 入库数量,sum(isnull(金额,0)) as 入库金额   from ('+
     ' select * ,gys=(select top 1 供应商 from 中央采购入库主表 where 入库编号=t.入库编号 ) from ('+
@@ -845,7 +852,7 @@ begin
   '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
   ' select *  ,gys=(select top 1 供应商  from 中央采购入库主表 where 入库编号 =x.入库编号 )'+
   ' from (  select 价目编号,入库编号,数量  from 中央采购入库明细表  where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)'+
-  '  )x)y  group by 价目编号,gys )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by gys,mc';
+  '  )x)y  group by 价目编号,gys )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by mc,gys';
   DataModule1.ADOQuery_dayin.open;
 
   DataModule1.frxDBDataset_dayin.FieldAliases.Clear;
@@ -923,6 +930,8 @@ begin
   qry_fuhuo_jilu_xiangxi.SQL.Text:='select *,zt=(case 状态 when 1 then ''待接收'' when 2 then ''接收成功'' when 3 then ''不同意接收'' end) , '+
   ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
   ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商),'+
+  ' 类别=(select top 1 类别 from 药品用品价目表 where 价目编号=a.价目编号),'+
+  ' 小类=(select top 1 小类 from 药品用品价目表 where 价目编号=a.价目编号),'+
   ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
   ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) from ( '+
   ' select 出库编号,出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
@@ -965,6 +974,8 @@ begin
 
       if (cl.DataBinding.FieldName='购入') or (RightStr(cl.DataBinding.FieldName,2)='出库')  then
       begin
+        if cl.DataBinding.FieldName='购入' then
+          cl.Styles.Content:=cxStyle1;
         cl.PropertiesClassName := 'TcxCurrencyEditProperties';
         TcxCurrencyEditProperties(cl.Properties).DisplayFormat:='0.00';
         cl.Summary.FooterKind:=skSum;
@@ -979,6 +990,9 @@ begin
         cl.Width := 100
       else
         cl.Width := 70;
+
+      if cl.DataBinding.FieldName='供应商id' then
+        cl.Visible:=false;
 
       if (cl.Visible) and (x=0) then
       begin
@@ -1084,7 +1098,6 @@ begin
   cxGridDBTableView8Column1.Visible:=false;
   cxGridDBTableView8Column2.Visible:=false;
   cxGridDBTableView8Column7.Visible:=false;
-  cxGridDBTableView8Column8.Visible:=True;
   qry_kucun.Close;
   qry_kucun.SQL.Text:='select *,库存=入库数量-出库数量-未接收, '+
   ' 供应商=(select top 1 名称 from 供应商表 where 供应商编号=c.gys) '+
@@ -1157,7 +1170,7 @@ begin
   end;
 
   Show_RuntimeInfo('正在统计');
-  tjstr:='select  top 0 申请编号 as 序号,申请编号 as 供应商名称,  单价 as 购入 ';
+  tjstr:='select  top 0 申请编号 as 序号,申请编号 as 供应商id,申请编号 as 供应商名称,  单价 as 购入 ';
   DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
@@ -1183,59 +1196,65 @@ begin
     ckstr:=ckstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
   end;
 
-
-  DataModule1.openSql('select  供应商编号,名称 from 供应商表 where 是否作废=0');
+  i:=0;
+  DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
-    qry_caiwu.Append;
-    qry_caiwu.FieldByName('序号').AsString:=IntToStr(DataModule1.ADOQuery_L.RecNo);
-    qry_caiwu.FieldByName('供应商名称').AsString:=DataModule1.ADOQuery_L.FieldByName('名称').AsString;
-    qry_caiwu.FieldByName('购入').AsFloat:=0;
-    DataModule1.openSql2('select sum(合计金额) as 购入 from 中央采购入库主表 where 状态=1 '+
-      ' and 供应商='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('供应商编号').AsString)+' '+tjstr);
-    if DataModule1.ADOQuery_L2.FieldByName('购入').AsString<>'' then
-      qry_caiwu.FieldByName('购入').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('购入').AsFloat;
-
-    heji:=0;
-    for I := 3 to qry_caiwu.FieldCount-1 do
+    DataModule1.openSql2('	select *, '+
+    '	金额=isnull((select sum(出库金额) from 中央库存_出库表 where 是否作废=0 and 状态 in (1,2) and 供应商=a.供应商编号'+
+    ' and 分店代码 ='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('abbr').AsString)+' '+ckstr+' ),0),'+
+    ' 购入=isnull((select sum(合计金额) as 购入 from 中央采购入库主表 where 状态=1  and 供应商=a.供应商编号 '+tjstr+'),0)'+
+    '	from ( 	select  供应商编号,名称	from 供应商表 where 是否作废=0 )a');
+    while not DataModule1.ADOQuery_L2.Eof  do
     begin
-      if RightStr(qry_caiwu.Fields[i].FieldName,2)='开票' then
+      if qry_caiwu.Locate('供应商名称',DataModule1.ADOQuery_L2.FieldByName('名称').AsString,[]) then
       begin
-        qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsString:='';
+        qry_caiwu.Edit;
       end
       else
       begin
-        qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat:=0;
-
-        fystr:= qry_caiwu.Fields[i].FieldName;
-        fystr:= Copy(fystr,1,length(fystr)-2);
-
-        DataModule1.openSql2('select sum(出库金额) as 金额 from 中央库存_出库表 '+
-        '	where 是否作废=0 and 供应商='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('供应商编号').AsString)+''+
-        ' and 分店代码 in (select abbr from 分院表 where name='+QuotedStr(fystr)+') '+ckstr+' ');
-
-        if DataModule1.ADOQuery_L2.FieldByName('金额').AsString<>'' then
-          qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat:=DataModule1.ADOQuery_L2.FieldByName('金额').AsFloat;
-
-        heji:=heji+qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat;
+        i:=i+1;
+        qry_caiwu.Append;
+        qry_caiwu.FieldByName('序号').AsString:=IntToStr(i);
+        qry_caiwu.FieldByName('供应商名称').AsString:=DataModule1.ADOQuery_L2.FieldByName('名称').AsString;
+        qry_caiwu.FieldByName('供应商id').AsString:=DataModule1.ADOQuery_L2.FieldByName('供应商编号').AsString;
+        qry_caiwu.FieldByName('购入').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('购入').AsFloat;
       end;
+      qry_caiwu.FieldByName(DataModule1.ADOQuery_L.FieldByName('name').AsString+'出库').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('金额').AsFloat;
+      qry_caiwu.FieldByName(DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票').AsString:='';
+      qry_caiwu.Post;
+
+      DataModule1.ADOQuery_L2.Next;
     end;
-    qry_caiwu.FieldByName('小计').AsFloat:=heji;
-    qry_caiwu.FieldByName('差额').AsFloat:=qry_caiwu.FieldByName('购入').AsFloat-heji;
-    qry_caiwu.Post;
 
     DataModule1.ADOQuery_L.Next;
   end;
 
+  qry_caiwu.DisableControls;
+  qry_caiwu.First;
+  while not qry_caiwu.Eof do
+  begin
+    heji:=0;
+    for I := 0 to qry_caiwu.FieldCount-1 do
+    begin
+      if RightStr(qry_caiwu.Fields[i].FieldName,2)='出库' then
+      begin
+        heji:=heji+qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat;
+      end;
+    end;
+    qry_caiwu.Edit;
+    qry_caiwu.FieldByName('小计').AsFloat:=heji;
+    qry_caiwu.FieldByName('差额').AsFloat:=qry_caiwu.FieldByName('购入').AsFloat-heji;
+    qry_caiwu.Post;
+
+    qry_caiwu.Next;
+  end;
+  qry_caiwu.EnableControls;
 
   if cxGridDBTableView12.DataController.ItemCount=0 then
     CreateGrid(cxGridDBTableView12);
 
-
-
   hide_RuntimeInfo;
-
-
 end;
 
 procedure TForm_main.cxButton31Click(Sender: TObject);
@@ -1338,6 +1357,53 @@ begin
   end;
 end;
 
+procedure TForm_main.cxGridDBTableView12CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  if cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption='购入' then
+  begin
+    Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+    try
+      Form_KuCunJilu.leibie:='入库';
+      Form_KuCunJilu.qry_leibiao.Close;
+      Form_KuCunJilu.qry_leibiao.SQL.Text:='select * , '+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=(select top 1 供应商 from 中央采购入库主表 where 入库编号=a.入库编号 )) '+
+      ' from ( select * '+
+      ' from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 '+
+      ' and 供应商='+QuotedStr(qry_caiwu.FieldByName('供应商id').AsString)+''+
+      ' and 入库时间>='+QuotedStr(cxDateEdit7.Text)+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ) )a '+
+      ' order by 入库时间';
+      Form_KuCunJilu.qry_leibiao.Open;
+      Form_KuCunJilu.ShowModal;
+    finally
+      FreeAndNil(Form_KuCunJilu);
+    end;
+  end;
+
+  if RightStr(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption,2) = '出库' then
+  begin
+    Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+    try
+      Form_KuCunJilu.leibie:='出库';
+      Form_KuCunJilu.qry_leibiao.Close;
+      Form_KuCunJilu.qry_leibiao.SQL.Text:= 'select * , '+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商), '+
+      ' 分店=(select top 1 name from 分院表 where abbr=a.分店代码), '+
+      ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号 ),'+
+      ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号 )'+
+      ' from ( select * from 中央库存_出库表 '+
+      ' where 状态 in (1,2) and 是否作废=0 and 供应商='+QuotedStr(qry_caiwu.FieldByName('供应商id').AsString)+' '+
+      ' and 分店代码 in (select abbr from 分院表 where name='+QuotedStr(copy(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption,1,length(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption)-2))+') '+
+      ' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+')a order by 出库时间';
+      Form_KuCunJilu.qry_leibiao.Open;
+      Form_KuCunJilu.ShowModal;
+    finally
+      FreeAndNil(Form_KuCunJilu);
+    end;
+  end;
+end;
+
 procedure TForm_main.cxGridDBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -1367,6 +1433,18 @@ begin
     Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
                                                   ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
     Form_cg_new.ADOQuery_cg_mingxi.Active := True;
+    Form_cg_new.ADOQuery_cg_mingxi.DisableControls;
+    Form_cg_new.ADOQuery_cg_mingxi.First;
+    while not Form_cg_new.ADOQuery_cg_mingxi.Eof do
+    begin
+      Form_cg_new.ADOQuery_cg_mingxi.Edit;
+      Form_cg_new.ADOQuery_cg_mingxi.FieldByName('库存').AsFloat:= ChaXunKuCun(Form_cg_new.ADOQuery_cg_mingxi.FieldByName('价目编号').asstring);
+      Form_cg_new.ADOQuery_cg_mingxi.Post;
+      Form_cg_new.ADOQuery_cg_mingxi.Next;
+    end;
+    Form_cg_new.ADOQuery_cg_mingxi.First;
+    Form_cg_new.ADOQuery_cg_mingxi.EnableControls;
+
     Form_cg_new.button_zhuanti('chakan');
     Form_cg_new.ShowModal;
   finally
@@ -1561,6 +1639,7 @@ procedure TForm_main.dxNavBar1Item10Click(Sender: TObject);
 begin
   cxlblLabel_main.Caption := TdxNavBarItem(Sender).caption;
   cxTabSheet13.Show;
+  cxTextEdit37.SetFocus;
 end;
 
 procedure TForm_main.dxNavBar1Item11Click(Sender: TObject);
@@ -1621,7 +1700,7 @@ begin
   qry_JMB.Close;
   qry_JMB.SQL.Text:='	select 编号,价目编号,名称,规格,单价=(case when isnull(进价,0)=0 then 单价 else 进价 end),'+
     ' 单位,类别,小类,零售价,包装规格,库存单位,拼音,原名称,警戒量'+
-    '	from ( select 编号,价目编号,名称,规格,单价,单位,类别,小类,零售价,包装规格,库存单位,拼音,原名称,警戒量, '+
+    '	from ( select 编号,价目编号,名称,规格,单价,单位,类别,小类,零售价,包装规格,库存单位,拼音,原名称,警戒量,暂时作废, '+
     ' 进价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=药品用品价目表.价目编号 order by 编号 desc) '+
     '	from 药品用品价目表	where 是否作废=0 and 提货=1 and 库存=1)a	order by 名称';
   qry_JMB.Open;

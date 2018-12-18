@@ -397,8 +397,16 @@ begin
             begin
               DataModule1.ADOQuery_L.FieldByName('申请编号').AsString:= qry_thshenqing_mx.FieldByName('编号').AsString;
 
-              DataModule1.execSql('update 提货申请明细表 set 状态=2,出库编号='+QuotedStr(ckbianhao)+' '+
-              ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
+              if qry_thshenqing_mx.FieldByName('申请数量').AsFloat>=qry_thshenqing_mx.FieldByName('付货数量').AsFloat then
+              begin
+                DataModule1.execSql('update 提货申请明细表 set 状态=2,出库编号='+QuotedStr(ckbianhao)+' '+
+                ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
+              end
+              else
+              begin
+                DataModule1.execSql('update 提货申请明细表 set 申请数量=申请数量-'+qry_thshenqing_mx.FieldByName('付货数量').asstring+' '+
+                ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
+              end;
             end;
             DataModule1.ADOQuery_L.post;
           end;

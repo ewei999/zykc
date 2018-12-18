@@ -344,6 +344,9 @@ begin
   baocun:=false;
   zt:='';
   xzbool:=false;
+  cxButton1.Top:=cxButton2.Top;
+  cxButton1.left:=cxButton2.left;
+  cxButton1.Visible:=false;
   cxlbl_heji.Caption:='0';
   qry_fenyuan.Close;
   qry_fenyuan.SQL.Text:='select abbr,name from ∑÷‘∫±Ì where sort_id<>0';
@@ -363,6 +366,7 @@ begin
     cxGridDBTableView1Column4.Visible:=false;
     cxLookup_gys.Enabled:=false;
     cxLookup_fenyuan.Enabled:=false;
+    cxButton1.Visible:=true;
   end;
   if KPbianhao<>'' then
   begin

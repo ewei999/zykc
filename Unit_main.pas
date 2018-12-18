@@ -599,7 +599,7 @@ begin
         Form_cg_new.ADOQuery_cg_zhubiao.Edit;
 
         Form_cg_new.ADOQuery_cg_mingxi.Active := false;
-        Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
+        Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录='''' from 中央采购申请明细表'+
                                                       ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
         Form_cg_new.ADOQuery_cg_mingxi.Active := True;
 
@@ -1430,7 +1430,7 @@ begin
     Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
 
     Form_cg_new.ADOQuery_cg_mingxi.Active := false;
-    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  * from 中央采购申请明细表'+
+    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录='''' from 中央采购申请明细表'+
                                                   ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
     Form_cg_new.ADOQuery_cg_mingxi.Active := True;
     Form_cg_new.ADOQuery_cg_mingxi.DisableControls;

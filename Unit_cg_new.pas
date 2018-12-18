@@ -25,7 +25,8 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.ToolWin,
   Vcl.ActnMan, Vcl.ActnCtrls, System.Actions, Vcl.ActnList,
   Vcl.PlatformDefaultStyleActnCtrls, Data.Win.ADODB, Vcl.ExtCtrls, Vcl.DBCtrls,
-  Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinBlue, cxGroupBox, cxCurrencyEdit;
+  Vcl.Menus, Vcl.StdCtrls, cxButtons, dxSkinBlue, cxGroupBox, cxCurrencyEdit,
+  cxButtonEdit,unit_KuCunJilu;
 
 type
   TForm_cg_new = class(TForm)
@@ -102,6 +103,7 @@ type
     cxGrid1DBTableView1Column5: TcxGridDBColumn;
     cxGrid1DBTableView1Column6: TcxGridDBColumn;
     cxGrid1DBTableView1Column7: TcxGridDBColumn;
+    cxGrid1DBTableView1Column8: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -121,6 +123,9 @@ type
     procedure act3Execute(Sender: TObject);
     procedure DataSource_cg_mingxiDataChange(Sender: TObject; Field: TField);
     procedure cxButton5Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure cxGrid1DBTableView1Column8PropertiesButtonClick(Sender: TObject;
+      AButtonIndex: Integer);
   private
     shenpi:Boolean;
     procedure  ShenPi_data(bj:string);
@@ -262,7 +267,7 @@ begin
   ADOQuery_cg_zhubiao.FieldByName('状态').AsString := '0';
 
   ADOQuery_cg_mingxi.Active := False;
-  ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购申请明细表 where 申请编号='+
+  ADOQuery_cg_mingxi.SQL.Text := 'select *,采购记录='''' from 中央采购申请明细表 where 申请编号='+
                                   QuotedStr(ADOQuery_cg_zhubiao.FieldByName('申请编号').AsString);
   ADOQuery_cg_mingxi.Active := true;
 end;
@@ -420,6 +425,10 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := True;
      Action_cancel.Enabled := True;
+
+
+
+
 
    end else if button='edit' then
    begin
@@ -603,7 +612,7 @@ begin
   '   where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1) and 价目编号=a.价目编号),0),'+
   ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号),0)'+
   ' from (   select 价目编号,名称,规格,单位,类别,小类,警戒量,单价  from 药品用品价目表 '+
-  '  where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )a )b )c   order by 名称');
+  '  where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and isnull(警戒量,'''')<>'''' )a )b )c   order by 名称');
   if DataModule1.ADOQuery_L.RecordCount=0 then
   begin
     Application.MessageBox('无记录', '提示', MB_OK );
@@ -634,6 +643,26 @@ begin
   Application.MessageBox('导入完成', '提示', MB_OK);
 end;
 
+procedure TForm_cg_new.cxGrid1DBTableView1Column8PropertiesButtonClick(
+  Sender: TObject; AButtonIndex: Integer);
+begin
+  Form_KuCunJilu := TForm_KuCunJilu.Create(nil);
+  try
+    Form_KuCunJilu.leibie:='采购记录';
+    Form_KuCunJilu.qry_leibiao.Close;
+    Form_KuCunJilu.qry_leibiao.SQL.Text:='	select * from (	select *,'+
+    '	日期=(select top 1 申请日期 from 中央采购申请主表 where 申请编号=a.申请编号 ) ,'+
+    '	gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商 )'+
+    '	from (	select 申请编号,名称,数量,规格,单位,供应商,备注	from 中央采购申请明细表'+
+    '	where 价目编号='+QuotedStr(ADOQuery_cg_mingxi.FieldByName('价目编号').AsString)+''+
+    ' and 申请编号 in (select 申请编号 from 中央采购申请主表 where 是否作废=0 and 状态<>4 )	)a)b	order by 日期 desc';
+    Form_KuCunJilu.qry_leibiao.Open;
+    Form_KuCunJilu.ShowModal;
+  finally
+    FreeAndNil(Form_KuCunJilu);
+  end;
+end;
+
 procedure TForm_cg_new.DataSource_cg_mingxiDataChange(Sender: TObject;
   Field: TField);
 begin
@@ -653,12 +682,16 @@ begin
     ADOQuery_cg_zhubiao.Cancel;
 end;
 
-procedure TForm_cg_new.FormShow(Sender: TObject);
+procedure TForm_cg_new.FormCreate(Sender: TObject);
 begin
-  Self.WindowState:=wsMaximized;
   baocun:=false;
   ADOQuery_list.Active := True;
   ADOQuery_jiamu.Open;
+end;
+
+procedure TForm_cg_new.FormShow(Sender: TObject);
+begin
+  Self.WindowState:=wsMaximized;
 end;
 
 end.

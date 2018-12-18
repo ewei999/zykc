@@ -89,7 +89,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     ParentFont = False
   end
   object cxButton2: TcxButton
-    Left = 505
+    Left = 561
     Top = 11
     Width = 50
     Height = 58
@@ -267,7 +267,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     end
   end
   object cxButton1: TcxButton
-    Left = 561
+    Left = 505
     Top = 11
     Width = 50
     Height = 58

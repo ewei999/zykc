@@ -23,7 +23,8 @@ uses
   cxStyles, dxSkinscxPCPainter, cxCustomData, cxFilter, cxData, cxDataStorage,
   cxNavigator, Data.DB, cxDBData, cxCalendar, Data.Win.ADODB, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
-  cxGridCustomView, cxGrid,Unit_FuKuan_Edit;
+  cxGridCustomView, cxGrid,Unit_FuKuan_Edit, Vcl.ComCtrls, dxCore, cxDateUtils,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit,system.DateUtils;
 
 type
   TForm_KaiPiao = class(TForm)
@@ -50,6 +51,11 @@ type
     cxButton3: TcxButton;
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
+    cxlbl5: TcxLabel;
+    cxDate_TuiH_qishi: TcxDateEdit;
+    cxlbl6: TcxLabel;
+    cxDate_TuiH_zhongzhi: TcxDateEdit;
+    cxButton19: TcxButton;
     procedure act_closeExecute(Sender: TObject);
     procedure act1Execute(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -58,6 +64,7 @@ type
       AShift: TShiftState; var AHandled: Boolean);
     procedure act2Execute(Sender: TObject);
     procedure act3Execute(Sender: TObject);
+    procedure cxButton19Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -126,6 +133,24 @@ begin
   close;
 end;
 
+procedure TForm_KaiPiao.cxButton19Click(Sender: TObject);
+var
+  tjstr:string;
+begin
+  tjstr:='';
+  if cxDate_TuiH_qishi.Text<>'' then
+    tjstr:=tjstr+' and 开票时间>='+QuotedStr(cxDate_TuiH_qishi.Text)+'';
+  if cxDate_TuiH_zhongzhi.Text<>'' then
+    tjstr:=tjstr+' and 开票时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+'';
+
+  qry_liebiao.Close;
+  qry_liebiao.SQL.Text:='select *, '+
+  ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
+  ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
+  ' from ( select * from 中央采购开票表 where 是否作废=0 )a order by 开票时间 desc';
+  qry_liebiao.Open;
+end;
+
 procedure TForm_KaiPiao.cxGrid1DBTableView1CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -142,12 +167,8 @@ end;
 
 procedure TForm_KaiPiao.FormShow(Sender: TObject);
 begin
-  qry_liebiao.Close;
-  qry_liebiao.SQL.Text:='select *, '+
-  ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
-  ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
-  ' from ( select * from 中央采购开票表 where 是否作废=0 )a order by 开票时间 desc';
-  qry_liebiao.Open;
+  cxDate_TuiH_qishi.Date:=IncMonth(date,-1);
+  cxButton19.Click;
 end;
 
 end.

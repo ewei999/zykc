@@ -13,6 +13,7 @@ object Form_cg_new: TForm_cg_new
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
@@ -360,6 +361,22 @@ object Form_cg_new: TForm_cg_new
         Properties.ListSource = DataSource_jiamu
         Options.Editing = False
         Width = 60
+      end
+      object cxGrid1DBTableView1Column8: TcxGridDBColumn
+        DataBinding.FieldName = #37319#36141#35760#24405
+        PropertiesClassName = 'TcxButtonEditProperties'
+        Properties.Buttons = <
+          item
+            Caption = #37319#36141#35760#24405
+            Default = True
+            Kind = bkText
+            Width = 80
+          end>
+        Properties.ReadOnly = True
+        Properties.OnButtonClick = cxGrid1DBTableView1Column8PropertiesButtonClick
+        Options.ShowEditButtons = isebAlways
+        Options.Sorting = False
+        Width = 70
       end
     end
     object cxGrid1Level1: TcxGridLevel

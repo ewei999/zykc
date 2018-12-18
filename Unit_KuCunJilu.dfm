@@ -95,7 +95,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Height = 549
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet1
+    Properties.ActivePage = cxTabSheet3
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 544
@@ -122,6 +122,11 @@ object Form_KuCunJilu: TForm_KuCunJilu
               Format = #21512#35745#65306'0'
               Kind = skCount
               Column = cxGridDBTableView8Column1
+            end
+            item
+              Format = '0.00'
+              Kind = skSum
+              Column = cxGridDBTableView8Column2
             end
             item
               Format = '0.0'
@@ -217,6 +222,11 @@ object Form_KuCunJilu: TForm_KuCunJilu
               Column = cxGridDBColumn1
             end
             item
+              Format = '0.00'
+              Kind = skSum
+              Column = cxGridDBColumn10
+            end
+            item
               Format = '0.0'
               Kind = skSum
               Column = cxGridDBColumn8
@@ -276,6 +286,84 @@ object Form_KuCunJilu: TForm_KuCunJilu
         end
         object cxGridLevel1: TcxGridLevel
           GridView = cxGridDBTableView1
+        end
+      end
+    end
+    object cxTabSheet3: TcxTabSheet
+      Caption = #37319#36141#35760#24405
+      ImageIndex = 2
+      object cxGrid2: TcxGrid
+        Left = 0
+        Top = 0
+        Width = 1060
+        Height = 513
+        Align = alClient
+        TabOrder = 0
+        LookAndFeel.SkinName = 'Blue'
+        object cxGridDBTableView2: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          DataController.DataSource = ds_leibiao
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn6
+            end
+            item
+              Format = '0.00'
+              Kind = skSum
+            end
+            item
+              Format = '0.0'
+              Kind = skSum
+              Column = cxGridDBColumn15
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+          object cxGridDBColumn6: TcxGridDBColumn
+            Caption = #30003#35831#26085#26399
+            DataBinding.FieldName = #26085#26399
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+            Width = 120
+          end
+          object cxGridDBColumn11: TcxGridDBColumn
+            DataBinding.FieldName = #21517#31216
+            Width = 150
+          end
+          object cxGridDBColumn12: TcxGridDBColumn
+            DataBinding.FieldName = #35268#26684
+            Width = 60
+          end
+          object cxGridDBColumn13: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20301
+            Width = 60
+          end
+          object cxGridDBColumn14: TcxGridDBColumn
+            Caption = #20379#24212#21830
+            DataBinding.FieldName = 'gys'
+            Width = 80
+          end
+          object cxGridDBColumn15: TcxGridDBColumn
+            Caption = #30003#35831#25968#37327
+            DataBinding.FieldName = #25968#37327
+            Width = 70
+          end
+          object cxGridDBColumn18: TcxGridDBColumn
+            DataBinding.FieldName = #22791#27880
+            Width = 100
+          end
+        end
+        object cxGridLevel2: TcxGridLevel
+          GridView = cxGridDBTableView2
         end
       end
     end

@@ -11,7 +11,7 @@ object Form_KaiPiao: TForm_KaiPiao
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  Position = poOwnerFormCenter
+  Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 19
@@ -212,6 +212,44 @@ object Form_KaiPiao: TForm_KaiPiao
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+  end
+  object cxlbl5: TcxLabel
+    Left = 189
+    Top = 26
+    Caption = #24320#31080#26085#26399
+    Transparent = True
+  end
+  object cxDate_TuiH_qishi: TcxDateEdit
+    Left = 259
+    Top = 24
+    Properties.DisplayFormat = 'yyyy-mm-dd'
+    Properties.EditFormat = 'yyyy-mm-dd'
+    TabOrder = 7
+    Width = 121
+  end
+  object cxlbl6: TcxLabel
+    Left = 388
+    Top = 26
+    Caption = #33267
+    Transparent = True
+  end
+  object cxDate_TuiH_zhongzhi: TcxDateEdit
+    Left = 415
+    Top = 24
+    Properties.DisplayFormat = 'yyyy-mm-dd'
+    Properties.EditFormat = 'yyyy-mm-dd'
+    TabOrder = 9
+    Width = 121
+  end
+  object cxButton19: TcxButton
+    Left = 542
+    Top = 22
+    Width = 75
+    Height = 31
+    Caption = #26597#35810
+    LookAndFeel.SkinName = 'Black'
+    TabOrder = 10
+    OnClick = cxButton19Click
   end
   object actmgr1: TActionManager
     ActionBars = <

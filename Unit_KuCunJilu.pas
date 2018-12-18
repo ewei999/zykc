@@ -63,6 +63,17 @@ type
     cxGridDBColumn10: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
     cxGridDBTableView8Column5: TcxGridDBColumn;
+    cxTabSheet3: TcxTabSheet;
+    cxGrid2: TcxGrid;
+    cxGridDBTableView2: TcxGridDBTableView;
+    cxGridDBColumn6: TcxGridDBColumn;
+    cxGridDBColumn11: TcxGridDBColumn;
+    cxGridDBColumn12: TcxGridDBColumn;
+    cxGridDBColumn13: TcxGridDBColumn;
+    cxGridDBColumn14: TcxGridDBColumn;
+    cxGridDBColumn15: TcxGridDBColumn;
+    cxGridDBColumn18: TcxGridDBColumn;
+    cxGridLevel2: TcxGridLevel;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -108,6 +119,12 @@ begin
     cxTabSheet2.Show;
     cxlbl1.Caption:='未接收记录';
     Self.Caption:='未接收记录';
+  end;
+  if leibie='采购记录' then
+  begin
+    cxTabSheet3.Show;
+    cxlbl1.Caption:='采购记录';
+    Self.Caption:='采购记录';
   end;
 end;
 

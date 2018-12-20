@@ -67,6 +67,7 @@ type
     { Private declarations }
   public
     CKBianhao:string;
+    baocun:boolean;
   end;
 
 var
@@ -163,7 +164,8 @@ begin
   begin
     if qry_fuhuo.FieldByName('出库数量').AsInteger=0 then
     begin
-      DataModule1.execSql('update 提货申请明细表 set 状态=1,出库编号='''' where 编号='+(qry_fuhuo.FieldByName('申请编号').AsString)+' ');
+      if qry_fuhuo.FieldByName('申请编号').AsString<>'' then
+        DataModule1.execSql('update 提货申请明细表 set 状态=1,出库编号='''' where 编号='+(qry_fuhuo.FieldByName('申请编号').AsString)+' ');
 
       qry_fuhuo.Delete;
     end
@@ -173,7 +175,12 @@ begin
   qry_fuhuo.EnableControls;
 
   qry_fuhuo.UpdateBatch();
-  qry_fuhuo.Edit;
+
+  if qry_fuhuo.RecordCount>0 then
+    qry_fuhuo.Edit
+  else
+    cxButton1.Visible:=false;
+  baocun:=true;
   Application.MessageBox('修改成功', '提示', MB_OK);
 end;
 
@@ -195,6 +202,7 @@ begin
   cxlbl_fenyuan.Caption:='';
   cxlbl_shijian.Caption:='';
   CKBianhao:='';
+  baocun:=false;
 end;
 
 procedure TForm_FuHuoDan.FormShow(Sender: TObject);

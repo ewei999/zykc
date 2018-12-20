@@ -1489,6 +1489,8 @@ begin
   try
     Form_FuHuoDan.CKBianhao:=qry_fuhuo_jilu.FieldByName('³ö¿â±àºÅ').AsString;
     Form_FuHuoDan.ShowModal;
+    if Form_FuHuoDan.baocun then
+      qry_fuhuo_jilu.Requery();
   finally
     FreeAndNil(Form_FuHuoDan);
   end;

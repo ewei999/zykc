@@ -738,6 +738,7 @@ begin
 
   Form_jiamubiao := TForm_jiamubiao.Create(nil);
   try
+    Form_jiamubiao.leibie:='Ö÷¶¯¸¶»õ';
     Form_jiamubiao.ShowModal;
     if Form_jiamubiao.baocun then
     begin

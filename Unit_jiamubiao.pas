@@ -52,6 +52,7 @@ type
     { Private declarations }
   public
     baocun:boolean;
+    leibie:string;
   end;
 
 var
@@ -90,8 +91,24 @@ end;
 
 procedure TForm_jiamubiao.FormShow(Sender: TObject);
 begin
-  ADOQuery1.Active := false;
-  ADOQuery1.SQL.Text:='select a.*,isnull(b.库存,0) as 库存 from ('+
+  if leibie='主动付货' then
+  begin
+    ADOQuery1.Active := false;
+    ADOQuery1.SQL.Text:='select * from (select a.*,isnull(b.库存,0) as 库存 from ('+
+    ' select 价目编号,名称,原名称,类别,小类,规格,单位,单价,零售价,拼音,包装规格,警戒量,库存单位  from 药品用品价目表 where 是否作废=0 '+
+    ' and isnull(是否套餐,0)= 0 and 标志=0 and 库存=1 '+
+    ' )a left join ( '+
+    ' select 价目编号,库存=入库数量-出库数量 from ( select a.*, '+
+    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号) ,0) '+
+    ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
+    ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
+    '  )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c )b on a.价目编号=b.价目编号)d  where 库存<>0  order by 名称';
+    ADOQuery1.Active := True;
+  end
+  else
+  begin
+    ADOQuery1.Active := false;
+    ADOQuery1.SQL.Text:='select a.*,isnull(b.库存,0) as 库存 from ('+
     ' select 价目编号,名称,原名称,类别,小类,规格,单位,单价,零售价,拼音,包装规格,警戒量,库存单位  from 药品用品价目表 where 是否作废=0 '+
     ' and isnull(是否套餐,0)= 0 and 标志=0 and 库存=1 '+
     ' and 提货=1'+
@@ -101,7 +118,8 @@ begin
     ' from ( select 价目编号,sum(isnull(数量,0)) as 入库数量 from 中央采购入库明细表 '+
     ' where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)  group by 价目编号 '+
     '  )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c )b on a.价目编号=b.价目编号 order by 名称';
-  ADOQuery1.Active := True;
+    ADOQuery1.Active := True;
+  end;
 
   baocun:=false;
   cxTextEdit1.SetFocus;

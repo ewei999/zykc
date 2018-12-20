@@ -108,6 +108,7 @@ type
     cxRadioButton3: TcxRadioButton;
     cxTextEdit37: TcxTextEdit;
     cxGridDBTableView1Column13: TcxGridDBColumn;
+    qry_temp: TADOQuery;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -202,7 +203,7 @@ begin
 
     for i:=0 to qry_thshenqing_mx.RecordCount - 1 do
     begin
-      if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
+      if qry_thshenqing_mx.FieldByName('选择').AsBoolean = True then
       begin
         if cxRadioButton1.Checked then
         begin
@@ -366,13 +367,15 @@ begin
     shijian:=XiTong_date;
     DataModule1.ADOCon_ALi.BeginTrans;
     try
+      qry_temp.Clone(qry_thshenqing_mx);
+
       if cxRadioButton1.Checked then  //付货，写出库表
         CKbianhao:= AutoCreateNo('ZYFH','中央库存付货');
       qry_thshenqing_mx.DisableControls;
       qry_thshenqing_mx.First;
       for i:=0 to qry_thshenqing_mx.RecordCount - 1 do
       begin
-        if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
+        if qry_thshenqing_mx.FieldByName('选择').AsBoolean = True then
         begin
           if cxRadioButton1.Checked then  //付货，写出库表
           begin
@@ -397,14 +400,26 @@ begin
             begin
               DataModule1.ADOQuery_L.FieldByName('申请编号').AsString:= qry_thshenqing_mx.FieldByName('编号').AsString;
 
-              if qry_thshenqing_mx.FieldByName('申请数量').AsFloat>=qry_thshenqing_mx.FieldByName('付货数量').AsFloat then
+              danjia:=0;
+              qry_temp.First;
+              while not qry_temp.Eof do
+              begin
+                if (qry_thshenqing_mx.FieldByName('选择').AsBoolean=true)
+                and (qry_temp.FieldByName('价目编号').AsString=DataModule1.ADOQuery_L.FieldByName('价目编号').AsString)
+                and (qry_temp.FieldByName('付货数量').AsString<>'') then
+                  danjia:=danjia+qry_temp.FieldByName('付货数量').AsFloat;
+                qry_temp.Next;
+              end;
+
+
+              if qry_thshenqing_mx.FieldByName('申请数量').AsFloat<=danjia then
               begin
                 DataModule1.execSql('update 提货申请明细表 set 状态=2,出库编号='+QuotedStr(ckbianhao)+' '+
                 ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
               end
               else
               begin
-                DataModule1.execSql('update 提货申请明细表 set 申请数量=申请数量-'+qry_thshenqing_mx.FieldByName('付货数量').asstring+' '+
+                DataModule1.execSql('update 提货申请明细表 set 数量=数量-'+floattostr(danjia)+' '+
                 ' where 编号='+qry_thshenqing_mx.FieldByName('编号').AsString+' ');
               end;
             end;
@@ -534,11 +549,11 @@ begin
       end;
       try
         danjia:= qry_zhudong.FieldByName('付货数量').asfloat;
-        if danjia<0 then
+        if danjia<=0 then
         begin
           qry_zhudong.EnableControls;
           qry_zhudong.edit;
-          Application.MessageBox('付货数量不能小于0', '提示', MB_OK);
+          Application.MessageBox('付货数量不能小于等于0', '提示', MB_OK);
           exit;
         end;
       except
@@ -777,11 +792,12 @@ begin
         end
         else
         begin
-          qry_thshenqing_mx.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
+          qry_thshenqing_mx.FieldByName('付货数量').AsFloat:= 1;
         end;
 
         qry_thshenqing_mx.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
         qry_thshenqing_mx.FieldByName('出库金额').AsFloat := qry_thshenqing_mx.FieldByName('单价').AsFloat*qry_thshenqing_mx.FieldByName('付货数量').AsFloat;
+
         qry_thshenqing_mx.Post;
       end;
     finally
@@ -853,6 +869,7 @@ begin
   qry_thshenqing_mx.Open;
 
   Show_RuntimeInfo('正在打开');
+
   DataModule1.openSql('select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
     ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称,不付货原因, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+

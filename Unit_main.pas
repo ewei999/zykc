@@ -276,7 +276,6 @@ type
     cxLabel10: TcxLabel;
     cxButton9: TcxButton;
     cxButton27: TcxButton;
-    cxButton28: TcxButton;
     cxGroupBox1: TcxGroupBox;
     Splitter1: TSplitter;
     cxGrid6: TcxGrid;
@@ -535,6 +534,9 @@ type
     procedure cxGridDBTableView12CellDblClick(Sender: TcxCustomGridTableView;
       ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
       AShift: TShiftState; var AHandled: Boolean);
+    procedure cxGrid6DBTableView1CellDblClick(Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     rktjstr,cktjstr:string;
     procedure CreateGrid(cxgridA:TcxGridDBTableView);
@@ -599,7 +601,7 @@ begin
         Form_cg_new.ADOQuery_cg_zhubiao.Edit;
 
         Form_cg_new.ADOQuery_cg_mingxi.Active := false;
-        Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录='''' from 中央采购申请明细表'+
+        Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录=(case when isnull(入库明细编号,'''')='''' then '''' else ''已入库'' end ) from 中央采购申请明细表'+
                                                       ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
         Form_cg_new.ADOQuery_cg_mingxi.Active := True;
 
@@ -665,12 +667,7 @@ begin
   finally
     FreeAndNil(form_ruku_caogao);
   end;
-//  Form_ruku_new := TForm_ruku_new.Create(nil);
-//  try
-//    Form_ruku_new.ShowModal;
-//  finally
-//    FreeAndNil(Form_ruku_new);
-//  end;
+
   ADOQuery_ruku_zhubiao.Requery();
   ADOQuery_ruku_mingxi.Requery();
 end;
@@ -844,7 +841,7 @@ var
   j:integer;
 begin
   DataModule1.ADOQuery_dayin.Close;
-  DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by gys,mc ) rank,*,kc=rk-ck-fjs from ( select a.rk, '+
+  DataModule1.ADOQuery_dayin.sql.text :='select Row_Number() OVER ( order by mc,gys ) rank,*,kc=rk-ck-fjs from ( select a.rk, '+
   '  gys=(select top 1 名称 from 供应商表 where 供应商编号=a.gys),'+
   ' ck=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0),'+
   ' fjs=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0),'+
@@ -852,6 +849,7 @@ begin
   '  select 价目编号,sum(isnull(数量,0)) as rk,gys  from ( '+
   ' select *  ,gys=(select top 1 供应商  from 中央采购入库主表 where 入库编号 =x.入库编号 )'+
   ' from (  select 价目编号,入库编号,数量  from 中央采购入库明细表  where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1)'+
+  ' and 价目编号 in (select 价目编号 from 药品用品价目表 where 提货=1)'+
   '  )x)y  group by 价目编号,gys )a left join 药品用品价目表 b on a.价目编号=b.价目编号 )c order by mc,gys';
   DataModule1.ADOQuery_dayin.open;
 
@@ -1108,7 +1106,7 @@ begin
   ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=x.价目编号 ) ,0),'+
   ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=x.价目编号) ,0) '+
   ' from ( select 价目编号,名称,规格,单位=(case when isnull(库存单位,'''')<>'''' then 库存单位 else 单位 end),类别,小类,警戒量 '+
-  '  from 药品用品价目表 where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )x)c order by 名称';
+  '  from 药品用品价目表 where 是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and isnull(警戒量,'''')<>'''' )x)c order by 名称';
   qry_kucun.Open;
 end;
 
@@ -1343,6 +1341,34 @@ begin
   ADOQuery_ruku_mingxi.Active := True;
 end;
 
+procedure TForm_main.cxGrid6DBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
+  AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
+begin
+  Form_ruku_new := TForm_ruku_new.Create(nil);
+  try
+    Form_ruku_new.ADOQuery_cg_zhubiao.Active := False;
+    Form_ruku_new.ADOQuery_cg_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 入库编号='+
+                                  QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
+    Form_ruku_new.ADOQuery_cg_zhubiao.Active := true;
+    Form_ruku_new.ADOQuery_cg_zhubiao.Edit;
+
+    Form_ruku_new.ADOQuery_cg_mingxi.Active := false;
+    Form_ruku_new.ADOQuery_cg_mingxi.SQL.Text := 'select * from 中央采购入库明细表 where 入库编号='
+                                +QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
+    Form_ruku_new.ADOQuery_cg_mingxi.Active := true;
+    Form_ruku_new.ADOQuery_cg_mingxi.Edit;
+
+    Form_ruku_new.button_zhuanti('edit');
+    Form_ruku_new.ShowModal;
+  finally
+    FreeAndNil(form_ruku_new);
+  end;
+
+  ADOQuery_ruku_zhubiao.Requery();
+  ADOQuery_ruku_mingxi.Requery();
+end;
+
 procedure TForm_main.cxGridDBTableView11CellDblClick(
   Sender: TcxCustomGridTableView; ACellViewInfo: TcxGridTableDataCellViewInfo;
   AButton: TMouseButton; AShift: TShiftState; var AHandled: Boolean);
@@ -1424,13 +1450,14 @@ procedure TForm_main.cxGridDBTableView2CellDblClick(
 begin
   Form_cg_new := TForm_cg_new.Create(nil);
   try
+    Show_RuntimeInfo('正在打开');
     Form_cg_new.ADOQuery_cg_zhubiao.Active := false;
     Form_cg_new.ADOQuery_cg_zhubiao.SQL.Text  := 'select  * from 中央采购申请主表'+
                                                   ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
     Form_cg_new.ADOQuery_cg_zhubiao.Active := True;
 
     Form_cg_new.ADOQuery_cg_mingxi.Active := false;
-    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录='''' from 中央采购申请明细表'+
+    Form_cg_new.ADOQuery_cg_mingxi.SQL.Text  := 'select  *,采购记录=(case when isnull(入库明细编号,'''')='''' then '''' else ''已入库'' end ) from 中央采购申请明细表'+
                                                   ' where 申请编号='+QuotedStr(qry_caigou_hz.FieldByName('申请编号').AsString);
     Form_cg_new.ADOQuery_cg_mingxi.Active := True;
     Form_cg_new.ADOQuery_cg_mingxi.DisableControls;
@@ -1446,6 +1473,8 @@ begin
     Form_cg_new.ADOQuery_cg_mingxi.EnableControls;
 
     Form_cg_new.button_zhuanti('chakan');
+    hide_RuntimeInfo;
+
     Form_cg_new.ShowModal;
   finally
     FreeAndNil(form_cg_new);

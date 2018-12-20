@@ -104,6 +104,7 @@ type
     cxGrid1DBTableView1Column6: TcxGridDBColumn;
     cxGrid1DBTableView1Column7: TcxGridDBColumn;
     cxGrid1DBTableView1Column8: TcxGridDBColumn;
+    cxStyle3: TcxStyle;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_closeExecute(Sender: TObject);
@@ -653,7 +654,8 @@ begin
     Form_KuCunJilu.qry_leibiao.SQL.Text:='	select * from (	select *,'+
     '	日期=(select top 1 申请日期 from 中央采购申请主表 where 申请编号=a.申请编号 ) ,'+
     '	gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商 )'+
-    '	from (	select 申请编号,名称,数量,规格,单位,供应商,备注	from 中央采购申请明细表'+
+    '	from (	select 编号,申请编号,名称,数量,规格,单位,供应商,备注,'+
+    ' 状态=(case when isnull(入库明细编号,'''')='''' then '''' else ''已入库'' end ) 	from 中央采购申请明细表'+
     '	where 价目编号='+QuotedStr(ADOQuery_cg_mingxi.FieldByName('价目编号').AsString)+''+
     ' and 申请编号 in (select 申请编号 from 中央采购申请主表 where 是否作废=0 and 状态<>4 )	)a)b	order by 日期 desc';
     Form_KuCunJilu.qry_leibiao.Open;

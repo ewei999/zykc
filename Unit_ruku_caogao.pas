@@ -213,6 +213,14 @@ begin
         DataModule1.ADOQuery_L.SQL.Text := 'update 中央采购入库主表 set 状态=1 where 入库编号='+
                                             QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
         DataModule1.ADOQuery_L.ExecSQL;
+
+        DataModule1.openSql('select 采购明细编号,入库明细编号 from 中央采购入库明细表 where 入库编号='+QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString)+' ');
+        while not DataModule1.ADOQuery_L.Eof do
+        begin
+          DataModule1.execSql('update 中央采购申请明细表 set 入库明细编号='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('入库明细编号').AsString)+' '+
+          ' where 编号='+DataModule1.ADOQuery_L.FieldByName('采购明细编号').AsString+' ');
+          DataModule1.ADOQuery_L.Next;
+        end;
       end;
       ADOQuery_ruku_zhubiao.Next;
     end;

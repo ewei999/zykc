@@ -230,7 +230,7 @@ object Form_cg_new: TForm_cg_new
         DataBinding.FieldName = #21517#31216
         Options.Editing = False
         Options.CellMerging = True
-        Width = 200
+        Width = 150
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn7: TcxGridDBColumn
         DataBinding.FieldName = #31867#21035
@@ -299,6 +299,7 @@ object Form_cg_new: TForm_cg_new
       object cxgrdbclmncxGrid1DBTableView1DBColumn5: TcxGridDBColumn
         DataBinding.FieldName = #25968#37327
         PropertiesClassName = 'TcxTextEditProperties'
+        Styles.Content = cxStyle2
         Width = 55
       end
       object cxGrid1DBTableView1Column2: TcxGridDBColumn
@@ -370,13 +371,14 @@ object Form_cg_new: TForm_cg_new
             Caption = #37319#36141#35760#24405
             Default = True
             Kind = bkText
-            Width = 80
+            Width = 70
           end>
         Properties.ReadOnly = True
         Properties.OnButtonClick = cxGrid1DBTableView1Column8PropertiesButtonClick
         Options.ShowEditButtons = isebAlways
         Options.Sorting = False
-        Width = 70
+        Styles.Content = cxStyle3
+        Width = 100
       end
     end
     object cxGrid1Level1: TcxGridLevel
@@ -647,8 +649,22 @@ object Form_cg_new: TForm_cg_new
       Font.Style = []
     end
     object cxStyle2: TcxStyle
-      AssignedValues = [svColor]
-      Color = clInfoBk
+      AssignedValues = [svColor, svFont]
+      Color = clSkyBlue
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+    end
+    object cxStyle3: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clAqua
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
     end
   end
 end

@@ -95,7 +95,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Height = 549
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet3
+    Properties.ActivePage = cxTabSheet4
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 544
@@ -302,7 +302,9 @@ object Form_KuCunJilu: TForm_KuCunJilu
         LookAndFeel.SkinName = 'Blue'
         object cxGridDBTableView2: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
+          DataController.DataModeController.SmartRefresh = True
           DataController.DataSource = ds_leibiao
+          DataController.KeyFieldNames = #32534#21495
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <
             item
@@ -323,43 +325,66 @@ object Form_KuCunJilu: TForm_KuCunJilu
           OptionsData.CancelOnExit = False
           OptionsData.Deleting = False
           OptionsData.DeletingConfirmation = False
-          OptionsData.Editing = False
           OptionsData.Inserting = False
+          OptionsSelection.InvertSelect = False
+          OptionsSelection.MultiSelect = True
+          OptionsSelection.CellMultiSelect = True
           OptionsView.ColumnAutoWidth = True
           OptionsView.Footer = True
           OptionsView.GroupByBox = False
+          object cxGridDBTableView2Column1: TcxGridDBColumn
+            Caption = #36873#25321
+            DataBinding.ValueType = 'Boolean'
+            PropertiesClassName = 'TcxCheckBoxProperties'
+            Properties.NullStyle = nssUnchecked
+            Options.Filtering = False
+            Options.Sorting = False
+            Width = 50
+            OnHeaderClick = cxGridDBTableView2Column1HeaderClick
+          end
           object cxGridDBColumn6: TcxGridDBColumn
             Caption = #30003#35831#26085#26399
             DataBinding.FieldName = #26085#26399
             PropertiesClassName = 'TcxDateEditProperties'
             Properties.DisplayFormat = 'yyyy-mm-dd hh:mm'
+            Options.Editing = False
             Width = 120
           end
           object cxGridDBColumn11: TcxGridDBColumn
             DataBinding.FieldName = #21517#31216
+            Options.Editing = False
             Width = 150
           end
           object cxGridDBColumn12: TcxGridDBColumn
             DataBinding.FieldName = #35268#26684
+            Options.Editing = False
             Width = 60
           end
           object cxGridDBColumn13: TcxGridDBColumn
             DataBinding.FieldName = #21333#20301
+            Options.Editing = False
             Width = 60
           end
           object cxGridDBColumn14: TcxGridDBColumn
             Caption = #20379#24212#21830
             DataBinding.FieldName = 'gys'
+            Options.Editing = False
             Width = 80
           end
           object cxGridDBColumn15: TcxGridDBColumn
             Caption = #30003#35831#25968#37327
             DataBinding.FieldName = #25968#37327
+            Options.Editing = False
             Width = 70
           end
           object cxGridDBColumn18: TcxGridDBColumn
             DataBinding.FieldName = #22791#27880
+            Options.Editing = False
             Width = 100
+          end
+          object cxGridDBTableView2Column2: TcxGridDBColumn
+            DataBinding.FieldName = #29366#24577
+            Width = 60
           end
         end
         object cxGridLevel2: TcxGridLevel
@@ -367,6 +392,145 @@ object Form_KuCunJilu: TForm_KuCunJilu
         end
       end
     end
+    object cxTabSheet4: TcxTabSheet
+      Caption = #37319#36141#35760#24405#27719#24635
+      ImageIndex = 3
+      object cxGrid3: TcxGrid
+        Left = 0
+        Top = 0
+        Width = 1060
+        Height = 513
+        Align = alClient
+        TabOrder = 0
+        LookAndFeel.SkinName = 'Blue'
+        object cxGridDBTableView3: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnCellDblClick = cxGridDBTableView3CellDblClick
+          DataController.DataSource = ds_huizong
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.GroupByBox = False
+          object cxGridDBTableView3Column1: TcxGridDBColumn
+            DataBinding.FieldName = #30003#35831#32534#21495
+            Options.Editing = False
+            Width = 100
+          end
+          object cxgrdbclmn2: TcxGridDBColumn
+            Caption = #30003#35831#37319#36141#26085#26399
+            DataBinding.FieldName = #30003#35831#26085#26399
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd'
+            Width = 164
+          end
+          object cxgrdbclmn3: TcxGridDBColumn
+            Caption = #37319#36141#32534#21495
+            DataBinding.FieldName = #30003#35831#32534#21495
+            Width = 166
+          end
+          object cxgrdbclmn4: TcxGridDBColumn
+            Caption = #37319#36141#35828#26126
+            DataBinding.FieldName = #30003#35831#35828#26126
+            Width = 314
+          end
+          object cxgrdbclmn5: TcxGridDBColumn
+            Caption = #30003#35831#37319#36141#20154
+            DataBinding.FieldName = #30003#35831#20154
+            Width = 110
+          end
+          object cxgrdbclmn6: TcxGridDBColumn
+            Caption = #30003#35831#26465#25968
+            DataBinding.FieldName = #30003#35831#25968
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Horz = taCenter
+            Width = 110
+          end
+          object cxgrdbclmn7: TcxGridDBColumn
+            Caption = #29366#24577
+            DataBinding.FieldName = 'zt'
+            Width = 110
+          end
+        end
+        object cxGridLevel3: TcxGridLevel
+          GridView = cxGridDBTableView3
+        end
+      end
+    end
+  end
+  object cxButton1: TcxButton
+    Left = 951
+    Top = 11
+    Width = 50
+    Height = 58
+    Align = alCustom
+    Action = act1
+    Anchors = [akTop, akRight]
+    LookAndFeel.NativeStyle = False
+    LookAndFeel.SkinName = 'Black'
+    OptionsImage.Layout = blGlyphTop
+    TabOrder = 3
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object cxlbl2: TcxLabel
+    Left = 196
+    Top = 26
+    Caption = #30003#35831#26085#26399
+    Transparent = True
+  end
+  object cxDateEdit1: TcxDateEdit
+    Left = 270
+    Top = 24
+    Properties.DisplayFormat = 'yyyy-mm-dd'
+    Properties.EditFormat = 'yyyy-mm-dd'
+    TabOrder = 5
+    Width = 121
+  end
+  object cxlbl3: TcxLabel
+    Left = 399
+    Top = 26
+    Caption = #33267
+    Transparent = True
+  end
+  object cxDateEdit2: TcxDateEdit
+    Left = 426
+    Top = 24
+    Properties.DisplayFormat = 'yyyy-mm-dd'
+    Properties.EditFormat = 'yyyy-mm-dd'
+    TabOrder = 7
+    Width = 121
+  end
+  object cxButton4: TcxButton
+    Left = 838
+    Top = 22
+    Width = 75
+    Height = 31
+    Caption = #26597#35810
+    LookAndFeel.SkinName = 'Black'
+    TabOrder = 8
+    OnClick = cxButton4Click
+  end
+  object cxlbl9: TcxLabel
+    Left = 557
+    Top = 26
+    Caption = #21517#31216
+    Transparent = True
+  end
+  object cxTextEdit37: TcxTextEdit
+    Left = 597
+    Top = 24
+    TabOrder = 10
+    Width = 233
   end
   object actmgr1: TActionManager
     ActionBars = <
@@ -379,13 +543,18 @@ object Form_KuCunJilu: TForm_KuCunJilu
           end>
       end>
     Images = DataModule1.cxImageList32
-    Left = 368
+    Left = 374
     Top = 8
     StyleName = 'Platform Default'
     object act_close: TAction
       Caption = #36820#22238
       ImageIndex = 6
       OnExecute = act_closeExecute
+    end
+    object act1: TAction
+      Caption = #30830#23450
+      ImageIndex = 33
+      OnExecute = act1Execute
     end
   end
   object qry_leibiao: TADOQuery
@@ -401,5 +570,19 @@ object Form_KuCunJilu: TForm_KuCunJilu
     DataSet = qry_leibiao
     Left = 215
     Top = 240
+  end
+  object ds_huizong: TDataSource
+    DataSet = qry_huizong
+    Left = 407
+    Top = 264
+  end
+  object qry_huizong: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 407
+    Top = 336
   end
 end

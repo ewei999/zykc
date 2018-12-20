@@ -778,4 +778,12 @@ object Form_fuhuo: TForm_fuhuo
       Color = clInfoBk
     end
   end
+  object qry_temp: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    Left = 264
+    Top = 400
+  end
 end

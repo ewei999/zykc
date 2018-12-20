@@ -2,8 +2,8 @@ object Form_ruku_new: TForm_ruku_new
   Left = 0
   Top = 0
   Caption = #20837#24211#21333
-  ClientHeight = 611
-  ClientWidth = 743
+  ClientHeight = 636
+  ClientWidth = 867
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object Form_ruku_new: TForm_ruku_new
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 743
-    Height = 337
+    Width = 867
+    Height = 305
     Align = alTop
     Anchors = []
     BevelOuter = bvNone
@@ -28,12 +28,12 @@ object Form_ruku_new: TForm_ruku_new
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      743
-      337)
+      867
+      305)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
-      Width = 743
+      Width = 867
       Height = 42
       ActionManager = ActionManager1
       BiDiMode = bdLeftToRight
@@ -51,6 +51,7 @@ object Form_ruku_new: TForm_ruku_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
+      ExplicitWidth = 743
     end
     object cxLabel1: TcxLabel
       Left = 144
@@ -73,8 +74,8 @@ object Form_ruku_new: TForm_ruku_new
       Caption = #22791#27880
     end
     object cxLabel5: TcxLabel
-      Left = 400
-      Top = 291
+      Left = 583
+      Top = 192
       Caption = #32463#25163#20154
     end
     object cxDBTextEdit1: TcxDBTextEdit
@@ -87,8 +88,8 @@ object Form_ruku_new: TForm_ruku_new
       Width = 145
     end
     object cxDBTextEdit2: TcxDBTextEdit
-      Left = 456
-      Top = 289
+      Left = 639
+      Top = 190
       DataBinding.DataField = #32463#25163#20154
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ReadOnly = True
@@ -131,11 +132,11 @@ object Form_ruku_new: TForm_ruku_new
       DataBinding.DataSource = DataSource_cg_zhubiao
       Properties.ScrollBars = ssVertical
       TabOrder = 10
-      Height = 87
+      Height = 66
       Width = 359
     end
     object cxButton1: TcxButton
-      Left = -237
+      Left = -113
       Top = 246
       Width = 33
       Height = 35
@@ -146,9 +147,10 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = ''
       SpeedButtonOptions.Transparent = True
       TabOrder = 11
+      ExplicitLeft = -237
     end
     object cxButton2: TcxButton
-      Left = -198
+      Left = -74
       Top = 246
       Width = 33
       Height = 35
@@ -156,9 +158,10 @@ object Form_ruku_new: TForm_ruku_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
+      ExplicitLeft = -198
     end
     object cxButton3: TcxButton
-      Left = -159
+      Left = -35
       Top = 246
       Width = 33
       Height = 35
@@ -167,6 +170,7 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
+      ExplicitLeft = -159
     end
     object cxLabel6: TcxLabel
       Left = 384
@@ -214,8 +218,8 @@ object Form_ruku_new: TForm_ruku_new
       Width = 121
     end
     object cxButton4: TcxButton
-      Left = 82
-      Top = 299
+      Left = 214
+      Top = 262
       Width = 33
       Height = 35
       Action = Action_save_m
@@ -225,28 +229,26 @@ object Form_ruku_new: TForm_ruku_new
       Visible = False
     end
     object cxButton5: TcxButton
-      Left = 43
-      Top = 299
+      Left = 51
+      Top = 262
       Width = 33
       Height = 35
       Action = Action_delete_m
-      Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 21
     end
     object cxButton7: TcxButton
-      Left = 4
-      Top = 299
+      Left = 12
+      Top = 262
       Width = 33
       Height = 35
       Action = Action_new_m
-      Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 22
     end
     object cxButton6: TcxButton
-      Left = 121
-      Top = 299
+      Left = 253
+      Top = 262
       Width = 33
       Height = 35
       Action = Action_edit_m
@@ -269,15 +271,34 @@ object Form_ruku_new: TForm_ruku_new
       TabOrder = 25
       Width = 145
     end
+    object cxButton8: TcxButton
+      Left = 121
+      Top = 263
+      Width = 112
+      Height = 31
+      Caption = #20174#37319#36141#21333#20013#36873#25321
+      LookAndFeel.SkinName = 'Black'
+      TabOrder = 26
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -14
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = cxButton8Click
+    end
   end
   object cxGrid1: TcxGrid
     Left = 0
-    Top = 337
-    Width = 743
-    Height = 274
+    Top = 305
+    Width = 867
+    Height = 331
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
+    ExplicitTop = 337
+    ExplicitWidth = 743
+    ExplicitHeight = 274
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
@@ -336,6 +357,7 @@ object Form_ruku_new: TForm_ruku_new
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #25968#37327
+        Styles.Content = cxStyle2
         Width = 90
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
@@ -345,6 +367,7 @@ object Form_ruku_new: TForm_ruku_new
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #36827#36135#21333#20215
+        Styles.Content = cxStyle1
         Width = 85
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
@@ -499,5 +522,37 @@ object Form_ruku_new: TForm_ruku_new
     DataSet = ADOQuery_jiamu
     Left = 648
     Top = 208
+  end
+  object cxStyleRepository1: TcxStyleRepository
+    Left = 184
+    Top = 400
+    PixelsPerInch = 96
+    object cxStyle1: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clMoneyGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+    end
+    object cxStyle2: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clSkyBlue
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -15
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+    end
+    object cxStyle3: TcxStyle
+      AssignedValues = [svColor, svFont]
+      Color = clAqua
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+    end
   end
 end

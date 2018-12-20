@@ -356,7 +356,7 @@
           Height = 584
           Align = alClient
           TabOrder = 1
-          Properties.ActivePage = cxTabSheet3
+          Properties.ActivePage = cxTabSheet2
           Properties.CustomButtons.Buttons = <>
           LookAndFeel.SkinName = 'Blue'
           ClientRectBottom = 579
@@ -714,7 +714,7 @@
             end
             object cxLabel3: TcxLabel
               Left = 189
-              Top = 35
+              Top = 33
               Caption = #30003#35831#26085#26399
               Transparent = True
             end
@@ -728,7 +728,7 @@
             end
             object cxLabel4: TcxLabel
               Left = 392
-              Top = 35
+              Top = 33
               Caption = #33267
               Transparent = True
             end
@@ -1360,7 +1360,7 @@
             Transparent = True
           end
           object cxButton9: TcxButton
-            Left = 899
+            Left = 979
             Top = 9
             Width = 50
             Height = 58
@@ -1386,27 +1386,6 @@
             LookAndFeel.SkinName = 'Black'
             TabOrder = 7
             OnClick = cxButton27Click
-          end
-          object cxButton28: TcxButton
-            Left = 955
-            Top = 9
-            Width = 50
-            Height = 58
-            Anchors = [akTop, akRight]
-            Caption = #20837#24211#20462#25913
-            LookAndFeel.NativeStyle = False
-            LookAndFeel.SkinName = 'Black'
-            OptionsImage.ImageIndex = 17
-            OptionsImage.Layout = blGlyphTop
-            TabOrder = 8
-            Visible = False
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'Tahoma'
-            Font.Style = []
-            ParentFont = False
-            OnClick = Action_ruku_newExecute
           end
         end
         object cxGroupBox1: TcxGroupBox
@@ -1436,6 +1415,7 @@
             object cxGrid6DBTableView1: TcxGridDBTableView
               Navigator.Buttons.CustomButtons = <>
               OnCellClick = cxGrid6DBTableView1CellClick
+              OnCellDblClick = cxGrid6DBTableView1CellDblClick
               DataController.DataSource = DataSource_ruku_zhubiao
               DataController.Summary.DefaultGroupSummaryItems = <>
               DataController.Summary.FooterSummaryItems = <

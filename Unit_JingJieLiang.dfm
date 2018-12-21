@@ -86,7 +86,6 @@ object Form_JingJieLiang: TForm_JingJieLiang
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 774
   end
   object cxButton1: TcxButton
     Left = 696
@@ -106,7 +105,6 @@ object Form_JingJieLiang: TForm_JingJieLiang
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 605
   end
   object cxButton2: TcxButton
     Left = 752
@@ -126,7 +124,6 @@ object Form_JingJieLiang: TForm_JingJieLiang
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 661
   end
   object cxButton3: TcxButton
     Left = 809
@@ -146,7 +143,6 @@ object Form_JingJieLiang: TForm_JingJieLiang
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 718
   end
   object cxGrid14: TcxGrid
     Left = 0
@@ -156,10 +152,6 @@ object Form_JingJieLiang: TForm_JingJieLiang
     Align = alClient
     TabOrder = 5
     LookAndFeel.SkinName = 'Blue'
-    ExplicitLeft = -228
-    ExplicitTop = -121
-    ExplicitWidth = 1069
-    ExplicitHeight = 680
     object cxGridDBTableView11: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = ds_leibiao
@@ -215,10 +207,7 @@ object Form_JingJieLiang: TForm_JingJieLiang
       end
       object cxGridDBTableView11Column2: TcxGridDBColumn
         DataBinding.FieldName = #35686#25106#37327
-        PropertiesClassName = 'TcxMaskEditProperties'
-        Properties.MaskKind = emkRegExprEx
-        Properties.EditMask = '[0-9]+'
-        Properties.MaxLength = 0
+        PropertiesClassName = 'TcxTextEditProperties'
         Width = 70
       end
     end

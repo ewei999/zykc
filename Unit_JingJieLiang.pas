@@ -24,7 +24,7 @@ uses
   cxFilter, cxData, cxDataStorage, cxNavigator, Data.DB, cxDBData, cxCalendar,
   Data.Win.ADODB, cxGridLevel, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid,unit_jiamubiao,
-  cxMaskEdit;
+  cxMaskEdit, cxTextEdit;
 
 type
   TForm_JingJieLiang = class(TForm)
@@ -116,21 +116,7 @@ begin
       Application.MessageBox('警戒量不能为空', '提示', MB_OK);
       exit;
     end;
-    try
-      ylint:= qry_leibiao.FieldByName('警戒量').AsInteger;
-      if ylint<=0 then
-      begin
-        qry_leibiao.EnableControls;
-        qry_leibiao.edit;
-        Application.MessageBox('警戒量不能小于等于0', '提示', MB_OK);
-        exit;
-      end;
-    except
-      qry_leibiao.EnableControls;
-      qry_leibiao.edit;
-      Application.MessageBox('警戒量格式不正确', '提示', MB_OK);
-      exit;
-    end;
+
     qry_leibiao.Next;
   end;
   qry_leibiao.EnableControls;
@@ -142,7 +128,7 @@ begin
   qry_leibiao.First;
   while not qry_leibiao.Eof do
   begin
-    DataModule1.execSql('update 药品用品价目表 set 警戒量='+qry_leibiao.FieldByName('警戒量').AsString+' '+
+    DataModule1.execSql('update 药品用品价目表 set 警戒量='+QuotedStr(qry_leibiao.FieldByName('警戒量').AsString)+' '+
     ' where 价目编号='+QuotedStr(qry_leibiao.FieldByName('价目编号').AsString)+' ');
 
     qry_leibiao.Next;
@@ -164,7 +150,7 @@ begin
       MB_ICONINFORMATION) = IDCANCEL then
       exit;
 
-  DataModule1.execSql('update 药品用品价目表 set 警戒量=0 where 价目编号='+QuotedStr(qry_leibiao.FieldByName('价目编号').AsString)+' ');
+  DataModule1.execSql('update 药品用品价目表 set 警戒量='''' where 价目编号='+QuotedStr(qry_leibiao.FieldByName('价目编号').AsString)+' ');
   qry_leibiao.Requery();
   if qry_leibiao.RecordCount>0 then
     qry_leibiao.Edit;
@@ -185,7 +171,7 @@ begin
     ' 入库编号=(select top 1 入库编号 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc), '+
     ' 进价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 order by 编号 desc) '+
     ' from ( select 编号,价目编号,名称,小类,类别,规格,单位,包装规格,警戒量,单价 from 药品用品价目表 '+
-    ' where  是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and 警戒量>0 )a)b order by 名称';
+    ' where  是否作废=0 and isnull(是否套餐,0)=0 and 库存=1 and 提货=1 and isnull(警戒量,'''')<>'''' )a)b order by 名称';
   qry_leibiao.Open;
   if qry_leibiao.RecordCount>0 then
     qry_leibiao.Edit;

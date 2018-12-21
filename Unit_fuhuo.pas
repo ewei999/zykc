@@ -645,9 +645,9 @@ begin
     shijian:=XiTong_date;
     DataModule1.ADOCon_ALi.BeginTrans;
     try
-      CKbianhao:= AutoCreateNo('ZYFH','中央库存付货');
       qry_zhudong.DisableControls;
       qry_zhudong.First;
+      CKbianhao:= AutoCreateNo('ZYFH','中央库存付货');
       while not qry_zhudong.Eof do
       begin
         DataModule1.openSql('select top 0 * from 中央库存_出库表');

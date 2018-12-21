@@ -51,7 +51,6 @@ object Form_ruku_new: TForm_ruku_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
-      ExplicitWidth = 743
     end
     object cxLabel1: TcxLabel
       Left = 144
@@ -147,7 +146,6 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = ''
       SpeedButtonOptions.Transparent = True
       TabOrder = 11
-      ExplicitLeft = -237
     end
     object cxButton2: TcxButton
       Left = -74
@@ -158,7 +156,6 @@ object Form_ruku_new: TForm_ruku_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
-      ExplicitLeft = -198
     end
     object cxButton3: TcxButton
       Left = -35
@@ -170,7 +167,6 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
-      ExplicitLeft = -159
     end
     object cxLabel6: TcxLabel
       Left = 384
@@ -296,9 +292,6 @@ object Form_ruku_new: TForm_ruku_new
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
-    ExplicitTop = 337
-    ExplicitWidth = 743
-    ExplicitHeight = 274
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi

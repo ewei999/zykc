@@ -242,7 +242,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet7
+      Properties.ActivePage = cxTabSheet13
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685
@@ -3013,8 +3013,8 @@
   end
   object ds_caiwu: TDataSource
     DataSet = qry_caiwu
-    Left = 888
-    Top = 128
+    Left = 880
+    Top = 160
   end
   object qry_caiwu: TADOQuery
     Connection = DataModule1.ADOCon_ALi
@@ -3023,8 +3023,8 @@
     Parameters = <>
     SQL.Strings = (
       'select * from '#27425#21345#35774#32622#34920)
-    Left = 960
-    Top = 120
+    Left = 952
+    Top = 168
   end
   object qry_JMB: TADOQuery
     Connection = DataModule1.ADOCon_ALi

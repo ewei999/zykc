@@ -482,6 +482,8 @@ object Form_fuhuo: TForm_fuhuo
               end>
             Properties.ListOptions.ShowHeader = False
             Properties.ListSource = ds_fenyuan
+            SortIndex = 0
+            SortOrder = soAscending
             Width = 100
           end
           object cxGridDBColumn5: TcxGridDBColumn

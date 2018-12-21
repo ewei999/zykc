@@ -799,7 +799,8 @@ begin
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=2  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+ sjdstr+
     ' 未接收=isnull((select sum(出库数量) from 中央库存_出库表 where 状态=1  and 是否作废=0 and 价目编号=a.价目编号 and 供应商=a.gys) ,0), '+
     ' 出库金额=isnull((select sum(出库金额) from 中央库存_出库表 where 状态 in (1,2)  and 是否作废=0 and 价目编号=a.价目编号  and 供应商=a.gys) ,0), '+
-    ' b.名称,b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类,b.警戒量'+
+    ' 名称=(case when b.提货=0 then ''作废  ''+b.名称 else b.名称 end ),'+
+    ' b.规格,单位=(case when isnull(b.库存单位,'''')<>'''' then b.库存单位 else b.单位 end),b.类别,b.小类,b.警戒量'+
     ' from ( '+
     ' select 价目编号,gys,sum(isnull(数量,0)) as 入库数量,sum(isnull(金额,0)) as 入库金额   from ('+
     ' select * ,gys=(select top 1 供应商 from 中央采购入库主表 where 入库编号=t.入库编号 ) from ('+

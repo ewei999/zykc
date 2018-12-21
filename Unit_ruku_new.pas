@@ -222,6 +222,11 @@ begin
         ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
 
       ADOQuery_cg_mingxi.Post;
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
+      if cxDBTextEdit4.Text<>'' then
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
+      else
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
     end;
   finally
     FreeAndNil(form_jiamubiao);
@@ -290,7 +295,11 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-
+     ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
+     if cxDBTextEdit4.Text<>'' then
+       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
+     else
+       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
   end
   else if button='save' then
   begin
@@ -386,13 +395,23 @@ begin
         if DataModule1.ADOQuery_L.FieldByName('进货单价').AsString<>'' then
           ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
 
+        ADOQuery_cg_mingxi.FieldByName('金额').AsFloat :=ADOQuery_cg_mingxi.FieldByName('进货单价').AsFloat*ADOQuery_cg_mingxi.FieldByName('数量').asfloat;
         ADOQuery_cg_mingxi.FieldByName('采购明细编号').AsString := DataModule1.ADOQuery_L.FieldByName('编号').AsString;
         ADOQuery_cg_mingxi.Post;
 
         DataModule1.ADOQuery_L.next;
       end;
       ADOQuery_cg_mingxi.First;
+
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
+     if cxDBTextEdit4.Text<>'' then
+       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
+     else
+       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+
+      ADOQuery_cg_mingxi.First;
       ADOQuery_cg_mingxi.EnableControls;
+      ADOQuery_cg_mingxi.Edit;
     end;
   finally
     FreeAndNil(Form_KuCunJilu);

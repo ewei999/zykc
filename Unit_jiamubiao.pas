@@ -78,9 +78,8 @@ begin
   if Trim(cxTextEdit1.Text)<> '' then
   begin
     ADOQuery1.Filtered := False;
-    ADOQuery1.Filter :='拼音 like '+
-                           QuotedStr('%'+cxTextEdit1.Text+'%')+
-                            ' or 名称 like '+QuotedStr('%'+cxTextEdit1.Text+'%');
+    ADOQuery1.Filter :=' 拼音 like '+QuotedStr('%'+cxTextEdit1.Text+'%')+''+
+                       ' or 名称 like '+QuotedStr('%'+cxTextEdit1.Text+'%')+' or 原名称 like '+QuotedStr('%'+cxTextEdit1.Text+'%')+' ';
     ADOQuery1.Filtered := True;
   end
   else

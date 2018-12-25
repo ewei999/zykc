@@ -777,7 +777,8 @@ begin
     cktjstr:=cktjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+' ';
   end;
   if Trim(cxTextEdit37.Text)<>'' then
-    mctj:=mctj+'  and 价目编号 in (select 价目编号 from 药品用品价目表 where 名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 原名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' )';
+    mctj:=mctj+'  and 价目编号 in (select 价目编号 from 药品用品价目表 '+
+    ' where 名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 原名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 拼音 like ''%'+Trim(cxTextEdit37.Text)+'%'' )';
 
   if rktjstr='' then
   begin
@@ -1195,6 +1196,7 @@ begin
     ckstr:=ckstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
   end;
 
+  qry_caiwu.DisableControls;
   i:=0;
   DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
@@ -1225,11 +1227,9 @@ begin
 
       DataModule1.ADOQuery_L2.Next;
     end;
-
     DataModule1.ADOQuery_L.Next;
   end;
 
-  qry_caiwu.DisableControls;
   qry_caiwu.First;
   while not qry_caiwu.Eof do
   begin
@@ -1350,7 +1350,7 @@ begin
   try
     Form_ruku_new.ADOQuery_cg_zhubiao.Active := False;
     Form_ruku_new.ADOQuery_cg_zhubiao.SQL.Text := 'select * from 中央采购入库主表 where 入库编号='+
-                                  QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString);
+                                  QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号' ).AsString);
     Form_ruku_new.ADOQuery_cg_zhubiao.Active := true;
     Form_ruku_new.ADOQuery_cg_zhubiao.Edit;
 
@@ -1361,6 +1361,7 @@ begin
     Form_ruku_new.ADOQuery_cg_mingxi.Edit;
 
     Form_ruku_new.button_zhuanti('edit');
+    Form_ruku_new.Action_save.Caption:='保存';
     Form_ruku_new.ShowModal;
   finally
     FreeAndNil(form_ruku_new);

@@ -95,7 +95,7 @@ object Form_jiamubiao: TForm_jiamubiao
   end
   object cxLabel1: TcxLabel
     Left = 38
-    Top = 19
+    Top = 17
     Caption = #21517#31216
   end
   object ADOQuery1: TADOQuery

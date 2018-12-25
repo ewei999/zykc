@@ -3,7 +3,7 @@ object Form_ruku_new: TForm_ruku_new
   Top = 0
   Caption = #20837#24211#21333
   ClientHeight = 636
-  ClientWidth = 867
+  ClientWidth = 1018
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_ruku_new: TForm_ruku_new
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 867
+    Width = 1018
     Height = 305
     Align = alTop
     Anchors = []
@@ -27,13 +27,14 @@ object Form_ruku_new: TForm_ruku_new
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 867
     DesignSize = (
-      867
+      1018
       305)
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
-      Width = 867
+      Width = 1018
       Height = 42
       ActionManager = ActionManager1
       BiDiMode = bdLeftToRight
@@ -51,6 +52,7 @@ object Form_ruku_new: TForm_ruku_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
+      ExplicitWidth = 867
     end
     object cxLabel1: TcxLabel
       Left = 144
@@ -135,7 +137,7 @@ object Form_ruku_new: TForm_ruku_new
       Width = 359
     end
     object cxButton1: TcxButton
-      Left = -113
+      Left = 38
       Top = 246
       Width = 33
       Height = 35
@@ -146,9 +148,10 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = ''
       SpeedButtonOptions.Transparent = True
       TabOrder = 11
+      ExplicitLeft = -113
     end
     object cxButton2: TcxButton
-      Left = -74
+      Left = 77
       Top = 246
       Width = 33
       Height = 35
@@ -156,9 +159,10 @@ object Form_ruku_new: TForm_ruku_new
       Anchors = [akTop, akRight]
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 12
+      ExplicitLeft = -74
     end
     object cxButton3: TcxButton
-      Left = -35
+      Left = 116
       Top = 246
       Width = 33
       Height = 35
@@ -167,6 +171,7 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 13
       Visible = False
+      ExplicitLeft = -35
     end
     object cxLabel6: TcxLabel
       Left = 384
@@ -209,12 +214,13 @@ object Form_ruku_new: TForm_ruku_new
       Top = 125
       DataBinding.DataField = #33293#38646
       DataBinding.DataSource = DataSource_cg_zhubiao
+      Properties.ReadOnly = True
       Properties.OnChange = cxDBTextEdit4PropertiesChange
       TabOrder = 19
       Width = 121
     end
     object cxButton4: TcxButton
-      Left = 214
+      Left = 365
       Top = 262
       Width = 33
       Height = 35
@@ -223,6 +229,7 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 20
       Visible = False
+      ExplicitLeft = 214
     end
     object cxButton5: TcxButton
       Left = 51
@@ -243,7 +250,7 @@ object Form_ruku_new: TForm_ruku_new
       TabOrder = 22
     end
     object cxButton6: TcxButton
-      Left = 253
+      Left = 404
       Top = 262
       Width = 33
       Height = 35
@@ -252,6 +259,7 @@ object Form_ruku_new: TForm_ruku_new
       LookAndFeel.SkinName = 'Office2007Black'
       TabOrder = 23
       Visible = False
+      ExplicitLeft = 253
     end
     object cxLabel9: TcxLabel
       Left = 144
@@ -287,11 +295,12 @@ object Form_ruku_new: TForm_ruku_new
   object cxGrid1: TcxGrid
     Left = 0
     Top = 305
-    Width = 867
+    Width = 1018
     Height = 331
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
+    ExplicitWidth = 867
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi
@@ -351,7 +360,7 @@ object Form_ruku_new: TForm_ruku_new
       object cxgrdbclmncxGrid1DBTableView1DBColumn9: TcxGridDBColumn
         DataBinding.FieldName = #25968#37327
         Styles.Content = cxStyle2
-        Width = 90
+        Width = 80
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn8: TcxGridDBColumn
         DataBinding.FieldName = #21333#20301
@@ -360,13 +369,37 @@ object Form_ruku_new: TForm_ruku_new
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn10: TcxGridDBColumn
         DataBinding.FieldName = #36827#36135#21333#20215
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
         Styles.Content = cxStyle1
-        Width = 85
+        Width = 80
+      end
+      object cxGrid1DBTableView1Column1: TcxGridDBColumn
+        DataBinding.FieldName = #33293#38646#37329#39069
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
+        Width = 90
       end
       object cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn
+        Caption = #21512#35745#37329#39069
         DataBinding.FieldName = #37329#39069
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
         Options.Editing = False
-        Width = 106
+        Width = 100
+      end
+      object cxGrid1DBTableView1Column2: TcxGridDBColumn
+        DataBinding.FieldName = #25972#20184#25968#37327
+        PropertiesClassName = 'TcxMaskEditProperties'
+        Properties.MaskKind = emkRegExpr
+        Properties.EditMask = '[0-9]+'
+        Width = 70
+      end
+      object cxGrid1DBTableView1Column3: TcxGridDBColumn
+        DataBinding.FieldName = #25972#20184#37329#39069
+        PropertiesClassName = 'TcxCurrencyEditProperties'
+        Properties.DisplayFormat = '0.00'
+        Width = 70
       end
     end
     object cxGrid1Level1: TcxGridLevel

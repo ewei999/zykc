@@ -183,11 +183,14 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
           OptionsData.DeletingConfirmation = False
           OptionsData.Editing = False
           OptionsData.Inserting = False
+          OptionsView.CellAutoHeight = True
           OptionsView.ColumnAutoWidth = True
           OptionsView.GroupByBox = False
           object cxGrid3DBTableView1Column1: TcxGridDBColumn
             DataBinding.FieldName = #20379#24212#21830
-            Width = 100
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Vert = taVCenter
+            Width = 80
           end
           object cxGrid3DBTableView1Column3: TcxGridDBColumn
             DataBinding.FieldName = #21333#20215
@@ -198,7 +201,21 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
           object cxGrid3DBTableView1Column4: TcxGridDBColumn
             Caption = #21487#20184#36135#25968#37327
             DataBinding.FieldName = #25968#37327
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Vert = taVCenter
             Width = 70
+          end
+          object cxGrid3DBTableView1Column2: TcxGridDBColumn
+            DataBinding.FieldName = #25972#20184#25968#37327
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Vert = taVCenter
+            Properties.WordWrap = True
+            Width = 60
+          end
+          object cxGrid3DBTableView1Column5: TcxGridDBColumn
+            DataBinding.FieldName = #25972#20184#37329#39069
+            PropertiesClassName = 'TcxLabelProperties'
+            Width = 60
           end
         end
         object cxGrid3Level1: TcxGridLevel

@@ -230,7 +230,6 @@ object Form_FuHuoDan: TForm_FuHuoDan
       end
       object cxGridDBTableView1Column2: TcxGridDBColumn
         DataBinding.FieldName = #33293#38646#37329#39069
-        Visible = False
         Options.Filtering = False
         Options.Sorting = False
         Width = 70

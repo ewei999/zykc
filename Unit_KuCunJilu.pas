@@ -99,6 +99,8 @@ type
     cxlbl9: TcxLabel;
     cxTextEdit37: TcxTextEdit;
     cxGridDBTableView3Column1: TcxGridDBColumn;
+    cxGridDBTableView8Column6: TcxGridDBColumn;
+    cxGridDBTableView1Column1: TcxGridDBColumn;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);

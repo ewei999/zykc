@@ -56,6 +56,8 @@ type
     cxGrid3Level1: TcxGridLevel;
     ds_liebiao: TDataSource;
     qry_liebiao: TADOQuery;
+    cxGrid3DBTableView1Column2: TcxGridDBColumn;
+    cxGrid3DBTableView1Column5: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);

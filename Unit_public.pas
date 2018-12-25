@@ -117,15 +117,15 @@ begin
   ADOBianHao.Connection := DataModule1.ADOCon_ALi;
   ADOBianHao.LockType:=ltBatchOptimistic;
   ADOBianHao.Close;
-  ADOBianHao.SQL.Text:='select  top 0 名称 as 供应商,价目编号 as 供应商编号,数量,进货单价 as 单价 from 中央采购入库明细表';
+  ADOBianHao.SQL.Text:='select  top 0 名称 as 供应商,价目编号 as 供应商编号,数量,进货单价 as 单价,整付数量,整付金额 from 中央采购入库明细表';
   ADOBianHao.Open;
   Result :=ADOBianHao;
 
   ADOQuery_danjia := TADOQuery.Create(nil);
   try
     ADOQuery_danjia.Connection := DataModule1.ADOCon_ALi;
-    ADOQuery_danjia.SQL.Text := 'select 供应商,进货单价,sum(批次剩余库存数) as 批次剩余库存数,名称=(select top 1 名称 from 供应商表 where 供应商编号=c.供应商) '+
-    ' from ( select b.进货单价, 供应商,'+
+    ADOQuery_danjia.SQL.Text := 'select 供应商,进货单价,sum(批次剩余库存数) as 批次剩余库存数,名称=(select top 1 名称 from 供应商表 where 供应商编号=c.供应商),整付数量,整付金额 '+
+    ' from ( select b.进货单价, 供应商,整付数量,整付金额,'+
     ' 批次剩余库存数=(case when 小于批次-出库数量<0 then (case when 小于等于批次-出库数量<0 then 0 else (小于等于批次-出库数量) end ) else b.数量 end) from ('+
     ' select * , '+
     ' 小于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) '+
@@ -133,8 +133,8 @@ begin
     ' 小于等于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) '+
     '    and 价目编号=a.价目编号 and 进货单价=a.进货单价 and 供应商=a.供应商 and 入库批次<=a.入库批次),0),'+
     ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2) and 是否作废=0 and 价目编号=a.价目编号 and 单价=a.进货单价 and 供应商=a.供应商 ),0)'+
-    ' from ( select 价目编号,入库批次,进货单价,数量,供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号=中央采购入库明细表.入库编号) from 中央采购入库明细表  '+
-    ' where 价目编号='+QuotedStr(jmbh)+' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) )a)b)c where 批次剩余库存数>0 group by 供应商,进货单价' ;
+    ' from ( select 价目编号,入库批次,进货单价,数量,整付数量,整付金额,供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号=中央采购入库明细表.入库编号) from 中央采购入库明细表  '+
+    ' where 价目编号='+QuotedStr(jmbh)+' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) )a)b)c where 批次剩余库存数>0 group by 供应商,进货单价,整付数量,整付金额' ;
     ADOQuery_danjia.Active := true;
     if ADOQuery_danjia.RecordCount >0 then
     begin
@@ -152,6 +152,8 @@ begin
             ADOBianHao.FieldByName('供应商编号').AsString:= ADOQuery_danjia.FieldByName('供应商').AsString;
             ADOBianHao.FieldByName('供应商').AsString:= ADOQuery_danjia.FieldByName('名称').AsString;
             ADOBianHao.FieldByName('单价').AsFloat:= ADOQuery_danjia.FieldByName('进货单价').AsFloat;
+            ADOBianHao.FieldByName('整付数量').AsFloat:= ADOQuery_danjia.FieldByName('整付数量').AsFloat;
+            ADOBianHao.FieldByName('整付金额').AsFloat:= ADOQuery_danjia.FieldByName('整付金额').AsFloat;
             ADOBianHao.FieldByName('数量').AsFloat:= ck;
             ADOBianHao.Post;
             ck:=0;
@@ -164,7 +166,9 @@ begin
             while not ADOBianHao.Eof do
             begin
               if (ADOBianHao.FieldByName('供应商编号').AsString=ADOQuery_danjia.FieldByName('供应商').AsString)
-              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat) then
+              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat)
+              and (ADOBianHao.FieldByName('整付数量').asfloat=ADOQuery_danjia.FieldByName('整付数量').asfloat)
+              and (ADOBianHao.FieldByName('整付金额').asfloat=ADOQuery_danjia.FieldByName('整付金额').asfloat)              then
               begin
                 i_int:=1;
                 ADOBianHao.Edit;
@@ -181,6 +185,8 @@ begin
               ADOBianHao.FieldByName('供应商').AsString:= ADOQuery_danjia.FieldByName('名称').AsString;
               ADOBianHao.FieldByName('单价').AsFloat:= ADOQuery_danjia.FieldByName('进货单价').AsFloat;
               ADOBianHao.FieldByName('数量').AsFloat:= ck;
+              ADOBianHao.FieldByName('整付数量').AsFloat:= ADOQuery_danjia.FieldByName('整付数量').AsFloat;
+              ADOBianHao.FieldByName('整付金额').AsFloat:= ADOQuery_danjia.FieldByName('整付金额').AsFloat;
               ADOBianHao.Post;
             end;
             ck:=0;
@@ -196,7 +202,10 @@ begin
             while not ADOBianHao.Eof do
             begin
               if (ADOBianHao.FieldByName('供应商编号').AsString=ADOQuery_danjia.FieldByName('供应商').AsString)
-              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat) then
+              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat)
+              and (ADOBianHao.FieldByName('整付数量').asfloat=ADOQuery_danjia.FieldByName('整付数量').asfloat)
+              and (ADOBianHao.FieldByName('整付金额').asfloat=ADOQuery_danjia.FieldByName('整付金额').asfloat)
+              then
               begin
                 i_int:=1;
                 ADOBianHao.Edit;
@@ -213,6 +222,8 @@ begin
               ADOBianHao.FieldByName('供应商').AsString:= ADOQuery_danjia.FieldByName('名称').AsString;
               ADOBianHao.FieldByName('单价').AsFloat:= ADOQuery_danjia.FieldByName('进货单价').AsFloat;
               ADOBianHao.FieldByName('数量').AsFloat:= StrToFloat(ckshuliang);
+              ADOBianHao.FieldByName('整付数量').AsFloat:= ADOQuery_danjia.FieldByName('整付数量').AsFloat;
+              ADOBianHao.FieldByName('整付金额').AsFloat:= ADOQuery_danjia.FieldByName('整付金额').AsFloat;
               ADOBianHao.Post;
             end;
             Break;
@@ -224,7 +235,10 @@ begin
             while not ADOBianHao.Eof do
             begin
               if (ADOBianHao.FieldByName('供应商编号').AsString=ADOQuery_danjia.FieldByName('供应商').AsString)
-              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat) then
+              and (ADOBianHao.FieldByName('单价').asfloat=ADOQuery_danjia.FieldByName('进货单价').asfloat)
+              and (ADOBianHao.FieldByName('整付数量').asfloat=ADOQuery_danjia.FieldByName('整付数量').asfloat)
+              and (ADOBianHao.FieldByName('整付金额').asfloat=ADOQuery_danjia.FieldByName('整付金额').asfloat)
+              then
               begin
                 i_int:=1;
                 ADOBianHao.Edit;
@@ -241,6 +255,8 @@ begin
               ADOBianHao.FieldByName('供应商').AsString:= ADOQuery_danjia.FieldByName('名称').AsString;
               ADOBianHao.FieldByName('单价').AsFloat:= ADOQuery_danjia.FieldByName('进货单价').AsFloat;
               ADOBianHao.FieldByName('数量').AsFloat:= ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat;
+              ADOBianHao.FieldByName('整付数量').AsFloat:= ADOQuery_danjia.FieldByName('整付数量').AsFloat;
+              ADOBianHao.FieldByName('整付金额').AsFloat:= ADOQuery_danjia.FieldByName('整付金额').AsFloat;
               ADOBianHao.Post;
             end;
             ck := ck- ADOQuery_danjia.FieldByName('批次剩余库存数').AsFloat;

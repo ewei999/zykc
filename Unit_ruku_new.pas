@@ -25,7 +25,8 @@ uses
   cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, Vcl.StdCtrls,
   cxButtons, cxDBEdit, cxDropDownEdit, cxLookupEdit, cxDBLookupEdit,
   cxDBLookupComboBox, cxMaskEdit, cxCalendar, cxLabel, Vcl.ToolWin,
-  Vcl.ActnCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, dxSkinBlue,unit_KuCunJilu;
+  Vcl.ActnCtrls, Vcl.ExtCtrls, Vcl.DBCtrls, dxSkinBlue,unit_KuCunJilu,
+  cxCurrencyEdit;
 
 type
   TForm_ruku_new = class(TForm)
@@ -93,6 +94,9 @@ type
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
     cxStyle3: TcxStyle;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
+    cxGrid1DBTableView1Column3: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_saveExecute(Sender: TObject);
@@ -104,7 +108,6 @@ type
     procedure DataSource_cg_mingxiDataChange(Sender: TObject; Field: TField);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edit(zt:string);
-    function jine(ado:tadoquery):real;
     procedure cxDBTextEdit4PropertiesChange(Sender: TObject);
     procedure Action_delete_mExecute(Sender: TObject);
     procedure Action_deleteExecute(Sender: TObject);
@@ -113,7 +116,7 @@ type
     procedure cxDBLookupComboBox1Exit(Sender: TObject);
     procedure cxButton8Click(Sender: TObject);
   private
-    { Private declarations }
+    function jine(ado:tadoquery;lx:string):real;
   public
     { Public declarations }
   end;
@@ -171,6 +174,13 @@ end;
 procedure TForm_ruku_new.Action_delete_mExecute(Sender: TObject);
 begin
   ADOQuery_cg_mingxi.Delete;
+
+  ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi,'合计'));
+  ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat :=  (jine(ADOQuery_cg_mingxi,'舍零'));
+  if ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat<>0 then
+    ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat
+  else
+    ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
 end;
 
 procedure TForm_ruku_new.Action_newExecute(Sender: TObject);
@@ -216,15 +226,21 @@ begin
       ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
       ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
 
-      DataModule1.openSql('select top 1 进货单价 from 中央采购入库明细表 '+
+      DataModule1.openSql('select top 1 进货单价,整付数量,整付金额 from 中央采购入库明细表 '+
         ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+' order by 编号 desc');
       if DataModule1.ADOQuery_L.Eof=false then
+      begin
         ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
+        ADOQuery_cg_mingxi.FieldByName('整付数量').AsString := DataModule1.ADOQuery_L.FieldByName('整付数量').AsString;
+        ADOQuery_cg_mingxi.FieldByName('整付金额').AsString := DataModule1.ADOQuery_L.FieldByName('整付金额').AsString;
+      end;
 
       ADOQuery_cg_mingxi.Post;
-      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
-      if cxDBTextEdit4.Text<>'' then
-        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
+
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat := (jine(ADOQuery_cg_mingxi,'合计'));
+      ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat :=  (jine(ADOQuery_cg_mingxi,'舍零'));
+      if ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat<>0 then
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat
       else
         ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
     end;
@@ -241,8 +257,59 @@ begin
     exit;
   end;
 
+  ADOQuery_cg_mingxi.DisableControls;
+  ADOQuery_cg_mingxi.First;
+  while not ADOQuery_cg_mingxi.Eof do
+  begin
+    if (ADOQuery_cg_mingxi.FieldByName('整付数量').AsString<>'') and (ADOQuery_cg_mingxi.FieldByName('整付金额').AsString='') then
+    begin
+      ADOQuery_cg_mingxi.EnableControls;
+      Application.MessageBox('整付金额不能为空', '提示', MB_OK + MB_ICONINFORMATION);
+      exit;
+    end;
+    if (ADOQuery_cg_mingxi.FieldByName('整付金额').AsString<>'') and (ADOQuery_cg_mingxi.FieldByName('整付数量').AsString='') then
+    begin
+      ADOQuery_cg_mingxi.EnableControls;
+      Application.MessageBox('整付数量不能为空', '提示', MB_OK + MB_ICONINFORMATION);
+      exit;
+    end;
+
+    ADOQuery_cg_mingxi.Next;
+  end;
+  ADOQuery_cg_mingxi.EnableControls;
+
   if ADOQuery_cg_zhubiao.Modified then
   begin
+    if Action_save.Caption='保存' then
+    begin
+      ADOQuery_cg_mingxi.DisableControls;
+      DataModule1.openSql('select * from 中央采购入库明细表 where 入库编号='+QuotedStr(cxDBTextEdit1.Text)+' ');
+      while not DataModule1.ADOQuery_L.Eof do
+      begin
+        if DataModule1.ADOQuery_L.FieldByName('价目编号').AsString<>'' then
+        begin
+          if ADOQuery_cg_mingxi.Locate('价目编号',DataModule1.ADOQuery_L.FieldByName('价目编号').AsString,[])=False then
+          begin
+            DataModule1.ADOQuery_L.Edit;
+            DataModule1.ADOQuery_L.FieldByName('采购明细编号').AsString:='';
+            DataModule1.ADOQuery_L.Post;
+
+            DataModule1.openSql2('select * from 中央采购申请明细表 where 入库明细编号='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('入库明细编号').AsString)+'');
+            if DataModule1.ADOQuery_L2.Eof=False then
+            begin
+              DataModule1.ADOQuery_L2.Edit;
+              DataModule1.ADOQuery_L2.FieldByName('入库明细编号').AsString:='';
+              DataModule1.ADOQuery_L2.Post;
+            end;
+          end;
+        end;
+        DataModule1.ADOQuery_L.Next;
+      end;
+
+      ADOQuery_cg_mingxi.First;
+      ADOQuery_cg_mingxi.EnableControls;
+      ADOQuery_cg_mingxi.Edit;
+    end;
     ADOQuery_cg_zhubiao.UpdateBatch();
     ADOQuery_cg_mingxi.UpdateBatch();
   end;
@@ -279,7 +346,7 @@ end;
 
 procedure TForm_ruku_new.button_zhuanti(button: string);
 begin
-  if button = 'new' then
+   if button = 'new' then
   begin
     Action_new.Enabled := false;
     Action_edit.Enabled := false;
@@ -295,11 +362,15 @@ begin
      Action_delete.Enabled := True;
      Action_close.Enabled := false;
      Action_cancel.Enabled := True;
-     ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
-     if cxDBTextEdit4.Text<>'' then
-       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
-     else
-       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+
+     cxDBTextEdit1.Enabled:=false;
+    ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi,'合计'));
+    ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat :=  (jine(ADOQuery_cg_mingxi,'舍零'));
+    if ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat<>0 then
+      ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat
+    else
+      ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+
   end
   else if button='save' then
   begin
@@ -371,7 +442,9 @@ begin
       ' 类别=(select top 1 类别 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
       ' 小类=(select top 1 小类 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
       ' 单价=(select top 1 单价 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
-      ' 进货单价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 )'+
+      ' 进货单价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 ),'+
+      ' 整付数量=(select top 1 整付数量 from 中央采购入库明细表 where 价目编号=a.价目编号 ),'+
+      ' 整付金额=(select top 1 整付金额 from 中央采购入库明细表 where 价目编号=a.价目编号 )'+
       ' from ( select 编号,价目编号,数量 from 中央采购申请明细表 where 编号 in ('+Form_KuCunJilu.BHStr+') )a');
       while not DataModule1.ADOQuery_L.Eof do
       begin
@@ -397,17 +470,23 @@ begin
 
         ADOQuery_cg_mingxi.FieldByName('金额').AsFloat :=ADOQuery_cg_mingxi.FieldByName('进货单价').AsFloat*ADOQuery_cg_mingxi.FieldByName('数量').asfloat;
         ADOQuery_cg_mingxi.FieldByName('采购明细编号').AsString := DataModule1.ADOQuery_L.FieldByName('编号').AsString;
+
+        ADOQuery_cg_mingxi.FieldByName('整付数量').AsString := DataModule1.ADOQuery_L.FieldByName('整付数量').AsString;
+        ADOQuery_cg_mingxi.FieldByName('整付金额').AsString := DataModule1.ADOQuery_L.FieldByName('整付金额').AsString;
+
         ADOQuery_cg_mingxi.Post;
 
         DataModule1.ADOQuery_L.next;
       end;
       ADOQuery_cg_mingxi.First;
 
-      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
-     if cxDBTextEdit4.Text<>'' then
-       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-strtofloat(cxDBTextEdit4.Text)
-     else
-       ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi,'合计'));
+      ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat :=  (jine(ADOQuery_cg_mingxi,'舍零'));
+      if ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat<>0 then
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat
+      else
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+
 
       ADOQuery_cg_mingxi.First;
       ADOQuery_cg_mingxi.EnableControls;
@@ -451,37 +530,28 @@ procedure TForm_ruku_new.DataSource_cg_mingxiDataChange(Sender: TObject;
 begin
   if ADOQuery_cg_mingxi.Modified then
   begin
-    if (LowerCase(Field.FieldName)= '数量') and (ADOQuery_cg_mingxi.FieldByName('数量').AsString <> '') and (ADOQuery_cg_mingxi.FieldByName('进货单价').AsString <> '') then
+    if (LowerCase(Field.FieldName)= '数量') or (LowerCase(Field.FieldName)= '进货单价') or (LowerCase(Field.FieldName)= '舍零金额') then
     begin
-      ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat;
-      ADOQuery_cg_zhubiao.Edit;
-      if ADOQuery_cg_mingxi.RecordCount>0 then
-      begin
-        ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
-        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  :=  (jine(ADOQuery_cg_mingxi) - ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat);
-      end
-      else
-      begin
-        ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=ADOQuery_cg_mingxi.FieldByName('金额').AsFloat;
-        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat :=ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
-      end;
-      ADOQuery_cg_mingxi.Edit;
-    end;
-    if (LowerCase(Field.FieldName)= '进货单价') and (ADOQuery_cg_mingxi.FieldByName('进货单价').AsString <> '') and (ADOQuery_cg_mingxi.FieldByName('数量').AsString <> '') then
-    begin
+      ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := 0;
 
-      ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat;
-      ADOQuery_cg_zhubiao.Edit;
-      if ADOQuery_cg_mingxi.RecordCount>0 then
+      if (ADOQuery_cg_mingxi.FieldByName('数量').AsString <> '') and (ADOQuery_cg_mingxi.FieldByName('进货单价').AsString <> '') then
       begin
-        ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi));
-        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  :=  (jine(ADOQuery_cg_mingxi) - ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat)
-      end
-      else
-      begin
-        ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('金额').AsFloat ;
-        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+        if (ADOQuery_cg_mingxi.FieldByName('舍零金额').AsString <> '') then
+          ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat-
+            ADOQuery_cg_mingxi.FieldByName('舍零金额').AsFloat
+        else
+          ADOQuery_cg_mingxi.FieldByName('金额').AsFloat := ADOQuery_cg_mingxi.FieldByName('数量').AsFloat*adoquery_cg_mingxi.FieldByName('进货单价').AsFloat;
       end;
+
+      ADOQuery_cg_zhubiao.Edit;
+      ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat :=  (jine(ADOQuery_cg_mingxi,'合计'));
+      ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat :=  (jine(ADOQuery_cg_mingxi,'舍零'));
+      if ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat<>0 then
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat-ADOQuery_cg_zhubiao.FieldByName('舍零').AsFloat
+      else
+        ADOQuery_cg_zhubiao.FieldByName('合计金额').AsFloat  := ADOQuery_cg_zhubiao.FieldByName('金额').AsFloat;
+
+
       ADOQuery_cg_mingxi.Edit;
     end;
   end;
@@ -516,21 +586,33 @@ begin
   ADOQuery_jiamu.Active := True;
 end;
 
-function TForm_ruku_new.jine(ado: tadoquery): real;
+function TForm_ruku_new.jine(ado:tadoquery;lx:string):real;
 var
   I : integer;
   K : real;
 begin
-  result := 0;
+  K:=0;
   if ado.RecordCount >0  then
   begin
     ado.First;
     for I := 0 to ado.RecordCount-1 do
     begin
-      result:= result+ ado.FieldByName('进货单价').AsFloat*ado.FieldByName('数量').asfloat ;
+      if lx='合计' then
+      begin
+        if ado.FieldByName('金额').AsString<>'' then
+          K:= K+ (ado.FieldByName('金额').AsFloat);
+        if ado.FieldByName('舍零金额').AsString<>'' then
+          K:= K+ (ado.FieldByName('舍零金额').AsFloat);
+      end;
+      if lx='舍零' then
+      begin
+        if ado.FieldByName('舍零金额').AsString<>'' then
+          K:= K+ (ado.FieldByName('舍零金额').AsFloat);
+      end;
       ado.Next;
     end;
   end;
+  result := K;
 end;
 
 end.

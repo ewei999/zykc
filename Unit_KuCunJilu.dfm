@@ -95,7 +95,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Height = 549
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet4
+    Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 544
@@ -188,6 +188,12 @@ object Form_KuCunJilu: TForm_KuCunJilu
             Properties.DisplayFormat = '0.00'
             Width = 70
           end
+          object cxGridDBTableView8Column6: TcxGridDBColumn
+            DataBinding.FieldName = #33293#38646#37329#39069
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
+            Width = 60
+          end
           object cxGridDBTableView8Column2: TcxGridDBColumn
             DataBinding.FieldName = #37329#39069
             PropertiesClassName = 'TcxCurrencyEditProperties'
@@ -272,6 +278,12 @@ object Form_KuCunJilu: TForm_KuCunJilu
             PropertiesClassName = 'TcxCurrencyEditProperties'
             Properties.DisplayFormat = '0.00'
             Width = 70
+          end
+          object cxGridDBTableView1Column1: TcxGridDBColumn
+            DataBinding.FieldName = #33293#38646#37329#39069
+            PropertiesClassName = 'TcxCurrencyEditProperties'
+            Properties.DisplayFormat = '0.00'
+            Width = 60
           end
           object cxGridDBColumn10: TcxGridDBColumn
             DataBinding.FieldName = #20986#24211#37329#39069

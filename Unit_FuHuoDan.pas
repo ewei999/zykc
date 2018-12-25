@@ -148,6 +148,24 @@ begin
       Application.MessageBox('付货数量格式不正确', '提示', MB_OK);
       exit;
     end;
+    if qry_fuhuo.FieldByName('舍零金额').asstring<>'' then
+    begin
+      try
+        danjia:= qry_fuhuo.FieldByName('舍零金额').asfloat;
+        if danjia<0 then
+        begin
+          qry_fuhuo.EnableControls;
+          qry_fuhuo.edit;
+          Application.MessageBox('舍零金额不能小于0', '提示', MB_OK);
+          exit;
+        end;
+      except
+        qry_fuhuo.EnableControls;
+        qry_fuhuo.edit;
+        Application.MessageBox('舍零金额格式不正确', '提示', MB_OK);
+        exit;
+      end;
+    end;
     qry_fuhuo.Next;
   end;
   qry_fuhuo.EnableControls;
@@ -188,10 +206,16 @@ procedure TForm_FuHuoDan.ds_fuhuoDataChange(Sender: TObject; Field: TField);
 begin
   if (qry_fuhuo.Modified) and (qry_fuhuo.State = dsEdit) then
   begin
-    if (LowerCase(Field.FieldName)= '出库数量')  then
+    if (LowerCase(Field.FieldName)= '出库数量') or (LowerCase(Field.FieldName)= '舍零金额')  then
     begin
       if (qry_fuhuo.FieldByName('单价').AsString<>'') and (qry_fuhuo.FieldByName('出库数量').AsString<>'') then
-        qry_fuhuo.FieldByName('出库金额').AsFloat:=qry_fuhuo.FieldByName('出库数量').AsFloat*qry_fuhuo.FieldByName('单价').AsFloat;
+      begin
+        if qry_fuhuo.FieldByName('舍零金额').AsString='' then
+          qry_fuhuo.FieldByName('出库金额').AsFloat:=qry_fuhuo.FieldByName('出库数量').AsFloat*qry_fuhuo.FieldByName('单价').AsFloat
+        else
+          qry_fuhuo.FieldByName('出库金额').AsFloat:=(qry_fuhuo.FieldByName('出库数量').AsFloat*qry_fuhuo.FieldByName('单价').AsFloat)
+                -qry_fuhuo.FieldByName('舍零金额').AsFloat;
+      end;
     end;
   end;
 end;

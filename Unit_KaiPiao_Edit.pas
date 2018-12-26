@@ -24,7 +24,8 @@ uses
   cxDBLookupComboBox, Data.DB, Data.Win.ADODB, cxStyles, dxSkinscxPCPainter,
   cxCustomData, cxFilter, cxData, cxDataStorage, cxNavigator, cxDBData,
   cxCheckBox, cxCalendar, cxGridLevel, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid;
+  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, dxBarBuiltInMenu, cxPC,
+  Vcl.ComCtrls, dxCore, cxDateUtils,RuntimeInfo,System.DateUtils,System.StrUtils,cxCurrencyEdit;
 
 type
   TForm_KaiPiao_Edit = class(TForm)
@@ -35,15 +36,21 @@ type
     act2: TAction;
     cxButton8: TcxButton;
     cxButton2: TcxButton;
-    pnl1: TPanel;
     ds_fenyuan: TDataSource;
     qry_fenyuan: TADOQuery;
+    qry_gys: TADOQuery;
+    ds_gys: TDataSource;
+    ds_liebiao: TDataSource;
+    qry_liebiao: TADOQuery;
+    act1: TAction;
+    cxButton1: TcxButton;
+    cxPageControl1: TcxPageControl;
+    cxTabSheet1: TcxTabSheet;
+    pnl1: TPanel;
     cxlbl2: TcxLabel;
     cxLookup_fenyuan: TcxLookupComboBox;
     cxLookup_gys: TcxLookupComboBox;
     cxlbl3: TcxLabel;
-    qry_gys: TADOQuery;
-    ds_gys: TDataSource;
     cxlbl4: TcxLabel;
     cxlbl_heji: TcxLabel;
     cxGrid2: TcxGrid;
@@ -55,10 +62,18 @@ type
     cxGridDBTableView1Column3: TcxGridDBColumn;
     cxGridDBTableView1Column6: TcxGridDBColumn;
     cxGridLevel1: TcxGridLevel;
-    ds_liebiao: TDataSource;
-    qry_liebiao: TADOQuery;
-    act1: TAction;
-    cxButton1: TcxButton;
+    cxTabSheet2: TcxTabSheet;
+    pnl2: TPanel;
+    cxlbl6: TcxLabel;
+    cxDateEdit7: TcxDateEdit;
+    cxlbl20: TcxLabel;
+    cxDateEdit8: TcxDateEdit;
+    cxButton30: TcxButton;
+    cxGrid15: TcxGrid;
+    cxGridDBTableView12: TcxGridDBTableView;
+    cxGridLevel12: TcxGridLevel;
+    qry_caiwu: TADOQuery;
+    ds_caiwu: TDataSource;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure act2Execute(Sender: TObject);
@@ -70,9 +85,11 @@ type
     procedure cxGridDBTableView1EditChanged(Sender: TcxCustomGridTableView;
       AItem: TcxCustomGridTableItem);
     procedure act1Execute(Sender: TObject);
+    procedure cxButton30Click(Sender: TObject);
   private
     xzbool:boolean;
     procedure Open_LieBiao;
+    procedure CreateGrid(cxgridA:TcxGridDBTableView);
   public
     zt:string;
     KPbianhao:string;
@@ -161,6 +178,55 @@ begin
   DataModule1.frxReport_dayin.ShowReport;
 end;
 
+
+procedure TForm_KaiPiao_Edit.CreateGrid(cxgridA:TcxGridDBTableView);
+var
+  i,x :integer;
+  cl  : TcxGridDBcolumn;
+begin
+  x:=0;
+  cxgridA.BeginUpdate;
+  try
+    cxgridA.ClearItems;
+    cxgridA.DataController.Summary.FooterSummaryItems.Clear;
+
+    for i := 0 to cxgridA.DataController.DataSet.FieldCount - 1 do
+    begin
+      cl  :=  cxgridA.CreateColumn;
+      cl.DataBinding.FieldName := cxgridA.DataController.DataSet.Fields[i].FieldName;
+
+      if  (RightStr(cl.DataBinding.FieldName,2)='出库')  then
+      begin
+        cl.PropertiesClassName := 'TcxCurrencyEditProperties';
+        TcxCurrencyEditProperties(cl.Properties).DisplayFormat:='0.00';
+        cl.Summary.FooterKind:=skSum;
+        cl.Summary.FooterFormat:='0.00';
+      end;
+//      if cl.DataBinding.FieldName='选择' then
+//      begin
+//        cl.PropertiesClassName := 'Tcxcheckbox';
+//        TcxcheckboxProperties(cl.Properties).NullStyle:=nssUnchecked;
+//      end;
+
+
+      cl.Width := 70;
+
+      if cl.DataBinding.FieldName='供应商id' then
+        cl.Visible:=false;
+
+      if (cl.Visible) and (x=0) then
+      begin
+        x:=11;
+        cl.Summary.FooterKind:=skCount;
+        cl.Summary.FooterFormat:='合计：0';
+      end;
+    end;
+  finally
+    cxgridA.EndUpdate;
+  end;
+end;
+
+
 procedure TForm_KaiPiao_Edit.act2Execute(Sender: TObject);
 var
   heji:Real;
@@ -221,7 +287,7 @@ begin
     begin
       if cxGridDBTableView1.DataController.Values[i,cxGridDBTableView1Column4.Index] = True then
       begin
-        DataModule1.execSql('update 中央库存_出库表 set 开票编号='+QuotedStr(KPbianhao)+' '+
+        DataModule1.execSql('update 中央库存_出库表 set 开票编号='+QuotedStr(KPbianhao)+' ,门店更新状态=0 '+
         ' where 编号='+qry_liebiao.FieldByName('编号').AsString+'');
       end;
       qry_liebiao.Next;
@@ -244,6 +310,41 @@ end;
 procedure TForm_KaiPiao_Edit.act_closeExecute(Sender: TObject);
 begin
   close;
+end;
+
+procedure TForm_KaiPiao_Edit.cxButton30Click(Sender: TObject);
+var
+  tjstr:string;
+  i:integer;
+  heji:Real;
+begin
+  if cxDateEdit7.Text='' then
+  begin
+    Application.MessageBox('请选择统计开始日期', '提示', MB_OK);
+    exit;
+  end;
+  if cxDateEdit8.Text='' then
+  begin
+    Application.MessageBox('请选择统计终止日期', '提示', MB_OK);
+    exit;
+  end;
+
+  tjstr:='';
+  if cxDateEdit7.Text<>'' then
+  begin
+    tjstr:=tjstr+' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
+  end;
+  if cxDateEdit8.Text<>'' then
+  begin
+    tjstr:=tjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
+  end;
+
+
+
+
+  Show_RuntimeInfo('正在统计');
+
+  hide_RuntimeInfo;
 end;
 
 procedure TForm_KaiPiao_Edit.cxGridDBTableView1Column4HeaderClick(
@@ -355,6 +456,8 @@ begin
   qry_gys.Close;
   qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where isnull(是否作废,0)=0 ';
   qry_gys.Open;
+
+  cxTabSheet1.Show;
 end;
 
 procedure TForm_KaiPiao_Edit.FormShow(Sender: TObject);

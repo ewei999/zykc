@@ -42,9 +42,6 @@ type
     cxDBDateEdit1: TcxDBDateEdit;
     cxDBLookupComboBox1: TcxDBLookupComboBox;
     cxDBMemo1: TcxDBMemo;
-    cxButton1: TcxButton;
-    cxButton2: TcxButton;
-    cxButton3: TcxButton;
     cxGrid1: TcxGrid;
     cxGrid1DBTableView1: TcxGridDBTableView;
     cxGrid1Level1: TcxGridLevel;
@@ -82,11 +79,9 @@ type
     cxgrdbclmncxGrid1DBTableView1DBColumn11: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn12: TcxGridDBColumn;
     cxgrdbclmncxGrid1DBTableView1DBColumn13: TcxGridDBColumn;
-    cxButton4: TcxButton;
     cxButton5: TcxButton;
     cxButton7: TcxButton;
     Action_edit_m: TAction;
-    cxButton6: TcxButton;
     cxLabel9: TcxLabel;
     cxDBTextEdit5: TcxDBTextEdit;
     cxButton8: TcxButton;
@@ -97,6 +92,7 @@ type
     cxGrid1DBTableView1Column1: TcxGridDBColumn;
     cxGrid1DBTableView1Column2: TcxGridDBColumn;
     cxGrid1DBTableView1Column3: TcxGridDBColumn;
+    cxGrid1DBTableView1Column4: TcxGridDBColumn;
     procedure Action_newExecute(Sender: TObject);
     procedure button_zhuanti(button:string);
     procedure Action_saveExecute(Sender: TObject);
@@ -226,13 +222,14 @@ begin
       ADOQuery_cg_mingxi.FieldByName('类别').AsString := Form_jiamubiao.ADOQuery1.FieldByName('类别').AsString;
       ADOQuery_cg_mingxi.FieldByName('小类').AsString := Form_jiamubiao.ADOQuery1.FieldByName('小类').AsString;
 
-      DataModule1.openSql('select top 1 进货单价,整付数量,整付金额 from 中央采购入库明细表 '+
+      DataModule1.openSql('select top 1 进货单价,整付数量,整付金额,备注 from 中央采购入库明细表 '+
         ' where 价目编号='+QuotedStr(Form_jiamubiao.ADOQuery1.FieldByName('价目编号').AsString)+' order by 编号 desc');
       if DataModule1.ADOQuery_L.Eof=false then
       begin
         ADOQuery_cg_mingxi.FieldByName('进货单价').AsString := DataModule1.ADOQuery_L.FieldByName('进货单价').AsString;
         ADOQuery_cg_mingxi.FieldByName('整付数量').AsString := DataModule1.ADOQuery_L.FieldByName('整付数量').AsString;
         ADOQuery_cg_mingxi.FieldByName('整付金额').AsString := DataModule1.ADOQuery_L.FieldByName('整付金额').AsString;
+        ADOQuery_cg_mingxi.FieldByName('备注').AsString := DataModule1.ADOQuery_L.FieldByName('备注').AsString;
       end;
 
       ADOQuery_cg_mingxi.Post;
@@ -444,7 +441,8 @@ begin
       ' 单价=(select top 1 单价 from 药品用品价目表 where 价目编号=a.价目编号) ,'+
       ' 进货单价=(select top 1 进货单价 from 中央采购入库明细表 where 价目编号=a.价目编号 ),'+
       ' 整付数量=(select top 1 整付数量 from 中央采购入库明细表 where 价目编号=a.价目编号 ),'+
-      ' 整付金额=(select top 1 整付金额 from 中央采购入库明细表 where 价目编号=a.价目编号 )'+
+      ' 整付金额=(select top 1 整付金额 from 中央采购入库明细表 where 价目编号=a.价目编号 ),'+
+      ' 备注=(select top 1 备注 from 中央采购入库明细表 where 价目编号=a.价目编号 )'+
       ' from ( select 编号,价目编号,数量 from 中央采购申请明细表 where 编号 in ('+Form_KuCunJilu.BHStr+') )a');
       while not DataModule1.ADOQuery_L.Eof do
       begin
@@ -473,7 +471,7 @@ begin
 
         ADOQuery_cg_mingxi.FieldByName('整付数量').AsString := DataModule1.ADOQuery_L.FieldByName('整付数量').AsString;
         ADOQuery_cg_mingxi.FieldByName('整付金额').AsString := DataModule1.ADOQuery_L.FieldByName('整付金额').AsString;
-
+        ADOQuery_cg_mingxi.FieldByName('备注').AsString := DataModule1.ADOQuery_L.FieldByName('备注').AsString;
         ADOQuery_cg_mingxi.Post;
 
         DataModule1.ADOQuery_L.next;

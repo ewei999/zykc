@@ -123,6 +123,9 @@
         end
         item
           Item = dxNavBar1Item18
+        end
+        item
+          Item = dxNavBar1Item19
         end>
     end
     object dxNavBar1Group3: TdxNavBarGroup
@@ -224,6 +227,10 @@
       SmallImageIndex = 45
       OnClick = dxNavBar1Item18Click
     end
+    object dxNavBar1Item19: TdxNavBarItem
+      Caption = #25439#22351#31649#29702
+      SmallImageIndex = 83
+    end
   end
   object pnl10: TPanel
     Left = 185
@@ -242,7 +249,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet8
+      Properties.ActivePage = cxTabSheet17
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685

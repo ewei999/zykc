@@ -2,8 +2,8 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
   Left = 0
   Top = 0
   Caption = #24320#31080
-  ClientHeight = 498
-  ClientWidth = 682
+  ClientHeight = 555
+  ClientWidth = 726
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 682
+    Width = 726
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -70,7 +70,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Transparent = True
   end
   object cxButton8: TcxButton
-    Left = 617
+    Left = 661
     Top = 11
     Width = 50
     Height = 58
@@ -87,9 +87,10 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 617
   end
   object cxButton2: TcxButton
-    Left = 561
+    Left = 605
     Top = 11
     Width = 50
     Height = 58
@@ -106,168 +107,10 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-  end
-  object pnl1: TPanel
-    Left = 0
-    Top = 80
-    Width = 682
-    Height = 65
-    Align = alTop
-    TabOrder = 3
-    object cxlbl2: TcxLabel
-      Left = 244
-      Top = 17
-      Caption = #20998#38498
-      Transparent = True
-    end
-    object cxLookup_fenyuan: TcxLookupComboBox
-      Left = 286
-      Top = 15
-      Properties.KeyFieldNames = 'abbr'
-      Properties.ListColumns = <
-        item
-          FieldName = 'name'
-        end>
-      Properties.ListOptions.ShowHeader = False
-      Properties.ListSource = ds_fenyuan
-      Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
-      StyleDisabled.Color = clYellow
-      StyleDisabled.TextColor = clBlack
-      TabOrder = 1
-      OnExit = cxLookup_gysExit
-      OnKeyPress = cxLookup_gysKeyPress
-      Width = 136
-    end
-    object cxLookup_gys: TcxLookupComboBox
-      Left = 78
-      Top = 15
-      Properties.KeyFieldNames = #20379#24212#21830#32534#21495
-      Properties.ListColumns = <
-        item
-          FieldName = #21517#31216
-        end>
-      Properties.ListOptions.ShowHeader = False
-      Properties.ListSource = ds_gys
-      Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
-      StyleDisabled.Color = clYellow
-      StyleDisabled.TextColor = clBlack
-      TabOrder = 2
-      OnExit = cxLookup_gysExit
-      OnKeyPress = cxLookup_gysKeyPress
-      Width = 136
-    end
-    object cxlbl3: TcxLabel
-      Left = 20
-      Top = 17
-      Caption = #20379#24212#21830
-      Transparent = True
-    end
-    object cxlbl4: TcxLabel
-      Left = 430
-      Top = 37
-      Caption = #24050#36873#21512#35745#37329#39069#65306
-      Transparent = True
-    end
-    object cxlbl_heji: TcxLabel
-      Left = 553
-      Top = 37
-      Caption = #24050#36873#21512#35745#37329#39069#65306
-      Transparent = True
-    end
-  end
-  object cxGrid2: TcxGrid
-    Left = 0
-    Top = 145
-    Width = 682
-    Height = 353
-    Align = alClient
-    TabOrder = 4
-    LookAndFeel.SkinName = 'Blue'
-    object cxGridDBTableView1: TcxGridDBTableView
-      Navigator.Buttons.CustomButtons = <>
-      OnEditChanged = cxGridDBTableView1EditChanged
-      DataController.DataModeController.SmartRefresh = True
-      DataController.DataSource = ds_liebiao
-      DataController.KeyFieldNames = #32534#21495
-      DataController.Summary.DefaultGroupSummaryItems = <>
-      DataController.Summary.FooterSummaryItems = <
-        item
-          Format = #21512#35745#65306'0'
-          Kind = skCount
-          Column = cxGridDBColumn3
-        end
-        item
-          Format = '0.00'
-          Kind = skSum
-          Column = cxGridDBTableView1Column6
-        end>
-      DataController.Summary.SummaryGroups = <>
-      OptionsData.CancelOnExit = False
-      OptionsData.Deleting = False
-      OptionsData.DeletingConfirmation = False
-      OptionsData.Inserting = False
-      OptionsSelection.InvertSelect = False
-      OptionsSelection.MultiSelect = True
-      OptionsSelection.CellMultiSelect = True
-      OptionsView.ColumnAutoWidth = True
-      OptionsView.Footer = True
-      OptionsView.GroupByBox = False
-      object cxGridDBTableView1Column4: TcxGridDBColumn
-        Caption = #36873#25321
-        DataBinding.ValueType = 'Boolean'
-        PropertiesClassName = 'TcxCheckBoxProperties'
-        Properties.Alignment = taCenter
-        Properties.NullStyle = nssUnchecked
-        Options.Filtering = False
-        Options.Moving = False
-        Options.Sorting = False
-        Width = 50
-        OnHeaderClick = cxGridDBTableView1Column4HeaderClick
-      end
-      object cxGridDBColumn3: TcxGridDBColumn
-        Caption = #20184#36135#26102#38388
-        DataBinding.FieldName = #20986#24211#26102#38388
-        PropertiesClassName = 'TcxDateEditProperties'
-        Properties.DisplayFormat = 'yyyy-mm-dd'
-        Options.Editing = False
-        Options.Moving = False
-        Width = 100
-      end
-      object cxGridDBColumn4: TcxGridDBColumn
-        DataBinding.FieldName = #21517#31216
-        Options.Editing = False
-        Options.Moving = False
-        Width = 150
-      end
-      object cxGridDBTableView1Column1: TcxGridDBColumn
-        Caption = #25968#37327
-        DataBinding.FieldName = #20986#24211#25968#37327
-        Options.Editing = False
-        Options.Moving = False
-        Width = 60
-      end
-      object cxGridDBTableView1Column3: TcxGridDBColumn
-        DataBinding.FieldName = #21333#20215
-        Options.Editing = False
-        Options.Filtering = False
-        Options.Moving = False
-        Options.Sorting = False
-        Width = 70
-      end
-      object cxGridDBTableView1Column6: TcxGridDBColumn
-        Caption = #21512#35745#37329#39069
-        DataBinding.FieldName = #20986#24211#37329#39069
-        Options.Editing = False
-        Options.Moving = False
-        Width = 70
-      end
-    end
-    object cxGridLevel1: TcxGridLevel
-      GridView = cxGridDBTableView1
-    end
+    ExplicitLeft = 561
   end
   object cxButton1: TcxButton
-    Left = 505
+    Left = 549
     Top = 11
     Width = 50
     Height = 58
@@ -277,13 +120,292 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     LookAndFeel.NativeStyle = False
     LookAndFeel.SkinName = 'Black'
     OptionsImage.Layout = blGlyphTop
-    TabOrder = 5
+    TabOrder = 3
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 505
+  end
+  object cxPageControl1: TcxPageControl
+    Left = 0
+    Top = 80
+    Width = 726
+    Height = 475
+    Align = alClient
+    TabOrder = 4
+    Properties.ActivePage = cxTabSheet2
+    Properties.CustomButtons.Buttons = <>
+    LookAndFeel.SkinName = 'Black'
+    ExplicitLeft = 8
+    ExplicitTop = 75
+    ExplicitWidth = 710
+    ExplicitHeight = 461
+    ClientRectBottom = 470
+    ClientRectLeft = 2
+    ClientRectRight = 721
+    ClientRectTop = 31
+    object cxTabSheet1: TcxTabSheet
+      Caption = #21333#24405
+      ImageIndex = 0
+      ExplicitLeft = 0
+      ExplicitTop = 30
+      ExplicitWidth = 710
+      ExplicitHeight = 431
+      object pnl1: TPanel
+        Left = 0
+        Top = 0
+        Width = 719
+        Height = 65
+        Align = alTop
+        TabOrder = 0
+        ExplicitLeft = 21
+        ExplicitTop = 123
+        ExplicitWidth = 682
+        object cxlbl2: TcxLabel
+          Left = 244
+          Top = 17
+          Caption = #20998#38498
+          Transparent = True
+        end
+        object cxLookup_fenyuan: TcxLookupComboBox
+          Left = 286
+          Top = 15
+          Properties.KeyFieldNames = 'abbr'
+          Properties.ListColumns = <
+            item
+              FieldName = 'name'
+            end>
+          Properties.ListOptions.ShowHeader = False
+          Properties.ListSource = ds_fenyuan
+          Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
+          StyleDisabled.Color = clYellow
+          StyleDisabled.TextColor = clBlack
+          TabOrder = 1
+          OnExit = cxLookup_gysExit
+          OnKeyPress = cxLookup_gysKeyPress
+          Width = 136
+        end
+        object cxLookup_gys: TcxLookupComboBox
+          Left = 78
+          Top = 15
+          Properties.KeyFieldNames = #20379#24212#21830#32534#21495
+          Properties.ListColumns = <
+            item
+              FieldName = #21517#31216
+            end>
+          Properties.ListOptions.ShowHeader = False
+          Properties.ListSource = ds_gys
+          Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
+          StyleDisabled.Color = clYellow
+          StyleDisabled.TextColor = clBlack
+          TabOrder = 2
+          OnExit = cxLookup_gysExit
+          OnKeyPress = cxLookup_gysKeyPress
+          Width = 136
+        end
+        object cxlbl3: TcxLabel
+          Left = 20
+          Top = 17
+          Caption = #20379#24212#21830
+          Transparent = True
+        end
+        object cxlbl4: TcxLabel
+          Left = 430
+          Top = 37
+          Caption = #24050#36873#21512#35745#37329#39069#65306
+          Transparent = True
+        end
+        object cxlbl_heji: TcxLabel
+          Left = 553
+          Top = 37
+          Caption = #24050#36873#21512#35745#37329#39069#65306
+          Transparent = True
+        end
+      end
+      object cxGrid2: TcxGrid
+        Left = 0
+        Top = 65
+        Width = 719
+        Height = 374
+        Align = alClient
+        TabOrder = 1
+        LookAndFeel.SkinName = 'Blue'
+        ExplicitLeft = 21
+        ExplicitTop = 72
+        ExplicitWidth = 682
+        ExplicitHeight = 353
+        object cxGridDBTableView1: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          OnEditChanged = cxGridDBTableView1EditChanged
+          DataController.DataModeController.SmartRefresh = True
+          DataController.DataSource = ds_liebiao
+          DataController.KeyFieldNames = #32534#21495
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+              Column = cxGridDBColumn3
+            end
+            item
+              Format = '0.00'
+              Kind = skSum
+              Column = cxGridDBTableView1Column6
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Inserting = False
+          OptionsSelection.InvertSelect = False
+          OptionsSelection.MultiSelect = True
+          OptionsSelection.CellMultiSelect = True
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+          object cxGridDBTableView1Column4: TcxGridDBColumn
+            Caption = #36873#25321
+            DataBinding.ValueType = 'Boolean'
+            PropertiesClassName = 'TcxCheckBoxProperties'
+            Properties.Alignment = taCenter
+            Properties.NullStyle = nssUnchecked
+            Options.Filtering = False
+            Options.Moving = False
+            Options.Sorting = False
+            Width = 50
+            OnHeaderClick = cxGridDBTableView1Column4HeaderClick
+          end
+          object cxGridDBColumn3: TcxGridDBColumn
+            Caption = #20184#36135#26102#38388
+            DataBinding.FieldName = #20986#24211#26102#38388
+            PropertiesClassName = 'TcxDateEditProperties'
+            Properties.DisplayFormat = 'yyyy-mm-dd'
+            Options.Editing = False
+            Options.Moving = False
+            Width = 100
+          end
+          object cxGridDBColumn4: TcxGridDBColumn
+            DataBinding.FieldName = #21517#31216
+            Options.Editing = False
+            Options.Moving = False
+            Width = 150
+          end
+          object cxGridDBTableView1Column1: TcxGridDBColumn
+            Caption = #25968#37327
+            DataBinding.FieldName = #20986#24211#25968#37327
+            Options.Editing = False
+            Options.Moving = False
+            Width = 60
+          end
+          object cxGridDBTableView1Column3: TcxGridDBColumn
+            DataBinding.FieldName = #21333#20215
+            Options.Editing = False
+            Options.Filtering = False
+            Options.Moving = False
+            Options.Sorting = False
+            Width = 70
+          end
+          object cxGridDBTableView1Column6: TcxGridDBColumn
+            Caption = #21512#35745#37329#39069
+            DataBinding.FieldName = #20986#24211#37329#39069
+            Options.Editing = False
+            Options.Moving = False
+            Width = 70
+          end
+        end
+        object cxGridLevel1: TcxGridLevel
+          GridView = cxGridDBTableView1
+        end
+      end
+    end
+    object cxTabSheet2: TcxTabSheet
+      Caption = #25209#24405
+      ImageIndex = 1
+      object pnl2: TPanel
+        Left = 0
+        Top = 0
+        Width = 719
+        Height = 65
+        Align = alTop
+        TabOrder = 0
+        ExplicitTop = 8
+        object cxlbl6: TcxLabel
+          Left = 26
+          Top = 19
+          Caption = #20986#24211#26085#26399
+          Transparent = True
+        end
+        object cxDateEdit7: TcxDateEdit
+          Left = 100
+          Top = 17
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 1
+          Width = 121
+        end
+        object cxlbl20: TcxLabel
+          Left = 229
+          Top = 20
+          Caption = #33267
+          Transparent = True
+        end
+        object cxDateEdit8: TcxDateEdit
+          Left = 256
+          Top = 17
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          TabOrder = 3
+          Width = 121
+        end
+        object cxButton30: TcxButton
+          Left = 393
+          Top = 14
+          Width = 75
+          Height = 31
+          Caption = #32479#35745
+          LookAndFeel.SkinName = 'Black'
+          TabOrder = 4
+          OnClick = cxButton30Click
+        end
+      end
+      object cxGrid15: TcxGrid
+        Left = 0
+        Top = 65
+        Width = 719
+        Height = 374
+        Align = alClient
+        TabOrder = 1
+        LookAndFeel.SkinName = 'Blue'
+        ExplicitTop = 55
+        ExplicitWidth = 1067
+        ExplicitHeight = 599
+        object cxGridDBTableView12: TcxGridDBTableView
+          Navigator.Buttons.CustomButtons = <>
+          DataController.DataSource = ds_caiwu
+          DataController.Summary.DefaultGroupSummaryItems = <>
+          DataController.Summary.FooterSummaryItems = <
+            item
+              Format = #21512#35745#65306'0'
+              Kind = skCount
+            end>
+          DataController.Summary.SummaryGroups = <>
+          OptionsData.CancelOnExit = False
+          OptionsData.Deleting = False
+          OptionsData.DeletingConfirmation = False
+          OptionsData.Editing = False
+          OptionsData.Inserting = False
+          OptionsView.ColumnAutoWidth = True
+          OptionsView.Footer = True
+          OptionsView.GroupByBox = False
+        end
+        object cxGridLevel12: TcxGridLevel
+          GridView = cxGridDBTableView12
+        end
+      end
+    end
   end
   object actmgr1: TActionManager
     ActionBars = <
@@ -355,5 +477,20 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Parameters = <>
     Left = 88
     Top = 336
+  end
+  object qry_caiwu: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
+    CursorType = ctStatic
+    LockType = ltBatchOptimistic
+    Parameters = <>
+    SQL.Strings = (
+      'select * from '#27425#21345#35774#32622#34920)
+    Left = 466
+    Top = 336
+  end
+  object ds_caiwu: TDataSource
+    DataSet = qry_caiwu
+    Left = 474
+    Top = 264
   end
 end

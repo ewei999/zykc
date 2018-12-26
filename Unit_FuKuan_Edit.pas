@@ -58,6 +58,7 @@ type
     qry_liebiao: TADOQuery;
     cxGrid3DBTableView1Column2: TcxGridDBColumn;
     cxGrid3DBTableView1Column5: TcxGridDBColumn;
+    cxGrid3DBTableView1Column6: TcxGridDBColumn;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -155,7 +156,7 @@ begin
   if leibiestr='ø‚¥Ê¡–±Ì' then
   begin
     cxButton2.Visible:=false;
-
+    Self.width:=700;
     cxTabSheet2.Show;
   end;
 

@@ -452,6 +452,7 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
+    dxNavBar1Item19: TdxNavBarItem;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);

@@ -2,8 +2,8 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
   Left = 0
   Top = 0
   Caption = #26631#39064
-  ClientHeight = 341
-  ClientWidth = 464
+  ClientHeight = 352
+  ClientWidth = 567
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 464
+    Width = 567
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -72,20 +72,24 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
   object cxPageControl1: TcxPageControl
     Left = 0
     Top = 80
-    Width = 464
-    Height = 261
+    Width = 567
+    Height = 272
     Align = alClient
     TabOrder = 1
     Properties.ActivePage = cxTabSheet2
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
-    ClientRectBottom = 256
+    ExplicitWidth = 464
+    ExplicitHeight = 261
+    ClientRectBottom = 267
     ClientRectLeft = 2
-    ClientRectRight = 459
+    ClientRectRight = 562
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = #20184#27454
       ImageIndex = 0
+      ExplicitWidth = 457
+      ExplicitHeight = 225
       object cxlbl3: TcxLabel
         Left = 20
         Top = 9
@@ -163,14 +167,18 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     object cxTabSheet2: TcxTabSheet
       Caption = #24211#23384#21015#34920
       ImageIndex = 1
+      ExplicitWidth = 457
+      ExplicitHeight = 225
       object cxGrid3: TcxGrid
         Left = 0
         Top = 0
-        Width = 457
-        Height = 225
+        Width = 560
+        Height = 236
         Align = alClient
         TabOrder = 0
         LookAndFeel.SkinName = 'Black'
+        ExplicitWidth = 457
+        ExplicitHeight = 225
         object cxGrid3DBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGrid3DBTableView1CellDblClick
@@ -217,6 +225,13 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
             PropertiesClassName = 'TcxLabelProperties'
             Width = 60
           end
+          object cxGrid3DBTableView1Column6: TcxGridDBColumn
+            DataBinding.FieldName = #22791#27880
+            PropertiesClassName = 'TcxLabelProperties'
+            Properties.Alignment.Vert = taVCenter
+            Properties.WordWrap = True
+            Width = 80
+          end
         end
         object cxGrid3Level1: TcxGridLevel
           GridView = cxGrid3DBTableView1
@@ -225,7 +240,7 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     end
   end
   object cxButton8: TcxButton
-    Left = 400
+    Left = 503
     Top = 11
     Width = 50
     Height = 58
@@ -242,9 +257,10 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 400
   end
   object cxButton2: TcxButton
-    Left = 344
+    Left = 447
     Top = 11
     Width = 50
     Height = 58
@@ -261,6 +277,7 @@ object Form_FuKuan_Edit: TForm_FuKuan_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 344
   end
   object actmgr1: TActionManager
     ActionBars = <

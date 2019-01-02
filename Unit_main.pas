@@ -1311,10 +1311,9 @@ begin
     ' 金额=(select top 1 sum(出库金额) from 中央库存_出库表 where 出库编号=a.出库编号),'+
     ' 门店接收人=(select top 1 门店接收人 from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
     ' 门店接收时间=(select top 1 门店接收时间 from 中央库存_出库表 where 出库编号=a.出库编号),'+
-    ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号), '+
-    ' 分店代码=(select top 1 分店代码 from 中央库存_出库表 where 出库编号=a.出库编号)'+
-    ' from ( select 出库编号 from 中央库存_出库表 where 是否作废=0 and left(出库编号,2)<>''TH'' '+tjstr+
-    ' group by 出库编号 )a)b order by 出库时间';
+    ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号) '+
+    ' from ( select 出库编号,分店代码 from 中央库存_出库表 where 是否作废=0 and left(出库编号,2)<>''TH'' '+tjstr+
+    ' group by 出库编号,分店代码 )a)b order by 出库时间';
   qry_fuhuo_jilu.Open;
   cxTabSheet11.Show;
 end;
@@ -1491,6 +1490,7 @@ begin
   Form_FuHuoDan := TForm_FuHuoDan.Create(nil);
   try
     Form_FuHuoDan.CKBianhao:=qry_fuhuo_jilu.FieldByName('出库编号').AsString;
+    Form_FuHuoDan.fyid :=qry_fuhuo_jilu.FieldByName('分店代码').AsString;
     Form_FuHuoDan.ShowModal;
     if Form_FuHuoDan.baocun then
       qry_fuhuo_jilu.Requery();

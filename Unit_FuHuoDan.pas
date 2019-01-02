@@ -66,7 +66,7 @@ type
   private
     { Private declarations }
   public
-    CKBianhao:string;
+    CKBianhao,fyid:string;
     baocun:boolean;
   end;
 
@@ -241,7 +241,7 @@ begin
       ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号)'+
       ' from ( '+
       ' select 编号,出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注,申请编号 '+
-      ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKBianhao)+' )a order by 名称';
+      ' from 中央库存_出库表 where 出库编号='+QuotedStr(CKBianhao)+' and 分店代码='+QuotedStr(fyid)+')a order by 名称';
     qry_fuhuo.Open;
     if qry_fuhuo.FieldByName('状态').AsInteger<>1 then
     begin

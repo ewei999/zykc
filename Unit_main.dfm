@@ -249,7 +249,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet16
+      Properties.ActivePage = cxTabSheet7
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685
@@ -444,10 +444,6 @@
           object cxTabSheet3: TcxTabSheet
             Caption = #26126#32454
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object cxGrid2: TcxGrid
               Left = 0
               Top = 0
@@ -857,10 +853,6 @@
           object cxTabSheet6: TcxTabSheet
             Caption = #37319#36141#26126#32454
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object cxGrid4: TcxGrid
               Left = 0
               Top = 0
@@ -964,10 +956,6 @@
       object cxTabSheet7: TcxTabSheet
         Caption = #20184#36135#35760#24405
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object pnl2: TPanel
           Left = 0
           Top = 0
@@ -1091,10 +1079,6 @@
           object cxTabSheet11: TcxTabSheet
             Caption = #27719#24635
             ImageIndex = 0
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object cxGrid5: TcxGrid
               Left = 0
               Top = 0
@@ -1175,10 +1159,6 @@
           object cxTabSheet14: TcxTabSheet
             Caption = #26126#32454
             ImageIndex = 1
-            ExplicitLeft = 0
-            ExplicitTop = 0
-            ExplicitWidth = 0
-            ExplicitHeight = 0
             object cxGrid12: TcxGrid
               Left = 0
               Top = 0
@@ -1716,10 +1696,6 @@
       object cxTabSheet12: TcxTabSheet
         Caption = #37319#36141#23457#25209
         ImageIndex = 5
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object pnl4: TPanel
           Left = 0
           Top = 0

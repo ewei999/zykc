@@ -539,7 +539,7 @@ begin
     qry_zhudong.edit;
     qry_zhudong.post;
     qry_kucun.Close;
-    qry_kucun.SQL.Text:='select top 0 价目编号,单价,供应商,单价 as 待付数量 from 中央库存_出库表';
+    qry_kucun.SQL.Text:='select top 0 价目编号,单价,供应商,单价 as 待付数量,单价 as 整付数量,单价 as 整付金额,供应商 as 备注 from 中央库存_出库表';
     qry_kucun.Open;
     qry_zhudong.DisableControls;
     qry_zhudong.First;
@@ -654,7 +654,11 @@ begin
       while not qry1.Eof do
       begin
         if (qry1.FieldByName('供应商编号').AsString=qry_zhudong.FieldByName('供应商').AsString)
-        and (qry1.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat) then
+        and (qry1.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat)
+        and (qry1.FieldByName('备注').AsString=qry_zhudong.FieldByName('价目备注').AsString)
+        and (qry1.FieldByName('整付数量').AsString=qry_zhudong.FieldByName('整付数量').AsString)
+        and (qry1.FieldByName('整付金额').AsString=qry_zhudong.FieldByName('整付金额').AsString)
+        then
         begin
           if qry_zhudong.FieldByName('付货数量').AsFloat>qry1.FieldByName('数量').AsFloat then
           begin
@@ -671,7 +675,11 @@ begin
             begin
               if (qry_kucun.FieldByName('价目编号').AsString=qry_zhudong.FieldByName('价目编号').asstring)
               and (qry_kucun.FieldByName('供应商').asstring=qry_zhudong.FieldByName('供应商').asstring)
-              and (qry_kucun.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat) then
+              and (qry_kucun.FieldByName('单价').AsFloat=qry_zhudong.FieldByName('单价').AsFloat)
+              and (qry_kucun.FieldByName('备注').AsString=qry_zhudong.FieldByName('价目备注').AsString)
+              and (qry_kucun.FieldByName('整付数量').AsString=qry_zhudong.FieldByName('整付数量').AsString)
+              and (qry_kucun.FieldByName('整付金额').AsString=qry_zhudong.FieldByName('整付金额').AsString)
+              then
               begin
                 qry_kucun.Edit;
                 qry_kucun.FieldByName('待付数量').AsFloat:= qry_kucun.FieldByName('待付数量').AsFloat+qry_zhudong.FieldByName('付货数量').asfloat;
@@ -687,7 +695,10 @@ begin
               qry_kucun.FieldByName('价目编号').AsString:= qry_zhudong.FieldByName('价目编号').asstring;
               qry_kucun.FieldByName('单价').asstring:= qry_zhudong.FieldByName('单价').asstring;
               qry_kucun.FieldByName('供应商').asstring:= qry_zhudong.FieldByName('供应商').asstring;
+              qry_kucun.FieldByName('备注').asstring:= qry_zhudong.FieldByName('价目备注').asstring;
               qry_kucun.FieldByName('待付数量').AsFloat:= qry_zhudong.FieldByName('付货数量').asfloat;
+              qry_kucun.FieldByName('整付数量').asstring:= qry_zhudong.FieldByName('整付数量').asstring;
+              qry_kucun.FieldByName('整付金额').asstring:= qry_zhudong.FieldByName('整付金额').asstring;
               qry_kucun.Post;
             end;
 
@@ -785,7 +796,7 @@ begin
       end;
       qry_zhudong.Close;
       qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
-      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注  from 中央库存_出库表';
+      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注 from 中央库存_出库表';
       qry_zhudong.Open;
     end;
     {$ENDREGION}
@@ -1166,7 +1177,7 @@ begin
     Self.Caption:=cxLabel10.Caption;
     qry_zhudong.Close;
     qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
-      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注  from 中央库存_出库表';
+      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注 from 中央库存_出库表';
     qry_zhudong.Open;
 
     qry_jiamu.Close;

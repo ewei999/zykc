@@ -249,7 +249,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet7
+      Properties.ActivePage = cxTabSheet17
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685

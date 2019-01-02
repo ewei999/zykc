@@ -973,7 +973,7 @@ begin
       cl  :=  cxgridA.CreateColumn;
       cl.DataBinding.FieldName := cxgridA.DataController.DataSet.Fields[i].FieldName;
 
-      if (cl.DataBinding.FieldName='购入') or (RightStr(cl.DataBinding.FieldName,2)='出库')  then
+      if (cl.DataBinding.FieldName='购入') or (RightStr(cl.DataBinding.FieldName,2)='出库') or (RightStr(cl.DataBinding.FieldName,2)='开票')  then
       begin
         if cl.DataBinding.FieldName='购入' then
           cl.Styles.Content:=cxStyle1;
@@ -989,6 +989,8 @@ begin
         cl.Width := 150
       else if (cl.DataBinding.FieldName='原名称') then
         cl.Width := 100
+      else if (cl.DataBinding.FieldName='序号') then
+        cl.Width := 40
       else
         cl.Width := 70;
 
@@ -1155,9 +1157,9 @@ end;
 
 procedure TForm_main.cxButton30Click(Sender: TObject);
 var
-  tjstr,ckstr,fystr:string;
+  tjstr,ckstr,fystr,kpstr:string;
   i:integer;
-  heji:Real;
+  heji,kpjine:Real;
 begin
   if cxDateEdit7.Text='' then
   begin
@@ -1175,26 +1177,29 @@ begin
   DataModule1.openSql('	select abbr,name from 分院表 where sort_id<>0');
   while not DataModule1.ADOQuery_L.Eof do
   begin
-    tjstr:=tjstr+',单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'出库,申请编号 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票';
+    tjstr:=tjstr+',单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'出库,单价 as '+DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票';
     DataModule1.ADOQuery_L.Next;
   end;
 
-  tjstr:=tjstr+',单价 as 小计,单价 as 差额 from 提货申请明细表';
+  tjstr:=tjstr+',单价 as 小计,单价 as 差额,单价 as 开票差额 from 提货申请明细表';
   qry_caiwu.Close;
   qry_caiwu.SQL.Text:=tjstr;
   qry_caiwu.Open;
 
   tjstr:='';
   ckstr:='';
+  kpstr:='';
   if cxDateEdit7.Text<>'' then
   begin
     tjstr:=tjstr+' and 入库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
     ckstr:=ckstr+' and 出库时间>='+QuotedStr(cxDateEdit7.Text)+' ';
+    kpstr:=kpstr+' and 开票时间>='+QuotedStr(cxDateEdit7.Text)+' ';
   end;
   if cxDateEdit8.Text<>'' then
   begin
     tjstr:=tjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
     ckstr:=ckstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
+    kpstr:=kpstr+' and 开票时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' ';
   end;
 
   qry_caiwu.DisableControls;
@@ -1205,7 +1210,9 @@ begin
     DataModule1.openSql2('	select *, '+
     '	金额=isnull((select sum(出库金额) from 中央库存_出库表 where 是否作废=0 and 状态 in (1,2) and 供应商=a.供应商编号'+
     ' and 分店代码 ='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('abbr').AsString)+' '+ckstr+' ),0),'+
-    ' 购入=isnull((select sum(合计金额) as 购入 from 中央采购入库主表 where 状态=1  and 供应商=a.供应商编号 '+tjstr+'),0)'+
+    ' 购入=isnull((select sum(合计金额) as 购入 from 中央采购入库主表 where 状态=1  and 供应商=a.供应商编号 '+tjstr+'),0),'+
+    ' 开票=isnull((select sum(合计金额) from 中央采购开票表 where 是否作废=0 and 供应商=a.供应商编号 '+kpstr+
+    ' and 分店代码='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('abbr').AsString)+' ),0)'+
     '	from ( 	select  供应商编号,名称	from 供应商表 where 是否作废=0 )a');
     while not DataModule1.ADOQuery_L2.Eof  do
     begin
@@ -1223,7 +1230,7 @@ begin
         qry_caiwu.FieldByName('购入').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('购入').AsFloat;
       end;
       qry_caiwu.FieldByName(DataModule1.ADOQuery_L.FieldByName('name').AsString+'出库').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('金额').AsFloat;
-      qry_caiwu.FieldByName(DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票').AsString:='';
+      qry_caiwu.FieldByName(DataModule1.ADOQuery_L.FieldByName('name').AsString+'开票').AsFloat:=DataModule1.ADOQuery_L2.FieldByName('开票').AsFloat;
       qry_caiwu.Post;
 
       DataModule1.ADOQuery_L2.Next;
@@ -1235,16 +1242,22 @@ begin
   while not qry_caiwu.Eof do
   begin
     heji:=0;
+    kpjine:=0;
     for I := 0 to qry_caiwu.FieldCount-1 do
     begin
       if RightStr(qry_caiwu.Fields[i].FieldName,2)='出库' then
       begin
         heji:=heji+qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat;
       end;
+      if RightStr(qry_caiwu.Fields[i].FieldName,2)='开票' then
+      begin
+        kpjine:=kpjine+qry_caiwu.FieldByName(qry_caiwu.Fields[i].FieldName).AsFloat;
+      end;
     end;
     qry_caiwu.Edit;
     qry_caiwu.FieldByName('小计').AsFloat:=heji;
     qry_caiwu.FieldByName('差额').AsFloat:=qry_caiwu.FieldByName('购入').AsFloat-heji;
+    qry_caiwu.FieldByName('开票差额').AsFloat:=qry_caiwu.FieldByName('购入').AsFloat-kpjine;
     qry_caiwu.Post;
 
     qry_caiwu.Next;
@@ -1306,12 +1319,12 @@ begin
   qry_fuhuo_jilu.SQL.Text:='select *,zt=(case 状态 when 1 then ''待接收'' when 2 then ''接收成功'' when 3 then ''拒绝接收'' end),'+
     ' 分院=(select top 1 name from 分院表 where abbr=b.分店代码 )'+
     ' from ( select *,'+
-    ' 出库时间=(select top 1 出库时间 from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
-    ' 数量=(select top 1 sum(出库数量) from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
-    ' 金额=(select top 1 sum(出库金额) from 中央库存_出库表 where 出库编号=a.出库编号),'+
-    ' 门店接收人=(select top 1 门店接收人 from 中央库存_出库表 where 出库编号=a.出库编号) ,'+
-    ' 门店接收时间=(select top 1 门店接收时间 from 中央库存_出库表 where 出库编号=a.出库编号),'+
-    ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号) '+
+    ' 出库时间=(select top 1 出库时间 from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码) ,'+
+    ' 数量=(select top 1 sum(出库数量) from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码) ,'+
+    ' 金额=(select top 1 sum(出库金额) from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码),'+
+    ' 门店接收人=(select top 1 门店接收人 from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码) ,'+
+    ' 门店接收时间=(select top 1 门店接收时间 from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码),'+
+    ' 状态=(select top 1 状态 from 中央库存_出库表 where 出库编号=a.出库编号 and 分店代码=a.分店代码) '+
     ' from ( select 出库编号,分店代码 from 中央库存_出库表 where 是否作废=0 and left(出库编号,2)<>''TH'' '+tjstr+
     ' group by 出库编号,分店代码 )a)b order by 出库时间';
   qry_fuhuo_jilu.Open;
@@ -1428,6 +1441,30 @@ begin
       Form_KuCunJilu.ShowModal;
     finally
       FreeAndNil(Form_KuCunJilu);
+    end;
+  end;
+
+  if RightStr(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption,2) = '开票' then
+  begin
+    Form_KaiPiao := TForm_KaiPiao.Create(nil);
+    try
+      Form_KaiPiao.cxlbl5.Visible:=false;
+      Form_KaiPiao.cxDate_TuiH_qishi.Visible:=false;
+      Form_KaiPiao.cxlbl6.Visible:=false;
+      Form_KaiPiao.cxDate_TuiH_zhongzhi.Visible:=false;
+      Form_KaiPiao.cxButton19.Visible:=false;
+      Form_KaiPiao.cxButton1.Visible:=false;
+      Form_KaiPiao.cxButton2.Visible:=false;
+      Form_KaiPiao.cxButton3.Visible:=false;
+      Form_KaiPiao.qry_liebiao.Close;
+      Form_KaiPiao.qry_liebiao.SQL.Text:='select *, '+
+        ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
+        ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
+        ' from ( select * from 中央采购开票表 where 是否作废=0 )a order by 开票时间 desc';
+      Form_KaiPiao.qry_liebiao.Open;
+      Form_KaiPiao.ShowModal;
+    finally
+      FreeAndNil(Form_KaiPiao);
     end;
   end;
 end;

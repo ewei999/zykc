@@ -168,7 +168,8 @@ end;
 procedure TForm_KaiPiao.FormShow(Sender: TObject);
 begin
   cxDate_TuiH_qishi.Date:=IncMonth(date,-1);
-  cxButton19.Click;
+  if qry_liebiao.Active=False then
+    cxButton19.Click;
 end;
 
 end.

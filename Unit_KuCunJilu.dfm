@@ -95,7 +95,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
     Height = 549
     Align = alClient
     TabOrder = 2
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet4
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Blue'
     ClientRectBottom = 544
@@ -415,6 +415,7 @@ object Form_KuCunJilu: TForm_KuCunJilu
         Align = alClient
         TabOrder = 0
         LookAndFeel.SkinName = 'Blue'
+        ExplicitHeight = 542
         object cxGridDBTableView3: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnCellDblClick = cxGridDBTableView3CellDblClick

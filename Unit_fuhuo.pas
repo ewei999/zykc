@@ -109,6 +109,7 @@ type
     cxTextEdit37: TcxTextEdit;
     cxGridDBTableView1Column13: TcxGridDBColumn;
     qry_temp: TADOQuery;
+    cxGridDBTableView1Column14: TcxGridDBColumn;
     procedure act1Execute(Sender: TObject);
     procedure cxGridDBTableView1Column4HeaderClick(Sender: TObject);
     procedure act_closeExecute(Sender: TObject);
@@ -281,32 +282,29 @@ begin
               exit;
             end;
           end;
-          DataModule1.openSql(' select top 1 价目编号 ,整付数量,整付金额   from 中央采购入库明细表'+
-          ' where 价目编号='+QuotedStr(qry_thshenqing_mx.FieldByName('价目编号').AsString)+' '+
-          ' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) order by 编号 desc');
-          if DataModule1.ADOQuery_L.FieldByName('整付数量').AsString<>'' then
+
+          if (qry_thshenqing_mx.FieldByName('整付数量').AsString<>'') and (qry_thshenqing_mx.FieldByName('整付数量').AsFloat<>0) then
           begin
-            if (trunc(qry_thshenqing_mx.FieldByName('付货数量').asfloat*100) mod trunc(DataModule1.ADOQuery_L.FieldByName('整付数量').asfloat*100))<>0 then
+            if (trunc(qry_thshenqing_mx.FieldByName('付货数量').asfloat*100) mod trunc(qry_thshenqing_mx.FieldByName('整付数量').asfloat*100))<>0 then
             begin
               qry_thshenqing_mx.EnableControls;
               qry_thshenqing_mx.edit;
               Application.MessageBox(PChar('名称'+qry_thshenqing_mx.FieldByName('名称').AsString+'，整付数量为 '+
-                DataModule1.ADOQuery_L.FieldByName('整付数量').AsString+' 不能拆开付货'), '提示', MB_OK);
+                qry_thshenqing_mx.FieldByName('整付数量').AsString+' 不能拆开付货'), '提示', MB_OK);
               exit;
             end;
           end;
-          if DataModule1.ADOQuery_L.FieldByName('整付金额').AsString<>'' then
+          if (qry_thshenqing_mx.FieldByName('整付金额').AsString<>'') and (qry_thshenqing_mx.FieldByName('整付金额').AsFloat<>0) then
           begin
-            if (trunc(qry_thshenqing_mx.FieldByName('出库金额').asfloat*100) mod trunc(DataModule1.ADOQuery_L.FieldByName('整付金额').asfloat*100))<>0 then
+            if (trunc(qry_thshenqing_mx.FieldByName('出库金额').asfloat*100) mod trunc(qry_thshenqing_mx.FieldByName('整付金额').asfloat*100))<>0 then
             begin
               qry_thshenqing_mx.EnableControls;
               qry_thshenqing_mx.edit;
               Application.MessageBox(PChar('名称'+qry_thshenqing_mx.FieldByName('名称').AsString+'，整付金额为 '+
-                DataModule1.ADOQuery_L.FieldByName('整付金额').AsString+' 不能拆开付货'), '提示', MB_OK);
+                qry_thshenqing_mx.FieldByName('整付金额').AsString+' 不能拆开付货'), '提示', MB_OK);
               exit;
             end;
           end;
-
 
 
           //判断中央仓库是此物品的库存是否够本次付货  ,分单价和供应商
@@ -419,6 +417,7 @@ begin
             DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= qry_thshenqing_mx.FieldByName('供应商').AsString;
             DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_thshenqing_mx.FieldByName('分店代码').AsString;
             DataModule1.ADOQuery_L.FieldByName('备注').AsString:= qry_thshenqing_mx.FieldByName('备注').AsString;
+            DataModule1.ADOQuery_L.FieldByName('价目备注').AsString:= qry_thshenqing_mx.FieldByName('价目备注').AsString;
             DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
             DataModule1.ADOQuery_L.FieldByName('状态').AsInteger:=1;
             DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:= false;
@@ -606,6 +605,50 @@ begin
         exit;
       end;
 
+      if qry_zhudong.FieldByName('舍零金额').asstring<>'' then
+      begin
+        try
+          danjia:= qry_zhudong.FieldByName('舍零金额').asfloat;
+          if danjia<0 then
+          begin
+            qry_zhudong.EnableControls;
+            qry_zhudong.edit;
+            Application.MessageBox('舍零金额不能小于0', '提示', MB_OK);
+          exit;
+          end;
+        except
+          qry_zhudong.EnableControls;
+          qry_zhudong.edit;
+          Application.MessageBox('舍零金额格式不正确', '提示', MB_OK);
+          exit;
+        end;
+      end;
+
+      if (qry_zhudong.FieldByName('整付数量').AsString<>'') and (qry_zhudong.FieldByName('整付数量').AsFloat<>0) then
+      begin
+        if (trunc(qry_zhudong.FieldByName('付货数量').asfloat*100) mod trunc(qry_zhudong.FieldByName('整付数量').asfloat*100))<>0 then
+        begin
+          qry_zhudong.EnableControls;
+          qry_zhudong.edit;
+          Application.MessageBox(PChar('名称'+qry_zhudong.FieldByName('名称').AsString+'，整付数量为 '+
+            qry_zhudong.FieldByName('整付数量').AsString+' 不能拆开付货'), '提示', MB_OK);
+          exit;
+        end;
+      end;
+      if (qry_zhudong.FieldByName('整付金额').AsString<>'') and (qry_zhudong.FieldByName('整付金额').AsFloat<>0) then
+      begin
+        if (trunc(qry_zhudong.FieldByName('出库金额').asfloat*100) mod trunc(qry_zhudong.FieldByName('整付金额').asfloat*100))<>0 then
+        begin
+          qry_zhudong.EnableControls;
+          qry_zhudong.edit;
+          Application.MessageBox(PChar('名称'+qry_zhudong.FieldByName('名称').AsString+'，整付金额为 '+
+             qry_zhudong.FieldByName('整付金额').AsString+' 不能拆开付货'), '提示', MB_OK);
+          exit;
+        end;
+      end;
+
+
+
       //判断中央仓库是此物品的库存是否够本次付货  ,分单价和供应商
       qry1.Clone(jisuan_danjia(qry_zhudong.FieldByName('价目编号').AsString ,qry_zhudong.FieldByName('仓库库存').AsString));
       while not qry1.Eof do
@@ -688,6 +731,7 @@ begin
         DataModule1.ADOQuery_L.FieldByName('出库金额').AsVariant:= qry_zhudong.FieldByName('出库金额').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= qry_zhudong.FieldByName('供应商').AsString;
         DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_zhudong.FieldByName('分店代码').AsString;
+        DataModule1.ADOQuery_L.FieldByName('价目备注').AsString:= qry_zhudong.FieldByName('价目备注').AsString;
         DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
         DataModule1.ADOQuery_L.FieldByName('状态').AsInteger:=1;
         DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:= false;
@@ -741,7 +785,7 @@ begin
       end;
       qry_zhudong.Close;
       qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
-        ' 名称 as 包装规格,单价 as 仓库库存 from 中央库存_出库表';
+      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注  from 中央库存_出库表';
       qry_zhudong.Open;
     end;
     {$ENDREGION}
@@ -824,6 +868,9 @@ begin
 
         qry_thshenqing_mx.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
         qry_thshenqing_mx.FieldByName('出库金额').AsFloat := qry_thshenqing_mx.FieldByName('单价').AsFloat*qry_thshenqing_mx.FieldByName('付货数量').AsFloat;
+        qry_thshenqing_mx.FieldByName('整付数量').AsVariant:= Form_FuKuan_Edit.qry_liebiao.FieldByName('整付数量').AsVariant;
+        qry_thshenqing_mx.FieldByName('整付金额').AsVariant:= Form_FuKuan_Edit.qry_liebiao.FieldByName('整付金额').AsVariant;
+        qry_thshenqing_mx.FieldByName('价目备注').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('备注').AsString;
 
         qry_thshenqing_mx.Post;
       end;
@@ -868,10 +915,12 @@ begin
       begin
         qry_zhudong.Edit;
         qry_zhudong.FieldByName('单价').AsFloat:=Form_FuKuan_Edit.qry_liebiao.FieldByName('单价').AsFloat;
-//        qry_zhudong.FieldByName('付货数量').AsFloat:= Form_FuKuan_Edit.qry_liebiao.FieldByName('数量').AsFloat;
         qry_zhudong.FieldByName('付货数量').AsFloat:= 0;
         qry_zhudong.FieldByName('供应商').AsString:= Form_FuKuan_Edit.qry_liebiao.FieldByName('供应商编号').AsString;
         qry_zhudong.FieldByName('出库金额').AsFloat := qry_zhudong.FieldByName('单价').AsFloat*qry_zhudong.FieldByName('付货数量').AsFloat;
+        qry_zhudong.FieldByName('整付数量').AsVariant:= Form_FuKuan_Edit.qry_liebiao.FieldByName('整付数量').AsVariant;
+        qry_zhudong.FieldByName('整付金额').AsVariant:= Form_FuKuan_Edit.qry_liebiao.FieldByName('整付金额').AsVariant;
+        qry_zhudong.FieldByName('价目备注').AsString := Form_FuKuan_Edit.qry_liebiao.FieldByName('备注').AsString;
         qry_zhudong.Post;
       end;
     finally
@@ -890,15 +939,17 @@ begin
     exit;
 
   fenyuanm:=cxLookupComboBox2.Text;
+
   qry_thshenqing_mx.Close;
-  qry_thshenqing_mx.SQL.Text:='select top 0 状态 as 编号,选择,价目编号,数量 as 申请数量,数量 as 付货数量,规格,单位,备注,库存 as 申请时库存,单价,单位 as 供应商,'+
-    ' 单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,库存 as 仓库库存,价目编号 as 审批日期,不付货原因 from 提货申请明细表';
+  qry_thshenqing_mx.SQL.Text:='select top 0 状态 as 编号,选择,价目编号,数量 as 申请数量,数量 as 付货数量,规格,单位,备注,'+
+    ' 库存 as 申请时库存,单价,单位 as 供应商,单价 as 出库金额,单价 as 舍零金额,单位 as 包装规格,名称,单位 as 分店代码,'+
+    ' 库存 as 仓库库存,价目编号 as 审批日期,不付货原因,紧急程度,数量 as 整付数量,单价 as 整付金额,价目编号 as 价目备注 from 提货申请明细表';
   qry_thshenqing_mx.Open;
 
   Show_RuntimeInfo('正在打开');
 
   DataModule1.openSql('select b.* ,c.舍零金额,c.出库金额,c.供应商,c.单价 from ('+
-    ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称,不付货原因, '+
+    ' select 编号,申请编号,价目编号,数量,规格,单位,备注,库存,选择,名称,不付货原因,紧急程度, '+
     ' 分店代码=(select top 1 分店代码 from 提货申请主表 where  申请编号=a.申请编号) ,'+
     ' 审批日期=(select top 1 convert(char(10),审批时间,120) from 提货申请审批表 where 申请编号=a.申请编号 and 审批时间 is not null order by 编号 desc ),'+
     ' 包装规格=(select top 1 包装规格 from 药品用品价目表 where 价目编号=a.价目编号) '+
@@ -925,10 +976,11 @@ begin
     qry_thshenqing_mx.FieldByName('分店代码').asstring:= DataModule1.ADOQuery_L.FieldByName('分店代码').AsString;
     qry_thshenqing_mx.FieldByName('审批日期').asstring:= DataModule1.ADOQuery_L.FieldByName('审批日期').AsString;
     qry_thshenqing_mx.FieldByName('不付货原因').asstring:= DataModule1.ADOQuery_L.FieldByName('不付货原因').AsString;
+    qry_thshenqing_mx.FieldByName('紧急程度').asstring:= DataModule1.ADOQuery_L.FieldByName('紧急程度').AsString;
     qry_thshenqing_mx.FieldByName('单价').AsVariant:= null;
     qry_thshenqing_mx.FieldByName('供应商').asstring:= '';
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
-//    qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
+    qry_thshenqing_mx.FieldByName('舍零金额').AsVariant:=null;
     qry_thshenqing_mx.FieldByName('出库金额').AsVariant:=null;
     qry_thshenqing_mx.FieldByName('仓库库存').AsFloat:= ChaXunKuCun(qry_thshenqing_mx.FieldByName('价目编号').asstring);
     qry_thshenqing_mx.Post;
@@ -1114,7 +1166,7 @@ begin
     Self.Caption:=cxLabel10.Caption;
     qry_zhudong.Close;
     qry_zhudong.SQL.Text:='select top 0 分店代码,价目编号,名称,出库数量 as 付货数量,单价,出库金额,供应商,'+
-      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额  from 中央库存_出库表';
+      ' 名称 as 包装规格,单价 as 仓库库存,舍零金额,出库数量 as 整付数量,单价 as 整付金额,价目备注  from 中央库存_出库表';
     qry_zhudong.Open;
 
     qry_jiamu.Close;

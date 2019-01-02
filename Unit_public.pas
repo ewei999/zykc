@@ -130,10 +130,11 @@ begin
     ' 批次剩余库存数=(case when 小于批次-出库数量<0 then (case when 小于等于批次-出库数量<0 then 0 else (小于等于批次-出库数量) end ) else b.数量 end) from ('+
     ' select * , '+
     ' 小于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) '+
-    '    and 价目编号=a.价目编号 and 进货单价=a.进货单价 and 供应商=a.供应商 and 入库批次<a.入库批次),0),'+
+    '    and 价目编号=a.价目编号 and 进货单价=a.进货单价 and 供应商=a.供应商 and isnull(备注,'''')=isnull(a.备注,'''') and 入库批次<a.入库批次),0),'+
     ' 小于等于批次=isnull((select isnull(sum(数量),0) from 中央采购入库明细表 where 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) '+
-    '    and 价目编号=a.价目编号 and 进货单价=a.进货单价 and 供应商=a.供应商 and 入库批次<=a.入库批次),0),'+
-    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2) and 是否作废=0 and 价目编号=a.价目编号 and 单价=a.进货单价 and 供应商=a.供应商 ),0)'+
+    '    and 价目编号=a.价目编号 and 进货单价=a.进货单价 and 供应商=a.供应商 and isnull(备注,'''')=isnull(a.备注,'''') and 入库批次<=a.入库批次),0),'+
+    ' 出库数量=isnull((select sum(出库数量) from 中央库存_出库表 where 状态 in (1,2) and 是否作废=0 and 价目编号=a.价目编号 and 单价=a.进货单价'+
+    '  and 供应商=a.供应商 and isnull(价目备注,'''')=isnull(a.备注,'''')  ),0)'+
     ' from ( select 价目编号,入库批次,进货单价,数量,整付数量,整付金额,备注,'+
     ' 供应商=(select top 1 供应商 from 中央采购入库主表 where 入库编号=中央采购入库明细表.入库编号) from 中央采购入库明细表  '+
     ' where 价目编号='+QuotedStr(jmbh)+' and 入库编号 in (select 入库编号 from 中央采购入库主表 where 状态=1 ) )a)b)c where 批次剩余库存数>0 '+

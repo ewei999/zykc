@@ -108,6 +108,11 @@ object Form_caigou_shenqing_new: TForm_caigou_shenqing_new
         Options.Editing = False
         Width = 70
       end
+      object cxGrid1DBTableView1Column5: TcxGridDBColumn
+        DataBinding.FieldName = #32039#24613#31243#24230
+        Options.Editing = False
+        Width = 70
+      end
       object cxGrid1DBTableView1Column8: TcxGridDBColumn
         DataBinding.FieldName = #20379#24212#21830
         PropertiesClassName = 'TcxLookupComboBoxProperties'

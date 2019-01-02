@@ -79,6 +79,7 @@ type
     ds_gys_list: TDataSource;
     qry_gys_list: TADOQuery;
     cxGrid1DBTableView1Column10: TcxGridDBColumn;
+    cxGrid1DBTableView1Column5: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure Action_closeExecute(Sender: TObject);
     procedure act_excelExecute(Sender: TObject);

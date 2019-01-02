@@ -105,7 +105,7 @@ begin
     MB_ICONINFORMATION) = IDCANCEL then
     exit;
   DataModule1.execSql('update 中央采购开票表 set 是否作废=1 where 开票编号='+QuotedStr(qry_liebiao.FieldByName('开票编号').AsString)+' ');
-  DataModule1.execSql('update 中央库存_出库表 set 开票编号='''' where 开票编号='+QuotedStr(qry_liebiao.FieldByName('开票编号').AsString)+' ');
+  DataModule1.execSql('update 中央库存_出库表 set 开票编号='''',门店更新状态=0 where 开票编号='+QuotedStr(qry_liebiao.FieldByName('开票编号').AsString)+' ');
   qry_liebiao.Requery();
   Application.MessageBox('作废成功', '提示', MB_OK);
 end;

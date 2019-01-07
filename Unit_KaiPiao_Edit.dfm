@@ -87,7 +87,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 617
   end
   object cxButton2: TcxButton
     Left = 605
@@ -107,7 +106,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 561
   end
   object cxButton1: TcxButton
     Left = 549
@@ -127,7 +125,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    ExplicitLeft = 505
   end
   object cxPageControl1: TcxPageControl
     Left = 0
@@ -136,13 +133,9 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Height = 475
     Align = alClient
     TabOrder = 4
-    Properties.ActivePage = cxTabSheet2
+    Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Black'
-    ExplicitLeft = 8
-    ExplicitTop = 75
-    ExplicitWidth = 710
-    ExplicitHeight = 461
     ClientRectBottom = 470
     ClientRectLeft = 2
     ClientRectRight = 721
@@ -150,10 +143,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     object cxTabSheet1: TcxTabSheet
       Caption = #21333#24405
       ImageIndex = 0
-      ExplicitLeft = 0
-      ExplicitTop = 30
-      ExplicitWidth = 710
-      ExplicitHeight = 431
       object pnl1: TPanel
         Left = 0
         Top = 0
@@ -161,9 +150,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
         Height = 65
         Align = alTop
         TabOrder = 0
-        ExplicitLeft = 21
-        ExplicitTop = 123
-        ExplicitWidth = 682
         object cxlbl2: TcxLabel
           Left = 244
           Top = 17
@@ -233,10 +219,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitLeft = 21
-        ExplicitTop = 72
-        ExplicitWidth = 682
-        ExplicitHeight = 353
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnEditChanged = cxGridDBTableView1EditChanged
@@ -331,7 +313,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
         Height = 65
         Align = alTop
         TabOrder = 0
-        ExplicitTop = 8
         object cxlbl6: TcxLabel
           Left = 26
           Top = 19
@@ -379,9 +360,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
-        ExplicitTop = 55
-        ExplicitWidth = 1067
-        ExplicitHeight = 599
         object cxGridDBTableView12: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_caiwu
@@ -443,7 +421,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 56
   end
   object qry_fenyuan: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
@@ -452,7 +429,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 8
   end
   object qry_gys: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
@@ -471,7 +447,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 264
   end
   object qry_liebiao: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic
     Parameters = <>
@@ -479,7 +454,6 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 336
   end
   object qry_caiwu: TADOQuery
-    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic
     Parameters = <>

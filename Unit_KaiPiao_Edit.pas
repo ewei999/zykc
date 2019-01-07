@@ -470,6 +470,7 @@ begin
     cxLookup_gys.Enabled:=false;
     cxLookup_fenyuan.Enabled:=false;
     cxButton1.Visible:=true;
+    cxPageControl1.HideTabs:=true;
   end;
   if KPbianhao<>'' then
   begin

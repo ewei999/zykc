@@ -1458,9 +1458,13 @@ begin
       Form_KaiPiao.cxButton3.Visible:=false;
       Form_KaiPiao.qry_liebiao.Close;
       Form_KaiPiao.qry_liebiao.SQL.Text:='select *, '+
-        ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
-        ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
-        ' from ( select * from 中央采购开票表 where 是否作废=0 )a order by 开票时间 desc';
+      ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ),'+
+      ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
+      ' from ( select * from 中央采购开票表 where 是否作废=0 '+
+      ' and 供应商='+QuotedStr(qry_caiwu.FieldByName('供应商id').AsString)+' '+
+      ' and 分店代码 in (select abbr from 分院表 where name='+QuotedStr(copy(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption,1,length(cxGridDBTableView12.Controller.FocusedColumn.VisibleCaption)-2))+')'+
+      ' and 开票时间>='+QuotedStr(cxDateEdit7.Text)+' and 开票时间<'+QuotedStr(DateToStr(incday(cxDateEdit8.date,1)))+' '+
+      ' )a order by 开票时间 desc ';
       Form_KaiPiao.qry_liebiao.Open;
       Form_KaiPiao.ShowModal;
     finally

@@ -147,7 +147,7 @@ begin
   qry_liebiao.SQL.Text:='select *, '+
   ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
   ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商) '+
-  ' from ( select * from 中央采购开票表 where 是否作废=0 )a order by 开票时间 desc';
+  ' from ( select * from 中央采购开票表 where 是否作废=0 '+tjstr+')a order by 开票时间 desc';
   qry_liebiao.Open;
 end;
 

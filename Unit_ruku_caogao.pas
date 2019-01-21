@@ -224,6 +224,16 @@ begin
           end;
           DataModule1.ADOQuery_L.Next;
         end;
+
+        DataModule1.openSql('select 进货单价,价目编号 from 中央采购入库明细表 where 入库编号='+QuotedStr(ADOQuery_ruku_zhubiao.FieldByName('入库编号').AsString)+' ');
+        while not DataModule1.ADOQuery_L.Eof do
+        begin
+          DataModule1.execSql('update 药品用品价目表 set 单价='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('进货单价').AsString)+' '+
+            ' where 价目编号='+QuotedStr(DataModule1.ADOQuery_L.FieldByName('价目编号').AsString)+' ');
+
+          DataModule1.ADOQuery_L.Next;
+        end;
+
       end;
       ADOQuery_ruku_zhubiao.Next;
     end;

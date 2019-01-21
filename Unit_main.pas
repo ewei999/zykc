@@ -774,8 +774,8 @@ begin
   end;
   if cxDate_KuCun_Zhongzhi.Text<>'' then
   begin
-    rktjstr:=rktjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+' ';
-    cktjstr:=cktjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_TuiH_zhongzhi.date,1)))+' ';
+    rktjstr:=rktjstr+' and 入库时间<'+QuotedStr(DateToStr(incday(cxDate_KuCun_Zhongzhi.date,1)))+' ';
+    cktjstr:=cktjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_KuCun_Zhongzhi.date,1)))+' ';
   end;
   if Trim(cxTextEdit37.Text)<>'' then
     mctj:=mctj+'  and 价目编号 in (select 价目编号 from 药品用品价目表 '+

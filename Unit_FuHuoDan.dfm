@@ -213,6 +213,11 @@ object Form_FuHuoDan: TForm_FuHuoDan
         Options.Sorting = False
         Width = 80
       end
+      object cxGridDBTableView1Column8: TcxGridDBColumn
+        DataBinding.FieldName = #32039#24613#31243#24230
+        Options.Editing = False
+        Width = 60
+      end
       object cxGridDBTableView1Column1: TcxGridDBColumn
         Caption = #20184#36135#25968#37327
         DataBinding.FieldName = #20986#24211#25968#37327

@@ -27,7 +27,6 @@ object Form_ruku_new: TForm_ruku_new
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 1018
     object ActionToolBar1: TActionToolBar
       Left = 0
       Top = 0
@@ -49,7 +48,6 @@ object Form_ruku_new: TForm_ruku_new
       ParentBiDiMode = False
       ParentFont = False
       Spacing = 0
-      ExplicitWidth = 1018
     end
     object cxLabel1: TcxLabel
       Left = 144
@@ -236,8 +234,6 @@ object Form_ruku_new: TForm_ruku_new
     Align = alClient
     TabOrder = 1
     LookAndFeel.SkinName = 'LiquidSky'
-    ExplicitWidth = 1018
-    ExplicitHeight = 331
     object cxGrid1DBTableView1: TcxGridDBTableView
       Navigator.Buttons.CustomButtons = <>
       DataController.DataSource = DataSource_cg_mingxi

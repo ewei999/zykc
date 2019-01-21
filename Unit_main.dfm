@@ -249,7 +249,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet17
+      Properties.ActivePage = cxTabSheet8
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685
@@ -1503,7 +1503,12 @@
               Navigator.Buttons.CustomButtons = <>
               DataController.DataSource = DataSource_ruku_mingxi
               DataController.Summary.DefaultGroupSummaryItems = <>
-              DataController.Summary.FooterSummaryItems = <>
+              DataController.Summary.FooterSummaryItems = <
+                item
+                  Format = '0.00'
+                  Kind = skSum
+                  Column = cxgrdbclmncxGrid7DBTableView1DBColumn11
+                end>
               DataController.Summary.SummaryGroups = <>
               OptionsData.CancelOnExit = False
               OptionsData.Deleting = False
@@ -1511,6 +1516,7 @@
               OptionsData.Editing = False
               OptionsData.Inserting = False
               OptionsView.ColumnAutoWidth = True
+              OptionsView.Footer = True
               OptionsView.GroupByBox = False
               object cxgrdbclmncxGrid7DBTableView1DBColumn: TcxGridDBColumn
                 DataBinding.FieldName = #32534#21495
@@ -1985,6 +1991,7 @@
             end
             object cxGridDBTableView8Column3: TcxGridDBColumn
               DataBinding.FieldName = #24211#23384
+              Styles.Content = cxStyle1
               Width = 70
             end
             object cxGridDBTableView8Column8: TcxGridDBColumn

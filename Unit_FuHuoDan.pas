@@ -57,6 +57,7 @@ type
     cxButton1: TcxButton;
     cxGridDBTableView1Column7: TcxGridDBColumn;
     cxButton2: TcxButton;
+    cxGridDBTableView1Column8: TcxGridDBColumn;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -237,6 +238,7 @@ begin
     qry_fuhuo.SQL.Text:='select *,zt=(case 状态 when 1 then ''待接收'' when 2 then ''接收成功'' when 3 then ''不同意接收'' end) , '+
       ' 分院=(select top 1 name from 分院表 where abbr=a.分店代码 ), '+
       ' gys=(select top 1 名称 from 供应商表 where 供应商编号=a.供应商), '+
+      ' 紧急程度=(select top 1 紧急程度 from 提货申请明细表 where 编号=a.申请编号), '+
       ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
       ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号)'+
       ' from ( '+

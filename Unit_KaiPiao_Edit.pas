@@ -74,6 +74,8 @@ type
     cxGridLevel12: TcxGridLevel;
     qry_caiwu: TADOQuery;
     ds_caiwu: TDataSource;
+    cxlbl5: TcxLabel;
+    cxDate_FH_qishi: TcxDateEdit;
     procedure act_closeExecute(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure act2Execute(Sender: TObject);
@@ -232,6 +234,12 @@ var
   heji:Real;
   i,j:integer;
 begin
+  if cxDate_FH_qishi.Text='' then
+  begin
+    Application.MessageBox('请选择开票日期', '提示', MB_OK);
+    cxDate_FH_qishi.SetFocus;
+    exit;
+  end;
   if cxLookup_gys.Text='' then
   begin
     Application.MessageBox('请选择供应商', '提示', MB_OK);
@@ -273,7 +281,8 @@ begin
     DataModule1.ADOQuery_L.append;
     DataModule1.ADOQuery_L.FieldByName('开票编号').AsString:= KPbianhao;
     DataModule1.ADOQuery_L.FieldByName('开票人').AsString:= G_user.UserName;
-    DataModule1.ADOQuery_L.FieldByName('开票时间').AsDateTime:= xitong_date;
+    DataModule1.ADOQuery_L.FieldByName('开票时间').AsDateTime:= cxDate_FH_qishi.Date;
+    DataModule1.ADOQuery_L.FieldByName('录入时间').AsDateTime:= xitong_date;
     DataModule1.ADOQuery_L.FieldByName('是否作废').AsBoolean:=false;
     DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= cxLookup_gys.EditValue;
     DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= cxLookup_fenyuan.EditValue;
@@ -457,6 +466,7 @@ begin
   qry_gys.SQL.Text:='select 供应商编号,名称 from 供应商表 where isnull(是否作废,0)=0 ';
   qry_gys.Open;
 
+  cxPageControl1.HideTabs:=true;
   cxTabSheet1.Show;
 end;
 
@@ -469,12 +479,14 @@ begin
     cxGridDBTableView1Column4.Visible:=false;
     cxLookup_gys.Enabled:=false;
     cxLookup_fenyuan.Enabled:=false;
+    cxDate_FH_qishi.Enabled:=false;
     cxButton1.Visible:=true;
     cxPageControl1.HideTabs:=true;
   end;
   if KPbianhao<>'' then
   begin
     DataModule1.openSql('select * from 中央采购开票表 where 开票编号='+QuotedStr(KPbianhao)+'');
+    cxDate_FH_qishi.text:=DataModule1.ADOQuery_L.FieldByName('开票时间').asstring;
     cxLookup_gys.EditValue:=DataModule1.ADOQuery_L.FieldByName('供应商').asstring;
     cxLookup_fenyuan.EditValue:=DataModule1.ADOQuery_L.FieldByName('分店代码').asstring;
     cxlbl_heji.Caption:= DataModule1.ADOQuery_L.FieldByName('合计金额').asstring;

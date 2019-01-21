@@ -2,8 +2,8 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
   Left = 0
   Top = 0
   Caption = #24320#31080
-  ClientHeight = 555
-  ClientWidth = 726
+  ClientHeight = 618
+  ClientWidth = 794
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
   object img1: TImage
     Left = 0
     Top = 0
-    Width = 726
+    Width = 794
     Height = 80
     Align = alTop
     Picture.Data = {
@@ -70,7 +70,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Transparent = True
   end
   object cxButton8: TcxButton
-    Left = 661
+    Left = 729
     Top = 11
     Width = 50
     Height = 58
@@ -87,9 +87,10 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 661
   end
   object cxButton2: TcxButton
-    Left = 605
+    Left = 673
     Top = 11
     Width = 50
     Height = 58
@@ -106,9 +107,10 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 605
   end
   object cxButton1: TcxButton
-    Left = 549
+    Left = 617
     Top = 11
     Width = 50
     Height = 58
@@ -125,39 +127,45 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
+    ExplicitLeft = 549
   end
   object cxPageControl1: TcxPageControl
     Left = 0
     Top = 80
-    Width = 726
-    Height = 475
+    Width = 794
+    Height = 538
     Align = alClient
     TabOrder = 4
     Properties.ActivePage = cxTabSheet1
     Properties.CustomButtons.Buttons = <>
     LookAndFeel.SkinName = 'Black'
-    ClientRectBottom = 470
+    ExplicitWidth = 726
+    ExplicitHeight = 475
+    ClientRectBottom = 533
     ClientRectLeft = 2
-    ClientRectRight = 721
+    ClientRectRight = 789
     ClientRectTop = 31
     object cxTabSheet1: TcxTabSheet
       Caption = #21333#24405
       ImageIndex = 0
+      ExplicitWidth = 719
+      ExplicitHeight = 439
       object pnl1: TPanel
         Left = 0
         Top = 0
-        Width = 719
-        Height = 65
+        Width = 787
+        Height = 73
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 719
         object cxlbl2: TcxLabel
-          Left = 244
+          Left = 480
           Top = 17
           Caption = #20998#38498
           Transparent = True
         end
         object cxLookup_fenyuan: TcxLookupComboBox
-          Left = 286
+          Left = 522
           Top = 15
           Properties.KeyFieldNames = 'abbr'
           Properties.ListColumns = <
@@ -169,13 +177,13 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
           Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
           StyleDisabled.Color = clYellow
           StyleDisabled.TextColor = clBlack
-          TabOrder = 1
+          TabOrder = 2
           OnExit = cxLookup_gysExit
           OnKeyPress = cxLookup_gysKeyPress
           Width = 136
         end
         object cxLookup_gys: TcxLookupComboBox
-          Left = 78
+          Left = 314
           Top = 15
           Properties.KeyFieldNames = #20379#24212#21830#32534#21495
           Properties.ListColumns = <
@@ -187,38 +195,57 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
           Properties.OnCloseUp = cxLookup_gysPropertiesCloseUp
           StyleDisabled.Color = clYellow
           StyleDisabled.TextColor = clBlack
-          TabOrder = 2
+          TabOrder = 1
           OnExit = cxLookup_gysExit
           OnKeyPress = cxLookup_gysKeyPress
           Width = 136
         end
         object cxlbl3: TcxLabel
-          Left = 20
+          Left = 256
           Top = 17
           Caption = #20379#24212#21830
           Transparent = True
         end
         object cxlbl4: TcxLabel
-          Left = 430
-          Top = 37
+          Left = 589
+          Top = 45
           Caption = #24050#36873#21512#35745#37329#39069#65306
           Transparent = True
         end
         object cxlbl_heji: TcxLabel
-          Left = 553
-          Top = 37
-          Caption = #24050#36873#21512#35745#37329#39069#65306
+          Left = 712
+          Top = 45
+          Caption = '1000'
           Transparent = True
+        end
+        object cxlbl5: TcxLabel
+          Left = 17
+          Top = 17
+          Caption = #24320#31080#26085#26399
+          Transparent = True
+        end
+        object cxDate_FH_qishi: TcxDateEdit
+          Left = 91
+          Top = 15
+          Properties.DisplayFormat = 'yyyy-mm-dd'
+          Properties.EditFormat = 'yyyy-mm-dd'
+          StyleDisabled.Color = clYellow
+          StyleDisabled.TextColor = clBlack
+          TabOrder = 0
+          Width = 150
         end
       end
       object cxGrid2: TcxGrid
         Left = 0
-        Top = 65
-        Width = 719
-        Height = 374
+        Top = 73
+        Width = 787
+        Height = 429
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitTop = 65
+        ExplicitWidth = 719
+        ExplicitHeight = 374
         object cxGridDBTableView1: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           OnEditChanged = cxGridDBTableView1EditChanged
@@ -306,13 +333,16 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     object cxTabSheet2: TcxTabSheet
       Caption = #25209#24405
       ImageIndex = 1
+      ExplicitWidth = 719
+      ExplicitHeight = 439
       object pnl2: TPanel
         Left = 0
         Top = 0
-        Width = 719
+        Width = 787
         Height = 65
         Align = alTop
         TabOrder = 0
+        ExplicitWidth = 719
         object cxlbl6: TcxLabel
           Left = 26
           Top = 19
@@ -355,11 +385,13 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
       object cxGrid15: TcxGrid
         Left = 0
         Top = 65
-        Width = 719
-        Height = 374
+        Width = 787
+        Height = 437
         Align = alClient
         TabOrder = 1
         LookAndFeel.SkinName = 'Blue'
+        ExplicitWidth = 719
+        ExplicitHeight = 374
         object cxGridDBTableView12: TcxGridDBTableView
           Navigator.Buttons.CustomButtons = <>
           DataController.DataSource = ds_caiwu
@@ -421,6 +453,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 56
   end
   object qry_fenyuan: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
@@ -429,6 +462,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 8
   end
   object qry_gys: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     Parameters = <>
     SQL.Strings = (
@@ -447,6 +481,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 264
   end
   object qry_liebiao: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic
     Parameters = <>
@@ -454,6 +489,7 @@ object Form_KaiPiao_Edit: TForm_KaiPiao_Edit
     Top = 336
   end
   object qry_caiwu: TADOQuery
+    Connection = DataModule1.ADOCon_ALi
     CursorType = ctStatic
     LockType = ltBatchOptimistic
     Parameters = <>

@@ -752,6 +752,7 @@ begin
         DataModule1.ADOQuery_L.FieldByName('出库数量').AsVariant:= qry_zhudong.FieldByName('付货数量').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('单价').AsVariant:= qry_zhudong.FieldByName('单价').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('出库金额').AsVariant:= qry_zhudong.FieldByName('出库金额').AsVariant;
+        DataModule1.ADOQuery_L.FieldByName('舍零金额').AsVariant:= qry_zhudong.FieldByName('舍零金额').AsVariant;
         DataModule1.ADOQuery_L.FieldByName('供应商').AsString:= qry_zhudong.FieldByName('供应商').AsString;
         DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_zhudong.FieldByName('分店代码').AsString;
         DataModule1.ADOQuery_L.FieldByName('价目备注').AsString:= qry_zhudong.FieldByName('价目备注').AsString;

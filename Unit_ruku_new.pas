@@ -308,7 +308,10 @@ begin
       ADOQuery_cg_mingxi.Edit;
     end;
     ADOQuery_cg_zhubiao.UpdateBatch();
+    ADOQuery_cg_mingxi.Edit;
+    ADOQuery_cg_mingxi.Post;
     ADOQuery_cg_mingxi.UpdateBatch();
+    ADOQuery_cg_mingxi.Edit;
   end;
   button_zhuanti('save');
 end;

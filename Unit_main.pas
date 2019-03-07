@@ -453,6 +453,7 @@ type
     cxStyle1: TcxStyle;
     cxStyle2: TcxStyle;
     dxNavBar1Item19: TdxNavBarItem;
+    cxCheckBox1: TcxCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cxButton1Click(Sender: TObject);
     procedure cxButton2Click(Sender: TObject);
@@ -778,8 +779,18 @@ begin
     cktjstr:=cktjstr+' and 出库时间<'+QuotedStr(DateToStr(incday(cxDate_KuCun_Zhongzhi.date,1)))+' ';
   end;
   if Trim(cxTextEdit37.Text)<>'' then
+  begin
     mctj:=mctj+'  and 价目编号 in (select 价目编号 from 药品用品价目表 '+
     ' where 名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 原名称 like ''%'+Trim(cxTextEdit37.Text)+'%'' or 拼音 like ''%'+Trim(cxTextEdit37.Text)+'%'' )';
+  end
+  else
+  begin
+    if cxCheckBox1.Checked then
+    begin
+      mctj:=mctj+' and 价目编号 in (select 价目编号 from 中央库存_出库表 '+
+        ' where 出库时间>=(select top 1 convert(char(10),出库时间,120) from 中央库存_出库表 order by 出库时间 desc))';
+    end;
+  end;
 
   if rktjstr='' then
   begin
@@ -935,7 +946,7 @@ begin
   ' 小类=(select top 1 小类 from 药品用品价目表 where 价目编号=a.价目编号),'+
   ' 规格=(select top 1 规格 from 药品用品价目表 where 价目编号=a.价目编号),'+
   ' 单位=(select top 1 单位 from 药品用品价目表 where 价目编号=a.价目编号) from ( '+
-  ' select 出库编号,出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注 '+
+  ' select 出库编号,出库时间,名称,出库数量,单价,出库金额,舍零金额,供应商,分店代码,状态,门店接收人,门店接收时间,价目编号,经手人,备注,开票编号 '+
   ' from 中央库存_出库表 where 是否作废=0 and 出库数量<>0 '+tjstr+' )a order by 出库时间';
   qry_fuhuo_jilu_xiangxi.Open;
 

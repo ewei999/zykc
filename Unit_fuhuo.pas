@@ -757,6 +757,7 @@ begin
         DataModule1.ADOQuery_L.FieldByName('分店代码').AsString:= qry_zhudong.FieldByName('分店代码').AsString;
         DataModule1.ADOQuery_L.FieldByName('价目备注').AsString:= qry_zhudong.FieldByName('价目备注').AsString;
         DataModule1.ADOQuery_L.FieldByName('经手人').AsString:= G_user.UserName;
+        DataModule1.ADOQuery_L.FieldByName('备注').AsString:= '中央仓库';
         DataModule1.ADOQuery_L.FieldByName('状态').AsInteger:=1;
         DataModule1.ADOQuery_L.FieldByName('是否作废').asboolean:= false;
         DataModule1.ADOQuery_L.post;

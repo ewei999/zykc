@@ -249,7 +249,7 @@
       Height = 690
       Align = alClient
       TabOrder = 0
-      Properties.ActivePage = cxTabSheet8
+      Properties.ActivePage = cxTabSheet13
       Properties.CustomButtons.Buttons = <>
       LookAndFeel.SkinName = 'Blue'
       ClientRectBottom = 685
@@ -1069,7 +1069,7 @@
           Height = 599
           Align = alClient
           TabOrder = 1
-          Properties.ActivePage = cxTabSheet11
+          Properties.ActivePage = cxTabSheet14
           Properties.CustomButtons.Buttons = <>
           LookAndFeel.SkinName = 'Blue'
           ClientRectBottom = 594
@@ -1812,18 +1812,18 @@
           Left = 0
           Top = 0
           Width = 1067
-          Height = 70
+          Height = 81
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
           object cxlbl7: TcxLabel
-            Left = 6
+            Left = 2
             Top = 24
             Caption = #24320#22987#26085#26399
             Transparent = True
           end
           object cxDate_KuCun_Qishi: TcxDateEdit
-            Left = 80
+            Left = 76
             Top = 22
             Properties.DisplayFormat = 'yyyy-mm-dd'
             Properties.EditFormat = 'yyyy-mm-dd'
@@ -1831,13 +1831,13 @@
             Width = 121
           end
           object cxlbl8: TcxLabel
-            Left = 209
+            Left = 205
             Top = 24
             Caption = #32467#26463#26085#26399
             Transparent = True
           end
           object cxDate_KuCun_Zhongzhi: TcxDateEdit
-            Left = 285
+            Left = 281
             Top = 22
             Properties.DisplayFormat = 'yyyy-mm-dd'
             Properties.EditFormat = 'yyyy-mm-dd'
@@ -1845,7 +1845,7 @@
             Width = 121
           end
           object cxButton15: TcxButton
-            Left = 704
+            Left = 700
             Top = 19
             Width = 75
             Height = 31
@@ -1855,19 +1855,19 @@
             OnClick = cxButton15Click
           end
           object cxTextEdit37: TcxTextEdit
-            Left = 456
+            Left = 452
             Top = 22
             TabOrder = 5
             Width = 233
           end
           object cxlbl9: TcxLabel
-            Left = 416
+            Left = 412
             Top = 24
             Caption = #21517#31216
             Transparent = True
           end
           object cxButton18: TcxButton
-            Left = 885
+            Left = 881
             Top = 19
             Width = 78
             Height = 31
@@ -1883,7 +1883,7 @@
             OnClick = cxButton18Click
           end
           object cxButton24: TcxButton
-            Left = 795
+            Left = 791
             Top = 19
             Width = 78
             Height = 31
@@ -1893,7 +1893,7 @@
             OnClick = cxButton24Click
           end
           object cxButton29: TcxButton
-            Left = 977
+            Left = 973
             Top = 19
             Width = 86
             Height = 31
@@ -1908,15 +1908,25 @@
             ParentFont = False
             OnClick = cxButton29Click
           end
+          object cxCheckBox1: TcxCheckBox
+            Left = 452
+            Top = 50
+            Caption = #26368#21518#19968#22825#20986#24211
+            TabOrder = 10
+            Transparent = True
+            Width = 233
+          end
         end
         object cxGrid11: TcxGrid
           Left = 0
-          Top = 70
+          Top = 81
           Width = 1067
-          Height = 584
+          Height = 573
           Align = alClient
           TabOrder = 1
           LookAndFeel.SkinName = 'Blue'
+          ExplicitTop = 70
+          ExplicitHeight = 584
           object cxGridDBTableView8: TcxGridDBTableView
             Navigator.Buttons.CustomButtons = <>
             OnCellDblClick = cxGridDBTableView8CellDblClick
